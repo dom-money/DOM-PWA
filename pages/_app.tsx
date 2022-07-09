@@ -4,6 +4,18 @@ import Head from 'next/head';
 import '../styles/globals.css';
 import {AppProps} from 'next/app';
 import LogRocket from 'logrocket';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
+
+import theme, { MyTheme } from '../styles/theme';
+
+export const GlobalStyle = createGlobalStyle<{theme: MyTheme}>`
+  body {
+    font-family: ${props => props.theme.fontFamily};
+  }
+  button {
+    font-family: ${props => props.theme.fontFamily};
+  }
+`
 
 LogRocket.init('8dtdv2/dom');
 
@@ -37,7 +49,10 @@ export default function MyApp({Component, pageProps}: AppProps) {
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#317EFB" />
       </Head>
-      <Component {...pageProps} />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </>
   );
 }
