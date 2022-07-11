@@ -38,6 +38,7 @@ const ButtonElement = styled.button<ButtonElementProps>`
   text-transform: capitalize;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
 `;
 
 const Button = ({ primary = false, label, ...props }: ButtonProps) => {
