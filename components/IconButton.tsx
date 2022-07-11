@@ -13,10 +13,6 @@ interface IconButtonProps {
    */
   backgroundColor: string;
   /**
-   * Icon Color
-   */
-  iconColor: string;
-  /**
    * Should a notification badge be added?
    */
   notificationBadge?: boolean;
@@ -27,7 +23,7 @@ interface IconButtonProps {
   /**
    * Click handler
    */
-   onClick?: () => void;
+  onClick?: () => void;
 }
 
 interface ButtonProps {
