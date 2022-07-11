@@ -1,0 +1,39 @@
+import React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+
+import Header from '../components/Header';
+
+export default {
+  title: 'Components/Header',
+  component: Header,
+  argTypes: {
+    notification: { control: 'boolean' },
+    profileOnClick: { action: 'onProfileClick' },
+    notificationsOnClick: { action: 'onNotificationsClick' },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{
+        padding: '2rem',
+        backgroundColor: '#1F1F1F',
+        boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)',
+      }}>
+        <Story />
+      </div>
+    ),
+  ],
+} as ComponentMeta<typeof Header>;
+
+const Template: ComponentStory<typeof Header> = (args) =>
+  <Header {...args} />;
+
+export const WithNotification = Template.bind({});
+WithNotification.args = {
+  avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
+  notification: true,
+};
+
+export const WitouthNotification = Template.bind({});
+WitouthNotification.args = {
+  avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
+};
