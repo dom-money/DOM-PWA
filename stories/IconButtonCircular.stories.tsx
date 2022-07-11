@@ -10,7 +10,11 @@ export default {
   component: IconButtonCircular,
   decorators: [
     (Story) => (
-      <div style={{ backgroundColor: '#1F1F1F', padding: '3rem' }}>
+      <div style={{
+        display: 'inline-block',
+        padding: '2rem',
+        backgroundColor: '#1F1F1F',
+      }}>
         <Story />
       </div>
     ),

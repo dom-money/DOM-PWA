@@ -9,11 +9,11 @@ export default {
   decorators: [
     (Story) => (
       <div style={{
-        backgroundColor: '#1F1F1F',
-        width: '20rem',
-        boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)',
+        display: 'inline-block',
         padding: '2rem',
         textAlign: 'center',
+        backgroundColor: '#1F1F1F',
+        boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)',
       }}>
         <Story />
       </div>
