@@ -27,7 +27,7 @@ Primary.args = {
   primary: true,
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
+export const Default = Template.bind({});
+Default.args = {
   label: 'Send',
 };

@@ -44,6 +44,9 @@ LargeButton.args = {
   backgroundColor: '#020202',
   children: <SignInIcon color='#FFFFFF'/>,
 };
+LargeButton.parameters = {
+  backgrounds: { default: 'darkAdditional' },
+};
 
 export const NotificationButton = Template.bind({});
 NotificationButton.args = {

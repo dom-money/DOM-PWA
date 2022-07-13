@@ -9,18 +9,6 @@ export default {
   argTypes: {
     onClick: { action: 'clicked' },
   },
-  decorators: [
-    (Story) => (
-      <div style={{
-        display: 'inline-block',
-        padding: '2rem',
-        backgroundColor: '#1F1F1F',
-        boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)',
-      }}>
-        <Story />
-      </div>
-    ),
-  ],
 } as ComponentMeta<typeof AvatarButton>;
 
 const Template: ComponentStory<typeof AvatarButton> = (args) =>

@@ -6,6 +6,9 @@ import Header from '../components/Header';
 export default {
   title: 'Components/Header',
   component: Header,
+  parameters: {
+    layout: 'padded',
+  },
   argTypes: {
     notification: { control: 'boolean' },
     profileOnClick: { action: 'onProfileClick' },
@@ -33,7 +36,7 @@ WithNotification.args = {
   notification: true,
 };
 
-export const WitouthNotification = Template.bind({});
-WitouthNotification.args = {
+export const WithoutNotification = Template.bind({});
+WithoutNotification.args = {
   avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
 };

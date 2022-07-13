@@ -6,18 +6,6 @@ import AmountDisplay from '../components/AmountDisplay';
 export default {
   title: 'Components/Amount Display',
   component: AmountDisplay,
-  decorators: [
-    (Story) => (
-      <div style={{
-        display: 'inline-block',
-        padding: '2rem',
-        backgroundColor: '#020202',
-        boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)',
-      }}>
-        <Story />
-      </div>
-    ),
-  ],
   argTypes: {
     size: {
       options: [ 'small', 'medium' ],
@@ -41,6 +29,9 @@ PositiveAmountSmall.args = {
   amount: 20000.12,
   size: 'small',
 };
+PositiveAmountSmall.parameters = {
+  backgrounds: { default: 'darkAdditional' },
+};
 
 export const ZeroAmount = Template.bind({});
 ZeroAmount.args = {
@@ -53,4 +44,7 @@ Inactive.args = {
   amount: 0,
   size: 'small',
   inactive: true,
+};
+Inactive.parameters = {
+  backgrounds: { default: 'darkAdditional' },
 };
