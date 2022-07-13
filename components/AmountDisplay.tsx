@@ -17,6 +17,10 @@ interface AmountDisplayProps {
    * Is component inactive?
    */
   inactive?: inactiveType;
+  /**
+   * Prop for extending styled-components style
+   */
+  className?: string;
 }
 
 const calculateAmountTextSizeCSS = (size: sizeType) => {
@@ -75,6 +79,7 @@ const AmountDisplay = ({
   amount,
   size = 'small',
   inactive = false,
+  className,
   ...props
 }: AmountDisplayProps) => {
   const amountLocaleString = amount.toLocaleString(
@@ -83,7 +88,7 @@ const AmountDisplay = ({
   const integerPart = amountLocaleString.match(/[^\.]*/);
   const decimalPart = amountLocaleString.match(/[^\.]*$/);
   return (
-    <Container>
+    <Container className={className}>
       <CurrencySymbol size={size} inactive={inactive}>$</CurrencySymbol>
       <AmountText size={size} inactive={inactive} {...props}>
         <span>

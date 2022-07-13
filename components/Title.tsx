@@ -5,7 +5,11 @@ interface TitleProps {
   /**
    * Title Text
    */
-   text: string;
+  text: string;
+  /**
+   * Prop for extending styled-components style
+   */
+  className?: string;
 }
 
 const TitleElement = styled.h2`
@@ -22,9 +26,9 @@ const TitleElement = styled.h2`
   text-overflow: ellipsis;
 `;
 
-const Title = ({ text, ...props }: TitleProps) => {
+const Title = ({ text, className, ...props }: TitleProps) => {
   return (
-    <TitleElement {...props}>
+    <TitleElement className={className} {...props}>
       {text}
     </TitleElement>
   );

@@ -22,9 +22,13 @@ interface HeaderProps {
    * Notifications Icon Button Click handler
    */
   notificationsOnClick?: () => void;
+  /**
+   * Prop for extending styled-components style
+   */
+  className?: string;
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.header`
   display: flex;
   justify-content: space-between;
 `;
@@ -34,9 +38,10 @@ const Header = ({
   notification,
   profileOnClick,
   notificationsOnClick,
+  className,
 }: HeaderProps) => {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <AvatarButton imageURL={avatarImageURL} onClick={profileOnClick}/>
       <IconButton
         size='medium'
