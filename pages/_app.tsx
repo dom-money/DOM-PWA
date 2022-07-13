@@ -4,18 +4,10 @@ import Head from 'next/head';
 import '../styles/globals.css';
 import {AppProps} from 'next/app';
 import LogRocket from 'logrocket';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
-import theme, { MyTheme } from '../styles/theme';
-
-export const GlobalStyle = createGlobalStyle<{theme: MyTheme}>`
-  body {
-    font-family: ${props => props.theme.fontFamily};
-  }
-  button {
-    font-family: ${props => props.theme.fontFamily};
-  }
-`
+import theme from '../styles/theme';
+import GlobalStyle from '../styles/global'
 
 LogRocket.init('8dtdv2/dom');
 

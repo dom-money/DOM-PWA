@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import { GlobalStyle } from '../pages/_app';
+import GlobalStyle from '../styles/global';
 import { ThemeProvider } from 'styled-components';
 import theme from '../styles/theme';
 
