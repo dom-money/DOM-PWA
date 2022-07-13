@@ -11,30 +11,43 @@ const SampleContent = () => {
 };
 
 export default {
-  title: 'Components/CollapsibleContainer',
+  title: 'Components/Collapsible Container',
   component: CollapsibleContainer,
+  parameters: {
+    layout: 'padded',
+  },
   argTypes: {
-    backgroundColor: { control: 'color' },
+    outside: { control: 'boolean' },
   },
 } as ComponentMeta<typeof CollapsibleContainer>;
 
 const Template: ComponentStory<typeof CollapsibleContainer> = (args) =>
   <CollapsibleContainer {...args} />;
 
-export const Open = Template.bind({});
-Open.args = {
-  label: 'Wallet',
-  children: <SampleContent />,
-};
-
 export const Closed = Template.bind({});
 Closed.args = {
   label: 'Wallet',
-  children: <SampleContent />,
+  mainContent: <SampleContent />,
+  secondaryContent: <SampleContent />,
 };
 
-Closed.play = async ({ canvasElement }) => {
+export const Open = Template.bind({});
+Open.args = {
+  label: 'Wallet',
+  mainContent: <SampleContent />,
+  secondaryContent: <SampleContent />,
+};
+
+Open.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const clickableHeader = await canvas.getByTestId('openCloseIcon');
   await userEvent.click(clickableHeader);
+};
+
+export const ContentOutside = Template.bind({});
+ContentOutside.args = {
+  label: 'Wallet',
+  outside: true,
+  mainContent: <SampleContent />,
+  secondaryContent: <SampleContent />,
 };
