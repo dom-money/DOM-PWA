@@ -13,10 +13,14 @@ interface AvatarButtonProps {
    onClick?: () => void;
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.button`
   position: relative;
   width: 2.75rem;
   height: 2.75rem;
+  background-color: transparent;
+  border-radius: 50%;
+  padding: 0;
+  border: none;
   cursor: pointer;
 `;
 

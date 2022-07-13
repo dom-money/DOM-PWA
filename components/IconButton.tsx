@@ -57,6 +57,9 @@ const calculateButtonSize = (size: sizeType) => {
 
 const Button = styled.button<ButtonProps>`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   ${(props) => calculateButtonSize(props.size)};
   background-color: ${(props) => props.backgroundColor};
   padding: 0;
