@@ -17,7 +17,7 @@ export default {
     layout: 'padded',
   },
   argTypes: {
-    outside: { control: 'boolean' },
+    shouldSecondaryContentBeOutside: { control: 'boolean' },
   },
 } as ComponentMeta<typeof CollapsibleContainer>;
 
@@ -47,7 +47,7 @@ Open.play = async ({ canvasElement }) => {
 export const ContentOutside = Template.bind({});
 ContentOutside.args = {
   label: 'Wallet',
-  outside: true,
+  shouldSecondaryContentBeOutside: true,
   mainContent: <SampleContent />,
   secondaryContent: <SampleContent />,
 };

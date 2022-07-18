@@ -68,7 +68,7 @@ const Wallet = ({
           <Button label='Send' onClick={SendButtonOnClick}/>
         </ButtonContainer>
       }
-      outside={true}
+      shouldSecondaryContentBeOutside={true}
     />
   );
 };

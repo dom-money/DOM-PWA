@@ -20,7 +20,7 @@ interface CollapsibleContainerProps {
   /**
    * Should secondary content be outside of container?
    */
-  outside: boolean;
+  shouldSecondaryContentBeOutside: boolean;
 }
 
 type SecondaryContentHeight = undefined | 'auto' | number;
@@ -80,7 +80,7 @@ const CollapsibleContainer = ({
   label,
   mainContent,
   secondaryContent,
-  outside = false,
+  shouldSecondaryContentBeOutside = false,
 }: CollapsibleContainerProps) => {
   const [ isCollapsed, setIsCollapsed ] = useState(false);
   const [ contentHeight, setContentHeight ] =
@@ -107,7 +107,7 @@ const CollapsibleContainer = ({
         </Header>
         <Contents>
           {mainContent}
-          {outside ||
+          {shouldSecondaryContentBeOutside ||
           <SecondaryContentElement
             ref={secondaryContentRef}
             isCollapsed={isCollapsed}
@@ -118,7 +118,7 @@ const CollapsibleContainer = ({
           }
         </Contents>
       </CollapsibleWrapper>
-      {outside &&
+      {shouldSecondaryContentBeOutside &&
       <SecondaryContentElement
         ref={secondaryContentRef}
         isCollapsed={isCollapsed}
