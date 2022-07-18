@@ -12,7 +12,7 @@ interface CollapsibleContainerProps {
   /**
    * Main Content (will be always displayed)
    */
-  mainContent: React.ReactNode;
+  primaryContent: React.ReactNode;
   /**
    * Secondary Content (will be hidden on collapsed state)
    */
@@ -78,7 +78,7 @@ const IconWrapper = styled(IconButtonCircular)<{isCollapsed: boolean}>`
 
 const CollapsibleContainer = ({
   label,
-  mainContent,
+  primaryContent,
   secondaryContent,
   shouldSecondaryContentBeOutside = false,
 }: CollapsibleContainerProps) => {
@@ -106,7 +106,7 @@ const CollapsibleContainer = ({
           </IconWrapper>
         </Header>
         <Contents>
-          {mainContent}
+          {primaryContent}
           {shouldSecondaryContentBeOutside ||
           <SecondaryContentElement
             ref={secondaryContentRef}

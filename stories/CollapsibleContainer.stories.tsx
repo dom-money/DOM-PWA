@@ -27,14 +27,14 @@ const Template: ComponentStory<typeof CollapsibleContainer> = (args) =>
 export const Closed = Template.bind({});
 Closed.args = {
   label: 'Wallet',
-  mainContent: <SampleContent />,
+  primaryContent: <SampleContent />,
   secondaryContent: <SampleContent />,
 };
 
 export const Open = Template.bind({});
 Open.args = {
   label: 'Wallet',
-  mainContent: <SampleContent />,
+  primaryContent: <SampleContent />,
   secondaryContent: <SampleContent />,
 };
 
@@ -48,6 +48,6 @@ export const ContentOutside = Template.bind({});
 ContentOutside.args = {
   label: 'Wallet',
   shouldSecondaryContentBeOutside: true,
-  mainContent: <SampleContent />,
+  primaryContent: <SampleContent />,
   secondaryContent: <SampleContent />,
 };

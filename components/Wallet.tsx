@@ -50,7 +50,7 @@ const Wallet = ({
   return (
     <CollapsibleContainer
       label='Wallet'
-      mainContent={
+      primaryContent={
         <ContentContainer>
           <AmountDisplay amount={amount} size='small' inactive={inactive}/>
           <IconButton
