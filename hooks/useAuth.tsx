@@ -12,8 +12,7 @@ import RPC from '../utils/evm';
 import { useTheme } from 'styled-components';
 import { ThemeType } from '../styles/theme';
 
-// eslint-disable-next-line max-len
-const clientId = 'BBLq6SdslpnOhfai0fc7H32IKq0K1V0wFo9iuJIUlDpgFHqBGTUQrNcUdwNJAAwi6YVPZnPMmKYHSd1pObDCLSc';
+const clientId = process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID as string;
 
 const useAuth = () => {
   const [ web3auth, setWeb3auth ] =
@@ -41,8 +40,8 @@ const useAuth = () => {
           clientId,
           chainConfig: {
             chainNamespace: CHAIN_NAMESPACES.EIP155,
-            chainId: '0x13881',
-            rpcTarget: 'https://ancient-little-dream.matic-testnet.discover.quiknode.pro/40926a99ba7fe2773355aeaa681d6c9b1f91c607/',
+            chainId: process.env.NEXT_PUBLIC_CHAIN_ID,
+            rpcTarget: process.env.NEXT_PUBLIC_RPC_TARGET,
           },
           uiConfig: {
             theme: 'dark',
@@ -52,7 +51,8 @@ const useAuth = () => {
         const openloginAdapter = new OpenloginAdapter({
           adapterSettings: {
             clientId,
-            network: 'testnet',
+            // eslint-disable-next-line max-len
+            network: process.env.NEXT_PUBLIC_NETWORK_TYPE as 'testnet' | 'mainnet',
             uxMode: 'popup',
             whiteLabel: {
               name: 'DOM Wallet',
