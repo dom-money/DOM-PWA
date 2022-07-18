@@ -11,6 +11,10 @@ interface ButtonProps {
    */
   label: string;
   /**
+   * Prop for extending styled-components style
+   */
+  className?: string;
+  /**
    * Click handler
    */
   onClick?: () => void;
@@ -24,7 +28,7 @@ const ButtonElement = styled.button<ButtonElementProps>`
   display: block;
   width: 100%;
   background-color:
-    ${(props) => props.primary ? props.theme.primaryColor :'#1F1F1F'};
+    ${(props) => props.primary ? props.theme.colors.primary :'#1F1F1F'};
   color: ${(props) => props.primary ? '#020202' :'#FFFFFF'};
   box-shadow:
     ${(props) => props.primary ? 'none' :'0px 0px 0px 0.5px #383838 inset'};

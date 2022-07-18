@@ -1,13 +1,22 @@
 import { createGlobalStyle } from 'styled-components';
 
-import { MyTheme } from '../styles/theme';
+import { ThemeType } from '../styles/theme';
 
-const GlobalStyle = createGlobalStyle<{theme: MyTheme}>`
+const GlobalStyle = createGlobalStyle<{theme: ThemeType}>`
+  html,
   body {
+    padding: 0;
+    margin: 0;
+    background-color: ${(props) => props.theme.colors.backgroundMain};
     font-family: ${(props) => props.theme.fontFamily};
   }
+  
   button {
     font-family: ${(props) => props.theme.fontFamily};
+  }
+
+  * {
+    box-sizing: border-box;
   }
 `;
 
