@@ -16,7 +16,7 @@ interface MainPageProps {
    */
   walletAmount: number;
   /**
-   * Wallet Balance amount
+   * Is wallet inactive?
    */
   walletInactive: boolean;
   /**
