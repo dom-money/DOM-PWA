@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Header from './Header';
 import TotalBalance from './TotalBalance';
 import Wallet from './Wallet';
-import Wealth from './Wealth';
+// import Wealth from './Wealth';
 
 interface MainPageProps {
   /**
@@ -23,9 +23,9 @@ interface MainPageProps {
    * URL to Avatar Image
    */
   avatarImageURL: string;
-   /**
-    * Is there a notification present?
-    */
+  /**
+   * Is there a notification present?
+   */
   isNotificationPresent?: boolean;
 }
 
