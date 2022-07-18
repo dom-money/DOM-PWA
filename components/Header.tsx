@@ -46,7 +46,7 @@ const Header = ({
       <IconButton
         size='medium'
         backgroundColor='#272727'
-        notificationBadge={notification}
+        hasNotificationBadge={notification}
         onClick={notificationsOnClick}
       >
         <NotificationIcon color='#FFFFFF'/>

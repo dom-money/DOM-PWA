@@ -17,7 +17,7 @@ export default {
     },
     backgroundColor: { control: 'color' },
     onClick: { action: 'clicked' },
-    notificationBadge: { control: 'boolean' },
+    hasNotificationBadge: { control: 'boolean' },
   },
 } as ComponentMeta<typeof IconButton>;
 
@@ -52,6 +52,6 @@ export const NotificationButton = Template.bind({});
 NotificationButton.args = {
   size: 'medium',
   backgroundColor: '#272727',
-  notificationBadge: true,
+  hasNotificationBadge: true,
   children: <NotificationIcon color='#FFFFFF'/>,
 };

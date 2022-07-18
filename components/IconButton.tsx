@@ -15,7 +15,7 @@ interface IconButtonProps {
   /**
    * Should a notification badge be added?
    */
-  notificationBadge?: boolean;
+  hasNotificationBadge?: boolean;
   /**
    * Pass SVG Icon component as a child
    */
@@ -80,14 +80,14 @@ const Badge = styled.span`
 const IconButton = ({
   size,
   backgroundColor,
-  notificationBadge = false,
+  hasNotificationBadge = false,
   children,
   ...props
 }: IconButtonProps) => {
   return (
     <Button size={size} backgroundColor={backgroundColor} {...props}>
       {children}
-      {notificationBadge && <Badge />}
+      {hasNotificationBadge && <Badge />}
     </Button>
   );
 };
