@@ -22,7 +22,7 @@ Default.args = {
   totalBalanceAmount: 45725.06,
   walletAmount: 20000.12,
   avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
-  notification: true,
+  isNotificationPresent: true,
 };
 
 export const Inactive = Template.bind({});
@@ -31,5 +31,5 @@ Inactive.args = {
   walletAmount: 0,
   walletInactive: true,
   avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
-  notification: false,
+  isNotificationPresent: false,
 };

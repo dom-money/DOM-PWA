@@ -13,7 +13,7 @@ interface HeaderProps {
   /**
    * Is there a notification present?
    */
-  notification?: boolean;
+  isNotificationPresent?: boolean;
   /**
    * Profile Avatar Button Click handler
    */
@@ -35,7 +35,7 @@ const Wrapper = styled.header`
 
 const Header = ({
   avatarImageURL,
-  notification,
+  isNotificationPresent,
   profileOnClick,
   notificationsOnClick,
   className,
@@ -46,7 +46,7 @@ const Header = ({
       <IconButton
         size='medium'
         backgroundColor='#272727'
-        hasNotificationBadge={notification}
+        hasNotificationBadge={isNotificationPresent}
         onClick={notificationsOnClick}
       >
         <NotificationIcon color='#FFFFFF'/>

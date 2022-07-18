@@ -26,7 +26,7 @@ interface MainPageProps {
    /**
     * Is there a notification present?
     */
-  notification?: boolean;
+  isNotificationPresent?: boolean;
 }
 
 const Wrapper = styled.div`
@@ -42,13 +42,13 @@ const MainPage = ({
   walletAmount,
   walletInactive,
   avatarImageURL,
-  notification,
+  isNotificationPresent,
 }: MainPageProps) => {
   return (
     <Wrapper>
       <HeaderWithMargin
         avatarImageURL={avatarImageURL}
-        notification={notification}
+        isNotificationPresent={isNotificationPresent}
       />
       <TotalBalance
         amount={totalBalanceAmount}

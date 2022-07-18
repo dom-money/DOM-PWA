@@ -10,7 +10,7 @@ export default {
     layout: 'padded',
   },
   argTypes: {
-    notification: { control: 'boolean' },
+    isNotificationPresent: { control: 'boolean' },
     profileOnClick: { action: 'onProfileClick' },
     notificationsOnClick: { action: 'onNotificationsClick' },
   },
@@ -33,7 +33,7 @@ const Template: ComponentStory<typeof Header> = (args) =>
 export const WithNotification = Template.bind({});
 WithNotification.args = {
   avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
-  notification: true,
+  isNotificationPresent: true,
 };
 
 export const WithoutNotification = Template.bind({});
