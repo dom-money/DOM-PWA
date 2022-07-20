@@ -33,7 +33,7 @@ const calculateAmountTextSizeCSS = (size: sizeType) => {
   if (size === 'medium') {
     return (`
       font-size: 3rem;
-      margin-left: -4px
+      margin-left: -2px
     `);
   };
 };
@@ -43,7 +43,7 @@ const calculateCurrencySymbolSizeCSS = (size: sizeType) => {
     return (`top: 7px;`);
   };
   if (size === 'medium') {
-    return (`top: 4px;`);
+    return (`top: 0`);
   };
 };
 
