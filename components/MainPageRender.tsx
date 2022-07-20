@@ -6,7 +6,7 @@ import TotalBalance from './TotalBalance';
 import Wallet from './Wallet';
 // import Wealth from './Wealth';
 
-interface MainPageProps {
+interface MainPageRenderProps {
   /**
    * Total Balance amount
    */
@@ -15,10 +15,6 @@ interface MainPageProps {
    * Wallet Balance amount
    */
   walletAmount: number;
-  /**
-   * Is wallet inactive?
-   */
-  walletInactive?: boolean;
   /**
    * User's name
    */
@@ -38,17 +34,16 @@ const Wrapper = styled.div`
 `;
 
 const HeaderWithMargin = styled(Header)`
-  margin: 2.688rem 0.625rem 0;
+  margin: 1.625rem 0.625rem 0;
 `;
 
-const MainPage = ({
+const MainPageRender = ({
   totalBalanceAmount,
   walletAmount,
-  walletInactive,
-  avatarImageURL,
-  isNotificationPresent,
   userName,
-}: MainPageProps) => {
+  avatarImageURL,
+  isNotificationPresent = false,
+}: MainPageRenderProps) => {
   return (
     <Wrapper>
       <HeaderWithMargin
@@ -59,9 +54,9 @@ const MainPage = ({
       <TotalBalance
         amount={totalBalanceAmount}
       />
-      <Wallet amount={walletAmount} inactive={walletInactive}/>
+      <Wallet amount={walletAmount}/>
     </Wrapper>
   );
 };
 
-export default MainPage;
+export default MainPageRender;

@@ -1,25 +1,33 @@
 import React from 'react';
 import type { NextPage } from 'next';
-import MainPage from '../components/MainPage';
+
+import MainPageRender from '../components/MainPageRender';
+
 import useUserInfo from '../hooks/useUserInfo';
+import useBalance from '../hooks/useBalance';
 
-const HomePage: NextPage = () => {
-  const [ userInfo, isUserInfoLoading, isUserInfoError ]: any = useUserInfo();
+const MainPage: NextPage = () => {
+  const [ userInfo, isUserInfoLoading, hasUserInfoError ]: any = useUserInfo();
+  const [ balance, isBalanceLoading, hasBalanceError ] = useBalance();
 
-  if (isUserInfoLoading || isUserInfoError) {
-    return <p>Loading</p>;
+  if (isUserInfoLoading ||
+    hasUserInfoError ||
+    isBalanceLoading ||
+    hasBalanceError
+  ) {
+    return null;
   }
 
   console.log(userInfo);
 
   return (
-    <MainPage
-      totalBalanceAmount={45725.06}
-      walletAmount={20000.12}
+    <MainPageRender
+      totalBalanceAmount={balance}
+      walletAmount={balance}
       userName={userInfo.name}
       avatarImageURL={userInfo.profileImage}
     />
   );
 };
 
-export default HomePage;
+export default MainPage;
