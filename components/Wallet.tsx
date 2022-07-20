@@ -13,10 +13,6 @@ interface WalletProps {
    */
   amount: number;
   /**
-   * Is component inactive?
-   */
-  inactive?: boolean;
-  /**
    * 'Top Up' Button Click handler
    */
   topUpButtonOnClick?: () => void;
@@ -24,10 +20,6 @@ interface WalletProps {
    * 'Send' Button Click handler
    */
   SendButtonOnClick?: () => void;
-  /**
-   * Scan QR Icon Button Click handler
-   */
-  ScanQRIconButtonOnClick?: () => void;
 }
 
 const ContentContainer = styled.div`
@@ -42,21 +34,19 @@ const ButtonContainer = styled.div`
 
 const Wallet = ({
   amount,
-  inactive = false,
   topUpButtonOnClick,
   SendButtonOnClick,
-  ScanQRIconButtonOnClick,
 }: WalletProps) => {
   return (
     <CollapsibleContainer
       label='Wallet'
       primaryContent={
         <ContentContainer>
-          <AmountDisplay amount={amount} size='small' inactive={inactive}/>
+          <AmountDisplay amount={amount} size='small' inactive={amount === 0}/>
           <IconButton
             size='large'
             backgroundColor='#020202'
-            onClick={ScanQRIconButtonOnClick}
+            href='/wallet-address'
           >
             <ScanQRIcon color='#FFFFFF'/>
           </IconButton>

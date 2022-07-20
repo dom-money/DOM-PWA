@@ -11,7 +11,6 @@ export default {
     layout: 'padded',
   },
   argTypes: {
-    inactive: { control: 'boolean' },
     topUpButtonOnClick: { action: 'onTopUpClick' },
     SendButtonOnClick: { action: 'onSendClick' },
     ScanQRIconButtonOnClick: { action: 'onScanQRIconClick' },
@@ -39,6 +38,4 @@ Open.play = async ({ canvasElement }) => {
 export const Inactive = Template.bind({});
 Inactive.args = {
   amount: 0,
-  inactive: true,
 };
-
