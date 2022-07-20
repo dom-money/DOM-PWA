@@ -6,9 +6,9 @@ import {
   SafeEventEmitterProvider,
   ADAPTER_EVENTS,
 } from '@web3auth/base';
+import { ethers } from 'ethers';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { MetamaskAdapter } from '@web3auth/metamask-adapter';
-import RPC from '../utils/evm';
 import { useTheme } from 'styled-components';
 import { ThemeType } from '../styles/theme';
 
@@ -19,6 +19,10 @@ const useAuth = () => {
     useState<Web3Auth | null>(null);
   const [ provider, setProvider ] =
     useState<SafeEventEmitterProvider | null>(null);
+  const [ ethersProvider, setEthersProvider ] =
+    useState<ethers.providers.Web3Provider | null>(null);
+  const [ signer, setSigner ] =
+    useState<ethers.providers.JsonRpcSigner | null>(null);
 
   const [ isLoaded, setIsLoaded ] = useState(false);
 
@@ -95,12 +99,22 @@ const useAuth = () => {
   }, [ web3auth ]);
 
   const login = async () => {
-    if (!web3auth) {
-      console.log('web3auth not initialized yet');
-      return;
+    try {
+      if (!web3auth) {
+        console.log('web3auth not initialized yet');
+        return;
+      }
+      const web3authProvider = await web3auth.connect();
+      setProvider(web3authProvider);
+      // Initializing Ethers.js Provider & Signer
+      // eslint-disable-next-line max-len
+      const ethersProvider = new ethers.providers.Web3Provider(web3authProvider as any);
+      setEthersProvider(ethersProvider);
+      const signer = ethersProvider.getSigner();
+      setSigner(signer);
+    } catch (error) {
+      console.log(error);
     }
-    const web3authProvider = await web3auth.connect();
-    setProvider(web3authProvider);
   };
 
   const logout = async () => {
@@ -110,35 +124,18 @@ const useAuth = () => {
     }
     await web3auth.logout();
     setProvider(null);
-  };
-
-  const getAccounts = async () => {
-    if (!provider) {
-      console.log('provider not initialized yet');
-      return;
-    }
-    const rpc = new RPC(provider);
-    const userAccount = await rpc.getAccounts();
-    console.log(userAccount);
-  };
-
-  const getBalance = async () => {
-    if (!provider) {
-      console.log('provider not initialized yet');
-      return;
-    }
-    const rpc = new RPC(provider);
-    return await rpc.getBalance();
+    setEthersProvider(null);
+    setSigner(null);
   };
 
   return {
     web3auth,
     provider,
+    ethersProvider,
+    signer,
     isLoaded,
     login,
     logout,
-    getAccounts,
-    getBalance,
   };
 };
 
