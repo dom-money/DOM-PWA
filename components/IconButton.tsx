@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 
 type sizeType = 'small' | 'medium' | 'large';
@@ -23,7 +24,11 @@ interface IconButtonProps {
   /**
    * Click handler
    */
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  /**
+   * URL on Click
+   */
+  href?: string
 }
 
 interface ButtonProps {
@@ -55,7 +60,7 @@ const calculateButtonSize = (size: sizeType) => {
   }
 };
 
-const Button = styled.button<ButtonProps>`
+const Button = styled.a<ButtonProps>`
   position: relative;
   display: flex;
   justify-content: center;
@@ -63,7 +68,6 @@ const Button = styled.button<ButtonProps>`
   ${(props) => calculateButtonSize(props.size)};
   background-color: ${(props) => props.backgroundColor};
   padding: 0;
-  border: none;
   cursor: pointer;
 `;
 
@@ -82,13 +86,16 @@ const IconButton = ({
   backgroundColor,
   hasNotificationBadge = false,
   children,
+  href,
   ...props
 }: IconButtonProps) => {
   return (
-    <Button size={size} backgroundColor={backgroundColor} {...props}>
-      {children}
-      {hasNotificationBadge && <Badge />}
-    </Button>
+    <Link href={href ? href : ''} passHref>
+      <Button size={size} backgroundColor={backgroundColor} {...props}>
+        {children}
+        {hasNotificationBadge && <Badge />}
+      </Button>
+    </Link>
   );
 };
 

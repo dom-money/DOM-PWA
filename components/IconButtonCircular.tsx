@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -5,11 +6,15 @@ interface IconButtonCircularProps {
   /**
    * Pass SVG Icon component as a child
    */
-   children: React.ReactNode;
-   /**
+  children: React.ReactNode;
+  /**
    * Click handler
    */
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
+  /**
+   * URL on Click
+   */
+  href?: string;
 }
 
 const IconButton = styled.button`
@@ -41,12 +46,15 @@ const IconButton = styled.button`
 
 const IconButtonCircular = ({
   children,
+  href,
   ...props
 }: IconButtonCircularProps) => {
   return (
-    <IconButton {...props}>
-      {children}
-    </IconButton>
+    <Link href={href ? href : ''} passHref>
+      <IconButton {...props}>
+        {children}
+      </IconButton>
+    </Link>
   );
 };
 
