@@ -8,6 +8,9 @@ export default {
   component: WalletAddressPageRender,
   parameters: {
     layout: 'fullscreen',
+    viewport: {
+      defaultViewport: 'iphone12promax',
+    },
   },
   argTypes: {
     shareButtonOnClick: { action: '\'Share\' Button Pressed' },
