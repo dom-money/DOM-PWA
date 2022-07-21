@@ -16,11 +16,11 @@ interface CollapsibleContainerProps {
   /**
    * Secondary Content (will be hidden on collapsed state)
    */
-  secondaryContent: React.ReactNode;
+  secondaryContent?: React.ReactNode;
   /**
    * Should secondary content be outside of container?
    */
-  shouldSecondaryContentBeOutside: boolean;
+  shouldSecondaryContentBeOutside?: boolean;
 }
 
 type SecondaryContentHeight = undefined | 'auto' | number;
