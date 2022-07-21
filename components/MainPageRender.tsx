@@ -2,19 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Header from './Header';
+import InvestButton from './InvestButton';
 import TotalBalance from './TotalBalance';
 import Wallet from './Wallet';
-// import Wealth from './Wealth';
+import Wealth from './Wealth';
 
 interface MainPageRenderProps {
-  /**
-   * Total Balance amount
-   */
-  totalBalanceAmount: number;
   /**
    * Wallet Balance amount
    */
   walletAmount: number;
+  /**
+   * Wealth Balance amount
+   */
+  wealthAmount: number;
+  /**
+   * Profit value
+   */
+  profit?: number;
+  /**
+   * Profit percentage
+   */
+  profitPercentage?: number;
+  /**
+   * Average Annual percentage yield value
+   */
+  averageAPY?: number;
   /**
    * User's name
    */
@@ -30,20 +43,24 @@ interface MainPageRenderProps {
 }
 
 const Wrapper = styled.div`
-  padding: 0 0.313rem;
+  padding: 1.625rem 0.313rem 9.25rem;
 `;
 
 const HeaderWithMargin = styled(Header)`
-  margin: 1.625rem 0.625rem 0;
+  margin: 0 0.625rem;
 `;
 
 const MainPageRender = ({
-  totalBalanceAmount,
   walletAmount,
+  wealthAmount = 0,
+  profit = 0,
+  profitPercentage = 0,
+  averageAPY = 0,
   userName,
   avatarImageURL,
   isNotificationPresent = false,
 }: MainPageRenderProps) => {
+  const totalBalanceAmount = walletAmount + wealthAmount;
   return (
     <Wrapper>
       <HeaderWithMargin
@@ -55,6 +72,13 @@ const MainPageRender = ({
         amount={totalBalanceAmount}
       />
       <Wallet amount={walletAmount}/>
+      <Wealth
+        amount={wealthAmount}
+        profit={profit}
+        profitPercentage={profitPercentage}
+        averageAPY={averageAPY}
+      />
+      <InvestButton/>
     </Wrapper>
   );
 };

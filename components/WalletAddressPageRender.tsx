@@ -26,7 +26,7 @@ interface WalletAddressPageRenderProps {
 }
 
 const Wrapper = styled.div`
-  padding: 1.938rem 0.313rem;
+  padding: 1.625rem 0.313rem;
 `;
 
 const HeaderWithMargin = styled(HeaderGoBack)`

@@ -22,8 +22,8 @@ const MainPage: NextPage = () => {
 
   return (
     <MainPageRender
-      totalBalanceAmount={balance}
       walletAmount={balance}
+      wealthAmount={0}
       userName={userInfo.name}
       avatarImageURL={userInfo.profileImage}
     />
