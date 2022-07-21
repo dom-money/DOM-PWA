@@ -29,6 +29,10 @@ interface IconButtonProps {
    * URL on Click
    */
   href?: string
+  /**
+   * Is button disabled?
+   */
+  disabled?: boolean;
 }
 
 interface ButtonProps {
@@ -68,7 +72,21 @@ const Button = styled.a<ButtonProps>`
   ${(props) => calculateButtonSize(props.size)};
   background-color: ${(props) => props.backgroundColor};
   padding: 0;
+  flex-shrink: 0;
   cursor: pointer;
+`;
+
+const DisabledButton = styled.button<ButtonProps>`
+  position: relative;
+  display: flex;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  ${(props) => calculateButtonSize(props.size)};
+  background-color: ${(props) => props.backgroundColor};
+  padding: 0;
+  flex-shrink: 0;
+  opacity: 0.5;
 `;
 
 const Badge = styled.span`
@@ -87,8 +105,22 @@ const IconButton = ({
   hasNotificationBadge = false,
   children,
   href,
+  disabled,
   ...props
 }: IconButtonProps) => {
+  if (disabled) {
+    return (
+      <DisabledButton
+        size={size}
+        backgroundColor={backgroundColor}
+        disabled={true}
+        {...props}
+      >
+        {children}
+        {hasNotificationBadge && <Badge />}
+      </DisabledButton>
+    );
+  }
   return (
     <Link href={href ? href : ''} passHref>
       <Button size={size} backgroundColor={backgroundColor} {...props}>
