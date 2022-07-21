@@ -49,6 +49,13 @@ const calculateCurrencySymbolSizeCSS = (size: sizeType) => {
 
 const Container = styled.div`
   display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 const AmountText = styled.h3<{size: sizeType, inactive: inactiveType}>`
@@ -58,7 +65,6 @@ const AmountText = styled.h3<{size: sizeType, inactive: inactiveType}>`
   margin-block-start: 0px;
   margin-block-end: 0px;
   color: #FFFFFF;
-  overflow: hidden;
   ${(props) => props.inactive && `opacity: 0.5 !important`};
 `;
 
@@ -68,6 +74,7 @@ const CurrencySymbol = styled(AmountText)`
   margin-left: 0;
   font-size: 1.125rem;
   opacity: 0.7;
+  flex-shrink: 0;
 `;
 
 const DecimalText = styled.span`
