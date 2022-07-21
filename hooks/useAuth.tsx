@@ -5,6 +5,7 @@ import {
   CHAIN_NAMESPACES,
   SafeEventEmitterProvider,
   ADAPTER_EVENTS,
+  PROVIDER_EVENTS,
 } from '@web3auth/base';
 import { ethers } from 'ethers';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
@@ -32,8 +33,14 @@ const useAuth = () => {
     web3auth.on(ADAPTER_EVENTS.CONNECTED, () => {
       setIsLoaded(true);
     });
+    web3auth.on(ADAPTER_EVENTS.READY, () => {
+      console.log('ready');
+    });
     web3auth.on(ADAPTER_EVENTS.ERRORED, () => {
       setIsLoaded(true);
+    });
+    web3auth.on(PROVIDER_EVENTS.INITIALIZED, () => {
+      console.log('initialized provider');
     });
   };
 
@@ -105,6 +112,11 @@ const useAuth = () => {
         return;
       }
       const web3authProvider = await web3auth.connect();
+      if (web3authProvider === null) {
+        // login attempt was unsuccsessful
+        setIsLoaded(true);
+        console.log('unsucessful login');
+      }
       setProvider(web3authProvider);
       // Initializing Ethers.js Provider & Signer
       // eslint-disable-next-line max-len
