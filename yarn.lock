@@ -2193,6 +2193,28 @@
     "superstruct" "^0.14.2"
     "tweetnacl" "^1.0.0"
 
+"@storybook/addon-a11y@^6.5.9":
+  "integrity" "sha512-jRiuJ2xlN8quVq2lOqpxqyuwAj8xLcgVBPy+Mf220u7AZmmbS/0sONyHKROfEBjJoHQAQYqn2vSAeuQZuTWyVA=="
+  "resolved" "https://registry.npmjs.org/@storybook/addon-a11y/-/addon-a11y-6.5.9.tgz"
+  "version" "6.5.9"
+  dependencies:
+    "@storybook/addons" "6.5.9"
+    "@storybook/api" "6.5.9"
+    "@storybook/channels" "6.5.9"
+    "@storybook/client-logger" "6.5.9"
+    "@storybook/components" "6.5.9"
+    "@storybook/core-events" "6.5.9"
+    "@storybook/csf" "0.0.2--canary.4566f4d.1"
+    "@storybook/theming" "6.5.9"
+    "axe-core" "^4.2.0"
+    "core-js" "^3.8.2"
+    "global" "^4.4.0"
+    "lodash" "^4.17.21"
+    "react-sizeme" "^3.0.1"
+    "regenerator-runtime" "^0.13.7"
+    "ts-dedent" "^2.0.0"
+    "util-deprecate" "^1.0.2"
+
 "@storybook/addon-actions@^6.0.0", "@storybook/addon-actions@^6.5.9", "@storybook/addon-actions@6.5.9":
   "integrity" "sha512-wDYm3M1bN+zcYZV3Q24M03b/P8DDpvj1oSoY6VLlxDAi56h8qZB/voeIS2I6vWXOB79C5tbwljYNQO0GsufS0g=="
   "resolved" "https://registry.npmjs.org/@storybook/addon-actions/-/addon-actions-6.5.9.tgz"
@@ -4900,6 +4922,11 @@
   "resolved" "https://registry.npmjs.org/aws4/-/aws4-1.11.0.tgz"
   "version" "1.11.0"
 
+"axe-core@^4.2.0":
+  "integrity" "sha512-32+ub6kkdhhWick/UjvEwRchgoetXqTK14INLqbGm5U2TzBkBNF3nQtLYm8ovxSkQWArjEQvftCKryjZaATu3w=="
+  "resolved" "https://registry.npmjs.org/axe-core/-/axe-core-4.4.3.tgz"
+  "version" "4.4.3"
+
 "babel-core@^7.0.0-bridge.0":
   "integrity" "sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg=="
   "resolved" "https://registry.npmjs.org/babel-core/-/babel-core-7.0.0-bridge.0.tgz"
@@ -5101,6 +5128,11 @@
   "integrity" "sha512-ir1UPr3dkwexU7FdV8qBBbNDRUhMmIekYMFZfi+C/sLNnRESKPl23nB9b2pltqfOQNnGzsDdId90AEtG5tCx4A=="
   "resolved" "https://registry.npmjs.org/base64url/-/base64url-3.0.1.tgz"
   "version" "3.0.1"
+
+"batch-processor@1.0.0":
+  "integrity" "sha512-xoLQD8gmmR32MeuBHgH0Tzd5PuSZx71ZsbhVxOCRbgktZEPe4SQy7s9Z50uPp0F/f7iw2XmkHN2xkgbMfckMDA=="
+  "resolved" "https://registry.npmjs.org/batch-processor/-/batch-processor-1.0.0.tgz"
+  "version" "1.0.0"
 
 "bcrypt-pbkdf@^1.0.0":
   "integrity" "sha512-qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w=="
@@ -6853,6 +6885,13 @@
   "integrity" "sha512-JER+w+9MV2MBVFOXxP036bLlNOnzbYAWrWU8sNUwoOO69T3w4564WhM5H5atd8VVS8U4vpi0i0kdoYzm1NPQgQ=="
   "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.174.tgz"
   "version" "1.4.174"
+
+"element-resize-detector@^1.2.2":
+  "integrity" "sha512-Fl5Ftk6WwXE0wqCgNoseKWndjzZlDCwuPTcoVZfCP9R3EHQF8qUtr3YUPNETegRBOKqQKPW3n4kiIWngGi8tKg=="
+  "resolved" "https://registry.npmjs.org/element-resize-detector/-/element-resize-detector-1.2.4.tgz"
+  "version" "1.2.4"
+  dependencies:
+    "batch-processor" "1.0.0"
 
 "elliptic@^6.4.0", "elliptic@^6.5.2", "elliptic@^6.5.3", "elliptic@^6.5.4", "elliptic@6.5.4":
   "integrity" "sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ=="
@@ -12468,6 +12507,16 @@
     "object-assign" "^4.1.1"
     "react-is" "^16.12.0 || ^17.0.0"
 
+"react-sizeme@^3.0.1":
+  "integrity" "sha512-xOIAOqqSSmKlKFJLO3inBQBdymzDuXx4iuwkNcJmC96jeiOg5ojByvL+g3MW9LPEsojLbC6pf68zOfobK8IPlw=="
+  "resolved" "https://registry.npmjs.org/react-sizeme/-/react-sizeme-3.0.2.tgz"
+  "version" "3.0.2"
+  dependencies:
+    "element-resize-detector" "^1.2.2"
+    "invariant" "^2.2.4"
+    "shallowequal" "^1.1.0"
+    "throttle-debounce" "^3.0.1"
+
 "react-syntax-highlighter@^15.4.5":
   "integrity" "sha512-+zq2myprEnQmH5yw6Gqc8lD55QHnpKaU8TOcFeC/Lg/MQSs8UknEA0JC4nTZGFAXC2J2Hyj/ijJ7NlabyPi2gg=="
   "resolved" "https://registry.npmjs.org/react-syntax-highlighter/-/react-syntax-highlighter-15.5.0.tgz"
@@ -14266,6 +14315,11 @@
   "integrity" "sha512-fcwX4mndzpLQKBS1DVYhGAcYaYt7vsHNIvQV+WXMvnow5cgjPphq5CaayLaGsjRdSCKZFNGt7/GYAuXaNOiYCA=="
   "resolved" "https://registry.npmjs.org/throat/-/throat-5.0.0.tgz"
   "version" "5.0.0"
+
+"throttle-debounce@^3.0.1":
+  "integrity" "sha512-dTEWWNu6JmeVXY0ZYoPuH5cRIwc0MeGbJwah9KUNYSJwommQpCzTySTpEe8Gs1J23aeWEuAobe4Ag7EHVt/LOg=="
+  "resolved" "https://registry.npmjs.org/throttle-debounce/-/throttle-debounce-3.0.1.tgz"
+  "version" "3.0.1"
 
 "through@>=2.2.7 <3":
   "integrity" "sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg=="

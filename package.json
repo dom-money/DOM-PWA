@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@fontsource/inter": "^4.5.11",
+        "@storybook/addon-a11y": "^6.5.9",
         "@web3auth/base": "^1.1.1",
         "@web3auth/ethereum-provider": "^1.1.1",
         "@web3auth/metamask-adapter": "^1.1.1",
