@@ -15,6 +15,10 @@ interface ButtonProps {
    */
   className?: string;
   /**
+   * Is button disabled?
+   */
+  disabled?: boolean;
+  /**
    * Click handler
    */
   onClick?: () => void;
@@ -43,11 +47,26 @@ const ButtonElement = styled.button<ButtonElementProps>`
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 `;
 
-const Button = ({ primary = false, label, ...props }: ButtonProps) => {
+const Button = ({
+  primary = false,
+  label,
+  disabled = false,
+  ...props
+}: ButtonProps) => {
   return (
-    <ButtonElement type='button' primary={primary} {...props}>
+    <ButtonElement
+      type='button'
+      primary={primary}
+      disabled={disabled}
+      {...props}
+    >
       {label}
     </ButtonElement>
   );

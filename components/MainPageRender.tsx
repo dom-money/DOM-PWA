@@ -78,7 +78,7 @@ const MainPageRender = ({
         profitPercentage={profitPercentage}
         averageAPY={averageAPY}
       />
-      <InvestButton/>
+      <InvestButton href='/invest'/>
     </Wrapper>
   );
 };

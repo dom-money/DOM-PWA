@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle<{theme: ThemeType}>`
     font-family: ${(props) => props.theme.fontFamily};
   }
   
-  button {
+  button, input {
     font-family: ${(props) => props.theme.fontFamily};
   }
 
