@@ -4,13 +4,13 @@ import type { NextPage } from 'next';
 import WalletAddressPageRender from '../../components/WalletAddressPageRender';
 
 import useWalletAddress from '../../hooks/useWalletAddress';
-import useBalance from '../../hooks/useBalance';
+import useUSDCBalance from '../../hooks/useUSDCBalance';
 
 const WalletAddressPage: NextPage = () => {
   // eslint-disable-next-line max-len
   const [ walletAddress, isWalletAddressLoading, hasWalletAddressError ] = useWalletAddress();
 
-  const [ balance, isBalanceLoading, hasBalanceError ] = useBalance();
+  const [ balance, isBalanceLoading, hasBalanceError ] = useUSDCBalance();
 
   if (isWalletAddressLoading ||
     hasWalletAddressError ||

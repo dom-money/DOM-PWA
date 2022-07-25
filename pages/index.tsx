@@ -4,11 +4,11 @@ import type { NextPage } from 'next';
 import MainPageRender from '../components/MainPageRender';
 
 import useUserInfo from '../hooks/useUserInfo';
-import useBalance from '../hooks/useBalance';
+import useUSDCBalance from '../hooks/useUSDCBalance';
 
 const MainPage: NextPage = () => {
   const [ userInfo, isUserInfoLoading, hasUserInfoError ]: any = useUserInfo();
-  const [ balance, isBalanceLoading, hasBalanceError ] = useBalance();
+  const [ balance, isBalanceLoading, hasBalanceError ] = useUSDCBalance();
 
   if (isUserInfoLoading ||
     hasUserInfoError ||

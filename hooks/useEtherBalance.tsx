@@ -2,13 +2,13 @@ import { useState, useEffect, useContext } from 'react';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
 import { ethers } from 'ethers';
 
-type useBalanceType = () => [
+type useEtherBalanceType = () => [
   balance: number,
   isLoading: boolean,
   isError: boolean
 ]
 
-const useBalance: useBalanceType = () => {
+const useEtherBalance: useEtherBalanceType = () => {
   const { ethersProvider, signer } = useContext(AuthContext) as AuthContextType;
 
   const [ balance, setBalance ] = useState(0);
@@ -38,4 +38,4 @@ const useBalance: useBalanceType = () => {
   return [ balance, isLoading, isError ];
 };
 
-export default useBalance;
+export default useEtherBalance;
