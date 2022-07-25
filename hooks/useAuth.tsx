@@ -99,6 +99,11 @@ const useAuth = () => {
 
     if (web3auth && web3auth.cachedAdapter) {
       login();
+      setTimeout(() => {
+        if (!isLoaded) {
+          setIsLoaded(true);
+        }
+      }, 5000);
     };
     if (web3auth && !web3auth.cachedAdapter) {
       setIsLoaded(true);
@@ -106,27 +111,23 @@ const useAuth = () => {
   }, [ web3auth ]);
 
   const login = async () => {
-    try {
-      if (!web3auth) {
-        console.log('web3auth not initialized yet');
-        return;
-      }
-      const web3authProvider = await web3auth.connect();
-      if (web3authProvider === null) {
-        // login attempt was unsuccsessful
-        setIsLoaded(true);
-        console.log('unsucessful login');
-      }
-      setProvider(web3authProvider);
-      // Initializing Ethers.js Provider & Signer
-      // eslint-disable-next-line max-len
-      const ethersProvider = new ethers.providers.Web3Provider(web3authProvider as any);
-      setEthersProvider(ethersProvider);
-      const signer = ethersProvider.getSigner();
-      setSigner(signer);
-    } catch (error) {
-      console.log(error);
+    if (!web3auth) {
+      console.log('web3auth not initialized yet');
+      return;
+    };
+    const web3authProvider = await web3auth.connect();
+    if (web3authProvider === null) {
+      // login attempt was unsuccsessful
+      setIsLoaded(true);
+      console.log('unsucessful login');
     }
+    setProvider(web3authProvider);
+    // Initializing Ethers.js Provider & Signer
+    // eslint-disable-next-line max-len
+    const ethersProvider = new ethers.providers.Web3Provider(web3authProvider as any);
+    setEthersProvider(ethersProvider);
+    const signer = ethersProvider.getSigner();
+    setSigner(signer);
   };
 
   const logout = async () => {
