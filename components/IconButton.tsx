@@ -87,6 +87,7 @@ const DisabledButton = styled.button<ButtonProps>`
   padding: 0;
   flex-shrink: 0;
   opacity: 0.5;
+  cursor: not-allowed;
 `;
 
 const Badge = styled.span`
