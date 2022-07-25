@@ -11,6 +11,18 @@ interface GenericContainerProps {
    * The content to be displayed
    */
   content: React.ReactNode;
+  /**
+   * Optionally render title as a <label> element
+   */
+  titleAs?: 'label';
+  /**
+   * Input ID for a label if using container with input
+   */
+  inputID?: string;
+  /**
+   * Prop for extending styled-components style
+   */
+  className?: string;
 }
 
 const Wrapper = styled.div`
@@ -34,11 +46,16 @@ const Contents = styled.div`
   padding: 1.25rem;
 `;
 
-const GenericContainer = ({ label, content }: GenericContainerProps) => {
+const GenericContainer = ({
+  label,
+  content,
+  titleAs,
+  ...props
+}: GenericContainerProps) => {
   return (
     <Wrapper>
       <Header>
-        <Title text={label} />
+        <Title as={titleAs} text={label} {...props} />
       </Header>
       <Contents>
         {content}
