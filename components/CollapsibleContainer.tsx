@@ -107,7 +107,7 @@ const CollapsibleContainer = ({
         </Header>
         <Contents>
           {primaryContent}
-          {shouldSecondaryContentBeOutside ||
+          {!shouldSecondaryContentBeOutside && secondaryContent &&
           <SecondaryContentElement
             ref={secondaryContentRef}
             isCollapsed={isCollapsed}
@@ -118,7 +118,7 @@ const CollapsibleContainer = ({
           }
         </Contents>
       </CollapsibleWrapper>
-      {shouldSecondaryContentBeOutside &&
+      {shouldSecondaryContentBeOutside && secondaryContent &&
       <SecondaryContentElement
         ref={secondaryContentRef}
         isCollapsed={isCollapsed}
