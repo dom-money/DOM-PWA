@@ -25,6 +25,7 @@ const HeaderGoBack = ({ href, ...props }: HeaderGoBackProps) => {
   return (
     <Wrapper {...props}>
       <IconButtonCircular
+        ariaLabel='Return to previous page'
         data-testid='goBackIcon'
         href={href}
       >

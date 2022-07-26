@@ -15,6 +15,10 @@ interface IconButtonCircularProps {
    * URL on Click
    */
   href?: string;
+  /**
+   * Optional aria-label
+   */
+  ariaLabel?: string;
 }
 
 const IconButton = styled.button`
@@ -47,14 +51,22 @@ const IconButton = styled.button`
 const IconButtonCircular = ({
   children,
   href,
+  ariaLabel,
   ...props
 }: IconButtonCircularProps) => {
+  if (href) {
+    return (
+      <Link href={href} passHref>
+        <IconButton as='a' aria-label={ariaLabel} {...props}>
+          {children}
+        </IconButton>
+      </Link>
+    );
+  };
   return (
-    <Link href={href ? href : ''} passHref>
-      <IconButton {...props}>
-        {children}
-      </IconButton>
-    </Link>
+    <IconButton aria-label={ariaLabel} {...props}>
+      {children}
+    </IconButton>
   );
 };
 

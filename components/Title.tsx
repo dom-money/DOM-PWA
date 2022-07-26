@@ -18,6 +18,10 @@ interface TitleProps {
    * Input ID if rendering as a <label> element
    */
   inputID?: string;
+  /**
+   * HTML id attribute
+   */
+  id?: string;
 }
 
 const TitleElement = styled.h2`

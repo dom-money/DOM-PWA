@@ -33,6 +33,10 @@ interface IconButtonProps {
    * Is button disabled?
    */
   disabled?: boolean;
+  /**
+   * Optional aria-label
+   */
+  ariaLabel?: string;
 }
 
 interface ButtonProps {
@@ -107,6 +111,7 @@ const IconButton = ({
   children,
   href = '',
   disabled,
+  ariaLabel,
   ...props
 }: IconButtonProps) => {
   if (disabled) {
@@ -114,6 +119,7 @@ const IconButton = ({
       <DisabledButton
         size={size}
         backgroundColor={backgroundColor}
+        aria-label={ariaLabel}
         disabled={true}
         {...props}
       >
@@ -124,7 +130,12 @@ const IconButton = ({
   }
   return (
     <Link href={href} passHref>
-      <AnchorButton size={size} backgroundColor={backgroundColor} {...props}>
+      <AnchorButton
+        size={size}
+        backgroundColor={backgroundColor}
+        aria-label={ariaLabel}
+        {...props}
+      >
         {children}
         {hasNotificationBadge && <Badge />}
       </AnchorButton>

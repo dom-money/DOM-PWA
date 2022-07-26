@@ -57,6 +57,7 @@ const Header = ({
         backgroundColor='#272727'
         hasNotificationBadge={isNotificationPresent}
         onClick={notificationsOnClick}
+        ariaLabel='Notifications'
       >
         <NotificationIcon color='#FFFFFF'/>
       </IconButton>

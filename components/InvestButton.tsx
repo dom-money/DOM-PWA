@@ -50,11 +50,11 @@ const InvestButton = ({ href = '' }: InvestButtonProps) => {
     <Wrapper>
       <ButtonBackground />
       <Link href={href}>
-        <a>
+        <a aria-labelledby='invest-button-title'>
           <Button />
         </a>
       </Link>
-      <Title text='Press To Invest' />
+      <Title id='invest-button-title' text='Press To Invest' />
     </Wrapper>
   );
 };

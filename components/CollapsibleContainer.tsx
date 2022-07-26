@@ -98,7 +98,8 @@ const CollapsibleContainer = ({
         <Header>
           <Title text={label} />
           <IconWrapper
-            data-testid="openCloseIcon"
+            ariaLabel={`Collapse ${label} Container`}
+            data-testid={`${label}OpenCloseIcon`}
             onClick={() => setIsCollapsed(!isCollapsed)}
             isCollapsed={isCollapsed}
           >

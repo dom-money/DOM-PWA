@@ -40,7 +40,7 @@ Open.args = {
 
 Open.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const clickableHeader = await canvas.getByTestId('openCloseIcon');
+  const clickableHeader = await canvas.getByTestId('WalletOpenCloseIcon');
   await userEvent.click(clickableHeader);
 };
 

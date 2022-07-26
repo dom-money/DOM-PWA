@@ -19,3 +19,6 @@ const Template: ComponentStory<typeof InvestButton> = (args) =>
   <InvestButton {...args} />;
 
 export const Default = Template.bind({});
+Default.args = {
+  href: '/invest',
+};

@@ -78,7 +78,8 @@ const Wealth = ({
               <IconButton
                 size='large'
                 backgroundColor='#020202'
-                disabled={inactive}
+                disabled={true}
+                ariaLabel='Wealth Button'
               >
                 <SignInIcon color='#FFFFFF'/>
               </IconButton>
@@ -103,6 +104,7 @@ const Wealth = ({
               size='large'
               backgroundColor='#020202'
               href={'/'}
+              ariaLabel='Wealth Button'
             >
               <SignInIcon color='#FFFFFF'/>
             </IconButton>

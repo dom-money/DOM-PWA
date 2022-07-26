@@ -8,17 +8,9 @@ import ArrowDownIcon from '../styles/icons/ArrowDownIcon';
 export default {
   title: 'Components/Icon Button Circular',
   component: IconButtonCircular,
-  decorators: [
-    (Story) => (
-      <div style={{
-        display: 'inline-block',
-        padding: '2rem',
-        backgroundColor: '#1F1F1F',
-      }}>
-        <Story />
-      </div>
-    ),
-  ],
+  parameters: {
+    backgrounds: { default: 'darkAdditional' },
+  },
   argTypes: {
     onClick: { action: 'clicked' },
   },
@@ -30,4 +22,5 @@ const Template: ComponentStory<typeof IconButtonCircular> = (args) =>
 export const Button = Template.bind({});
 Button.args = {
   children: <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>,
+  ariaLabel: 'Collapse Container',
 };

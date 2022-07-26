@@ -41,6 +41,7 @@ const Wallet = ({
           <IconButton
             size='large'
             backgroundColor='#020202'
+            ariaLabel='Scan QR'
           >
             <ScanQRIcon color='#FFFFFF'/>
           </IconButton>
