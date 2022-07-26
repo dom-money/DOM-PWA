@@ -11,9 +11,9 @@ interface TitleProps {
    */
   className?: string;
   /**
-   * Optionally render title as a <label> element
+   * Optionally render title as another HTML element (renders as h2 by default)
    */
-  as?: 'label';
+  as?: React.ElementType;
   /**
    * Input ID if rendering as a <label> element
    */
