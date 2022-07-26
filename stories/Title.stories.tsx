@@ -6,19 +6,33 @@ import Title from '../components/Title';
 export default {
   title: 'Components/Title',
   component: Title,
-  decorators: [
-    (Story) => (
-      <div style={{
-        display: 'inline-block',
-        padding: '2rem',
-        textAlign: 'center',
-        backgroundColor: '#1F1F1F',
-        boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)',
-      }}>
-        <Story />
-      </div>
-    ),
-  ],
+  argTypes: {
+    text: {
+      type: { name: 'string', required: true },
+      description: 'Text to display',
+      table: {
+        type: {
+          summary: 'string',
+        },
+      },
+    },
+    as: {
+      type: { name: 'string', required: false },
+      // eslint-disable-next-line max-len
+      description: 'Optionally render title as another HTML element (renders as h2 by default)',
+      table: {
+        defaultValue: {
+          summary: 'undefined',
+        },
+        type: {
+          summary: 'string',
+        },
+      },
+    },
+  },
+  parameters: {
+    backgrounds: { default: 'darkAdditional' },
+  },
 } as ComponentMeta<typeof Title>;
 
 const Template: ComponentStory<typeof Title> = (args) => <Title {...args} />;
@@ -26,4 +40,10 @@ const Template: ComponentStory<typeof Title> = (args) => <Title {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   text: 'Wallet',
+};
+
+export const AsParagraph = Template.bind({});
+AsParagraph.args = {
+  text: 'Wallet',
+  as: 'p',
 };
