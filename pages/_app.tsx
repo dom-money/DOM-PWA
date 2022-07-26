@@ -8,6 +8,10 @@ import theme from '../styles/theme';
 import GlobalStyle from '../styles/global';
 import Loading from '../components/Loading';
 
+import '@fontsource/inter/300.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+
 const DynamicContextProviders = dynamic(
     () => import('../context/ContextProviders'),
     {
@@ -39,7 +43,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           // eslint-disable-next-line max-len
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
-        <meta name="description" content="Description" />
+        <meta name="description" content="DOM Wallet App" />
         <meta name="keywords" content="Keywords" />
         <title>DOM Wallet</title>
 
