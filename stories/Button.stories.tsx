@@ -31,3 +31,18 @@ export const Default = Template.bind({});
 Default.args = {
   label: 'Send',
 };
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  label: 'Send',
+  primary: true,
+  disabled: true,
+};
+
+export const AsLink = Template.bind({});
+AsLink.args = {
+  label: 'Top Up',
+  primary: true,
+  asAnchor: true,
+  href: '/',
+};

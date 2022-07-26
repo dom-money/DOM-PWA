@@ -64,7 +64,7 @@ const calculateButtonSize = (size: sizeType) => {
   }
 };
 
-const Button = styled.a<ButtonProps>`
+const AnchorButton = styled.a<ButtonProps>`
   position: relative;
   display: flex;
   justify-content: center;
@@ -105,7 +105,7 @@ const IconButton = ({
   backgroundColor,
   hasNotificationBadge = false,
   children,
-  href,
+  href = '',
   disabled,
   ...props
 }: IconButtonProps) => {
@@ -123,11 +123,11 @@ const IconButton = ({
     );
   }
   return (
-    <Link href={href ? href : ''} passHref>
-      <Button size={size} backgroundColor={backgroundColor} {...props}>
+    <Link href={href} passHref>
+      <AnchorButton size={size} backgroundColor={backgroundColor} {...props}>
         {children}
         {hasNotificationBadge && <Badge />}
-      </Button>
+      </AnchorButton>
     </Link>
   );
 };

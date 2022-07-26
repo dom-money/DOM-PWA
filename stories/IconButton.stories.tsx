@@ -55,3 +55,14 @@ NotificationButton.args = {
   hasNotificationBadge: true,
   children: <NotificationIcon color='#FFFFFF'/>,
 };
+
+export const DisabledButton = Template.bind({});
+DisabledButton.args = {
+  size: 'large',
+  backgroundColor: '#020202',
+  children: <SignInIcon color='#FFFFFF'/>,
+  disabled: true,
+};
+DisabledButton.parameters = {
+  backgrounds: { default: 'darkAdditional' },
+};
