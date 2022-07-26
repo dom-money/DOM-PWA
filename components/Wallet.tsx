@@ -13,10 +13,6 @@ interface WalletProps {
    */
   amount: number;
   /**
-   * 'Top Up' Button Click handler
-   */
-  topUpButtonOnClick?: () => void;
-  /**
    * 'Send' Button Click handler
    */
   SendButtonOnClick?: () => void;
@@ -34,7 +30,6 @@ const ButtonContainer = styled.div`
 
 const Wallet = ({
   amount,
-  topUpButtonOnClick,
   SendButtonOnClick,
 }: WalletProps) => {
   return (
@@ -46,7 +41,6 @@ const Wallet = ({
           <IconButton
             size='large'
             backgroundColor='#020202'
-            href='/wallet-address'
           >
             <ScanQRIcon color='#FFFFFF'/>
           </IconButton>
@@ -54,7 +48,7 @@ const Wallet = ({
       }
       secondaryContent={
         <ButtonContainer>
-          <Button label='Top Up' primary onClick={topUpButtonOnClick} />
+          <Button label='Top Up' primary asAnchor href='/wallet-address' />
           <Button label='Send' onClick={SendButtonOnClick}/>
         </ButtonContainer>
       }
