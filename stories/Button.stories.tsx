@@ -7,9 +7,9 @@ export default {
   title: 'Components/Button',
   component: Button,
   decorators: [
-    (Story) => (
+    (story) => (
       <div style={{ width: '206px' }}>
-        <Story />
+        {story()}
       </div>
     ),
   ],
