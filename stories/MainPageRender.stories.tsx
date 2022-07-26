@@ -11,6 +11,10 @@ export default {
     viewport: {
       defaultViewport: 'iphone12promax',
     },
+    docs: {
+      inlineStories: false,
+      iframeHeight: 926,
+    },
   },
   argTypes: {
     walletAmount: {

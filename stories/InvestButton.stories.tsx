@@ -8,6 +8,10 @@ export default {
   component: InvestButton,
   parameters: {
     layout: 'fullscreen',
+    docs: {
+      inlineStories: false,
+      iframeHeight: 250,
+    },
   },
 } as ComponentMeta<typeof InvestButton>;
 
