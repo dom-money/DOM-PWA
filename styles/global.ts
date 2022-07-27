@@ -21,7 +21,16 @@ const GlobalStyle = createGlobalStyle<{theme: ThemeType}>`
   }
   
   button, input {
-    font-family: ${(props) => props.theme.fontFamily};
+    font-family: ${(props) => `
+      ${props.theme.fontFamily},
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif
+    `};
   }
 
   * {
