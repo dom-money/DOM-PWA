@@ -6,7 +6,7 @@ import CollapsibleContainer from '../components/CollapsibleContainer';
 
 const SampleContent = () => {
   return (
-    <h3 style={{ color: 'white' }}>Sample Content</h3>
+    <h3 style={{ color: 'white', fontWeight: 500 }}>Sample Content</h3>
   );
 };
 
