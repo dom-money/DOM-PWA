@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 import { AppProps } from 'next/app';
 import React, { useContext } from 'react';
-import Loading from '../components/Loading';
+import LoadingPage from '../components/LoadingPage';
 import LoginPageRender from '../components/LoginPageRender';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
 
@@ -13,7 +13,7 @@ const Page = ({ Component, pageProps }: AppProps) => {
   } = useContext(AuthContext) as AuthContextType;
 
   if (!isLoaded) {
-    return <Loading />;
+    return <LoadingPage />;
   }
 
   return (

@@ -6,7 +6,7 @@ import LogRocket from 'logrocket';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../styles/theme';
 import GlobalStyle from '../styles/global';
-import Loading from '../components/Loading';
+import LoadingPage from '../components/LoadingPage';
 
 import '@fontsource/inter/300.css';
 import '@fontsource/inter/400.css';
@@ -16,13 +16,13 @@ const DynamicContextProviders = dynamic(
     () => import('../context/ContextProviders'),
     {
       ssr: false,
-      loading: () => <Loading />,
+      loading: () => <LoadingPage />,
     },
 );
 
 const DynamicPage = dynamic(() => import('./Page'), {
   ssr: false,
-  loading: () => <Loading />,
+  loading: () => <LoadingPage />,
 });
 
 LogRocket.init('8dtdv2/dom');

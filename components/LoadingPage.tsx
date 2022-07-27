@@ -12,7 +12,7 @@ const Title = styled.h1`
   color: white;
 `;
 
-const Loading = () => {
+const LoadingPage = () => {
   return (
     <Wrapper>
       <Title>
@@ -22,4 +22,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default LoadingPage;
