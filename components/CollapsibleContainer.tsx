@@ -71,8 +71,8 @@ const SecondaryContentElement = styled.div<SecondaryContentProps>`
 
 const IconWrapper = styled(IconButtonCircular)<{isCollapsed: boolean}>`
   transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  ${(props) => !props.isCollapsed && `
-  transform: rotate(180deg);
+  ${(props) => props.isCollapsed && `
+    transform: rotate(180deg);
   `}
 `;
 

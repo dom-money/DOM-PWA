@@ -77,6 +77,7 @@ const AnchorButton = styled.a<ButtonProps>`
   background-color: ${(props) => props.backgroundColor};
   padding: 0;
   flex-shrink: 0;
+  overflow: hidden;
   cursor: pointer;
 `;
 
@@ -90,6 +91,7 @@ const DisabledButton = styled.button<ButtonProps>`
   background-color: ${(props) => props.backgroundColor};
   padding: 0;
   flex-shrink: 0;
+  overflow: hidden;
   opacity: 0.5;
   cursor: not-allowed;
 `;
