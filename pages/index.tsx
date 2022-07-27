@@ -7,7 +7,7 @@ import useUserInfo from '../hooks/useUserInfo';
 import useUSDCBalance from '../hooks/useUSDCBalance';
 
 const MainPage: NextPage = () => {
-  const [ userInfo, isUserInfoLoading, hasUserInfoError ]: any = useUserInfo();
+  const [ userInfo, isUserInfoLoading, hasUserInfoError ] = useUserInfo();
   const [ balance, isBalanceLoading, hasBalanceError ] = useUSDCBalance();
 
   if (isUserInfoLoading ||
