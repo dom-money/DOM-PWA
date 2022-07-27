@@ -5,7 +5,6 @@ import {
   CHAIN_NAMESPACES,
   SafeEventEmitterProvider,
   ADAPTER_EVENTS,
-  PROVIDER_EVENTS,
 } from '@web3auth/base';
 import { ethers } from 'ethers';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
@@ -31,16 +30,15 @@ const useAuth = () => {
 
   const subscribeAuthEvents = (web3auth: Web3Auth) => {
     web3auth.on(ADAPTER_EVENTS.CONNECTED, () => {
+      console.log('Connected');
       setIsLoaded(true);
     });
-    web3auth.on(ADAPTER_EVENTS.READY, () => {
-      console.log('ready');
+    web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
+      console.log('Connecting...');
     });
     web3auth.on(ADAPTER_EVENTS.ERRORED, () => {
+      console.log('Error');
       setIsLoaded(true);
-    });
-    web3auth.on(PROVIDER_EVENTS.INITIALIZED, () => {
-      console.log('initialized provider');
     });
   };
 
@@ -58,6 +56,8 @@ const useAuth = () => {
             theme: 'dark',
           },
         });
+
+        subscribeAuthEvents(web3auth);
 
         const openloginAdapter = new OpenloginAdapter({
           adapterSettings: {
@@ -85,7 +85,7 @@ const useAuth = () => {
         await web3auth.initModal();
       } catch (error) {
         console.error(error);
-      }
+      };
     };
 
     init();
@@ -93,10 +93,6 @@ const useAuth = () => {
 
   // Auto logging in authenticated users on web3auth initialization
   useEffect(() => {
-    if (web3auth) {
-      subscribeAuthEvents(web3auth);
-    };
-
     if (web3auth && web3auth.cachedAdapter) {
       login();
       setTimeout(() => {
@@ -119,7 +115,6 @@ const useAuth = () => {
     if (web3authProvider === null) {
       // login attempt was unsuccsessful
       setIsLoaded(true);
-      console.log('unsucessful login');
     }
     setProvider(web3authProvider);
     // Initializing Ethers.js Provider & Signer
