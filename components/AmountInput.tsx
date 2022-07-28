@@ -107,7 +107,7 @@ const AmountInput = ({
   return (
     <GenericContainer
       label={label}
-      titleAs='label'
+      titleHtmlElement='label'
       inputID={inputID}
       content={
         <Container>

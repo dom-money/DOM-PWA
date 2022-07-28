@@ -14,7 +14,7 @@ interface GenericContainerProps {
   /**
    * Optionally render title as a <label> element
    */
-  titleAs?: 'label';
+  titleHtmlElement?: 'label';
   /**
    * Input ID for a label if using container with input
    */
@@ -49,13 +49,13 @@ const Contents = styled.div`
 const GenericContainer = ({
   label,
   content,
-  titleAs,
+  titleHtmlElement,
   ...props
 }: GenericContainerProps) => {
   return (
     <Wrapper>
       <Header>
-        <Title as={titleAs} text={label} {...props} />
+        <Title as={titleHtmlElement} text={label} {...props} />
       </Header>
       <Contents>
         {content}
