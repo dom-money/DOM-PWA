@@ -9,10 +9,10 @@ const Page = ({ Component, pageProps }: AppProps) => {
   const {
     provider,
     login,
-    isLoaded,
+    isAuthLoaded,
   } = useContext(AuthContext) as AuthContextType;
 
-  if (!isLoaded) {
+  if (!isAuthLoaded) {
     return <LoadingPage />;
   }
 

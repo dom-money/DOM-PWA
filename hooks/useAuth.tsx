@@ -24,22 +24,28 @@ const useAuth = () => {
   const [ signer, setSigner ] =
     useState<ethers.providers.JsonRpcSigner | null>(null);
 
-  const [ isLoaded, setIsLoaded ] = useState(false);
+  // Shows if web3Auth instance & provider are ready and autologin process ended
+  const [ isAuthLoaded, setIsAuthLoaded ] = useState(false);
 
   const theme = useTheme() as ThemeType;
 
   const subscribeAuthEvents = (web3auth: Web3Auth) => {
     web3auth.on(ADAPTER_EVENTS.CONNECTED, () => {
-      console.log('Connected');
-      setIsLoaded(true);
-    });
-    web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
-      console.log('Connecting...');
+      setProvider(web3auth.provider);
+      // Initializing Ethers.js Provider & Signer
+      setEthersProviderAndSinger(web3auth);
     });
     web3auth.on(ADAPTER_EVENTS.ERRORED, () => {
-      console.log('Error');
-      setIsLoaded(true);
+      setIsAuthLoaded(true);
     });
+  };
+
+  const setEthersProviderAndSinger = (web3auth: Web3Auth) => {
+    const ethersProvider =
+        new ethers.providers.Web3Provider(web3auth.provider as any);
+    setEthersProvider(ethersProvider);
+    const signer = ethersProvider.getSigner();
+    setSigner(signer);
   };
 
   useEffect(() => {
@@ -85,26 +91,13 @@ const useAuth = () => {
         await web3auth.initModal();
       } catch (error) {
         console.error(error);
-      };
+      } finally {
+        setIsAuthLoaded(true);
+      }
     };
 
     init();
   }, []);
-
-  // Auto logging in authenticated users on web3auth initialization
-  useEffect(() => {
-    if (web3auth && web3auth.cachedAdapter) {
-      login();
-      setTimeout(() => {
-        if (!isLoaded) {
-          setIsLoaded(true);
-        }
-      }, 5000);
-    };
-    if (web3auth && !web3auth.cachedAdapter) {
-      setIsLoaded(true);
-    };
-  }, [ web3auth ]);
 
   const login = async () => {
     if (!web3auth) {
@@ -112,17 +105,9 @@ const useAuth = () => {
       return;
     };
     const web3authProvider = await web3auth.connect();
-    if (web3authProvider === null) {
-      // login attempt was unsuccsessful
-      setIsLoaded(true);
-    }
     setProvider(web3authProvider);
     // Initializing Ethers.js Provider & Signer
-    // eslint-disable-next-line max-len
-    const ethersProvider = new ethers.providers.Web3Provider(web3authProvider as any);
-    setEthersProvider(ethersProvider);
-    const signer = ethersProvider.getSigner();
-    setSigner(signer);
+    setEthersProviderAndSinger(web3auth);
   };
 
   const logout = async () => {
@@ -141,7 +126,7 @@ const useAuth = () => {
     provider,
     ethersProvider,
     signer,
-    isLoaded,
+    isAuthLoaded,
     login,
     logout,
   };
