@@ -18,11 +18,15 @@ interface MainPageProps {
   /**
    * Is wallet inactive?
    */
-  walletInactive: boolean;
+  walletInactive?: boolean;
+  /**
+   * User's name
+   */
+  userName: string;
   /**
    * URL to Avatar Image
    */
-  avatarImageURL: string;
+  avatarImageURL?: string;
   /**
    * Is there a notification present?
    */
@@ -43,12 +47,14 @@ const MainPage = ({
   walletInactive,
   avatarImageURL,
   isNotificationPresent,
+  userName,
 }: MainPageProps) => {
   return (
     <Wrapper>
       <HeaderWithMargin
         avatarImageURL={avatarImageURL}
         isNotificationPresent={isNotificationPresent}
+        userName={userName}
       />
       <TotalBalance
         amount={totalBalanceAmount}

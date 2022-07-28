@@ -9,7 +9,11 @@ interface HeaderProps {
   /**
    * URL to Avatar Image
    */
-  avatarImageURL: string;
+  avatarImageURL?: string;
+  /**
+   * User's name
+   */
+  userName: string;
   /**
    * Is there a notification present?
    */
@@ -36,13 +40,18 @@ const Wrapper = styled.header`
 const Header = ({
   avatarImageURL,
   isNotificationPresent,
+  userName,
   profileOnClick,
   notificationsOnClick,
   className,
 }: HeaderProps) => {
   return (
     <Wrapper className={className}>
-      <AvatarButton imageURL={avatarImageURL} onClick={profileOnClick}/>
+      <AvatarButton
+        imageURL={avatarImageURL}
+        userName={userName}
+        onClick={profileOnClick}
+      />
       <IconButton
         size='medium'
         backgroundColor='#272727'

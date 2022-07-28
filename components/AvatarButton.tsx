@@ -6,11 +6,15 @@ interface AvatarButtonProps {
   /**
    * URL to Avatar Image
    */
-  imageURL: string;
+  imageURL?: string;
+  /**
+   * User's name
+   */
+  userName: string,
   /**
    * Click handler
    */
-   onClick?: () => void;
+  onClick?: () => void;
 }
 
 const Wrapper = styled.button`
@@ -34,7 +38,24 @@ const Avatar = styled.img`
   width: 2.5rem;
 `;
 
-const AvatarButton = ({ imageURL, ...props }: AvatarButtonProps) => {
+const TextAvatar = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: #bdbdbd;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  color: white;
+  height: 2.5rem;
+  width: 2.5rem;
+`;
+
+const AvatarButton = ({ imageURL, userName, ...props }: AvatarButtonProps) => {
   return (
     <Wrapper {...props}>
       <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +67,11 @@ const AvatarButton = ({ imageURL, ...props }: AvatarButtonProps) => {
           </linearGradient>
         </defs>
       </svg>
-      <Avatar src={imageURL} />
+      {
+      imageURL ?
+      <Avatar src={imageURL} alt={`${userName}\'s Avatar`}/> :
+      <TextAvatar>{userName.match(/\b[a-z]/gi)?.slice(0, 2)}</TextAvatar>
+      }
     </Wrapper>
   );
 };

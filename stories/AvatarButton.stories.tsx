@@ -14,7 +14,13 @@ export default {
 const Template: ComponentStory<typeof AvatarButton> = (args) =>
   <AvatarButton {...args} />;
 
-export const Default = Template.bind({});
-Default.args = {
+export const Image = Template.bind({});
+Image.args = {
   imageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
+  userName: 'John Doe',
+};
+
+export const Text = Template.bind({});
+Text.args = {
+  userName: 'John Doe',
 };
