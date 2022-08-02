@@ -1,5 +1,14 @@
 const theme = {
-  fontFamily: 'Inter',
+  fontFamily:
+    `Inter
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif`,
+  fontFamilyMono: 'Roboto Mono',
   colors: {
     primary: '#FEF200',
     success: '#A1FB56',
