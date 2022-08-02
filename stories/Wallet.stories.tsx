@@ -11,8 +11,6 @@ export default {
     layout: 'padded',
   },
   argTypes: {
-    topUpButtonOnClick: { action: 'onTopUpClick' },
-    SendButtonOnClick: { action: 'onSendClick' },
     ScanQRIconButtonOnClick: { action: 'onScanQRIconClick' },
   },
 } as ComponentMeta<typeof Wallet>;

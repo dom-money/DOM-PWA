@@ -12,10 +12,6 @@ interface WalletProps {
    * Currency amount
    */
   amount: number;
-  /**
-   * 'Send' Button Click handler
-   */
-  SendButtonOnClick?: () => void;
 }
 
 const ContentContainer = styled.div`
@@ -30,7 +26,6 @@ const ButtonContainer = styled.div`
 
 const Wallet = ({
   amount,
-  SendButtonOnClick,
 }: WalletProps) => {
   return (
     <CollapsibleContainer
@@ -50,7 +45,7 @@ const Wallet = ({
       secondaryContent={
         <ButtonContainer>
           <Button label='Top Up' primary asAnchor href='/wallet-address' />
-          <Button label='Send' onClick={SendButtonOnClick}/>
+          <Button label='Send' asAnchor href='/send-to-wallet'/>
         </ButtonContainer>
       }
       shouldSecondaryContentBeOutside={true}
