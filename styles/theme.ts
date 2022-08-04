@@ -1,6 +1,6 @@
 const theme = {
   fontFamily:
-    `Inter
+    `Inter,
     -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
