@@ -23,7 +23,7 @@ const TitleWithMargin = styled(Title)`
 `;
 
 const AmountDisplayWithMargin = styled(AmountDisplay)`
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.875rem;
 `;
 
 const TotalBalance = ({ amount }: TotalBalanceProps) => {

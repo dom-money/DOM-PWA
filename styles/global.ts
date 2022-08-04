@@ -8,11 +8,29 @@ const GlobalStyle = createGlobalStyle<{theme: ThemeType}>`
     padding: 0;
     margin: 0;
     background-color: ${(props) => props.theme.colors.backgroundMain};
-    font-family: ${(props) => props.theme.fontFamily};
+    font-family: ${(props) => `
+      ${props.theme.fontFamily},
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif
+    `};
   }
   
-  button {
-    font-family: ${(props) => props.theme.fontFamily};
+  button, input {
+    font-family: ${(props) => `
+      ${props.theme.fontFamily},
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif
+    `};
   }
 
   * {

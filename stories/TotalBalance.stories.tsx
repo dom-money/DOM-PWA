@@ -6,9 +6,6 @@ import TotalBalance from '../components/TotalBalance';
 export default {
   title: 'Components/Total Balance',
   component: TotalBalance,
-  parameters: {
-    layout: 'padded',
-  },
 } as ComponentMeta<typeof TotalBalance>;
 
 const Template: ComponentStory<typeof TotalBalance> = (args) =>

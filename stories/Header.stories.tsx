@@ -15,13 +15,13 @@ export default {
     notificationsOnClick: { action: 'onNotificationsClick' },
   },
   decorators: [
-    (Story) => (
+    (story) => (
       <div style={{
         padding: '2rem',
         backgroundColor: '#1F1F1F',
         boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)',
       }}>
-        <Story />
+        {story()}
       </div>
     ),
   ],

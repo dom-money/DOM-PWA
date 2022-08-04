@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Button from './Button';
 
-interface NotAuthorizedProps {
+interface LoginPageRenderProps {
   /**
    * Profile Avatar Button Click handler
    */
@@ -21,7 +21,7 @@ const StyledButton = styled(Button)`
   max-width: 20rem;
 `;
 
-const NotAuthorized = ({ ...props }: NotAuthorizedProps) => {
+const LoginPageRender = ({ ...props }: LoginPageRenderProps) => {
   return (
     <Wrapper>
       <StyledButton label="Login" primary {...props}/>
@@ -29,4 +29,4 @@ const NotAuthorized = ({ ...props }: NotAuthorizedProps) => {
   );
 };
 
-export default NotAuthorized;
+export default LoginPageRender;

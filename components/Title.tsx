@@ -10,6 +10,18 @@ interface TitleProps {
    * Prop for extending styled-components style
    */
   className?: string;
+  /**
+   * Optionally render title as another HTML element (renders as h2 by default)
+   */
+  as?: React.ElementType;
+  /**
+   * Input ID if rendering as a <label> element
+   */
+  inputID?: string;
+  /**
+   * HTML id attribute
+   */
+  id?: string;
 }
 
 const TitleElement = styled.h2`
@@ -26,9 +38,9 @@ const TitleElement = styled.h2`
   text-overflow: ellipsis;
 `;
 
-const Title = ({ text, className, ...props }: TitleProps) => {
+const Title = ({ text, className, as, inputID, ...props }: TitleProps) => {
   return (
-    <TitleElement className={className} {...props}>
+    <TitleElement as={as} className={className} htmlFor={inputID} {...props}>
       {text}
     </TitleElement>
   );

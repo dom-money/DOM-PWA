@@ -1,10 +1,9 @@
-import '@fontsource/inter/500.css';
-
 const theme = {
   fontFamily: 'Inter',
   colors: {
     primary: '#FEF200',
     success: '#A1FB56',
+    danger: '#E30000',
     backgroundMain: '#020202',
   },
 };

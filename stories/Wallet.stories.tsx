@@ -11,7 +11,6 @@ export default {
     layout: 'padded',
   },
   argTypes: {
-    inactive: { control: 'boolean' },
     topUpButtonOnClick: { action: 'onTopUpClick' },
     SendButtonOnClick: { action: 'onSendClick' },
     ScanQRIconButtonOnClick: { action: 'onScanQRIconClick' },
@@ -32,13 +31,11 @@ Open.args = {
 };
 Open.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const clickableHeader = await canvas.getByTestId('openCloseIcon');
+  const clickableHeader = await canvas.getByTestId('WalletOpenCloseIcon');
   await userEvent.click(clickableHeader);
 };
 
 export const Inactive = Template.bind({});
 Inactive.args = {
   amount: 0,
-  inactive: true,
 };
-

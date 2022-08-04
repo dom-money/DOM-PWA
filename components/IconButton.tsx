@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 
 type sizeType = 'small' | 'medium' | 'large';
@@ -23,7 +24,19 @@ interface IconButtonProps {
   /**
    * Click handler
    */
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  /**
+   * URL on Click
+   */
+  href?: string
+  /**
+   * Is button disabled?
+   */
+  disabled?: boolean;
+  /**
+   * Optional aria-label
+   */
+  ariaLabel?: string;
 }
 
 interface ButtonProps {
@@ -55,7 +68,7 @@ const calculateButtonSize = (size: sizeType) => {
   }
 };
 
-const Button = styled.button<ButtonProps>`
+const AnchorButton = styled.a<ButtonProps>`
   position: relative;
   display: flex;
   justify-content: center;
@@ -63,8 +76,24 @@ const Button = styled.button<ButtonProps>`
   ${(props) => calculateButtonSize(props.size)};
   background-color: ${(props) => props.backgroundColor};
   padding: 0;
-  border: none;
+  flex-shrink: 0;
+  overflow: hidden;
   cursor: pointer;
+`;
+
+const DisabledButton = styled.button<ButtonProps>`
+  position: relative;
+  display: flex;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  ${(props) => calculateButtonSize(props.size)};
+  background-color: ${(props) => props.backgroundColor};
+  padding: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  opacity: 0.5;
+  cursor: not-allowed;
 `;
 
 const Badge = styled.span`
@@ -82,13 +111,37 @@ const IconButton = ({
   backgroundColor,
   hasNotificationBadge = false,
   children,
+  href = '',
+  disabled,
+  ariaLabel,
   ...props
 }: IconButtonProps) => {
+  if (disabled) {
+    return (
+      <DisabledButton
+        size={size}
+        backgroundColor={backgroundColor}
+        aria-label={ariaLabel}
+        disabled={true}
+        {...props}
+      >
+        {children}
+        {hasNotificationBadge && <Badge />}
+      </DisabledButton>
+    );
+  }
   return (
-    <Button size={size} backgroundColor={backgroundColor} {...props}>
-      {children}
-      {hasNotificationBadge && <Badge />}
-    </Button>
+    <Link href={href} passHref>
+      <AnchorButton
+        size={size}
+        backgroundColor={backgroundColor}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {children}
+        {hasNotificationBadge && <Badge />}
+      </AnchorButton>
+    </Link>
   );
 };
 

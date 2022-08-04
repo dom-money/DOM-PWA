@@ -29,6 +29,7 @@ SmallButton.args = {
   size: 'small',
   backgroundColor: '#272727',
   children: <TwoSquaresIcon color='#FFFFFF'/>,
+  ariaLabel: 'Small Button',
 };
 
 export const MediumButton = Template.bind({});
@@ -36,6 +37,7 @@ MediumButton.args = {
   size: 'medium',
   backgroundColor: '#272727',
   children: <NotificationIcon color='#FFFFFF'/>,
+  ariaLabel: 'Medium Button',
 };
 
 export const LargeButton = Template.bind({});
@@ -43,6 +45,7 @@ LargeButton.args = {
   size: 'large',
   backgroundColor: '#020202',
   children: <SignInIcon color='#FFFFFF'/>,
+  ariaLabel: 'Large Button',
 };
 LargeButton.parameters = {
   backgrounds: { default: 'darkAdditional' },
@@ -54,4 +57,17 @@ NotificationButton.args = {
   backgroundColor: '#272727',
   hasNotificationBadge: true,
   children: <NotificationIcon color='#FFFFFF'/>,
+  ariaLabel: 'Notification Button',
+};
+
+export const DisabledButton = Template.bind({});
+DisabledButton.args = {
+  size: 'large',
+  backgroundColor: '#020202',
+  children: <SignInIcon color='#FFFFFF'/>,
+  disabled: true,
+  ariaLabel: 'Disabled Button',
+};
+DisabledButton.parameters = {
+  backgrounds: { default: 'darkAdditional' },
 };

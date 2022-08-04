@@ -1,19 +1,19 @@
 /* eslint-disable require-jsdoc */
 import { AppProps } from 'next/app';
 import React, { useContext } from 'react';
-import Loading from '../components/Loading';
-import NotAuthorized from '../components/NotAuthorized';
+import LoadingPage from '../components/LoadingPage';
+import LoginPageRender from '../components/LoginPageRender';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
 
 const Page = ({ Component, pageProps }: AppProps) => {
   const {
     provider,
     login,
-    isLoaded,
+    isAuthLoaded,
   } = useContext(AuthContext) as AuthContextType;
 
-  if (!isLoaded) {
-    return <Loading />;
+  if (!isAuthLoaded) {
+    return <LoadingPage />;
   }
 
   return (
@@ -21,7 +21,7 @@ const Page = ({ Component, pageProps }: AppProps) => {
       {/* Is user logged in? */}
       {provider ?
           <Component {...pageProps} /> :
-          <NotAuthorized onClick={login} {...pageProps}/>
+          <LoginPageRender onClick={login} {...pageProps}/>
       }
     </>
   );

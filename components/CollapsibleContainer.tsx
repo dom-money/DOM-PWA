@@ -16,11 +16,11 @@ interface CollapsibleContainerProps {
   /**
    * Secondary Content (will be hidden on collapsed state)
    */
-  secondaryContent: React.ReactNode;
+  secondaryContent?: React.ReactNode;
   /**
    * Should secondary content be outside of container?
    */
-  shouldSecondaryContentBeOutside: boolean;
+  shouldSecondaryContentBeOutside?: boolean;
 }
 
 type SecondaryContentHeight = undefined | 'auto' | number;
@@ -71,8 +71,8 @@ const SecondaryContentElement = styled.div<SecondaryContentProps>`
 
 const IconWrapper = styled(IconButtonCircular)<{isCollapsed: boolean}>`
   transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  ${(props) => !props.isCollapsed && `
-  transform: rotate(180deg);
+  ${(props) => props.isCollapsed && `
+    transform: rotate(180deg);
   `}
 `;
 
@@ -98,7 +98,8 @@ const CollapsibleContainer = ({
         <Header>
           <Title text={label} />
           <IconWrapper
-            data-testid="openCloseIcon"
+            ariaLabel={`Collapse ${label} Container`}
+            data-testid={`${label}OpenCloseIcon`}
             onClick={() => setIsCollapsed(!isCollapsed)}
             isCollapsed={isCollapsed}
           >
@@ -107,7 +108,7 @@ const CollapsibleContainer = ({
         </Header>
         <Contents>
           {primaryContent}
-          {shouldSecondaryContentBeOutside ||
+          {!shouldSecondaryContentBeOutside && secondaryContent &&
           <SecondaryContentElement
             ref={secondaryContentRef}
             isCollapsed={isCollapsed}
@@ -118,7 +119,7 @@ const CollapsibleContainer = ({
           }
         </Contents>
       </CollapsibleWrapper>
-      {shouldSecondaryContentBeOutside &&
+      {shouldSecondaryContentBeOutside && secondaryContent &&
       <SecondaryContentElement
         ref={secondaryContentRef}
         isCollapsed={isCollapsed}

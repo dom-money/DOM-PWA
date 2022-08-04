@@ -2,9 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
 
 interface UserInfoType {
-  email?: string;
-  name?: string;
-  profileImage?: string;
+  email: string;
+  name: string;
+  profileImage: string;
   aggregateVerifier?: string;
   verifier?: string;
   verifierId?: string;
@@ -15,15 +15,21 @@ interface UserInfoType {
 };
 
 type useUserInfoType = () => [
-  userInfo: UserInfoType | null,
+  userInfo: UserInfoType,
   isLoading: boolean,
   isError: boolean
 ]
 
+const defaultUser = {
+  email: '',
+  name: 'User',
+  profileImage: '',
+};
+
 const useUserInfo: useUserInfoType = () => {
   const { web3auth } = useContext(AuthContext) as AuthContextType;
 
-  const [ userInfo, setUserInfo ] = useState<UserInfoType | null>(null);
+  const [ userInfo, setUserInfo ] = useState<UserInfoType>(defaultUser);
   const [ isLoading, setIsLoading ] = useState(true);
   const [ isError, setIsError ] = useState(false);
 
@@ -35,7 +41,7 @@ const useUserInfo: useUserInfoType = () => {
       }
       try {
         const response = await web3auth.getUserInfo();
-        setUserInfo(response);
+        setUserInfo(Object.assign(userInfo, response));
         setIsLoading(false);
       } catch (error) {
         console.error(error);

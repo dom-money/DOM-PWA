@@ -1,8 +1,9 @@
 import React from 'react';
+import { RouterContext } from 'next/dist/shared/lib/router-context';
+import { ThemeProvider } from 'styled-components';
 
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import GlobalStyle from '../styles/global';
-import { ThemeProvider } from 'styled-components';
 import theme from '../styles/theme';
 
 export const decorators = [
@@ -44,5 +45,9 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+    expanded: true,
+  },
+  nextRouter: {
+    Provider: RouterContext.Provider,
   },
 }

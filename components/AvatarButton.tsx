@@ -23,6 +23,7 @@ const Wrapper = styled.button`
   height: 2.75rem;
   background-color: transparent;
   border-radius: 50%;
+  overflow: hidden;
   padding: 0;
   border: none;
   cursor: pointer;

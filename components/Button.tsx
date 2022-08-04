@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -15,14 +16,26 @@ interface ButtonProps {
    */
   className?: string;
   /**
+   * Optionally render button as an <a> element
+   */
+  asAnchor?: boolean;
+  /**
+   * Is button disabled?
+   */
+  disabled?: boolean;
+  /**
    * Click handler
    */
   onClick?: () => void;
+  /**
+   * URL on Click
+   */
+  href?: string;
 }
 
 interface ButtonElementProps {
   primary?: boolean;
-}
+};
 
 const ButtonElement = styled.button<ButtonElementProps>`
   display: block;
@@ -43,13 +56,66 @@ const ButtonElement = styled.button<ButtonElementProps>`
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 `;
 
-const Button = ({ primary = false, label, ...props }: ButtonProps) => {
+const LinkElement = styled(ButtonElement)`
+  text-align: center;
+  text-decoration: none;
+`;
+
+const RenderButton = ({ label, ...props }: ButtonProps) => {
   return (
-    <ButtonElement type='button' primary={primary} {...props}>
+    <ButtonElement
+      type='button'
+      {...props}
+    >
       {label}
     </ButtonElement>
+  );
+};
+
+const RenderLink = ({ href = '', label, ...props }: ButtonProps) => {
+  return (
+    <Link href={href} passHref>
+      <LinkElement
+        as='a'
+        {...props}
+      >
+        {label}
+      </LinkElement>
+    </Link>
+  );
+};
+
+const Button = ({
+  primary = false,
+  label,
+  disabled = false,
+  href = '',
+  asAnchor = false,
+  onClick,
+  className,
+}: ButtonProps) => {
+  return (
+    asAnchor ?
+    <RenderLink
+      primary={primary}
+      label={label}
+      href={href}
+      className={className}
+    /> :
+    <RenderButton
+      primary={primary}
+      label={label}
+      disabled={disabled}
+      onClick={onClick}
+      className={className}
+    />
   );
 };
 

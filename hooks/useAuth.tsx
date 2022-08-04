@@ -6,9 +6,9 @@ import {
   SafeEventEmitterProvider,
   ADAPTER_EVENTS,
 } from '@web3auth/base';
+import { ethers } from 'ethers';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { MetamaskAdapter } from '@web3auth/metamask-adapter';
-import RPC from '../utils/evm';
 import { useTheme } from 'styled-components';
 import { ThemeType } from '../styles/theme';
 
@@ -19,18 +19,33 @@ const useAuth = () => {
     useState<Web3Auth | null>(null);
   const [ provider, setProvider ] =
     useState<SafeEventEmitterProvider | null>(null);
+  const [ ethersProvider, setEthersProvider ] =
+    useState<ethers.providers.Web3Provider | null>(null);
+  const [ signer, setSigner ] =
+    useState<ethers.providers.JsonRpcSigner | null>(null);
 
-  const [ isLoaded, setIsLoaded ] = useState(false);
+  // Shows if web3Auth instance & provider are ready and autologin process ended
+  const [ isAuthLoaded, setIsAuthLoaded ] = useState(false);
 
   const theme = useTheme() as ThemeType;
 
   const subscribeAuthEvents = (web3auth: Web3Auth) => {
     web3auth.on(ADAPTER_EVENTS.CONNECTED, () => {
-      setIsLoaded(true);
+      setProvider(web3auth.provider);
+      // Initializing Ethers.js Provider & Signer
+      setEthersProviderAndSinger(web3auth);
     });
     web3auth.on(ADAPTER_EVENTS.ERRORED, () => {
-      setIsLoaded(true);
+      setIsAuthLoaded(true);
     });
+  };
+
+  const setEthersProviderAndSinger = (web3auth: Web3Auth) => {
+    const ethersProvider =
+        new ethers.providers.Web3Provider(web3auth.provider as any);
+    setEthersProvider(ethersProvider);
+    const signer = ethersProvider.getSigner();
+    setSigner(signer);
   };
 
   useEffect(() => {
@@ -47,6 +62,8 @@ const useAuth = () => {
             theme: 'dark',
           },
         });
+
+        subscribeAuthEvents(web3auth);
 
         const openloginAdapter = new OpenloginAdapter({
           adapterSettings: {
@@ -74,33 +91,23 @@ const useAuth = () => {
         await web3auth.initModal();
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsAuthLoaded(true);
       }
     };
 
     init();
   }, []);
 
-  // Auto logging in authenticated users on web3auth initialization
-  useEffect(() => {
-    if (web3auth) {
-      subscribeAuthEvents(web3auth);
-    };
-
-    if (web3auth && web3auth.cachedAdapter) {
-      login();
-    };
-    if (web3auth && !web3auth.cachedAdapter) {
-      setIsLoaded(true);
-    };
-  }, [ web3auth ]);
-
   const login = async () => {
     if (!web3auth) {
       console.log('web3auth not initialized yet');
       return;
-    }
+    };
     const web3authProvider = await web3auth.connect();
     setProvider(web3authProvider);
+    // Initializing Ethers.js Provider & Signer
+    setEthersProviderAndSinger(web3auth);
   };
 
   const logout = async () => {
@@ -110,35 +117,18 @@ const useAuth = () => {
     }
     await web3auth.logout();
     setProvider(null);
-  };
-
-  const getAccounts = async () => {
-    if (!provider) {
-      console.log('provider not initialized yet');
-      return;
-    }
-    const rpc = new RPC(provider);
-    const userAccount = await rpc.getAccounts();
-    console.log(userAccount);
-  };
-
-  const getBalance = async () => {
-    if (!provider) {
-      console.log('provider not initialized yet');
-      return;
-    }
-    const rpc = new RPC(provider);
-    return await rpc.getBalance();
+    setEthersProvider(null);
+    setSigner(null);
   };
 
   return {
     web3auth,
     provider,
-    isLoaded,
+    ethersProvider,
+    signer,
+    isAuthLoaded,
     login,
     logout,
-    getAccounts,
-    getBalance,
   };
 };
 

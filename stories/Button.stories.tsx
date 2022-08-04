@@ -7,9 +7,9 @@ export default {
   title: 'Components/Button',
   component: Button,
   decorators: [
-    (Story) => (
+    (story) => (
       <div style={{ width: '206px' }}>
-        <Story />
+        {story()}
       </div>
     ),
   ],
@@ -30,4 +30,19 @@ Primary.args = {
 export const Default = Template.bind({});
 Default.args = {
   label: 'Send',
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  label: 'Send',
+  primary: true,
+  disabled: true,
+};
+
+export const AsLink = Template.bind({});
+AsLink.args = {
+  label: 'Top Up',
+  primary: true,
+  asAnchor: true,
+  href: '/',
 };
