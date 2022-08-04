@@ -6,7 +6,7 @@ import AmountDisplay from './AmountDisplay';
 import PeriodSelectionTabs from './PeriodSelectionTabs';
 import IconButton from './IconButton';
 import SignInIcon from '../styles/icons/SignInIcon';
-import ProfitDisplay from './ProfitDisplay';
+import YieldDisplay from './YieldDisplay';
 
 interface WealthProps {
   /**
@@ -14,13 +14,13 @@ interface WealthProps {
    */
   amount: number;
   /**
-   * Profit value
+   * Yield value
    */
-  profit?: number;
+  yieldValue?: number;
   /**
-   * Profit percentage
+   * Yield percentage
    */
-  profitPercentage?: number;
+  yieldValuePercentage?: number;
   /**
    * Average Annual percentage yield value
    */
@@ -44,15 +44,15 @@ const PeriodSelectionTabsWithMargin = styled(PeriodSelectionTabs)`
   margin-top: 1.938rem;
 `;
 
-const ProfitDisplayWithMargin = styled(ProfitDisplay)`
+const YieldDisplayWithMargin = styled(YieldDisplay)`
   align-self: flex-start;
   margin-top: 0.563rem;
 `;
 
 const Wealth = ({
   amount,
-  profit = 0,
-  profitPercentage = 0,
+  yieldValue = 0,
+  yieldValuePercentage = 0,
   averageAPY = 0,
 }: WealthProps) => {
   const [ selectedPeriodTabID, setSelectedPeriodTabID ] = useState(0);
@@ -109,9 +109,9 @@ const Wealth = ({
               <SignInIcon color='#FFFFFF'/>
             </IconButton>
           </AmountAndIconContainer>
-          <ProfitDisplayWithMargin
-            profit={profit}
-            profitPercentage={profitPercentage}
+          <YieldDisplayWithMargin
+            yieldValue={yieldValue}
+            yieldValuePercentage={yieldValuePercentage}
             averageAPY={averageAPY}
           />
           <PeriodSelectionTabsWithMargin

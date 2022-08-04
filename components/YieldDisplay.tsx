@@ -3,15 +3,15 @@ import styled, { useTheme } from 'styled-components';
 import TriangleIcon from '../styles/icons/TriangleIcon';
 import { ThemeType } from '../styles/theme';
 
-interface ProfitDisplayProps {
+interface YieldDisplayProps {
   /**
-   * Profit value
+   * Yield value
    */
-  profit: number;
+  yieldValue: number;
   /**
-   * Profit percentage
+   * Yield percentage
    */
-  profitPercentage: number;
+  yieldValuePercentage: number;
   /**
    * Average Annual percentage yield value
    */
@@ -28,12 +28,12 @@ const Wrapper = styled.div`
   gap: 1.25rem;
 `;
 
-const ProfitContainer = styled.div`
+const YieldContainer = styled.div`
   display: flex;
   gap: 0.125rem;
 `;
 
-const ProfitText = styled.p`
+const YieldText = styled.p`
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 500;
@@ -46,26 +46,26 @@ const StyledTriangleIcon = styled(TriangleIcon)`
   top: 4px;
 `;
 
-const AverageAPYText = styled(ProfitText)`
+const AverageAPYText = styled(YieldText)`
   color: #ffffff;
   font-weight: 400;
 `;
 
-const ProfitDisplay = ({
-  profit,
-  profitPercentage,
+const YieldDisplay = ({
+  yieldValue,
+  yieldValuePercentage,
   averageAPY,
   ...props
-}: ProfitDisplayProps) => {
+}: YieldDisplayProps) => {
   const theme = useTheme() as ThemeType;
   return (
     <Wrapper {...props}>
-      <ProfitContainer>
+      <YieldContainer>
         <StyledTriangleIcon color={theme.colors.success} />
-        <ProfitText>
-          ${profit} (+{profitPercentage}%)
-        </ProfitText>
-      </ProfitContainer>
+        <YieldText>
+          ${yieldValue} (+{yieldValuePercentage}%)
+        </YieldText>
+      </YieldContainer>
       <AverageAPYText>
         Average APY {averageAPY}%
       </AverageAPYText>
@@ -73,4 +73,4 @@ const ProfitDisplay = ({
   );
 };
 
-export default ProfitDisplay;
+export default YieldDisplay;

@@ -17,8 +17,8 @@ const Template: ComponentStory<typeof Wealth> = (args) =>
 export const Default = Template.bind({});
 Default.args = {
   amount: 25000.12,
-  profit: 600,
-  profitPercentage: 0.1,
+  yieldValue: 600,
+  yieldValuePercentage: 0.1,
   averageAPY: 13,
 };
 
