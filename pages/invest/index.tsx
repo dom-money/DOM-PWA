@@ -15,8 +15,11 @@ const InvestPage: NextPage = () => {
   const [ isInputValid, setIsInputValid ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState('');
 
-  // eslint-disable-next-line max-len
-  const [ walletBalance, isWalletBalanceLoading, hasWalletBalanceError ] = useUSDCBalance();
+  const [
+    walletBalance,
+    isWalletBalanceLoading,
+    hasWalletBalanceError,
+  ] = useUSDCBalance();
 
   const handleInputChange = ({
     formattedValue,
