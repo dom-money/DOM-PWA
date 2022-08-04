@@ -12,7 +12,7 @@ interface HandleInputChangeType {
 
 const InvestPage: NextPage = () => {
   const [ inputAmount, setInputAmount ] = useState('');
-  const [ isValid, setIsValid ] = useState(false);
+  const [ isInputValid, setIsInputValid ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState('');
 
   // eslint-disable-next-line max-len
@@ -33,18 +33,18 @@ const InvestPage: NextPage = () => {
   const validateInput = (numericAmountValue: number) => {
     // Checking if user has enough money on his balance
     if (numericAmountValue > walletBalance) {
-      setIsValid(false);
+      setIsInputValid(false);
       setErrorMessage('Not enough money');
       return;
     }
     // Checking if field was filled
     if (!numericAmountValue) {
       setErrorMessage('');
-      setIsValid(false);
+      setIsInputValid(false);
       return;
     }
     setErrorMessage('');
-    setIsValid(true);
+    setIsInputValid(true);
   };
 
   const handleInputClear = () => {
@@ -62,7 +62,7 @@ const InvestPage: NextPage = () => {
       inputAmount={inputAmount}
       onInputChange={handleInputChange}
       errorMessage={errorMessage}
-      isValid={isValid}
+      isInputValid={isInputValid}
       clearButtonOnClick={handleInputClear}
     />
   );
