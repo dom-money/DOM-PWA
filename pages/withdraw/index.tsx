@@ -16,8 +16,12 @@ const WithdrawPage: NextPage = () => {
   const [ isValid, setIsValid ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState('');
 
-  // eslint-disable-next-line max-len
-  const [ walletBalance, isWalletBalanceLoading, hasWalletBalanceError ] = useUSDCBalance();
+  const [
+    walletBalance,
+    isWalletBalanceLoading,
+    hasWalletBalanceError,
+  ] = useUSDCBalance();
+
   const wealthBalance = 0;
 
   const handleInputChange = ({
