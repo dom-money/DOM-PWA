@@ -21,13 +21,13 @@ interface MainPageRenderProps {
    */
   wealthAmount: number;
   /**
-   * Profit value
+   * Yield value
    */
-  profit?: number;
+  yieldValue?: number;
   /**
-   * Profit percentage
+   * Yield percentage
    */
-  profitPercentage?: number;
+  yieldValuePercentage?: number;
   /**
    * Average Annual percentage yield value
    */
@@ -58,8 +58,8 @@ const MainPageRender = ({
   walletAmount,
   scanQROnClick,
   wealthAmount = 0,
-  profit = 0,
-  profitPercentage = 0,
+  yieldValue = 0,
+  yieldValuePercentage = 0,
   averageAPY = 0,
   userName,
   avatarImageURL,
@@ -82,8 +82,8 @@ const MainPageRender = ({
       />
       <Wealth
         amount={wealthAmount}
-        profit={profit}
-        profitPercentage={profitPercentage}
+        yieldValue={yieldValue}
+        yieldValuePercentage={yieldValuePercentage}
         averageAPY={averageAPY}
       />
       <InvestButton href='/invest'/>

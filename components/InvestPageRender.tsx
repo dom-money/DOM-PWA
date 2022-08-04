@@ -26,7 +26,7 @@ interface InvestPageRenderProps {
   /**
    * Is input valid?
    */
-  isValid: boolean,
+  isInputValid: boolean,
   /**
    * 'Send' Button Click Handler
    */
@@ -60,7 +60,7 @@ const InvestPageRender = ({
   inputAmount,
   onInputChange,
   errorMessage = '',
-  isValid = false,
+  isInputValid = false,
   sendButtonOnClick,
   clearButtonOnClick,
 }: InvestPageRenderProps) => {
@@ -84,7 +84,7 @@ const InvestPageRender = ({
           label='Send'
           primary
           onClick={sendButtonOnClick}
-          disabled={!isValid}
+          disabled={!isInputValid}
         />
         <Button
           label='Clear'
