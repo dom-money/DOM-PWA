@@ -32,7 +32,7 @@ const InvestPage: NextPage = () => {
       inputAmount={inputAmount}
       onInputChange={inputAmountHandleChange}
       errorMessage={inputAmountErrorMessage}
-      isInputValid={inputAmountIsValid}
+      isValid={inputAmountIsValid}
       clearButtonOnClick={inputAmountHandleClear}
     />
   );
