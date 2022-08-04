@@ -38,7 +38,6 @@ export const WithError = Template.bind({});
 WithError.args = {
   totalAmount: 45725.06,
   inputAmount: '46000',
-  isError: true,
   errorMessage: 'Not Enough Money',
   isValid: false,
 };

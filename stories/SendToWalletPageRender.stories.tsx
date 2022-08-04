@@ -61,7 +61,6 @@ WithError.args = {
   totalAmount: 45725.06,
   inputAmount: '46000',
   inputAddress: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
-  hasInputAmountError: true,
   inputAmountErrorMessage: 'Not Enough Money',
   isValid: false,
 };

@@ -29,6 +29,5 @@ WithError.args = {
   label: 'How much do you want to invest?',
   amount: '25000',
   inputID: 'default-amount-input',
-  isError: true,
   errorMessage: 'Not Enough Money',
 };

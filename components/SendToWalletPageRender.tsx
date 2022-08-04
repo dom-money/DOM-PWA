@@ -33,10 +33,6 @@ interface SendToWalletPageRenderProps {
    */
   onInputAddressFocus?: (addressValue: string) => void;
   /**
-   * Is there a validation error present on amount input?
-   */
-  hasInputAmountError?: boolean;
-  /**
    * Amount input validation error message
    */
   inputAmountErrorMessage?: string;
@@ -87,7 +83,6 @@ const SendToWalletPageRender = ({
   inputAddress,
   onInputAddressChange,
   onInputAddressFocus,
-  hasInputAmountError = false,
   inputAmountErrorMessage = '',
   isValid = false,
   getContactOnClick,
@@ -125,7 +120,6 @@ const SendToWalletPageRender = ({
           inputID='amount-to-transfer-input'
           amount={inputAmount}
           onInputChange={onInputAmountChange}
-          isError={hasInputAmountError}
           errorMessage={inputAmountErrorMessage}
           autoFocus={false}
         />
