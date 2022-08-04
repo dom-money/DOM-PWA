@@ -12,7 +12,6 @@ interface HandleInputChangeType {
 
 const InvestPage: NextPage = () => {
   const [ inputAmount, setInputAmount ] = useState('');
-  const [ isError, setIsError ] = useState(false);
   const [ isValid, setIsValid ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState('');
 
@@ -34,7 +33,6 @@ const InvestPage: NextPage = () => {
   const validateInput = (numericAmountValue: number) => {
     // Checking if user has enough money on his balance
     if (numericAmountValue > walletBalance) {
-      setIsError(true);
       setIsValid(false);
       setErrorMessage('Not enough money');
       return;
@@ -42,12 +40,10 @@ const InvestPage: NextPage = () => {
     // Checking if field was filled
     if (!numericAmountValue) {
       setErrorMessage('');
-      setIsError(false);
       setIsValid(false);
       return;
     }
     setErrorMessage('');
-    setIsError(false);
     setIsValid(true);
   };
 
@@ -65,7 +61,6 @@ const InvestPage: NextPage = () => {
       totalAmount={walletBalance}
       inputAmount={inputAmount}
       onInputChange={handleInputChange}
-      isError={isError}
       errorMessage={errorMessage}
       isValid={isValid}
       clearButtonOnClick={handleInputClear}
