@@ -12,7 +12,11 @@ interface WalletProps {
    * Currency amount
    */
   amount: number;
-}
+  /**
+   * Scan QR On Click Handler
+   */
+  scanQROnClick?: () => void;
+};
 
 const ContentContainer = styled.div`
   display: flex;
@@ -26,6 +30,7 @@ const ButtonContainer = styled.div`
 
 const Wallet = ({
   amount,
+  scanQROnClick,
 }: WalletProps) => {
   return (
     <CollapsibleContainer
@@ -37,6 +42,7 @@ const Wallet = ({
             size='large'
             backgroundColor='#020202'
             ariaLabel='Scan QR'
+            onClick={scanQROnClick}
           >
             <ScanQRIcon color='#FFFFFF'/>
           </IconButton>

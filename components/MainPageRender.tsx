@@ -13,6 +13,10 @@ interface MainPageRenderProps {
    */
   walletAmount: number;
   /**
+   * Scan QR On Click Handler
+   */
+  scanQROnClick?: () => void;
+  /**
    * Wealth Balance amount
    */
   wealthAmount: number;
@@ -52,6 +56,7 @@ const HeaderWithMargin = styled(Header)`
 
 const MainPageRender = ({
   walletAmount,
+  scanQROnClick,
   wealthAmount = 0,
   profit = 0,
   profitPercentage = 0,
@@ -71,7 +76,10 @@ const MainPageRender = ({
       <TotalBalance
         amount={totalBalanceAmount}
       />
-      <Wallet amount={walletAmount}/>
+      <Wallet
+        amount={walletAmount}
+        scanQROnClick={scanQROnClick}
+      />
       <Wealth
         amount={wealthAmount}
         profit={profit}
