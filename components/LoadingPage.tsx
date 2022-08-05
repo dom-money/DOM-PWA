@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import LogoSVG from '../styles/svg/LogoSVG';
 
 const Wrapper = styled.div`
   display: flex;
@@ -8,16 +9,10 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h1`
-  color: white;
-`;
-
 const LoadingPage = () => {
   return (
     <Wrapper>
-      <Title>
-        Loading...
-      </Title>
+      <LogoSVG />
     </Wrapper>
   );
 };
