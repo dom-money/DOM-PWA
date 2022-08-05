@@ -103,7 +103,7 @@ const Wealth = ({
             <IconButton
               size='large'
               backgroundColor='#020202'
-              href={'/'}
+              href={'/withdraw'}
               ariaLabel='Withdraw Button'
             >
               <WithdrawIcon color='#FFFFFF'/>
