@@ -11,7 +11,7 @@ export default {
     layout: 'padded',
   },
   argTypes: {
-    ScanQRIconButtonOnClick: { action: 'onScanQRIconClick' },
+    scanQROnClick: { action: '\'Scan QR\' Icon Button Clicked' },
   },
 } as ComponentMeta<typeof Wallet>;
 
