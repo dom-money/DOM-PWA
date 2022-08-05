@@ -33,7 +33,7 @@ const ContentContainer = styled.div`
   align-items: center;
 `;
 
-const AmountAndIconContainer = styled.div`
+const AmountTopContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -55,10 +55,70 @@ const Wealth = ({
   yieldValuePercentage = 0,
   averageAPY = 0,
 }: WealthProps) => {
+  const [ isContainerCollapsed, setIsContainerCollapsed ] = useState(false);
+
   const [ selectedPeriodTabID, setSelectedPeriodTabID ] = useState(0);
+
+  const handleCollapseClick = () => {
+    setIsContainerCollapsed(!isContainerCollapsed);
+  };
 
   const handleChangeTabClick = (buttonID: number) => {
     setSelectedPeriodTabID(buttonID);
+  };
+
+  const PrimaryContentCollapsed = () => {
+    return (
+      <ContentContainer>
+        <AmountTopContainer>
+          <AmountDisplay
+            amount={amount}
+            size='small'
+          />
+          <IconButton
+            size='large'
+            backgroundColor='#020202'
+            asAnchor={true}
+            href={'/withdraw'}
+            ariaLabel='Withdraw Button'
+          >
+            <WithdrawIcon color='#FFFFFF'/>
+          </IconButton>
+        </AmountTopContainer>
+        <YieldDisplayWithMargin
+          type={'long'}
+          yieldValue={yieldValue}
+          yieldValuePercentage={yieldValuePercentage}
+          averageAPY={averageAPY}
+        />
+        <PeriodSelectionTabsWithMargin
+          selectedButtonID={selectedPeriodTabID}
+          onClick={handleChangeTabClick}
+        />
+      </ContentContainer>
+    );
+  };
+
+  const PrimaryContentNotCollapsed = () => {
+    return (
+      <ContentContainer>
+        <AmountTopContainer>
+          <AmountDisplay
+            amount={amount}
+            size='small'
+          />
+          <YieldDisplay
+            type={'short'}
+            yieldValue={yieldValue}
+            yieldValuePercentage={yieldValuePercentage}
+          />
+        </AmountTopContainer>
+        <PeriodSelectionTabsWithMargin
+          selectedButtonID={selectedPeriodTabID}
+          onClick={handleChangeTabClick}
+        />
+      </ContentContainer>
+    );
   };
 
   const inactive = amount === 0;
@@ -67,9 +127,10 @@ const Wealth = ({
     return (
       <CollapsibleContainer
         label='Wealth'
+        isCollapsed={false}
         primaryContent={
           <ContentContainer>
-            <AmountAndIconContainer>
+            <AmountTopContainer>
               <AmountDisplay
                 amount={amount}
                 size='small'
@@ -83,7 +144,7 @@ const Wealth = ({
               >
                 <WithdrawIcon color='#FFFFFF'/>
               </IconButton>
-            </AmountAndIconContainer>
+            </AmountTopContainer>
           </ContentContainer>
         }
       />
@@ -93,33 +154,10 @@ const Wealth = ({
   return (
     <CollapsibleContainer
       label='Wealth'
-      primaryContent={
-        <ContentContainer>
-          <AmountAndIconContainer>
-            <AmountDisplay
-              amount={amount}
-              size='small'
-            />
-            <IconButton
-              size='large'
-              backgroundColor='#020202'
-              asAnchor={true}
-              href={'/withdraw'}
-              ariaLabel='Withdraw Button'
-            >
-              <WithdrawIcon color='#FFFFFF'/>
-            </IconButton>
-          </AmountAndIconContainer>
-          <YieldDisplayWithMargin
-            yieldValue={yieldValue}
-            yieldValuePercentage={yieldValuePercentage}
-            averageAPY={averageAPY}
-          />
-          <PeriodSelectionTabsWithMargin
-            selectedButtonID={selectedPeriodTabID}
-            onClick={handleChangeTabClick}
-          />
-        </ContentContainer>
+      isCollapsed={isContainerCollapsed}
+      handleCollapseClick={handleCollapseClick}
+      primaryContent={isContainerCollapsed ?
+        <PrimaryContentCollapsed /> : <PrimaryContentNotCollapsed />
       }
     />
   );
