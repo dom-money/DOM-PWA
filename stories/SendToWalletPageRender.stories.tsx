@@ -45,7 +45,7 @@ Valid.args = {
   totalAmount: 45725.06,
   inputAmount: '10000',
   inputAddress: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
-  isValid: true,
+  areInputsValid: true,
 };
 
 export const Empty = Template.bind({});
@@ -53,7 +53,7 @@ Empty.args = {
   totalAmount: 45725.06,
   inputAmount: '',
   inputAddress: '',
-  isValid: false,
+  areInputsValid: false,
 };
 
 export const WithError = Template.bind({});
@@ -62,5 +62,5 @@ WithError.args = {
   inputAmount: '46000',
   inputAddress: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
   inputAmountErrorMessage: 'Not Enough Money',
-  isValid: false,
+  areInputsValid: false,
 };

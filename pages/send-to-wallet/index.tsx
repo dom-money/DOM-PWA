@@ -63,7 +63,7 @@ const SendToWalletPage: NextPage = () => {
         onInputAddressFocus={inputAddressHandleFocus}
         inputAmountErrorMessage={inputAmountErrorMessage}
         scanQROnClick={handleQRDialogOpen}
-        isValid={isSubmitReady}
+        areInputsValid={isSubmitReady}
         clearButtonOnClick={handleClearInputs}
       />
       <AddressQRReader

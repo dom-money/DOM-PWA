@@ -39,7 +39,7 @@ interface SendToWalletPageRenderProps {
   /**
    * Are inputs valid for submission?
    */
-  isValid: boolean,
+  areInputsValid: boolean,
   /**
    * 'Send' Button Click Handler
    */
@@ -84,7 +84,7 @@ const SendToWalletPageRender = ({
   onInputAddressChange,
   onInputAddressFocus,
   inputAmountErrorMessage = '',
-  isValid = false,
+  areInputsValid = false,
   getContactOnClick,
   scanQROnClick,
   sendButtonOnClick,
@@ -127,7 +127,7 @@ const SendToWalletPageRender = ({
           <Button
             label='Send'
             primary
-            disabled={!isValid}
+            disabled={!areInputsValid}
             type='submit'
           />
           <Button
