@@ -10,6 +10,14 @@ interface CollapsibleContainerProps {
    */
   label: string;
   /**
+   * Is container collapsed?
+   */
+  isCollapsed?: boolean;
+  /**
+   * Collapse Click Handler Function
+   */
+  handleCollapseClick?: () => void;
+  /**
    * Main Content (will be always displayed)
    */
   primaryContent: React.ReactNode;
@@ -78,11 +86,12 @@ const IconWrapper = styled(IconButtonCircular)<{isCollapsed: boolean}>`
 
 const CollapsibleContainer = ({
   label,
+  isCollapsed = false,
+  handleCollapseClick,
   primaryContent,
   secondaryContent,
   shouldSecondaryContentBeOutside = false,
 }: CollapsibleContainerProps) => {
-  const [ isCollapsed, setIsCollapsed ] = useState(false);
   const [ contentHeight, setContentHeight ] =
     useState<SecondaryContentHeight>('auto');
 
@@ -100,7 +109,7 @@ const CollapsibleContainer = ({
           <IconWrapper
             ariaLabel={`Collapse ${label} Container`}
             data-testid={`${label}OpenCloseIcon`}
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onClick={handleCollapseClick}
             isCollapsed={isCollapsed}
           >
             <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
+import { useArgs } from '@storybook/client-api';
 
 import CollapsibleContainer from '../components/CollapsibleContainer';
 
@@ -17,12 +18,26 @@ export default {
     layout: 'padded',
   },
   argTypes: {
+    isCollapsed: { control: 'boolean' },
     shouldSecondaryContentBeOutside: { control: 'boolean' },
   },
 } as ComponentMeta<typeof CollapsibleContainer>;
 
-const Template: ComponentStory<typeof CollapsibleContainer> = (args) =>
-  <CollapsibleContainer {...args} />;
+const Template: ComponentStory<typeof CollapsibleContainer> = (args) => {
+  const [ { isCollapsed }, updateArgs ] = useArgs();
+
+  const handleCollapseClick = () => {
+    updateArgs({ isCollapsed: !isCollapsed });
+  };
+
+  return (
+    <CollapsibleContainer
+      {...args}
+      isCollapsed={isCollapsed}
+      handleCollapseClick={handleCollapseClick}
+    />
+  );
+};
 
 export const Closed = Template.bind({});
 Closed.args = {
