@@ -30,7 +30,7 @@ interface InvestPageRenderProps {
   /**
    * 'Send' Button Click Handler
    */
-  sendButtonOnClick?: () => void,
+  investButtonOnClick?: () => void,
   /**
    * 'Clear' Button Click Handler
    */
@@ -61,7 +61,7 @@ const InvestPageRender = ({
   onInputChange,
   errorMessage = '',
   isInputValid = false,
-  sendButtonOnClick,
+  investButtonOnClick,
   clearButtonOnClick,
 }: InvestPageRenderProps) => {
   return (
@@ -81,9 +81,9 @@ const InvestPageRender = ({
       />
       <ButtonContainer>
         <Button
-          label='Send'
+          label='Invest'
           primary
-          onClick={sendButtonOnClick}
+          onClick={investButtonOnClick}
           disabled={!isInputValid}
         />
         <Button
