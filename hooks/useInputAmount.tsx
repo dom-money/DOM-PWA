@@ -13,7 +13,7 @@ interface HandleInputChangeType {
   value: string
 };
 
-const useInputAmount: useInputAmountType = (walletBalance) => {
+const useInputAmount: useInputAmountType = (balance) => {
   const [ amount, setAmount ] = useState('');
   const [ numericAmount, setNumericAmount ] = useState(0);
   const [ errorMessage, setErrorMessage ] = useState('');
@@ -36,7 +36,7 @@ const useInputAmount: useInputAmountType = (walletBalance) => {
 
   const checkForErrors = (numericAmountValue: number) => {
     // Checking if user has enough money on his balance
-    if (numericAmountValue > walletBalance) {
+    if (numericAmountValue > balance) {
       setErrorMessage('Not enough money');
       return;
     }
