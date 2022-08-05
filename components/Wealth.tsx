@@ -5,7 +5,7 @@ import CollapsibleContainer from './CollapsibleContainer';
 import AmountDisplay from './AmountDisplay';
 import PeriodSelectionTabs from './PeriodSelectionTabs';
 import IconButton from './IconButton';
-import SignInIcon from '../styles/icons/SignInIcon';
+import WithdrawIcon from '../styles/icons/WithdrawIcon';
 import ProfitDisplay from './ProfitDisplay';
 
 interface WealthProps {
@@ -79,9 +79,9 @@ const Wealth = ({
                 size='large'
                 backgroundColor='#020202'
                 disabled={true}
-                ariaLabel='Wealth Button'
+                ariaLabel='Withdraw Button'
               >
-                <SignInIcon color='#FFFFFF'/>
+                <WithdrawIcon color='#FFFFFF'/>
               </IconButton>
             </AmountAndIconContainer>
           </ContentContainer>
@@ -104,9 +104,9 @@ const Wealth = ({
               size='large'
               backgroundColor='#020202'
               href={'/'}
-              ariaLabel='Wealth Button'
+              ariaLabel='Withdraw Button'
             >
-              <SignInIcon color='#FFFFFF'/>
+              <WithdrawIcon color='#FFFFFF'/>
             </IconButton>
           </AmountAndIconContainer>
           <ProfitDisplayWithMargin

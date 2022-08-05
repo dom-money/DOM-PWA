@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import IconButton from '../components/IconButton';
 
 import TwoSquaresIcon from '../styles/icons/TwoSquaresIcon';
-import SignInIcon from '../styles/icons/SignInIcon';
+import WithdrawIcon from '../styles/icons/WithdrawIcon';
 import NotificationIcon from '../styles/icons/NotificationIcon';
 
 export default {
@@ -44,7 +44,7 @@ export const LargeButton = Template.bind({});
 LargeButton.args = {
   size: 'large',
   backgroundColor: '#020202',
-  children: <SignInIcon color='#FFFFFF'/>,
+  children: <WithdrawIcon color='#FFFFFF'/>,
   ariaLabel: 'Large Button',
 };
 LargeButton.parameters = {
@@ -64,7 +64,7 @@ export const DisabledButton = Template.bind({});
 DisabledButton.args = {
   size: 'large',
   backgroundColor: '#020202',
-  children: <SignInIcon color='#FFFFFF'/>,
+  children: <WithdrawIcon color='#FFFFFF'/>,
   disabled: true,
   ariaLabel: 'Disabled Button',
 };
