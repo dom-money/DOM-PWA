@@ -22,10 +22,6 @@ interface AmountInputProps {
    */
   onInputChange?: ({ formattedValue, value }: onInputChangeType) => void;
   /**
-   * Is there an validation error present?
-   */
-  isError?: boolean;
-  /**
    * Optional validation error message
    */
   errorMessage?: string;
@@ -101,7 +97,6 @@ const AmountInput = ({
   amount,
   inputID,
   onInputChange,
-  isError = false,
   errorMessage = '',
 }: AmountInputProps) => {
   return (
@@ -111,7 +106,7 @@ const AmountInput = ({
       inputID={inputID}
       content={
         <Container>
-          <ErrorMessageDisplay isError={isError}>
+          <ErrorMessageDisplay isError={errorMessage.length > 0}>
             {errorMessage}
           </ErrorMessageDisplay>
           <CurrencySymbol>$</CurrencySymbol>

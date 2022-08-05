@@ -12,12 +12,14 @@ interface HandleInputChangeType {
 
 const InvestPage: NextPage = () => {
   const [ inputAmount, setInputAmount ] = useState('');
-  const [ isError, setIsError ] = useState(false);
-  const [ isValid, setIsValid ] = useState(false);
+  const [ isInputValid, setIsInputValid ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState('');
 
-  // eslint-disable-next-line max-len
-  const [ walletBalance, isWalletBalanceLoading, hasWalletBalanceError ] = useUSDCBalance();
+  const [
+    walletBalance,
+    isWalletBalanceLoading,
+    hasWalletBalanceError,
+  ] = useUSDCBalance();
 
   const handleInputChange = ({
     formattedValue,
@@ -34,21 +36,18 @@ const InvestPage: NextPage = () => {
   const validateInput = (numericAmountValue: number) => {
     // Checking if user has enough money on his balance
     if (numericAmountValue > walletBalance) {
-      setIsError(true);
-      setIsValid(false);
+      setIsInputValid(false);
       setErrorMessage('Not enough money');
       return;
     }
     // Checking if field was filled
     if (!numericAmountValue) {
       setErrorMessage('');
-      setIsError(false);
-      setIsValid(false);
+      setIsInputValid(false);
       return;
     }
     setErrorMessage('');
-    setIsError(false);
-    setIsValid(true);
+    setIsInputValid(true);
   };
 
   const handleInputClear = () => {
@@ -65,9 +64,8 @@ const InvestPage: NextPage = () => {
       totalAmount={walletBalance}
       inputAmount={inputAmount}
       onInputChange={handleInputChange}
-      isError={isError}
       errorMessage={errorMessage}
-      isValid={isValid}
+      isInputValid={isInputValid}
       clearButtonOnClick={handleInputClear}
     />
   );

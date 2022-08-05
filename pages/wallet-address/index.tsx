@@ -7,8 +7,11 @@ import useWalletAddress from '../../hooks/useWalletAddress';
 import useUSDCBalance from '../../hooks/useUSDCBalance';
 
 const WalletAddressPage: NextPage = () => {
-  // eslint-disable-next-line max-len
-  const [ walletAddress, isWalletAddressLoading, hasWalletAddressError ] = useWalletAddress();
+  const [
+    walletAddress,
+    isWalletAddressLoading,
+    hasWalletAddressError,
+  ] = useWalletAddress();
 
   const [ balance, isBalanceLoading, hasBalanceError ] = useUSDCBalance();
 

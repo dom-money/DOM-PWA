@@ -20,17 +20,13 @@ interface InvestPageRenderProps {
    */
   onInputChange?: ({ formattedValue, value }: onInputChangeType) => void;
   /**
-   * Is there a validation error present?
-   */
-  isError?: boolean,
-  /**
    * Validation error message
    */
   errorMessage?: string,
   /**
    * Is input valid?
    */
-  isValid: boolean,
+  isInputValid: boolean,
   /**
    * 'Send' Button Click Handler
    */
@@ -63,9 +59,8 @@ const InvestPageRender = ({
   totalAmount,
   inputAmount,
   onInputChange,
-  isError = false,
   errorMessage = '',
-  isValid = false,
+  isInputValid = false,
   sendButtonOnClick,
   clearButtonOnClick,
 }: InvestPageRenderProps) => {
@@ -82,7 +77,6 @@ const InvestPageRender = ({
         inputID='amount-to-invest-input'
         amount={inputAmount}
         onInputChange={onInputChange}
-        isError={isError}
         errorMessage={errorMessage}
       />
       <ButtonContainer>
@@ -90,7 +84,7 @@ const InvestPageRender = ({
           label='Send'
           primary
           onClick={sendButtonOnClick}
-          disabled={!isValid}
+          disabled={!isInputValid}
         />
         <Button
           label='Clear'

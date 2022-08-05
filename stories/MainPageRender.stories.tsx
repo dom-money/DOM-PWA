@@ -35,18 +35,18 @@ export default {
         },
       },
     },
-    profit: {
+    yieldValue: {
       type: { name: 'number', required: false },
-      description: 'Profit Value',
+      description: 'Yield Value',
       table: {
         type: {
           summary: 'number',
         },
       },
     },
-    profitPercentage: {
+    yieldValuePercentage: {
       type: { name: 'number', required: false },
-      description: 'Profit Percentage Value',
+      description: 'Yield Percentage Value',
       table: {
         type: {
           summary: 'number',
@@ -108,8 +108,8 @@ export const Default = Template.bind({});
 Default.args = {
   walletAmount: 20000.12,
   wealthAmount: 25724.94,
-  profit: 600,
-  profitPercentage: 0.1,
+  yieldValue: 600,
+  yieldValuePercentage: 0.1,
   averageAPY: 13,
   userName: 'John Doe',
   avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
@@ -120,8 +120,8 @@ export const TextAvatar = Template.bind({});
 TextAvatar.args = {
   walletAmount: 20000.12,
   wealthAmount: 25724.94,
-  profit: 600,
-  profitPercentage: 0.1,
+  yieldValue: 600,
+  yieldValuePercentage: 0.1,
   averageAPY: 13,
   userName: 'John Doe',
   isNotificationPresent: true,
