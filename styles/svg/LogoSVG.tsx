@@ -5,7 +5,6 @@ interface LogoSVGProps {
   className?: string;
 };
 
-// const LogoSVG = ({ color, width = '100%', height = '100%' }: LogoSVGProps) => {
 const LogoSVG = ({ ...props }: LogoSVGProps) => {
   return (
     <svg {...props} width="119" height="144" viewBox="0 0 119 144" fill="none" xmlns="http://www.w3.org/2000/svg">

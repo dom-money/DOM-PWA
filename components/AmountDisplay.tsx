@@ -53,7 +53,7 @@ const Container = styled.div`
   overflow-y: hidden;
   &::-webkit-scrollbar {
     display: none;
-  }
+  };
   -ms-overflow-style: none;
   scrollbar-width: none;
 `;
