@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Web3Auth } from '@web3auth/web3auth';
 import {
   CHAIN_NAMESPACES,
@@ -14,7 +14,9 @@ import { ThemeType } from '../styles/theme';
 
 const clientId = process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID as string;
 
-const useAuth = () => {
+const useAuth = (
+    setIsAuthLoaded: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const [ web3auth, setWeb3auth ] =
     useState<Web3Auth | null>(null);
   const [ provider, setProvider ] =
@@ -23,9 +25,6 @@ const useAuth = () => {
     useState<ethers.providers.Web3Provider | null>(null);
   const [ signer, setSigner ] =
     useState<ethers.providers.JsonRpcSigner | null>(null);
-
-  // Shows if web3Auth instance & provider are ready and autologin process ended
-  const [ isAuthLoaded, setIsAuthLoaded ] = useState(false);
 
   const theme = useTheme() as ThemeType;
 
@@ -126,7 +125,6 @@ const useAuth = () => {
     provider,
     ethersProvider,
     signer,
-    isAuthLoaded,
     login,
     logout,
   };
