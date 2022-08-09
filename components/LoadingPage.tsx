@@ -9,10 +9,29 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
+const AnimatedLogoSVG = styled(LogoSVG)`
+  animation-name: grow;
+  animation-duration: 10000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+
+  @keyframes grow {
+    from {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5)
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+`;
+
 const LoadingPage = () => {
   return (
     <Wrapper>
-      <LogoSVG />
+      <AnimatedLogoSVG />
     </Wrapper>
   );
 };
