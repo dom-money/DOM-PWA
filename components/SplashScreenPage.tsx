@@ -28,7 +28,7 @@ const AnimatedLogoSVG = styled(LogoSVG)`
   }
 `;
 
-const LoadingPage = () => {
+const SplashScreenPage = () => {
   return (
     <Wrapper>
       <AnimatedLogoSVG />
@@ -36,4 +36,4 @@ const LoadingPage = () => {
   );
 };
 
-export default LoadingPage;
+export default SplashScreenPage;
