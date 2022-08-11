@@ -40,7 +40,7 @@ const Template: ComponentStory<typeof PaymentStatus> = (args) => {
   };
 
   return (
-    <div>
+    <>
       <SendToWalletPageRender
         totalAmount={45725.06}
         inputAmount='10000'
@@ -52,7 +52,7 @@ const Template: ComponentStory<typeof PaymentStatus> = (args) => {
         isOpen={isOpen}
         onClose={handleDrawerClose}
       />
-    </div>
+    </>
   );
 };
 
@@ -61,7 +61,7 @@ Successful.args = {
   type: 'successful',
   isOpen: true,
   paymentTo: '0x64ff637fb478863b7468bc97d30a5bf3a415fAb3',
-  amount: 200,
+  amount: '200',
   message: 'Submitted successfully',
 };
 
@@ -70,6 +70,6 @@ Failed.args = {
   type: 'failed',
   isOpen: true,
   paymentTo: '0x64ff637fb478863b7468bc97d30a5bf3a415fAb3',
-  amount: 200,
+  amount: '200',
   errorMessage: 'Insufficient funds',
 };
