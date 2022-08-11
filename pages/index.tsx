@@ -11,7 +11,7 @@ import useQRAddressReader from '../hooks/useQRAddressReader';
 
 const MainPage: NextPage = () => {
   const [ userInfo, isUserInfoLoading, hasUserInfoError ] = useUserInfo();
-  const [ balance, isBalanceLoading, hasBalanceError ] = useUSDCBalance();
+  const [ balance, , isBalanceLoading, hasBalanceError ] = useUSDCBalance();
 
   const router = useRouter();
 

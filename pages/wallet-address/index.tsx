@@ -13,7 +13,7 @@ const WalletAddressPage: NextPage = () => {
     hasWalletAddressError,
   ] = useWalletAddress();
 
-  const [ balance, isBalanceLoading, hasBalanceError ] = useUSDCBalance();
+  const [ balance, , isBalanceLoading, hasBalanceError ] = useUSDCBalance();
 
   if (isWalletAddressLoading ||
     hasWalletAddressError ||

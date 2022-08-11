@@ -12,12 +12,14 @@ import useQRAddressReader from '../../hooks/useQRAddressReader';
 const SendToWalletPage: NextPage = () => {
   const [
     walletBalance,
+    ,
     isWalletBalanceLoading,
     hasWalletBalanceError,
   ] = useUSDCBalance();
 
   const [
     inputAmount,
+    ,
     inputAmountIsValid,
     inputAmountErrorMessage,
     inputAmountHandleChange,

@@ -9,6 +9,7 @@ import useInputAmount from '../../hooks/useInputAmount';
 const WithdrawPage: NextPage = () => {
   const [
     walletBalance,
+    ,
     isWalletBalanceLoading,
     hasWalletBalanceError,
   ] = useUSDCBalance();
@@ -17,6 +18,7 @@ const WithdrawPage: NextPage = () => {
 
   const [
     inputAmount,
+    ,
     inputAmountIsValid,
     inputAmountErrorMessage,
     inputAmountHandleChange,
