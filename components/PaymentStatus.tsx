@@ -221,13 +221,16 @@ const PaymentStatus = ({
         unmountOnExit: true,
         onExited: onExited,
       }}
-      sx={{
+      sx={(theme) => ({
         '.MuiDrawer-paper': {
           backgroundColor: 'transparent',
           borderRadius: '32px 32px 0px 0px',
           maxHeight: '75%',
           marginInline: 'auto',
+          [ theme.breakpoints.up('lg') ]: {
+            minWidth: '40rem',
             maxWidth: 'fit-content',
+          },
         },
         '.MuiBackdrop-root': {
           display: 'flex',
