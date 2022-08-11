@@ -1,20 +1,26 @@
 import { useState, useEffect, useContext } from 'react';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
-import { ethers } from 'ethers';
+import { ethers, BigNumber } from 'ethers';
 import genericErc20Abi from '../utils/Erc20.json';
 
 type useUSDCBalanceType = () => [
-  balanceUSDC: number,
+  balanceAsNumber: number,
+  balanceAsBigNumber: BigNumber,
   isLoading: boolean,
   isError: boolean
 ];
 
-const tokenUSDCContractAddress = '0xe11A86849d99F524cAC3E7A0Ec1241828e332C62';
+const TOKEN_USDC_CONTRACT_ADDRESS =
+  '0xe11A86849d99F524cAC3E7A0Ec1241828e332C62';
 
 const useUSDCBalance: useUSDCBalanceType = () => {
   const { ethersProvider, signer } = useContext(AuthContext) as AuthContextType;
 
-  const [ balanceUSDC, setBalanceUSDC ] = useState(0);
+  const [ balanceAsNumber, setBalanceAsNumber ] = useState(0);
+  const [
+    balanceAsBigNumber,
+    setBalanceAsBigNumber,
+  ] = useState(BigNumber.from(0));
   const [ isLoading, setIsLoading ] = useState(true);
   const [ isError, setIsError ] = useState(false);
 
@@ -26,18 +32,17 @@ const useUSDCBalance: useUSDCBalanceType = () => {
       try {
         const address = await signer.getAddress();
         const contract = new ethers.Contract(
-            tokenUSDCContractAddress,
+            TOKEN_USDC_CONTRACT_ADDRESS,
             genericErc20Abi,
             ethersProvider,
         );
         const receivedBalance = await contract.balanceOf(address);
-        const balanceAsFloatNumber = parseFloat(
-            ethers.utils.formatEther(receivedBalance),
+        setBalanceAsBigNumber(receivedBalance);
+        setBalanceAsNumber(
+            parseFloat(ethers.utils.formatEther(receivedBalance)),
         );
-        setBalanceUSDC(balanceAsFloatNumber);
         setIsLoading(false);
       } catch (error) {
-        console.error(error);
         setIsError(true);
         setIsLoading(false);
       }
@@ -46,7 +51,7 @@ const useUSDCBalance: useUSDCBalanceType = () => {
     getBalance();
   }, [ ethersProvider, signer ]);
 
-  return [ balanceUSDC, isLoading, isError ];
+  return [ balanceAsNumber, balanceAsBigNumber, isLoading, isError ];
 };
 
 export default useUSDCBalance;
