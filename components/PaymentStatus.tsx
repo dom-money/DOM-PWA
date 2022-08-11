@@ -23,13 +23,17 @@ interface PaymentStatusProps {
    */
   onClose?: () => void;
   /**
+   * On Exited (Component unmount) Handler Function
+   */
+  onExited?: (node: HTMLElement) => void,
+  /**
    * Receiver of the payment
    */
   paymentTo: string;
   /**
    * Amount of the payment
    */
-  amount: number;
+  amount: string;
   /**
    * Payment message
    */
@@ -165,6 +169,7 @@ const PaymentStatus = ({
   type,
   isOpen,
   onClose = () => {},
+  onExited,
   paymentTo,
   amount,
   message,
@@ -211,20 +216,25 @@ const PaymentStatus = ({
           children: <Backdrop type={type} marginBottom={drawerPaperHeight} />,
         } },
       }}
+      SlideProps={{
+        mountOnEnter: true,
+        unmountOnExit: true,
+        onExited: onExited,
+      }}
       sx={{
         '.MuiDrawer-paper': {
           backgroundColor: 'transparent',
           borderRadius: '32px 32px 0px 0px',
           maxHeight: '75%',
           marginInline: 'auto',
-          maxWidth: 'fit-content',
+            maxWidth: 'fit-content',
         },
         '.MuiBackdrop-root': {
           display: 'flex',
           backgroundColor: 'rgba(0, 0, 0, 0.8)',
           backdropFilter: 'blur(5px)',
         },
-      }}
+      })}
     >
       <ColoredAreaWrapper>
         <Puller />
