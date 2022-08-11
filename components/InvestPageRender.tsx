@@ -5,6 +5,7 @@ import HeaderGoBack from './HeaderGoBack';
 import TotalBalance from './TotalBalance';
 import AmountInput from './AmountInput';
 import Button from './Button';
+import Loading from './Loading';
 
 interface InvestPageRenderProps {
   /**
@@ -27,6 +28,10 @@ interface InvestPageRenderProps {
    * Is input valid?
    */
   isInputValid: boolean,
+  /**
+   * Is Component in the process of submitting data?
+   */
+  isSubmitting?: boolean
   /**
    * 'Send' Button Click Handler
    */
@@ -61,37 +66,41 @@ const InvestPageRender = ({
   onInputChange,
   errorMessage = '',
   isInputValid = false,
+  isSubmitting,
   investButtonOnClick,
   clearButtonOnClick,
 }: InvestPageRenderProps) => {
   return (
-    <Wrapper>
-      <HeaderWithMargin
-        href={'/'}
-      />
-      <TotalBalance
-        amount={totalAmount}
-      />
-      <AmountInput
-        label='How much do you want to invest?'
-        inputID='amount-to-invest-input'
-        amount={inputAmount}
-        onInputChange={onInputChange}
-        errorMessage={errorMessage}
-      />
-      <ButtonContainer>
-        <Button
-          label='Invest'
-          primary
-          onClick={investButtonOnClick}
-          disabled={!isInputValid}
+    <>
+      <Wrapper>
+        <HeaderWithMargin
+          href={'/'}
         />
-        <Button
-          label='Clear'
-          onClick={clearButtonOnClick}
+        <TotalBalance
+          amount={totalAmount}
         />
-      </ButtonContainer>
-    </Wrapper>
+        <AmountInput
+          label='How much do you want to invest?'
+          inputID='amount-to-invest-input'
+          amount={inputAmount}
+          onInputChange={onInputChange}
+          errorMessage={errorMessage}
+        />
+        <ButtonContainer>
+          <Button
+            label='Invest'
+            primary
+            onClick={investButtonOnClick}
+            disabled={!isInputValid || isSubmitting}
+          />
+          <Button
+            label='Clear'
+            onClick={clearButtonOnClick}
+          />
+        </ButtonContainer>
+      </Wrapper>
+      {isSubmitting && <Loading primary />}
+    </>
   );
 };
 
