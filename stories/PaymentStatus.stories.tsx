@@ -44,7 +44,7 @@ const Template: ComponentStory<typeof PaymentStatus> = (args) => {
   return (
     <>
       <SendToWalletPageRender
-        totalAmount={45725.06}
+        availableBalance={45725.06}
         inputAmount='10000'
         inputAddress='0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca'
         areInputsValid={true}
