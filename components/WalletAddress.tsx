@@ -15,8 +15,6 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
-  overflow-x: auto;
 `;
 
 const QRWrapper = styled.div`
@@ -25,11 +23,12 @@ const QRWrapper = styled.div`
 `;
 
 const Text = styled.p`
-  display: inline-flex;
   font-weight: 400;
   font-size: 0.875rem;
   color: #FFFFFF;
   margin: 1.25rem 0 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
 `;
 
 const WalletAddress = ({ address }: WalletAddressProps) => {

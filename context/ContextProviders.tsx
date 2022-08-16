@@ -23,6 +23,7 @@ const ContextProviders = ({ children }: ContextProvidersProps) => {
             vertical: 'top',
             horizontal: 'center',
           }}
+          css='overflow-wrap: break-word; word-break: break-word;'
         >
           <EventListenersProvider ethersProvider={authArgs.ethersProvider}>
             {children}
