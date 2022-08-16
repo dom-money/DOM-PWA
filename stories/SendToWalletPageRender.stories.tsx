@@ -64,3 +64,12 @@ WithError.args = {
   inputAmountErrorMessage: 'Not Enough Money',
   areInputsValid: false,
 };
+
+export const Submitting = Template.bind({});
+Submitting.args = {
+  totalAmount: 45725.06,
+  inputAmount: '10000',
+  inputAddress: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
+  areInputsValid: true,
+  isSubmitting: true,
+};
