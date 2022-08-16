@@ -3,22 +3,23 @@ import AuthContext, { AuthContextType } from '../context/AuthContext';
 import { ethers } from 'ethers';
 import abi from '../utils/DepositManager-ABI.json';
 
-type ErrorMessageType = null | string;
+type ErrorMessageType = string | null;
+type DepositResultType = object | null;
 
 type useContractType = () => [
   depositToWealth: (amountToDeposit: string) => void,
-  depositResult: null | object,
+  depositResult: DepositResultType,
   isLoading: boolean,
   errorMessage: ErrorMessageType,
   handleStateClear: () => void,
 ];
 
-const CONTRACT_ADDRESS = '0x44Cb030F4E9dbDd869abb0CbF19717974B167e13';
+export const CONTRACT_ADDRESS = '0xBC91bEdE221AbDAc4F39AF2827Cef8aD9313A7ba';
 
 const useContract: useContractType = () => {
   const { signer } = useContext(AuthContext) as AuthContextType;
 
-  const [ depositResult, setDepositResult ] = useState(null);
+  const [ depositResult, setDepositResult ] = useState<DepositResultType>(null);
   const [ isLoading, setIsLoading ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState<ErrorMessageType>(null);
 
@@ -40,11 +41,11 @@ const useContract: useContractType = () => {
           abi,
           signer,
       );
-      const depositResult = await contractWithSigner.deposit({
+      const result = await contractWithSigner.deposit({
         recipient: recipient,
         depositAmount: amountToDepositAsBigNumber,
       });
-      setDepositResult(depositResult);
+      setDepositResult(result);
     } catch (error) {
       if (!(error instanceof Error)) {
         console.error('Unexpected error', error);
