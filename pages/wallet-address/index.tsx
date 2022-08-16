@@ -29,12 +29,23 @@ const WalletAddressPage: NextPage = () => {
     });
   };
 
+  const handleAddressShare = async () => {
+    if (!navigator[ 'canShare' ]) {
+      return;
+    };
+    try {
+      await navigator.share({ text: walletAddress });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <WalletAddressPageRender
       totalAmount={balance}
       address={walletAddress}
       copyAddressButtonOnClick={copyToClipboard}
-      shareButtonOnClick={() => {}}
+      shareButtonOnClick={handleAddressShare}
     />
   );
 };
