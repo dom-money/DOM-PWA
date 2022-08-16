@@ -21,3 +21,8 @@ ZeroAmount.args = {
   amount: 0,
 };
 
+export const AsAvailableBalance = Template.bind({});
+AsAvailableBalance.args = {
+  amount: 45725.06,
+  asAvailableBalance: true,
+};

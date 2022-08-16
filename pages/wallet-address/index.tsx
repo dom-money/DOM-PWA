@@ -1,10 +1,12 @@
 import React from 'react';
 import type { NextPage } from 'next';
+import { useSnackbar } from 'notistack';
 
 import WalletAddressPageRender from '../../components/WalletAddressPageRender';
 
 import useWalletAddress from '../../hooks/useWalletAddress';
 import useWalletBalance from '../../hooks/useWalletBalance';
+
 
 const WalletAddressPage: NextPage = () => {
   const [
@@ -14,6 +16,8 @@ const WalletAddressPage: NextPage = () => {
   ] = useWalletAddress();
 
   const [ balance, , isBalanceLoading, hasBalanceError ] = useWalletBalance();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   if (isWalletAddressLoading ||
     hasWalletAddressError ||
@@ -25,7 +29,16 @@ const WalletAddressPage: NextPage = () => {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(walletAddress).then(()=> {
-      alert('Successfully copied wallet address to clipboard');
+      enqueueSnackbar(
+          'Successfully copied wallet address to clipboard',
+          {
+            variant: 'default',
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'center',
+            },
+          },
+      );
     });
   };
 

@@ -10,9 +10,9 @@ import Loading from './Loading';
 
 interface SendToWalletPageRenderProps {
   /**
-   * Total Balance Amount
+   * Available Balance Amount
    */
-  totalAmount: number;
+  availableBalance: number;
   /**
    * Input amount
    */
@@ -82,7 +82,7 @@ const ButtonContainer = styled.div`
 `;
 
 const SendToWalletPageRender = ({
-  totalAmount,
+  availableBalance,
   inputAmount,
   onInputAmountChange,
   inputAddress,
@@ -110,7 +110,8 @@ const SendToWalletPageRender = ({
           href={'/'}
         />
         <TotalBalance
-          amount={totalAmount}
+          amount={availableBalance}
+          asAvailableBalance
         />
         <form onSubmit={handleSubmit}>
           <AddressInput

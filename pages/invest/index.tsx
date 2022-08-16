@@ -70,7 +70,7 @@ const InvestPage: NextPage = () => {
   return (
     <>
       <InvestPageRender
-        totalAmount={walletBalance}
+        availableBalance={walletBalance}
         inputAmount={inputAmount}
         onInputChange={inputAmountHandleChange}
         errorMessage={inputAmountErrorMessage}

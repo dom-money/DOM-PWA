@@ -5,12 +5,13 @@ import HeaderGoBack from './HeaderGoBack';
 import TotalBalance from './TotalBalance';
 import AmountInput from './AmountInput';
 import Button from './Button';
+import Loading from './Loading';
 
 interface WithdrawPageRenderProps {
   /**
-   * Total Balance Amount
+   * Available Balance Amount
    */
-  totalAmount: number;
+  availableBalance: number;
   /**
    * Input amount as a string (for state control)
    */
@@ -27,6 +28,10 @@ interface WithdrawPageRenderProps {
    * Is input valid?
    */
   isInputValid: boolean,
+  /**
+   * Is Component in the process of submitting data?
+   */
+  isSubmitting?: boolean
   /**
    * 'Send' Button Click Handler
    */
@@ -56,42 +61,47 @@ const ButtonContainer = styled.div`
 `;
 
 const WithdrawPageRender = ({
-  totalAmount,
+  availableBalance,
   inputAmount,
   onInputChange,
   errorMessage = '',
   isInputValid = false,
+  isSubmitting,
   withdrawButtonOnClick,
   clearButtonOnClick,
 }: WithdrawPageRenderProps) => {
   return (
-    <Wrapper>
-      <HeaderWithMargin
-        href={'/'}
-      />
-      <TotalBalance
-        amount={totalAmount}
-      />
-      <AmountInput
-        label='How much do you want to withdraw?'
-        inputID='amount-to-withdraw-input'
-        amount={inputAmount}
-        onInputChange={onInputChange}
-        errorMessage={errorMessage}
-      />
-      <ButtonContainer>
-        <Button
-          label='Withdraw'
-          primary
-          onClick={withdrawButtonOnClick}
-          disabled={!isInputValid}
+    <>
+      <Wrapper>
+        <HeaderWithMargin
+          href={'/'}
         />
-        <Button
-          label='Clear'
-          onClick={clearButtonOnClick}
+        <TotalBalance
+          amount={availableBalance}
+          asAvailableBalance
         />
-      </ButtonContainer>
-    </Wrapper>
+        <AmountInput
+          label='How much do you want to withdraw?'
+          inputID='amount-to-withdraw-input'
+          amount={inputAmount}
+          onInputChange={onInputChange}
+          errorMessage={errorMessage}
+        />
+        <ButtonContainer>
+          <Button
+            label='Withdraw'
+            primary
+            onClick={withdrawButtonOnClick}
+            disabled={!isInputValid}
+          />
+          <Button
+            label='Clear'
+            onClick={clearButtonOnClick}
+          />
+        </ButtonContainer>
+      </Wrapper>
+      {isSubmitting && <Loading primary />}
+    </>
   );
 };
 

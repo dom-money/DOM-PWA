@@ -98,7 +98,7 @@ const SendToWalletPage: NextPage = () => {
   return (
     <>
       <SendToWalletPageRender
-        totalAmount={walletBalance}
+        availableBalance={walletBalance}
         inputAmount={inputAmount}
         onInputAmountChange={inputAmountHandleChange}
         inputAddress={inputAddress}

@@ -9,9 +9,9 @@ import Loading from './Loading';
 
 interface InvestPageRenderProps {
   /**
-   * Total Balance Amount
+   * Available Balance Amount
    */
-  totalAmount: number;
+  availableBalance: number;
   /**
    * Input amount as a string (for state control)
    */
@@ -61,7 +61,7 @@ const ButtonContainer = styled.div`
 `;
 
 const InvestPageRender = ({
-  totalAmount,
+  availableBalance,
   inputAmount,
   onInputChange,
   errorMessage = '',
@@ -77,7 +77,8 @@ const InvestPageRender = ({
           href={'/'}
         />
         <TotalBalance
-          amount={totalAmount}
+          amount={availableBalance}
+          asAvailableBalance
         />
         <AmountInput
           label='How much do you want to invest?'

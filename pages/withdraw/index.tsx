@@ -3,17 +3,9 @@ import type { NextPage } from 'next';
 
 import WithdrawPageRender from '../../components/WithdrawPageRender';
 
-import useWalletBalance from '../../hooks/useWalletBalance';
 import useInputAmount from '../../hooks/useInputAmount';
 
 const WithdrawPage: NextPage = () => {
-  const [
-    walletBalance,
-    ,
-    isWalletBalanceLoading,
-    hasWalletBalanceError,
-  ] = useWalletBalance();
-
   const wealthBalance = 0;
 
   const [
@@ -25,14 +17,14 @@ const WithdrawPage: NextPage = () => {
     inputAmountHandleClear,
   ] = useInputAmount(wealthBalance);
 
-  if (isWalletBalanceLoading || hasWalletBalanceError) {
-    return null;
-  };
+  // if (isWalletBalanceLoading || hasWalletBalanceError) {
+  //   return null;
+  // };
 
 
   return (
     <WithdrawPageRender
-      totalAmount={walletBalance}
+      availableBalance={wealthBalance}
       inputAmount={inputAmount}
       onInputChange={inputAmountHandleChange}
       errorMessage={inputAmountErrorMessage}
