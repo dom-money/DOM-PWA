@@ -42,6 +42,14 @@ interface PaymentStatusProps {
    * Error message
    */
   errorMessage?: string;
+  /**
+   * 'Send Again' Button On Click Handler
+   */
+  sendAgainOnClick?: () => void;
+  /**
+   * 'Try Again' Button On Click Handler
+   */
+  tryAgainOnClick?: () => void;
 };
 
 interface BackdropProps {
@@ -174,6 +182,8 @@ const PaymentStatus = ({
   amount,
   message,
   errorMessage,
+  sendAgainOnClick,
+  tryAgainOnClick,
 }: PaymentStatusProps) => {
   const [
     drawerPaperHeight,
@@ -282,14 +292,14 @@ const PaymentStatus = ({
       </ColoredAreaWrapper>
       {type === 'successful' &&
         <ButtonsContainer>
-          <Button primary label='Send Again'/>
-          <Button label='Next'/>
+          <Button primary label='Send Again' onClick={sendAgainOnClick}/>
+          <Button label='Next' asAnchor href='/'/>
         </ButtonsContainer>
       }
       {type === 'failed' &&
         <ButtonsContainer>
-          <Button primary label='Try Again'/>
-          <Button label='Home'/>
+          <Button primary label='Try Again' onClick={tryAgainOnClick}/>
+          <Button label='Home' asAnchor href='/'/>
         </ButtonsContainer>
       }
     </SwipeableDrawer>

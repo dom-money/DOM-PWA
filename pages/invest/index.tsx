@@ -34,6 +34,7 @@ const InvestPage: NextPage = () => {
   ] = useContract();
 
   const [ isPaymentStatusOpen, setIsPaymentStatusOpen ] = useState(false);
+  const [ preserveState, setPreserveState ] = useState(false);
 
   useEffect(() => {
     if (depositResult || depositErrorMessage) {
@@ -45,13 +46,21 @@ const InvestPage: NextPage = () => {
     depositToWealth(inputAmountUnformatted);
   };
 
-  const handlePaymentStatusDrawerClose = () => {
+  const handlePaymentStatusDrawerClose = (shouldPreserveState?: boolean) => {
+    if (shouldPreserveState) {
+      setPreserveState(true);
+    }
     setIsPaymentStatusOpen(false);
   };
 
   const handlePaymentStatusDrawerOnExited = () => {
-    inputAmountHandleClear();
+    if (preserveState) {
+      handleUseDepositStateClear();
+      setPreserveState(false);
+      return;
+    }
     handleUseDepositStateClear();
+    inputAmountHandleClear();
   };
 
   if (isWalletBalanceLoading || hasWalletBalanceError) {
@@ -73,12 +82,14 @@ const InvestPage: NextPage = () => {
       <PaymentStatus
         type={depositResult ? 'successful' : 'failed'}
         isOpen={isPaymentStatusOpen}
-        onClose={handlePaymentStatusDrawerClose}
+        onClose={() => handlePaymentStatusDrawerClose()}
         onExited={handlePaymentStatusDrawerOnExited}
         paymentTo='Your wealth wallet'
         amount={inputAmount}
         message='Submitted successfully'
         errorMessage={depositErrorMessage ? depositErrorMessage : undefined}
+        sendAgainOnClick={() => handlePaymentStatusDrawerClose()}
+        tryAgainOnClick={() => handlePaymentStatusDrawerClose(true)}
       />
     </>
   );

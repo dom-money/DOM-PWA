@@ -23,6 +23,8 @@ export default {
         type: 'select',
       },
     },
+    sendAgainOnClick: { action: '\'Send Again\' Button Pressed' },
+    tryAgainOnClick: { action: '\'Try Again\' Button Pressed' },
   },
   parameters: {
     layout: 'fullscreen',
