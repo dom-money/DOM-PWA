@@ -2,8 +2,11 @@ import { useState, useEffect, useContext } from 'react';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
 import { ethers, BigNumber } from 'ethers';
 import genericErc20Abi from '../utils/Erc20.json';
+import EventListenersContext, {
+  EventListenersContextType,
+} from '../context/EventListenersContext';
 
-type useUSDCBalanceType = () => [
+type useWalletBalanceType = () => [
   balanceAsNumber: number,
   balanceAsBigNumber: BigNumber,
   isLoading: boolean,
@@ -13,8 +16,14 @@ type useUSDCBalanceType = () => [
 const TOKEN_USDC_CONTRACT_ADDRESS =
   '0xe11A86849d99F524cAC3E7A0Ec1241828e332C62';
 
-const useUSDCBalance: useUSDCBalanceType = () => {
+const useWalletBalance: useWalletBalanceType = () => {
   const { ethersProvider, signer } = useContext(AuthContext) as AuthContextType;
+
+  const {
+    depositToWalletEventData,
+    depositToWealthEventData,
+    sentFromWalletEventData,
+  } = useContext(EventListenersContext) as EventListenersContextType;
 
   const [ balanceAsNumber, setBalanceAsNumber ] = useState(0);
   const [
@@ -49,9 +58,15 @@ const useUSDCBalance: useUSDCBalanceType = () => {
     };
 
     getBalance();
-  }, [ ethersProvider, signer ]);
+  }, [
+    ethersProvider,
+    signer,
+    depositToWalletEventData,
+    depositToWealthEventData,
+    sentFromWalletEventData,
+  ]);
 
   return [ balanceAsNumber, balanceAsBigNumber, isLoading, isError ];
 };
 
-export default useUSDCBalance;
+export default useWalletBalance;

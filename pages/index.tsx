@@ -4,14 +4,20 @@ import type { NextPage } from 'next';
 import MainPageRender from '../components/MainPageRender';
 
 import useUserInfo from '../hooks/useUserInfo';
-import useUSDCBalance from '../hooks/useUSDCBalance';
+import useWalletBalance from '../hooks/useWalletBalance';
 import AddressQRReader from '../components/AddressQRReader';
 import { useRouter } from 'next/router';
 import useQRAddressReader from '../hooks/useQRAddressReader';
 
 const MainPage: NextPage = () => {
   const [ userInfo, isUserInfoLoading, hasUserInfoError ] = useUserInfo();
-  const [ balance, , isBalanceLoading, hasBalanceError ] = useUSDCBalance();
+  const [
+    walletBalance,
+    ,
+    isWalletBalanceLoading,
+    hasWalletBalanceError,
+  ] = useWalletBalance();
+
 
   const router = useRouter();
 
@@ -24,8 +30,8 @@ const MainPage: NextPage = () => {
 
   if (isUserInfoLoading ||
     hasUserInfoError ||
-    isBalanceLoading ||
-    hasBalanceError
+    isWalletBalanceLoading ||
+    hasWalletBalanceError ||
   ) {
     return null;
   };
@@ -36,8 +42,7 @@ const MainPage: NextPage = () => {
     <>
       <MainPageRender
         scanQROnClick={handleQRDialogOpen}
-        walletAmount={balance}
-        wealthAmount={0}
+        walletAmount={walletBalance}
         userName={userInfo.name}
         avatarImageURL={userInfo.profileImage}
       />

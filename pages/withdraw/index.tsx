@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 
 import WithdrawPageRender from '../../components/WithdrawPageRender';
 
-import useUSDCBalance from '../../hooks/useUSDCBalance';
+import useWalletBalance from '../../hooks/useWalletBalance';
 import useInputAmount from '../../hooks/useInputAmount';
 
 const WithdrawPage: NextPage = () => {
@@ -12,7 +12,7 @@ const WithdrawPage: NextPage = () => {
     ,
     isWalletBalanceLoading,
     hasWalletBalanceError,
-  ] = useUSDCBalance();
+  ] = useWalletBalance();
 
   const wealthBalance = 0;
 

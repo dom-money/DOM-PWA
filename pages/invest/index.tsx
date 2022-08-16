@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import InvestPageRender from '../../components/InvestPageRender';
 import PaymentStatus from '../../components/PaymentStatus';
 
-import useUSDCBalance from '../../hooks/useUSDCBalance';
+import useWalletBalance from '../../hooks/useWalletBalance';
 import useInputAmount from '../../hooks/useInputAmount';
 import useContract from '../../hooks/useContract';
 
@@ -14,7 +14,7 @@ const InvestPage: NextPage = () => {
     ,
     isWalletBalanceLoading,
     hasWalletBalanceError,
-  ] = useUSDCBalance();
+  ] = useWalletBalance();
 
   const [
     inputAmount,

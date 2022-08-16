@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import WalletAddressPageRender from '../../components/WalletAddressPageRender';
 
 import useWalletAddress from '../../hooks/useWalletAddress';
-import useUSDCBalance from '../../hooks/useUSDCBalance';
+import useWalletBalance from '../../hooks/useWalletBalance';
 
 const WalletAddressPage: NextPage = () => {
   const [
@@ -13,10 +13,11 @@ const WalletAddressPage: NextPage = () => {
     hasWalletAddressError,
   ] = useWalletAddress();
 
-  const [ balance, , isBalanceLoading, hasBalanceError ] = useUSDCBalance();
+  const [ balance, , isBalanceLoading, hasBalanceError ] = useWalletBalance();
 
   if (isWalletAddressLoading ||
     hasWalletAddressError ||
+    !walletAddress ||
     isBalanceLoading ||
     hasBalanceError) {
     return null;

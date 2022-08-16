@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 
 import SendToWalletPageRender from '../../components/SendToWalletPageRender';
 
-import useUSDCBalance from '../../hooks/useUSDCBalance';
+import useWalletBalance from '../../hooks/useWalletBalance';
 import useInputAmount from '../../hooks/useInputAmount';
 import useInputAddress from '../../hooks/useInputAddress';
 import AddressQRReader from '../../components/AddressQRReader';
@@ -15,7 +15,7 @@ const SendToWalletPage: NextPage = () => {
     ,
     isWalletBalanceLoading,
     hasWalletBalanceError,
-  ] = useUSDCBalance();
+  ] = useWalletBalance();
 
   const [
     inputAmount,
