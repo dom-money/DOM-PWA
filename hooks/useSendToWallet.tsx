@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
 import { ethers } from 'ethers';
 import genericErc20Abi from '../utils/Erc20.json';
+import { TOKEN_USDC_CONTRACT_ADDRESS } from './useWalletBalance';
 
 type ErrorMessageType = null | string;
 
@@ -12,9 +13,6 @@ type useSendToWalletType = () => [
   errorMessage: ErrorMessageType,
   handleStateClear: () => void,
 ];
-
-const TOKEN_USDC_CONTRACT_ADDRESS =
-  '0xe11A86849d99F524cAC3E7A0Ec1241828e332C62';
 
 const useSendToWallet: useSendToWalletType = () => {
   const { signer } = useContext(AuthContext) as AuthContextType;
