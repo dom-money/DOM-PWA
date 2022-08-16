@@ -68,7 +68,10 @@ const iOS =
   /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 const ColoredAreaWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: #1F1F1F;
+  overflow: auto;
 `;
 
 const Puller = styled.div`
@@ -86,6 +89,7 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   padding-inline: 1.25rem;
   margin-top: 1.5rem;
+  overflow: auto;
 `;
 
 const StatusTitle = styled.h1<{type: PaymentStatusType}>`
@@ -110,6 +114,7 @@ const DataContainer = styled.ul`
   list-style-type: none;
   margin: 0 0 1.875rem;
   padding: 0;
+  overflow: auto;
 `;
 
 const DataItem = styled.li`
@@ -127,12 +132,7 @@ const Text = styled.p`
   text-transform: capitalize;
   color: #FFFFFF;
   margin: 0;
-  overflow: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  };
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  overflow-wrap: break-word;
 `;
 
 const Divider = styled.li`
@@ -236,8 +236,8 @@ const PaymentStatus = ({
           backgroundColor: 'transparent',
           borderRadius: '32px 32px 0px 0px',
           maxHeight: '75%',
-          marginInline: 'auto',
           [ theme.breakpoints.up('lg') ]: {
+            marginInline: 'auto',
             minWidth: '40rem',
             maxWidth: 'fit-content',
           },
