@@ -25,7 +25,9 @@ const ContextProviders = ({ children }: ContextProvidersProps) => {
           }}
           css='overflow-wrap: break-word; word-break: break-word;'
         >
-          <EventListenersProvider ethersProvider={authArgs.ethersProvider}>
+          <EventListenersProvider
+            ethersProvider={authArgs.ethersProvider}
+          >
             {children}
           </EventListenersProvider>
         </SnackbarProvider>
