@@ -1,5 +1,6 @@
 /* eslint-disable require-jsdoc */
 import { useState, useEffect } from 'react';
+import Router from 'next/router';
 import { Web3Auth } from '@web3auth/web3auth';
 import {
   CHAIN_NAMESPACES,
@@ -42,6 +43,16 @@ const useAuth = (
   const setEthersProviderAndSinger = (web3auth: Web3Auth) => {
     const ethersProvider =
         new ethers.providers.Web3Provider(web3auth.provider as any);
+
+    // Implementing reload on network change
+    ethersProvider.on('network', (newNetwork, oldNetwork) => {
+      // When a Provider makes its initial connection, it emits a "network"
+      // event with a null oldNetwork along with the newNetwork. So, if the
+      // oldNetwork exists, it represents a changing network
+      if (oldNetwork) {
+        Router.reload();
+      }
+    });
     setEthersProvider(ethersProvider);
     const signer = ethersProvider.getSigner();
     setSigner(signer);
