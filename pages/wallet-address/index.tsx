@@ -5,8 +5,6 @@ import { useSnackbar } from 'notistack';
 import WalletAddressPageRender from '../../components/WalletAddressPageRender';
 
 import useWalletAddress from '../../hooks/useWalletAddress';
-import useWalletBalance from '../../hooks/useWalletBalance';
-
 
 const WalletAddressPage: NextPage = () => {
   const [
@@ -15,15 +13,11 @@ const WalletAddressPage: NextPage = () => {
     hasWalletAddressError,
   ] = useWalletAddress();
 
-  const [ balance, , isBalanceLoading, hasBalanceError ] = useWalletBalance();
-
   const { enqueueSnackbar } = useSnackbar();
 
   if (isWalletAddressLoading ||
     hasWalletAddressError ||
-    !walletAddress ||
-    isBalanceLoading ||
-    hasBalanceError) {
+    !walletAddress) {
     return null;
   };
 
@@ -55,7 +49,6 @@ const WalletAddressPage: NextPage = () => {
 
   return (
     <WalletAddressPageRender
-      totalAmount={balance}
       address={walletAddress}
       copyAddressButtonOnClick={copyToClipboard}
       shareButtonOnClick={handleAddressShare}

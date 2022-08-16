@@ -2,15 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 import HeaderGoBack from './HeaderGoBack';
-import TotalBalance from './TotalBalance';
 import WalletAddress from './WalletAddress';
 import Button from './Button';
 
 interface WalletAddressPageRenderProps {
-  /**
-   * Total Balance Amount
-   */
-  totalAmount: number;
   /**
    * Wallet Address
    */
@@ -30,7 +25,7 @@ const Wrapper = styled.div`
 `;
 
 const HeaderWithMargin = styled(HeaderGoBack)`
-  margin: 0 2.25rem 0;
+  margin: 0 2.25rem 10.625rem; 
 `;
 
 const ButtonContainer = styled.div`
@@ -39,7 +34,6 @@ const ButtonContainer = styled.div`
 `;
 
 const WalletAddressPageRender = ({
-  totalAmount,
   address,
   copyAddressButtonOnClick,
   shareButtonOnClick,
@@ -48,9 +42,6 @@ const WalletAddressPageRender = ({
     <Wrapper>
       <HeaderWithMargin
         href={'/'}
-      />
-      <TotalBalance
-        amount={totalAmount}
       />
       <WalletAddress address={address}/>
       <ButtonContainer>
