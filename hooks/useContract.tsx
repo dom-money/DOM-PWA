@@ -4,11 +4,12 @@ import { ethers } from 'ethers';
 import abi from '../utils/DepositManager-ABI.json';
 
 type ErrorMessageType = string | null;
-type DepositResultType = object | null;
+type TransactionResultType = object | null;
 
 type useContractType = () => [
   depositToWealth: (amountToDeposit: string) => void,
-  depositResult: DepositResultType,
+  withdrawFromWealth: (amountToWithdraw: string) => void,
+  transactionResult: TransactionResultType,
   isLoading: boolean,
   errorMessage: ErrorMessageType,
   handleStateClear: () => void,
@@ -19,7 +20,10 @@ export const CONTRACT_ADDRESS = '0xBC91bEdE221AbDAc4F39AF2827Cef8aD9313A7ba';
 const useContract: useContractType = () => {
   const { signer } = useContext(AuthContext) as AuthContextType;
 
-  const [ depositResult, setDepositResult ] = useState<DepositResultType>(null);
+  const [
+    transactionResult,
+    setTransactionResult,
+  ] = useState<TransactionResultType>(null);
   const [ isLoading, setIsLoading ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState<ErrorMessageType>(null);
 
@@ -45,7 +49,43 @@ const useContract: useContractType = () => {
         recipient: recipient,
         depositAmount: amountToDepositAsBigNumber,
       });
-      setDepositResult(result);
+      setTransactionResult(result);
+    } catch (error) {
+      if (!(error instanceof Error)) {
+        console.error('Unexpected error', error);
+        setErrorMessage('Unexpected error');
+        return;
+      };
+      console.error(error);
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const withdrawFromWealth = async (amountToWithdraw: string) => {
+    setIsLoading(true);
+
+    if (!signer) {
+      setErrorMessage('Signer not initialized');
+      setIsLoading(false);
+      return;
+    };
+
+    try {
+      const recipient = await signer.getAddress();
+      const amountToWithdrawAsBigNumber =
+        ethers.utils.parseUnits(amountToWithdraw, 'ether');
+      const contractWithSigner = new ethers.Contract(
+          CONTRACT_ADDRESS,
+          abi,
+          signer,
+      );
+      const result = await contractWithSigner.withdraw({
+        recipient: recipient,
+        withdrawalAmount: amountToWithdrawAsBigNumber,
+      });
+      setTransactionResult(result);
     } catch (error) {
       if (!(error instanceof Error)) {
         console.error('Unexpected error', error);
@@ -60,14 +100,15 @@ const useContract: useContractType = () => {
   };
 
   const handleStateClear = () => {
-    setDepositResult(null);
+    setTransactionResult(null);
     setIsLoading(false);
     setErrorMessage(null);
   };
 
   return [
     depositToWealth,
-    depositResult,
+    withdrawFromWealth,
+    transactionResult,
     isLoading,
     errorMessage,
     handleStateClear,

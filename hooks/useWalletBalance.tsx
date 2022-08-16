@@ -21,6 +21,7 @@ const useWalletBalance: useWalletBalanceType = () => {
 
   const {
     depositToWalletEventData,
+    withdrawFromWealthEventData,
     depositToWealthEventData,
     sentFromWalletEventData,
   } = useContext(EventListenersContext) as EventListenersContextType;
@@ -63,6 +64,7 @@ const useWalletBalance: useWalletBalanceType = () => {
     signer,
     depositToWalletEventData,
     depositToWealthEventData,
+    withdrawFromWealthEventData,
     sentFromWalletEventData,
   ]);
 

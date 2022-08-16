@@ -5,29 +5,31 @@ import abi from '../utils/DepositManager-ABI.json';
 import genericErc20Abi from '../utils/Erc20.json';
 import useWalletAddress from './useWalletAddress';
 import { CONTRACT_ADDRESS } from './useContract';
+import { TOKEN_USDC_CONTRACT_ADDRESS } from './useWalletBalance';
 
 type EthersProviderType = ethers.providers.Web3Provider | null;
-type DepositToWealthEventData = object | null;
-type SentFromWealthEventData = object | null;
-
-const TOKEN_USDC_CONTRACT_ADDRESS =
-  '0xe11A86849d99F524cAC3E7A0Ec1241828e332C62';
+type EventData = object | null;
 
 const useEventListeners = (ethersProvider: EthersProviderType) => {
   const [
     depositToWealthEventData,
     setDepositToWealthEventData,
-  ] = useState<DepositToWealthEventData>(null);
+  ] = useState<EventData>(null);
+
+  const [
+    withdrawFromWealthEventData,
+    setWithdrawFromWealthEventData,
+  ] = useState<EventData>(null);
 
   const [
     depositToWalletEventData,
     setDepositToWalletEventData,
-  ] = useState<DepositToWealthEventData>(null);
+  ] = useState<EventData>(null);
 
   const [
     sentFromWalletEventData,
     setSentFromWalletEventData,
-  ] = useState<SentFromWealthEventData>(null);
+  ] = useState<EventData>(null);
 
   const [ walletAddress ] = useWalletAddress();
 
@@ -45,6 +47,22 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
         );
         setDepositToWealthEventData(event);
         console.log('Deposit to Wealth Wallet event:', event);
+      }, [],
+  );
+
+  // 'Withdraw from Wealth Wallet' Event Listener Function
+  const withdrawFromWealthEventListener = useCallback(
+      (tokenId, owner, withdrawnAmount, remainingAmount, event) => {
+        const withdrawnAmountAsAString =
+          ethers.utils.formatEther(withdrawnAmount);
+        const notificationMessage = `
+          Withdrawal of $${withdrawnAmountAsAString} 
+          from your Wealth Wallet was successful!
+        `;
+        enqueueSnackbar(notificationMessage, { variant: 'success' },
+        );
+        setWithdrawFromWealthEventData(event);
+        console.log('Withdrawal from Wealth Wallet event:', event);
       }, [],
   );
 
@@ -78,7 +96,8 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
       }, [],
   );
 
-  // Subscription to 'Deposit to Wealth Wallet' Event
+  // Subscription to 'Deposit to Wealth Wallet' and
+  // 'Withdraw from Wealth Wallet' Events
   useEffect(() => {
     if (!ethersProvider) {
       return;
@@ -90,8 +109,10 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
         ethersProvider,
     );
     contractWithProvider.on('Deposit', depositToWealthEventListener);
+    contractWithProvider.on('Withdraw', withdrawFromWealthEventListener);
     return () => {
       contractWithProvider.off('Deposit', depositToWealthEventListener);
+      contractWithProvider.off('Withdraw', withdrawFromWealthEventListener);
     };
   }, [ ethersProvider ]);
 
@@ -127,6 +148,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
 
   return {
     depositToWealthEventData,
+    withdrawFromWealthEventData,
     depositToWalletEventData,
     sentFromWalletEventData,
   };

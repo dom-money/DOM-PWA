@@ -27,10 +27,11 @@ const InvestPage: NextPage = () => {
 
   const [
     depositToWealth,
+    ,
     depositResult,
     isTransactionLoading,
     depositErrorMessage,
-    handleUseDepositStateClear,
+    handleUseContractStateClear,
   ] = useContract();
 
   const [ isPaymentStatusOpen, setIsPaymentStatusOpen ] = useState(false);
@@ -55,11 +56,11 @@ const InvestPage: NextPage = () => {
 
   const handlePaymentStatusDrawerOnExited = () => {
     if (preserveState) {
-      handleUseDepositStateClear();
+      handleUseContractStateClear();
       setPreserveState(false);
       return;
     }
-    handleUseDepositStateClear();
+    handleUseContractStateClear();
     inputAmountHandleClear();
   };
 
