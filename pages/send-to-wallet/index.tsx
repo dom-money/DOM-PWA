@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 
 import SendToWalletPageRender from '../../components/SendToWalletPageRender';
 
+import AddressQRReader from '../../components/AddressQRReader';
+import PaymentStatus from '../../components/PaymentStatus';
 import useWalletBalance from '../../hooks/useWalletBalance';
 import useInputAmount from '../../hooks/useInputAmount';
 import useInputAddress from '../../hooks/useInputAddress';
-import AddressQRReader from '../../components/AddressQRReader';
 import useQRAddressReader from '../../hooks/useQRAddressReader';
+import useSendToWallet from '../../hooks/useSendToWallet';
+
 
 const SendToWalletPage: NextPage = () => {
   const [
