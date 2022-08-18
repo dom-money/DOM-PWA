@@ -108,11 +108,33 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
         abi,
         ethersProvider,
     );
-    contractWithProvider.on('Deposit', depositToWealthEventListener);
-    contractWithProvider.on('Withdraw', withdrawFromWealthEventListener);
+    // eslint-disable-next-line new-cap
+    const filterDepositByAddress = contractWithProvider.filters.Deposit(
+        null,
+        walletAddress,
+    );
+    // eslint-disable-next-line new-cap
+    const filterWithdrawByAddress = contractWithProvider.filters.Withdraw(
+        null,
+        walletAddress,
+    );
+    contractWithProvider.on(
+        filterDepositByAddress,
+        depositToWealthEventListener,
+    );
+    contractWithProvider.on(
+        filterWithdrawByAddress,
+        withdrawFromWealthEventListener,
+    );
     return () => {
-      contractWithProvider.off('Deposit', depositToWealthEventListener);
-      contractWithProvider.off('Withdraw', withdrawFromWealthEventListener);
+      contractWithProvider.off(
+          filterDepositByAddress,
+          depositToWealthEventListener,
+      );
+      contractWithProvider.off(
+          filterWithdrawByAddress,
+          withdrawFromWealthEventListener,
+      );
     };
   }, [ ethersProvider ]);
 
