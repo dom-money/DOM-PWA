@@ -14,7 +14,7 @@ type useWalletBalanceType = () => [
 ];
 
 export const TOKEN_USDC_CONTRACT_ADDRESS =
-  '0xe11A86849d99F524cAC3E7A0Ec1241828e332C62';
+  '0x4DBCdF9B62e891a7cec5A2568C3F4FAF9E8Abe2b';
 
 const useWalletBalance: useWalletBalanceType = () => {
   const { ethersProvider, signer } = useContext(AuthContext) as AuthContextType;
@@ -46,10 +46,11 @@ const useWalletBalance: useWalletBalanceType = () => {
             genericErc20Abi,
             ethersProvider,
         );
-        const receivedBalance = await contract.balanceOf(address);
+        const receivedBalance: BigNumber = await contract.balanceOf(address);
+        const decimals: number = await contract.decimals();
         setBalanceAsBigNumber(receivedBalance);
         setBalanceAsNumber(
-            parseFloat(ethers.utils.formatEther(receivedBalance)),
+            parseFloat(ethers.utils.formatUnits(receivedBalance, decimals)),
         );
         setIsLoading(false);
       } catch (error) {

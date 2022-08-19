@@ -52,7 +52,7 @@ const useWealthBalance: useWealthBalanceType = () => {
         const tokensAmountAsString =
           ethers.utils.formatUnits(tokensAmountAsBigNumber, 0);
         if (tokensAmountAsString === '0') {
-          setIsLoading(false);
+          clearState();
           return;
         }
         const tokenIdAsBigNumber = await contractWithSigner.tokenOfOwnerByIndex(
@@ -77,6 +77,15 @@ const useWealthBalance: useWealthBalanceType = () => {
 
     getBalance();
   }, [ signer, depositToWealthEventData, withdrawFromWealthEventData ]);
+
+  const clearState = () => {
+    setBalanceAsNumber(0);
+    setBalanceAsBigNumber(BigNumber.from(0));
+    setApy(0);
+    setRewards('');
+    setIsError(false);
+    setIsLoading(false);
+  };
 
   return [
     balanceAsNumber,

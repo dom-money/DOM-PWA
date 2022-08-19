@@ -32,7 +32,7 @@ const useSendToWallet: useSendToWalletType = () => {
 
     try {
       const amountToSendAsBigNumber =
-        ethers.utils.parseUnits(amountToSend, 'ether');
+        ethers.utils.parseUnits(amountToSend, 6);
       const contractWithSigner = new ethers.Contract(
           TOKEN_USDC_CONTRACT_ADDRESS,
           genericErc20Abi,

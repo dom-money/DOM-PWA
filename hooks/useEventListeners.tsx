@@ -69,7 +69,8 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
   // 'Deposit to Wallet' Event Listener Function
   const depositToWalletEventListener = useCallback(
       (from, to, depositAmount, event) => {
-        const depositAmountAsAString = ethers.utils.formatEther(depositAmount);
+        const depositAmountAsAString =
+          ethers.utils.formatUnits(depositAmount, 6);
         const notificationMessage = `
           Deposit of $${depositAmountAsAString} 
           to your Wallet was successful!
@@ -84,7 +85,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
   // 'Sent From Wallet' Event Listener Function
   const sentFromWalletEventListener = useCallback(
       (from, to, amount, event) => {
-        const amountAsAString = ethers.utils.formatEther(amount);
+        const amountAsAString = ethers.utils.formatUnits(amount, 6);
         const notificationMessage = `
           Successfully sent $${amountAsAString} 
           from your Wallet to ${to}!

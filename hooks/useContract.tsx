@@ -15,7 +15,7 @@ type useContractType = () => [
   handleStateClear: () => void,
 ];
 
-export const CONTRACT_ADDRESS = '0xBC91bEdE221AbDAc4F39AF2827Cef8aD9313A7ba';
+export const CONTRACT_ADDRESS = '0x9C4ebB64127c52b7B3d5C602C979438A7FbAb0D2';
 
 const useContract: useContractType = () => {
   const { signer } = useContext(AuthContext) as AuthContextType;
