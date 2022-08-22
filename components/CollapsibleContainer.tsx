@@ -108,7 +108,7 @@ const CollapsibleContainer = ({
           <Title text={label} />
           <IconWrapper
             ariaLabel={`Collapse ${label} Container`}
-            data-testid={`${label}OpenCloseIcon`}
+            data-testid={`${label}OpenCloseIcon`.replace(/ /g, '')}
             onClick={handleCollapseClick}
             isCollapsed={isCollapsed}
           >

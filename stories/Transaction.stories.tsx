@@ -55,6 +55,7 @@ const Template: ComponentStory<typeof Transaction> = (args) =>
 
 export const CryptoTopUp = Template.bind({});
 CryptoTopUp.args = {
+  id: 1,
   name: 'Deposit from 0xEe5b9E3a125F5c6c74cE8AEbFa76b72B3D6CF009',
   type: 'Crypto Top Up',
   timestamp: Math.floor(new Date().getTime() / 1000),
@@ -63,6 +64,7 @@ CryptoTopUp.args = {
 
 export const CardTopUp = Template.bind({});
 CardTopUp.args = {
+  id: 2,
   name: 'Revolut LTD Visa *8035',
   type: 'Card Top Up',
   timestamp: Math.floor((new Date().getTime() / 1000) - 86400),
@@ -71,6 +73,7 @@ CardTopUp.args = {
 
 export const Invest = Template.bind({});
 Invest.args = {
+  id: 3,
   name: 'Wallet to Wealth',
   type: 'Invest',
   timestamp: Math.floor((new Date().getTime() / 1000) - (5 * 86400)),
@@ -79,6 +82,7 @@ Invest.args = {
 
 export const Withdraw = Template.bind({});
 Withdraw.args = {
+  id: 4,
   name: 'Wealth to Wallet',
   type: 'Withdraw',
   timestamp: Math.floor((new Date().getTime() / 1000) - (14 * 86400)),
@@ -87,6 +91,7 @@ Withdraw.args = {
 
 export const Transfer = Template.bind({});
 Transfer.args = {
+  id: 5,
   name: 'Transfer to 0xEe5b9E3a125F5c6c74cE8AEbFa76b72B3D6CF009',
   type: 'Transfer',
   timestamp: Math.floor((new Date().getTime() / 1000) - (365 * 86400)),

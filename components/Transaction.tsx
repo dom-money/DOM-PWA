@@ -10,7 +10,11 @@ type TransactionType =
   | 'Withdraw'
   | 'Transfer';
 
-interface TransactionProps {
+export interface TransactionProps {
+  /**
+   * Transaction ID
+   */
+  id: number;
   /**
    * Transaction name
    */
@@ -108,7 +112,13 @@ const TimestampText = styled(TypeText)`
   justify-self: end;
 `;
 
-const Transaction = ({ name, type, timestamp, amount }: TransactionProps) => {
+const Transaction = ({
+  id,
+  name,
+  type,
+  timestamp,
+  amount,
+}: TransactionProps) => {
   const incomeOrOutcomeType = incomeOrOutcome(type);
 
   return (
