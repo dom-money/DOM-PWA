@@ -43,9 +43,9 @@ const App = ({ Component, pageProps }: AppProps) => {
           // eslint-disable-next-line max-len
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
-        <meta name="description" content="DOM Wallet App" />
+        <meta name="description" content="D O M Wallet Web App" />
         <meta name="keywords" content="Keywords" />
-        <title>DOM Wallet</title>
+        <title>D O M</title>
 
         <link rel="manifest" href="/manifest.json" />
         <link
@@ -61,7 +61,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           sizes="32x32"
         />
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
-        <meta name="theme-color" content={theme.colors.backgroundMain} />
+        <meta name="theme-color" content={theme.colors.primary} />
       </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
