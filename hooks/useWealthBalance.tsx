@@ -5,7 +5,6 @@ import EventListenersContext, {
   EventListenersContextType,
 } from '../context/EventListenersContext';
 import abi from '../utils/DepositManager-ABI.json';
-import { CONTRACT_ADDRESS } from './useContract';
 
 type useWealthBalanceType = () => [
   balanceAsNumber: number,
@@ -43,7 +42,7 @@ const useWealthBalance: useWealthBalanceType = () => {
         const address = await signer.getAddress();
 
         const contractWithSigner = new ethers.Contract(
-            CONTRACT_ADDRESS,
+            process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string,
             abi,
             signer,
         );

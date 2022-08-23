@@ -15,8 +15,6 @@ type useContractType = () => [
   handleStateClear: () => void,
 ];
 
-export const CONTRACT_ADDRESS = '0x9C4ebB64127c52b7B3d5C602C979438A7FbAb0D2';
-
 const useContract: useContractType = () => {
   const { signer } = useContext(AuthContext) as AuthContextType;
 
@@ -41,7 +39,7 @@ const useContract: useContractType = () => {
       const amountToDepositAsBigNumber =
         ethers.utils.parseUnits(amountToDeposit, 'ether');
       const contractWithSigner = new ethers.Contract(
-          CONTRACT_ADDRESS,
+          process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string,
           abi,
           signer,
       );
@@ -77,7 +75,7 @@ const useContract: useContractType = () => {
       const amountToWithdrawAsBigNumber =
         ethers.utils.parseUnits(amountToWithdraw, 'ether');
       const contractWithSigner = new ethers.Contract(
-          CONTRACT_ADDRESS,
+          process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string,
           abi,
           signer,
       );

@@ -13,9 +13,6 @@ type useWalletBalanceType = () => [
   isError: boolean
 ];
 
-export const TOKEN_USDC_CONTRACT_ADDRESS =
-  '0x4DBCdF9B62e891a7cec5A2568C3F4FAF9E8Abe2b';
-
 const useWalletBalance: useWalletBalanceType = () => {
   const { ethersProvider, signer } = useContext(AuthContext) as AuthContextType;
 
@@ -42,7 +39,7 @@ const useWalletBalance: useWalletBalanceType = () => {
       try {
         const address = await signer.getAddress();
         const contract = new ethers.Contract(
-            TOKEN_USDC_CONTRACT_ADDRESS,
+            process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as string,
             genericErc20Abi,
             ethersProvider,
         );

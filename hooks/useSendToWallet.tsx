@@ -2,7 +2,6 @@ import { useState, useContext } from 'react';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
 import { ethers } from 'ethers';
 import genericErc20Abi from '../utils/Erc20.json';
-import { TOKEN_USDC_CONTRACT_ADDRESS } from './useWalletBalance';
 
 type ErrorMessageType = null | string;
 
@@ -34,7 +33,7 @@ const useSendToWallet: useSendToWalletType = () => {
       const amountToSendAsBigNumber =
         ethers.utils.parseUnits(amountToSend, 6);
       const contractWithSigner = new ethers.Contract(
-          TOKEN_USDC_CONTRACT_ADDRESS,
+          process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as string,
           genericErc20Abi,
           signer,
       );

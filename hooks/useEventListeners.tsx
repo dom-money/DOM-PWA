@@ -4,8 +4,6 @@ import { ethers } from 'ethers';
 import abi from '../utils/DepositManager-ABI.json';
 import genericErc20Abi from '../utils/Erc20.json';
 import useWalletAddress from './useWalletAddress';
-import { CONTRACT_ADDRESS } from './useContract';
-import { TOKEN_USDC_CONTRACT_ADDRESS } from './useWalletBalance';
 
 type EthersProviderType = ethers.providers.Web3Provider | null;
 type EventData = object | null;
@@ -105,7 +103,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
     };
 
     const contractWithProvider = new ethers.Contract(
-        CONTRACT_ADDRESS,
+        process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string,
         abi,
         ethersProvider,
     );
@@ -146,7 +144,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
     };
 
     const contractUSDCWithProvider = new ethers.Contract(
-        TOKEN_USDC_CONTRACT_ADDRESS,
+        process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as string,
         genericErc20Abi,
         ethersProvider,
     );
