@@ -26,13 +26,13 @@ const Wrapper = styled.div`
 const ButtonBackground = styled.span`
   display: inline-block;
   position: absolute;
-  width: 150%;
-  height: 150%;
+  width: 200%;
+  height: 200%;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   background-color: #020202;
-  filter: blur(60px);
+  filter: blur(40px);
   border-radius: 60px;
   z-index: -1;
 `;
