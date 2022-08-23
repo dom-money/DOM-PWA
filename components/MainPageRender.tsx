@@ -6,6 +6,8 @@ import InvestButton from './InvestButton';
 import TotalBalance from './TotalBalance';
 import Wallet from './Wallet';
 import Wealth from './Wealth';
+import RecentTransactions from './RecentTransactions';
+import { TransactionProps } from './Transaction';
 
 interface MainPageRenderProps {
   /**
@@ -32,6 +34,10 @@ interface MainPageRenderProps {
    * Average Annual percentage yield value
    */
   averageAPY?: number;
+  /**
+   * Array of transactions
+   */
+  transactions?: TransactionProps[] | [];
   /**
    * User's name
    */
@@ -61,6 +67,7 @@ const MainPageRender = ({
   yieldValue = 0,
   yieldValuePercentage = 0,
   averageAPY = 0,
+  transactions = [],
   userName,
   avatarImageURL,
   isNotificationPresent = false,
@@ -86,6 +93,11 @@ const MainPageRender = ({
         yieldValuePercentage={yieldValuePercentage}
         averageAPY={averageAPY}
       />
+      {
+        transactions ?
+        <RecentTransactions transactions={transactions} /> :
+        <RecentTransactions isLoading />
+      }
       <InvestButton href='/invest'/>
     </Wrapper>
   );

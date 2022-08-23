@@ -6,10 +6,27 @@ import Transaction, { TransactionProps } from './Transaction';
 
 interface RecentTransactionsProps {
   /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
+  /**
    * Array of transactions
    */
   transactions: TransactionProps[] | [];
 };
+
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  /**
+   * Array of transactions
+   */
+  transactions?: never;
+};
+
+type TransactionPropsWithLoading = LoadingProps | RecentTransactionsProps;
 
 const Divider = styled.hr`
   border-style: solid;
@@ -40,21 +57,49 @@ const RenderTransactions = ({ transactions }: RecentTransactionsProps) => {
   return (
     <>
       {transactions.map((transaction) =>
-        <>
+        <React.Fragment key={transaction.id}>
           <Divider />
-          <Transaction key={transaction.id} {...transaction} />
-        </>,
+          <Transaction {...transaction} />
+        </React.Fragment>,
       )}
     </>
   );
 };
 
-const RecentTransactions = ({ transactions }: RecentTransactionsProps) => {
+const RecentTransactions = ({
+  transactions,
+  isLoading,
+}: TransactionPropsWithLoading) => {
   const [ isContainerCollapsed, setIsContainerCollapsed ] = useState(false);
 
   const handleCollapseClick = () => {
     setIsContainerCollapsed(!isContainerCollapsed);
   };
+
+  if (isLoading) {
+    return (
+      <CollapsibleContainer
+        label='Recent Transactions'
+        isCollapsed={isContainerCollapsed}
+        handleCollapseClick={handleCollapseClick}
+        primaryContent={
+          <Transaction isLoading />
+        }
+        secondaryContent={
+          <>
+            <Divider />
+            <Transaction isLoading />
+            <Divider />
+            <Transaction isLoading />
+            <Divider />
+            <Transaction isLoading />
+            <Divider />
+            <Transaction isLoading />
+          </>
+        }
+      />
+    );
+  }
 
   const isTransactionsPropEmpty = transactions?.length === 0;
   const shouldDisplaySecondaryContent = transactions?.length <= 1;

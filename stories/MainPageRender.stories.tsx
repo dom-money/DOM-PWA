@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import MainPageRender from '../components/MainPageRender';
+import { Closed } from './RecentTransactions.stories';
 
 export default {
   title: 'Pages/Main Page',
@@ -68,6 +69,18 @@ export default {
         },
       },
     },
+    transactions: {
+      control: 'array',
+      description: 'Array of transactions',
+      table: {
+        defaultValue: {
+          summary: '[]',
+        },
+        type: {
+          summary: 'array',
+        },
+      },
+    },
     userName: {
       type: { name: 'string', required: true },
       description: 'User\'s name',
@@ -111,6 +124,7 @@ Default.args = {
   yieldValue: 600,
   yieldValuePercentage: 0.1,
   averageAPY: 13,
+  transactions: Closed.args?.transactions,
   userName: 'John Doe',
   avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
   isNotificationPresent: true,
@@ -123,6 +137,7 @@ TextAvatar.args = {
   yieldValue: 600,
   yieldValuePercentage: 0.1,
   averageAPY: 13,
+  transactions: Closed.args?.transactions,
   userName: 'John Doe',
   isNotificationPresent: true,
 };

@@ -15,6 +15,20 @@ import { TransactionProps } from '../components/Transaction';
 export default {
   title: 'Components/Recent Transactions',
   component: RecentTransactions,
+  argTypes: {
+    transactions: {
+      control: 'array',
+      description: 'Array of transactions',
+      table: {
+        defaultValue: {
+          summary: '[]',
+        },
+        type: {
+          summary: 'array',
+        },
+      },
+    },
+  },
   parameters: {
     layout: 'padded',
   },
@@ -54,4 +68,15 @@ Open.play = async ({ canvasElement }) => {
 export const Empty = Template.bind({});
 Empty.args = {
   transactions: [],
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
+};
+Loading.parameters = {
+  controls: {
+    hideNoControlsWarning: true,
+    exclude: [ 'transactions', 'isLoading' ],
+  },
 };

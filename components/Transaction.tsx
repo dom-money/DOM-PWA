@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Skeleton from '@mui/material/Skeleton';
 import GenericTransactionIcon from '../styles/icons/GenericTransactionIcon';
 import dateStringifier from '../utils/dateStringifier';
 
@@ -12,9 +13,13 @@ type TransactionType =
 
 export interface TransactionProps {
   /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
+  /**
    * Transaction ID
    */
-  id: number;
+  id: string;
   /**
    * Transaction name
    */
@@ -30,10 +35,43 @@ export interface TransactionProps {
   /**
    * Transaction amount
    */
-  amount: number;
+  amount: string;
 };
 
-const incomeOrOutcome = ( type: TransactionType) => {
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  /**
+   * Transaction ID
+   */
+  id?: never;
+  /**
+   * Transaction name
+   */
+  name?: never;
+  /**
+   * Transaction type
+   */
+  type?: never;
+  /**
+   * Transaction time and date (UTC Epoch in seconds)
+   */
+  timestamp?: never;
+  /**
+   * Transaction amount
+   */
+  amount?: never;
+};
+
+type TransactionPropsWithLoading = LoadingProps | TransactionProps;
+
+interface TextSkeletonProps {
+  type?: 'nameText';
+};
+
+const incomeOrOutcome = (type: TransactionType | null) => {
   if (
     type === 'Crypto Top Up' ||
     type === 'Card Top Up' ||
@@ -46,7 +84,8 @@ const incomeOrOutcome = ( type: TransactionType) => {
     type === 'Transfer'
   ) {
     return 'outcome';
-  }
+  };
+  return null;
 };
 
 const Wrapper = styled.div`
@@ -82,7 +121,6 @@ const NameText = styled.h3`
   font-weight: 300;
   font-size: 0.875rem;
   color: #FFFFFF;
-  // word-break: break-all;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -112,34 +150,63 @@ const TimestampText = styled(TypeText)`
   justify-self: end;
 `;
 
+const IconSkeleton = () =>
+  <Skeleton
+    variant='rectangular'
+    width='2.5rem'
+    height='2.5rem'
+    sx={{ bgcolor: 'grey.800' }}
+  />;
+
+const TextSkeleton = ({ type }: TextSkeletonProps) =>
+  <Skeleton
+    variant='text'
+    width={type === 'nameText' ? '8rem' : '4rem'}
+    sx={{
+      bgcolor: 'grey.800',
+      fontSize: type === 'nameText' ? '0.875rem' : '0.75rem',
+    }}
+  />;
+
 const Transaction = ({
   id,
   name,
   type,
   timestamp,
   amount,
-}: TransactionProps) => {
-  const incomeOrOutcomeType = incomeOrOutcome(type);
+  isLoading,
+}: TransactionPropsWithLoading) => {
+  const incomeOrOutcomeType = incomeOrOutcome(type ?? null);
 
   return (
     <Wrapper>
       <IconContainer>
-        <GenericTransactionIcon color='#ffffff' css='opacity: 0.5;'/>
+        {
+          isLoading ?
+          <IconSkeleton /> :
+          <GenericTransactionIcon color='#ffffff' css='opacity: 0.5;'/>
+        }
       </IconContainer>
       <DataContainer>
         <NameText>
-          {name}
+          {isLoading ? <TextSkeleton type='nameText' /> : name}
         </NameText>
         <AmountText type={incomeOrOutcomeType}>
-          {incomeOrOutcomeType === 'income' && '+'}
-          {incomeOrOutcomeType === 'outcome' && '-'}
-          ${amount}
+          {
+            isLoading ?
+            <TextSkeleton /> :
+            <>
+              {incomeOrOutcomeType === 'income' && '+'}
+              {incomeOrOutcomeType === 'outcome' && '-'}
+              ${amount}
+            </>
+          }
         </AmountText>
         <TypeText>
-          {type}
+          {isLoading ? <TextSkeleton /> : type}
         </TypeText>
         <TimestampText>
-          {dateStringifier(timestamp)}
+          {isLoading ? <TextSkeleton /> : dateStringifier(timestamp)}
         </TimestampText>
       </DataContainer>
     </Wrapper>
