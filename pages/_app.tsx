@@ -11,6 +11,7 @@ import LoadingPage from '../components/LoadingPage';
 import '@fontsource/inter/300.css';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
+import '@fontsource/roboto-mono/400.css';
 
 const DynamicContextProviders = dynamic(
     () => import('../context/ContextProviders'),

@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@fontsource/inter": "^4.5.11",
+        "@fontsource/roboto-mono": "^4.5.7",
         "@storybook/addon-a11y": "^6.5.9",
         "@web3auth/base": "^1.1.2",
         "@web3auth/ethereum-provider": "^1.1.2",
@@ -25,6 +26,7 @@
         "react-dom": "^17.0.2",
         "react-number-format": "^4.9.3",
         "react-qr-code": "^2.0.7",
+        "react-qr-reader": "^3.0.0-beta-1",
         "storybook-addon-next-router": "^4.0.0",
         "styled-components": "^5.3.5",
         "web3": "^1.7.4"
@@ -48,7 +50,7 @@
         "eslint-config-google": "^0.14.0",
         "eslint-plugin-react": "^7.30.1",
         "eslint-plugin-storybook": "^0.5.13",
-        "typescript": "4.5.4"
+        "typescript": "4.7.4"
     },
     "pre-commit": [
         "lint"

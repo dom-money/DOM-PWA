@@ -13,10 +13,10 @@ interface WalletProps {
    */
   amount: number;
   /**
-   * 'Send' Button Click handler
+   * Scan QR On Click Handler
    */
-  SendButtonOnClick?: () => void;
-}
+  scanQROnClick?: () => void;
+};
 
 const ContentContainer = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ const ButtonContainer = styled.div`
 
 const Wallet = ({
   amount,
-  SendButtonOnClick,
+  scanQROnClick,
 }: WalletProps) => {
   return (
     <CollapsibleContainer
@@ -42,6 +42,7 @@ const Wallet = ({
             size='large'
             backgroundColor='#020202'
             ariaLabel='Scan QR'
+            onClick={scanQROnClick}
           >
             <ScanQRIcon color='#FFFFFF'/>
           </IconButton>
@@ -50,7 +51,7 @@ const Wallet = ({
       secondaryContent={
         <ButtonContainer>
           <Button label='Top Up' primary asAnchor href='/wallet-address' />
-          <Button label='Send' onClick={SendButtonOnClick}/>
+          <Button label='Send' asAnchor href='/send-to-wallet'/>
         </ButtonContainer>
       }
       shouldSecondaryContentBeOutside={true}

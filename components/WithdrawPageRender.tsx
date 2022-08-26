@@ -20,17 +20,13 @@ interface WithdrawPageRenderProps {
    */
   onInputChange?: ({ formattedValue, value }: onInputChangeType) => void;
   /**
-   * Is there a validation error present?
-   */
-  isError?: boolean,
-  /**
    * Validation error message
    */
   errorMessage?: string,
   /**
    * Is input valid?
    */
-  isValid: boolean,
+  isInputValid: boolean,
   /**
    * 'Send' Button Click Handler
    */
@@ -63,9 +59,8 @@ const WithdrawPageRender = ({
   totalAmount,
   inputAmount,
   onInputChange,
-  isError = false,
   errorMessage = '',
-  isValid = false,
+  isInputValid = false,
   withdrawButtonOnClick,
   clearButtonOnClick,
 }: WithdrawPageRenderProps) => {
@@ -82,7 +77,6 @@ const WithdrawPageRender = ({
         inputID='amount-to-withdraw-input'
         amount={inputAmount}
         onInputChange={onInputChange}
-        isError={isError}
         errorMessage={errorMessage}
       />
       <ButtonContainer>
@@ -90,7 +84,7 @@ const WithdrawPageRender = ({
           label='Withdraw'
           primary
           onClick={withdrawButtonOnClick}
-          disabled={!isValid}
+          disabled={!isInputValid}
         />
         <Button
           label='Clear'

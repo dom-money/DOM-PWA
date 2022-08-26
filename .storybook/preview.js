@@ -6,6 +6,11 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import GlobalStyle from '../styles/global';
 import theme from '../styles/theme';
 
+import '@fontsource/inter/300.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/roboto-mono/400.css';
+
 export const decorators = [
     Story => (
       <>

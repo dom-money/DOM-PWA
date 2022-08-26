@@ -13,7 +13,7 @@ export default {
     },
   },
   argTypes: {
-    sendButtonOnClick: { action: '\'Send\' Button Pressed' },
+    investButtonOnClick: { action: '\'Invest\' Button Pressed' },
     clearButtonOnClick: { action: '\'Clear\' Button Pressed' },
   },
 } as ComponentMeta<typeof InvestPageRender>;

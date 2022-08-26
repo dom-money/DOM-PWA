@@ -16,7 +16,7 @@ interface ButtonProps {
    */
   className?: string;
   /**
-   * Optionally render button as an <a> element
+   * Optionally render button as an \<a\> element
    */
   asAnchor?: boolean;
   /**
@@ -31,6 +31,10 @@ interface ButtonProps {
    * URL on Click
    */
   href?: string;
+  /**
+   * Button typ
+   */
+  type?: 'submit' | 'button';
 }
 
 interface ButtonElementProps {
@@ -100,6 +104,7 @@ const Button = ({
   asAnchor = false,
   onClick,
   className,
+  type = 'button',
 }: ButtonProps) => {
   return (
     asAnchor ?
@@ -115,6 +120,7 @@ const Button = ({
       disabled={disabled}
       onClick={onClick}
       className={className}
+      type={type}
     />
   );
 };

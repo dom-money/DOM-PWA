@@ -25,6 +25,10 @@ interface AmountInputProps {
    * Optional validation error message
    */
   errorMessage?: string;
+  /**
+   * Optional autofocus prop
+   */
+  autoFocus?: boolean;
 };
 
 interface onInputChangeType {
@@ -98,6 +102,7 @@ const AmountInput = ({
   inputID,
   onInputChange,
   errorMessage = '',
+  autoFocus = true,
 }: AmountInputProps) => {
   return (
     <GenericContainer
@@ -111,7 +116,7 @@ const AmountInput = ({
           </ErrorMessageDisplay>
           <CurrencySymbol>$</CurrencySymbol>
           <NumberFormat
-            autoFocus
+            autoFocus={autoFocus}
             id={inputID}
             inputMode='decimal'
             value={amount}
