@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Title from './Title';
 import IconButtonCircular from './IconButtonCircular';
@@ -29,14 +29,9 @@ interface CollapsibleContainerProps {
    * Should secondary content be outside of container?
    */
   shouldSecondaryContentBeOutside?: boolean;
-}
+};
 
-type SecondaryContentHeight = undefined | 'auto' | number;
-
-interface SecondaryContentProps {
-  isCollapsed: boolean,
-  contentHeight: SecondaryContentHeight
-}
+const TRANSITION_DURATION = 300; // ms
 
 const Wrapper = styled.div`
   width: 100%;
@@ -63,17 +58,14 @@ const Contents = styled.div`
   padding: 1.25rem;
 `;
 
-const SecondaryContentElement = styled.div<SecondaryContentProps>`
-  transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  height: ${(props) =>
-    props.contentHeight ? `${props.contentHeight}px` : 'auto'};
+const SecondaryContentElement = styled.div<{isCollapsed: boolean}>`
+  transition: height ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  height: auto;
   overflow-x: hidden;
   overflow-y: hidden;
   margin-bottom: 0.313rem;
   ${(props) => !props.isCollapsed && `
-  // visibility: hidden;
-  height: 0;
-  margin-bottom: 0;
+    margin-bottom: 0;
   `}
 `;
 
@@ -92,14 +84,36 @@ const CollapsibleContainer = ({
   secondaryContent,
   shouldSecondaryContentBeOutside = false,
 }: CollapsibleContainerProps) => {
-  const [ contentHeight, setContentHeight ] =
-    useState<SecondaryContentHeight>('auto');
-
   const secondaryContentRef = useRef<HTMLDivElement>(null);
 
+  // Directly setting Secondary Content's height and visibility
   useEffect(() => {
-    setContentHeight(secondaryContentRef.current?.scrollHeight);
-  }, []);
+    if (!secondaryContentRef.current) {
+      return;
+    }
+    if (!isCollapsed) {
+      secondaryContentRef.current.style.height = '0';
+    } else {
+      secondaryContentRef.current.style.visibility = 'visible';
+      secondaryContentRef.current.style.height =
+      `${secondaryContentRef.current.scrollHeight}px`;
+    };
+    // The statements below will be executed after transition end
+    setTimeout(() => {
+      if (!secondaryContentRef.current) {
+        return;
+      };
+      if (!isCollapsed) {
+        // Setting visibility property to 'hidden' for accessibility
+        secondaryContentRef.current.style.visibility = 'hidden';
+      } else {
+        // Setting height to 'auto' for recalculation of scrollHeight to occur
+        secondaryContentRef.current.style.height = 'auto';
+        secondaryContentRef.current.style.height =
+          `${secondaryContentRef.current.scrollHeight}px`;
+      }
+    }, TRANSITION_DURATION);
+  }, [ isCollapsed, secondaryContent ]);
 
   return (
     <Wrapper>
@@ -121,7 +135,6 @@ const CollapsibleContainer = ({
           <SecondaryContentElement
             ref={secondaryContentRef}
             isCollapsed={isCollapsed}
-            contentHeight={contentHeight}
           >
             {secondaryContent}
           </SecondaryContentElement>
@@ -132,7 +145,6 @@ const CollapsibleContainer = ({
       <SecondaryContentElement
         ref={secondaryContentRef}
         isCollapsed={isCollapsed}
-        contentHeight={contentHeight}
       >
         {secondaryContent}
       </SecondaryContentElement>
