@@ -44,19 +44,19 @@ const App = ({ Component, pageProps }: AppProps) => {
           // eslint-disable-next-line max-len
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
-        <meta name="description" content="DOM Wallet App" />
+        <meta name="description" content="D O M Wallet Web App" />
         <meta name="keywords" content="Keywords" />
-        <title>DOM Wallet</title>
+        <title>D O M</title>
 
         <link rel="manifest" href="/manifest.json" />
         <link
-          href="/icons/favicon-16x16.png"
+          href="/icons/icon-16x16.png"
           rel="icon"
           type="image/png"
           sizes="16x16"
         />
         <link
-          href="/icons/favicon-32x32.png"
+          href="/icons/icon-32x32.png"
           rel="icon"
           type="image/png"
           sizes="32x32"

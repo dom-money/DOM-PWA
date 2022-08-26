@@ -1,8 +1,8 @@
 {
-  "name": "Next.JS Progressive Web App",
-  "short_name": "Next PWA",
-  "theme_color": "#ffffff",
-  "background_color": "#004740",
+  "name": "D O M Wallet Web App",
+  "short_name": "D O M",
+  "theme_color": "#020202",
+  "background_color": "#020202",
   "display": "fullscreen",
   "orientation": "portrait",
   "scope": "/",
