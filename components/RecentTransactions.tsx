@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { TransitionGroup, Transition } from 'react-transition-group';
+import { TransitionStatus } from 'react-transition-group/Transition';
 
 import CollapsibleContainer from './CollapsibleContainer';
 import Transaction, { TransactionProps } from './Transaction';
@@ -45,6 +47,34 @@ const FirstTransactionText = styled.p`
   font-size: 1rem;
   text-align: center;
   color: #FFFFFF;
+`;
+
+const opacityFromTransitionStatus = (status: TransitionStatus) => {
+  switch (status) {
+    case 'entering':
+      return `
+        position: absolute;
+        width: 100%;
+        opacity: 0;
+      `;
+    case 'entered':
+      return `
+        opacity: 1;
+      `;
+    case 'exiting':
+      return `
+        opacity: 0;
+      `;
+    case 'exited':
+      return `
+        opacity: 0;
+      `;
+  }
+};
+
+const FadeOpacity = styled.div<{status: TransitionStatus}>`
+  transition: opacity 500ms ease-in-out;
+  ${(props) => opacityFromTransitionStatus(props.status)};
 `;
 
 const NoRecentTransactions = () => {
@@ -112,9 +142,24 @@ const RecentTransactions = ({
       }
       handleCollapseClick={handleCollapseClick}
       primaryContent={
-        isTransactionsPropEmpty ?
-        <NoRecentTransactions /> :
-        <Transaction {...transactions[ 0 ]} />
+        <div style={{ overflow: 'hidden', position: 'relative' }}>
+          <TransitionGroup component={null}>
+            <Transition
+              key={transactions[ 0 ]?.id ?? 'no-recent-transactions'}
+              timeout={500}
+            >
+              {(status) => (
+                <FadeOpacity status={status}>
+                  {
+                    isTransactionsPropEmpty ?
+                    <NoRecentTransactions /> :
+                    <Transaction {...transactions[ 0 ]} />
+                  }
+                </FadeOpacity>
+              )}
+            </Transition>
+          </TransitionGroup>
+        </div>
       }
       secondaryContent={
         shouldDisplaySecondaryContent ?
