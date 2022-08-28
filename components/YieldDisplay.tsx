@@ -37,22 +37,22 @@ const YieldContainer = styled.div`
   gap: 0.125rem;
 `;
 
-const SuccessText = styled.p`
+const Text = styled.p`
   font-size: 0.75rem;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   margin: 0;
+  color: #ffffff;
+`;
+
+const SuccessText = styled(Text)`
+  font-weight: 500;
   color: ${(props) => props.theme.colors.success};
 `;
 
 const StyledTriangleIcon = styled(TriangleIcon)`
   position: relative;
   top: 4px;
-`;
-
-const WhiteText = styled(SuccessText)`
-  color: #ffffff;
-  font-weight: 400;
 `;
 
 const YieldDisplay = ({
@@ -69,9 +69,9 @@ const YieldDisplay = ({
         <SuccessText>
           +${yieldValue}
         </SuccessText>
-        <WhiteText>
+        <Text>
           +{yieldValuePercentage}%
-        </WhiteText>
+        </Text>
       </Wrapper>
     );
   }
@@ -83,9 +83,9 @@ const YieldDisplay = ({
           ${yieldValue} (+{yieldValuePercentage}%)
         </SuccessText>
       </YieldContainer>
-      <WhiteText>
+      <Text>
         Average APY {averageAPY}%
-      </WhiteText>
+      </Text>
     </Wrapper>
   );
 };
