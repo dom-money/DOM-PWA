@@ -15,6 +15,10 @@ interface RecentTransactionsProps {
    * Array of transactions
    */
   transactions: TransactionProps[] | [];
+  /**
+   * Duration of the transition (in ms), defaults to 500ms
+   */
+  transitionDuration?: number;
 };
 
 interface LoadingProps {
@@ -26,9 +30,18 @@ interface LoadingProps {
    * Array of transactions
    */
   transactions?: never;
+  /**
+   * Duration of the transition (in ms), defaults to 500ms
+   */
+  transitionDuration?: never;
 };
 
 type TransactionPropsWithLoading = LoadingProps | RecentTransactionsProps;
+
+interface FadeOpacityProps {
+  status: TransitionStatus;
+  transitionDuration: number;
+};
 
 const Divider = styled.hr`
   border-style: solid;
@@ -72,8 +85,8 @@ const opacityFromTransitionStatus = (status: TransitionStatus) => {
   }
 };
 
-const FadeOpacity = styled.div<{status: TransitionStatus}>`
-  transition: opacity 500ms ease-in-out;
+const FadeOpacity = styled.div<FadeOpacityProps>`
+  transition: opacity ${(props) => props.transitionDuration}ms ease-in-out;
   ${(props) => opacityFromTransitionStatus(props.status)};
 `;
 
@@ -99,6 +112,7 @@ const RenderTransactions = ({ transactions }: RecentTransactionsProps) => {
 const RecentTransactions = ({
   transactions,
   isLoading,
+  transitionDuration = 500,
 }: TransactionPropsWithLoading) => {
   const [ isContainerCollapsed, setIsContainerCollapsed ] = useState(false);
 
@@ -146,10 +160,13 @@ const RecentTransactions = ({
           <TransitionGroup component={null}>
             <Transition
               key={transactions[ 0 ]?.id ?? 'no-recent-transactions'}
-              timeout={500}
+              timeout={transitionDuration}
             >
               {(status) => (
-                <FadeOpacity status={status}>
+                <FadeOpacity
+                  status={status}
+                  transitionDuration={transitionDuration}
+                >
                   {
                     isTransactionsPropEmpty ?
                     <NoRecentTransactions /> :
