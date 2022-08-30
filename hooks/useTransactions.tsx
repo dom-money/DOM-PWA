@@ -1,18 +1,13 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import axios from 'axios';
-import { TransactionProps } from '../components/Transaction';
+import { useQuery } from '@tanstack/react-query';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
 import EventListenersContext, {
   EventListenersContextType,
 } from '../context/EventListenersContext';
-
-type ErrorMessageType = string | null;
-type TransactionsType = TransactionProps[] | [] | null;
-
-type useTransactionsType = () => [
-  transactions: TransactionsType,
-  errorMessage: ErrorMessageType,
-];
+import { SignerType } from './useAuth';
+import { TransactionProps } from '../components/Transaction';
+import useDebounce from '../hooks/useDebounce';
 
 interface TransactionResponseType {
   blockNumber: string;
@@ -36,6 +31,10 @@ interface TransactionResponseType {
   confirmations: string;
 };
 
+type TransactionsType = TransactionProps[] | [];
+
+type GetTransactionsType = (signer: SignerType) => Promise<TransactionsType>
+
 interface FormatAmountArgs {
   amount: string;
   decimals: string;
@@ -55,10 +54,97 @@ const formatAmount = ({ amount, decimals }: FormatAmountArgs) => {
 const DOM_CONTRACT_ADDRESS =
   process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string;
 
-const useTransactions: useTransactionsType = () => {
-  const [ transactions, setTransactions ] = useState<TransactionsType>(null);
-  const [ errorMessage, setErrorMessage ] = useState<ErrorMessageType>(null);
+const getTransactions: GetTransactionsType = async (signer) => {
+  return new Promise(async (resolve, reject) => {
+    if (!signer) {
+      throw new Error('Signer is not initialized');
+    };
+    try {
+      const walletAddress = (await signer.getAddress()).toLowerCase();
+      const txsUsdcRawData = await axios.get('/', {
+        baseURL: process.env.NEXT_PUBLIC_ETHERSCAN_BASE_URL,
+        params: {
+          module: 'account',
+          action: 'tokentx',
+          contractaddress: process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS,
+          address: walletAddress,
+          startblock: 0,
+          endblock: 99999999,
+          page: 1,
+          offset: 10,
+          sort: 'desc',
+        } });
+      if (txsUsdcRawData.data.status === '0') {
+        reject(new Error(txsUsdcRawData.data.result));
+        return;
+      }
+      if (txsUsdcRawData.data.result.length === 0) {
+        resolve([]);
+        return;
+      };
+      const formattedTransactions = txsUsdcRawData.data.result.map(
+          (transaction: TransactionResponseType) => {
+            if (transaction.from === walletAddress) {
+              return {
+                id: transaction.hash,
+                name: `Transfer to ${transaction.to}`,
+                type: 'Transfer',
+                timestamp: transaction.timeStamp,
+                amount: formatAmount({
+                  amount: transaction.value,
+                  decimals: transaction.tokenDecimal,
+                }),
+              };
+            };
+            if (transaction.to === walletAddress) {
+              return {
+                id: transaction.hash,
+                name: `Deposit from ${transaction.from}`,
+                type: 'Crypto Top Up',
+                timestamp: transaction.timeStamp,
+                amount: formatAmount({
+                  amount: transaction.value,
+                  decimals: transaction.tokenDecimal,
+                }),
+              };
+            };
+            if (transaction.to === DOM_CONTRACT_ADDRESS) {
+              return {
+                id: transaction.hash,
+                name: `Wallet to Wealth`,
+                type: 'Invest',
+                timestamp: transaction.timeStamp,
+                amount: formatAmount({
+                  amount: transaction.value,
+                  decimals: transaction.tokenDecimal,
+                }),
+              };
+            };
+            if (transaction.from === DOM_CONTRACT_ADDRESS) {
+              return {
+                id: transaction.hash,
+                name: `Wealth to Wallet`,
+                type: 'Withdraw',
+                timestamp: transaction.timeStamp,
+                amount: formatAmount({
+                  amount: transaction.value,
+                  decimals: transaction.tokenDecimal,
+                }),
+              };
+            }
+          });
+      // Removing undefined values from Transactions Array
+      const filteredTransactions = formattedTransactions.filter(
+          (transaction: TransactionResponseType) => transaction !== undefined,
+      );
+      resolve(filteredTransactions);
+    } catch (error) {
+      reject(error);
+    };
+  });
+};
 
+const useTransactions = () => {
   const { signer } = useContext(AuthContext) as AuthContextType;
 
   const {
@@ -66,101 +152,21 @@ const useTransactions: useTransactionsType = () => {
     sentFromWalletEventData,
   } = useContext(EventListenersContext) as EventListenersContextType;
 
-  useEffect(() => {
-    if (!signer) {
-      return;
-    };
+  const debouncedWalletEvent = useDebounce(
+      [ depositToWalletEventData, sentFromWalletEventData ],
+      15000,
+  );
 
-    const getTransactions = async () => {
-      try {
-        const walletAddress = (await signer.getAddress()).toLowerCase();
-        const txsUsdcRawData = await axios.get('/', {
-          baseURL: process.env.NEXT_PUBLIC_ETHERSCAN_BASE_URL,
-          params: {
-            module: 'account',
-            action: 'tokentx',
-            contractaddress: process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS,
-            address: walletAddress,
-            startblock: 0,
-            endblock: 99999999,
-            page: 1,
-            offset: 10,
-            sort: 'desc',
-            apikey: process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY,
-          } });
-        if (txsUsdcRawData.data.result.length === 0) {
-          setTransactions([]);
-          return;
-        };
-        const formattedTransactions = txsUsdcRawData.data.result.map(
-            (transaction: TransactionResponseType) => {
-              if (transaction.from === walletAddress) {
-                return {
-                  id: transaction.hash,
-                  name: `Transfer to ${transaction.to}`,
-                  type: 'Transfer',
-                  timestamp: transaction.timeStamp,
-                  amount: formatAmount({
-                    amount: transaction.value,
-                    decimals: transaction.tokenDecimal,
-                  }),
-                };
-              };
-              if (transaction.to === walletAddress) {
-                return {
-                  id: transaction.hash,
-                  name: `Deposit from ${transaction.from}`,
-                  type: 'Crypto Top Up',
-                  timestamp: transaction.timeStamp,
-                  amount: formatAmount({
-                    amount: transaction.value,
-                    decimals: transaction.tokenDecimal,
-                  }),
-                };
-              };
-              if (transaction.to === DOM_CONTRACT_ADDRESS) {
-                return {
-                  id: transaction.hash,
-                  name: `Wallet to Wealth`,
-                  type: 'Invest',
-                  timestamp: transaction.timeStamp,
-                  amount: formatAmount({
-                    amount: transaction.value,
-                    decimals: transaction.tokenDecimal,
-                  }),
-                };
-              };
-              if (transaction.from === DOM_CONTRACT_ADDRESS) {
-                return {
-                  id: transaction.hash,
-                  name: `Wealth to Wallet`,
-                  type: 'Withdraw',
-                  timestamp: transaction.timeStamp,
-                  amount: formatAmount({
-                    amount: transaction.value,
-                    decimals: transaction.tokenDecimal,
-                  }),
-                };
-              }
-            });
-        // Removing undefined values from Transactions Array
-        const filteredTransactions = formattedTransactions.filter(
-            (transaction: TransactionResponseType) => transaction !== undefined,
-        );
-        setTransactions(filteredTransactions);
-      } catch (error) {
-        if (!(error instanceof Error)) {
-          setErrorMessage('Unexpected error');
-          return;
-        };
-        setErrorMessage(error.message);
-      }
-    };
-
-    getTransactions();
-  }, [ signer, depositToWalletEventData, sentFromWalletEventData ]);
-
-  return [ transactions, errorMessage ];
+  return useQuery(
+      [ 'transactions', debouncedWalletEvent ],
+      () => getTransactions(signer),
+      {
+        // The query will not execute until the signer is initialized
+        enabled: !!signer,
+        // New data on key change will be swapped without Loading state
+        keepPreviousData: true,
+      },
+  );
 };
 
 export default useTransactions;

@@ -29,7 +29,7 @@ const MainPage: NextPage = () => {
     hasWealthBalanceError,
   ] = useWealthBalance();
 
-  const [ transactions, transactionsErrorMessage ] = useTransactions();
+  const transactions = useTransactions();
 
   const router = useRouter();
 
@@ -46,9 +46,9 @@ const MainPage: NextPage = () => {
     hasWalletBalanceError ||
     isWealthBalanceLoading ||
     hasWealthBalanceError ||
-    (!transactions || transactionsErrorMessage)
+    (transactions.isLoading || transactions.isError)
   ) {
-    return null;
+    return <MainPageRender isLoading />;
   };
 
   return (
@@ -58,7 +58,7 @@ const MainPage: NextPage = () => {
         walletAmount={walletBalance}
         wealthAmount={wealthBalance}
         averageAPY={apy}
-        transactions={transactions}
+        transactions={transactions.data}
         userName={userInfo.name}
         avatarImageURL={userInfo.profileImage}
       />
