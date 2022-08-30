@@ -17,10 +17,7 @@ const useWalletBalance: useWalletBalanceType = () => {
   const { ethersProvider, signer } = useContext(AuthContext) as AuthContextType;
 
   const {
-    depositToWalletEventData,
-    withdrawFromWealthEventData,
-    depositToWealthEventData,
-    sentFromWalletEventData,
+    walletEvent,
   } = useContext(EventListenersContext) as EventListenersContextType;
 
   const [ balanceAsNumber, setBalanceAsNumber ] = useState(0);
@@ -60,10 +57,7 @@ const useWalletBalance: useWalletBalanceType = () => {
   }, [
     ethersProvider,
     signer,
-    depositToWalletEventData,
-    depositToWealthEventData,
-    withdrawFromWealthEventData,
-    sentFromWalletEventData,
+    walletEvent,
   ]);
 
   return [ balanceAsNumber, balanceAsBigNumber, isLoading, isError ];

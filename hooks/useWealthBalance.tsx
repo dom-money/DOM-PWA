@@ -19,8 +19,7 @@ const useWealthBalance: useWealthBalanceType = () => {
   const { signer } = useContext(AuthContext) as AuthContextType;
 
   const {
-    depositToWealthEventData,
-    withdrawFromWealthEventData,
+    wealthEvent,
   } = useContext(EventListenersContext) as EventListenersContextType;
 
   const [ balanceAsNumber, setBalanceAsNumber ] = useState(0);
@@ -75,7 +74,7 @@ const useWealthBalance: useWealthBalanceType = () => {
     };
 
     getBalance();
-  }, [ signer, depositToWealthEventData, withdrawFromWealthEventData ]);
+  }, [ signer, wealthEvent ]);
 
   const clearState = () => {
     setBalanceAsNumber(0);

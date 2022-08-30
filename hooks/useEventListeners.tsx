@@ -9,25 +9,8 @@ type EthersProviderType = ethers.providers.Web3Provider | null;
 type EventData = object | null;
 
 const useEventListeners = (ethersProvider: EthersProviderType) => {
-  const [
-    depositToWealthEventData,
-    setDepositToWealthEventData,
-  ] = useState<EventData>(null);
-
-  const [
-    withdrawFromWealthEventData,
-    setWithdrawFromWealthEventData,
-  ] = useState<EventData>(null);
-
-  const [
-    depositToWalletEventData,
-    setDepositToWalletEventData,
-  ] = useState<EventData>(null);
-
-  const [
-    sentFromWalletEventData,
-    setSentFromWalletEventData,
-  ] = useState<EventData>(null);
+  const [ walletEvent, setWalletEvent ] = useState<EventData>(null);
+  const [ wealthEvent, setWealthEvent ] = useState<EventData>(null);
 
   const [ walletAddress ] = useWalletAddress();
 
@@ -43,7 +26,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
         `;
         enqueueSnackbar(notificationMessage, { variant: 'success' },
         );
-        setDepositToWealthEventData(event);
+        setWealthEvent(event);
         console.log('Deposit to Wealth Wallet event:', event);
       }, [],
   );
@@ -59,7 +42,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
         `;
         enqueueSnackbar(notificationMessage, { variant: 'success' },
         );
-        setWithdrawFromWealthEventData(event);
+        setWealthEvent(event);
         console.log('Withdrawal from Wealth Wallet event:', event);
       }, [],
   );
@@ -75,7 +58,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
         `;
         enqueueSnackbar(notificationMessage, { variant: 'success' },
         );
-        setDepositToWalletEventData(event);
+        setWalletEvent(event);
         console.log('Deposit to Wallet event:', event);
       }, [],
   );
@@ -90,7 +73,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
         `;
         enqueueSnackbar(notificationMessage, { variant: 'success' },
         );
-        setSentFromWalletEventData(event);
+        setWalletEvent(event);
         console.log('Sent from Wallet event:', event);
       }, [],
   );
@@ -98,7 +81,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
   // Subscription to 'Deposit to Wealth Wallet' and
   // 'Withdraw from Wealth Wallet' Events
   useEffect(() => {
-    if (!ethersProvider) {
+    if (!ethersProvider || !walletAddress) {
       return;
     };
 
@@ -135,7 +118,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
           withdrawFromWealthEventListener,
       );
     };
-  }, [ ethersProvider ]);
+  }, [ ethersProvider, walletAddress ]);
 
   // Subscription to 'Deposit to Wallet' and 'Send From Wallet' Events
   useEffect(() => {
@@ -167,12 +150,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
     };
   }, [ ethersProvider, walletAddress ]);
 
-  return {
-    depositToWealthEventData,
-    withdrawFromWealthEventData,
-    depositToWalletEventData,
-    sentFromWalletEventData,
-  };
+  return { walletEvent, wealthEvent };
 };
 
 export default useEventListeners;
