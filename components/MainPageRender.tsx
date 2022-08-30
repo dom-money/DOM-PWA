@@ -11,6 +11,10 @@ import { TransactionProps } from './Transaction';
 
 interface MainPageRenderProps {
   /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
+  /**
    * Wallet Balance amount
    */
   walletAmount: number;
@@ -50,7 +54,26 @@ interface MainPageRenderProps {
    * Is there a notification present?
    */
   isNotificationPresent?: boolean;
-}
+};
+
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  walletAmount?: never;
+  scanQROnClick?: never;
+  wealthAmount?: never;
+  yieldValue?: never;
+  yieldValuePercentage?: never;
+  averageAPY?: never;
+  transactions?: never;
+  userName?: never;
+  avatarImageURL?: never;
+  isNotificationPresent?: never;
+};
+
+type MainPageRenderPropsWithLoading = LoadingProps | MainPageRenderProps;
 
 const Wrapper = styled.div`
   padding: 1.625rem 0.313rem 9.25rem;
@@ -71,7 +94,30 @@ const MainPageRender = ({
   userName,
   avatarImageURL,
   isNotificationPresent = false,
-}: MainPageRenderProps) => {
+  isLoading,
+}: MainPageRenderPropsWithLoading) => {
+  if (isLoading) {
+    return (
+      <Wrapper>
+        <HeaderWithMargin
+          isNotificationPresent={false}
+          userName='User'
+        />
+        <TotalBalance
+          amount={0}
+        />
+        <Wallet
+          amount={0}
+        />
+        <Wealth
+          amount={0}
+        />
+        <RecentTransactions isLoading />
+        <InvestButton href='/invest'/>
+      </Wrapper>
+    );
+  }
+
   const totalBalanceAmount = walletAmount + wealthAmount;
   return (
     <Wrapper>
@@ -93,11 +139,7 @@ const MainPageRender = ({
         yieldValuePercentage={yieldValuePercentage}
         averageAPY={averageAPY}
       />
-      {
-        transactions ?
-        <RecentTransactions transactions={transactions} /> :
-        <RecentTransactions isLoading />
-      }
+      <RecentTransactions transactions={transactions} />
       <InvestButton href='/invest'/>
     </Wrapper>
   );
