@@ -26,13 +26,7 @@ interface LoadingProps {
    * Should component display loading skeleton?
    */
   isLoading: true;
-  /**
-   * Array of transactions
-   */
   transactions?: never;
-  /**
-   * Duration of the transition (in ms), defaults to 500ms
-   */
   transitionDuration?: never;
 };
 
