@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import CollapsibleContainer from './CollapsibleContainer';
@@ -32,12 +32,22 @@ const Wallet = ({
   amount,
   scanQROnClick,
 }: WalletProps) => {
+  const [ isContainerCollapsed, setIsContainerCollapsed ] = useState(false);
+
+  const handleCollapseClick = () => {
+    setIsContainerCollapsed(!isContainerCollapsed);
+  };
+
+  const inactive = amount === 0;
+
   return (
     <CollapsibleContainer
       label='Wallet'
+      isCollapsed={isContainerCollapsed}
+      handleCollapseClick={handleCollapseClick}
       primaryContent={
         <ContentContainer>
-          <AmountDisplay amount={amount} size='small' inactive={amount === 0}/>
+          <AmountDisplay amount={amount} size='small' inactive={inactive}/>
           <IconButton
             size='large'
             backgroundColor='#020202'

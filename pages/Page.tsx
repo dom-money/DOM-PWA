@@ -1,19 +1,21 @@
 /* eslint-disable require-jsdoc */
 import { AppProps } from 'next/app';
 import React, { useContext } from 'react';
-import LoadingPage from '../components/LoadingPage';
+import SplashScreenPage from '../components/SplashScreenPage';
 import LoginPageRender from '../components/LoginPageRender';
+import LoadingContext, { LoadingContextType } from '../context/LoadingContext';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
 
 const Page = ({ Component, pageProps }: AppProps) => {
+  const { isAppLoaded } = useContext(LoadingContext) as LoadingContextType;
+
   const {
     provider,
     login,
-    isAuthLoaded,
   } = useContext(AuthContext) as AuthContextType;
 
-  if (!isAuthLoaded) {
-    return <LoadingPage />;
+  if (!isAppLoaded) {
+    return <SplashScreenPage />;
   }
 
   return (

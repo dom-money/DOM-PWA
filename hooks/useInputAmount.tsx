@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 type useInputAmountType = (balance: number) => [
   amount: string,
+  amountUnformatted: string,
   isValid: boolean,
   errorMessage: string,
   handleChange: ({ formattedValue, value }:HandleInputChangeType) => void,
@@ -15,6 +16,7 @@ interface HandleInputChangeType {
 
 const useInputAmount: useInputAmountType = (balance) => {
   const [ amount, setAmount ] = useState('');
+  const [ amountUnformatted, setAmountUnformatted ] = useState('');
   const [ numericAmount, setNumericAmount ] = useState(0);
   const [ errorMessage, setErrorMessage ] = useState('');
 
@@ -25,6 +27,7 @@ const useInputAmount: useInputAmountType = (balance) => {
     value,
   }: HandleInputChangeType) => {
     setAmount(formattedValue);
+    setAmountUnformatted(value);
     const numericAmountValue = parseFloat(value);
     setNumericAmount(numericAmountValue);
     if (value && value.length > 0) {
@@ -47,7 +50,14 @@ const useInputAmount: useInputAmountType = (balance) => {
     setAmount('');
   };
 
-  return [ amount, isValid, errorMessage, handleChange, handleClear ];
+  return [
+    amount,
+    amountUnformatted,
+    isValid,
+    errorMessage,
+    handleChange,
+    handleClear,
+  ];
 };
 
 export default useInputAmount;

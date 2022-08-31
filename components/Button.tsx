@@ -32,7 +32,7 @@ interface ButtonProps {
    */
   href?: string;
   /**
-   * Button typ
+   * Button type
    */
   type?: 'submit' | 'button';
 }

@@ -9,7 +9,11 @@ interface TotalBalanceProps {
    * Currency amount
    */
   amount: number;
-}
+  /**
+   * Should title be 'Available Balance'?
+   */
+  asAvailableBalance?: boolean;
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,10 +30,12 @@ const AmountDisplayWithMargin = styled(AmountDisplay)`
   margin-bottom: 2.875rem;
 `;
 
-const TotalBalance = ({ amount }: TotalBalanceProps) => {
+const TotalBalance = ({ amount, asAvailableBalance }: TotalBalanceProps) => {
   return (
     <Wrapper>
-      <TitleWithMargin text='Total Balance'/>
+      <TitleWithMargin text={
+        asAvailableBalance ? 'Available Balance' : 'Total Balance'
+      }/>
       <AmountDisplayWithMargin
         amount={amount}
         size='medium'

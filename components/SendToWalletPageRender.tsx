@@ -6,12 +6,13 @@ import TotalBalance from './TotalBalance';
 import AddressInput from './AddressInput';
 import AmountInput from './AmountInput';
 import Button from './Button';
+import Loading from './Loading';
 
 interface SendToWalletPageRenderProps {
   /**
-   * Total Balance Amount
+   * Available Balance Amount
    */
-  totalAmount: number;
+  availableBalance: number;
   /**
    * Input amount
    */
@@ -40,6 +41,10 @@ interface SendToWalletPageRenderProps {
    * Are inputs valid for submission?
    */
   areInputsValid: boolean,
+  /**
+   * Is Component in the process of submitting data?
+   */
+  isSubmitting?: boolean
   /**
    * 'Send' Button Click Handler
    */
@@ -77,7 +82,7 @@ const ButtonContainer = styled.div`
 `;
 
 const SendToWalletPageRender = ({
-  totalAmount,
+  availableBalance,
   inputAmount,
   onInputAmountChange,
   inputAddress,
@@ -85,6 +90,7 @@ const SendToWalletPageRender = ({
   onInputAddressFocus,
   inputAmountErrorMessage = '',
   areInputsValid = false,
+  isSubmitting,
   getContactOnClick,
   scanQROnClick,
   sendButtonOnClick,
@@ -98,45 +104,50 @@ const SendToWalletPageRender = ({
     sendButtonOnClick();
   };
   return (
-    <Wrapper>
-      <HeaderWithMargin
-        href={'/'}
-      />
-      <TotalBalance
-        amount={totalAmount}
-      />
-      <form onSubmit={handleSubmit}>
-        <AddressInput
-          label='Enter Or Choose Address'
-          inputID='send-to-address-input'
-          addressValue={inputAddress}
-          onValueChange={onInputAddressChange}
-          onFocus={onInputAddressFocus}
-          getContactOnClick={getContactOnClick}
-          scanQROnClick={scanQROnClick}
+    <>
+      <Wrapper>
+        <HeaderWithMargin
+          href={'/'}
         />
-        <AmountInput
-          label='Enter Amount To Transfer'
-          inputID='amount-to-transfer-input'
-          amount={inputAmount}
-          onInputChange={onInputAmountChange}
-          errorMessage={inputAmountErrorMessage}
-          autoFocus={false}
+        <TotalBalance
+          amount={availableBalance}
+          asAvailableBalance
         />
-        <ButtonContainer>
-          <Button
-            label='Send'
-            primary
-            disabled={!areInputsValid}
-            type='submit'
+        <form onSubmit={handleSubmit}>
+          <AddressInput
+            label='Enter Or Choose Address'
+            inputID='send-to-address-input'
+            addressValue={inputAddress}
+            onValueChange={onInputAddressChange}
+            onFocus={onInputAddressFocus}
+            getContactOnClick={getContactOnClick}
+            scanQROnClick={scanQROnClick}
           />
-          <Button
-            label='Clear'
-            onClick={clearButtonOnClick}
+          <AmountInput
+            label='Enter Amount To Transfer'
+            inputID='amount-to-transfer-input'
+            amount={inputAmount}
+            onInputChange={onInputAmountChange}
+            errorMessage={inputAmountErrorMessage}
+            autoFocus={false}
           />
-        </ButtonContainer>
-      </form>
-    </Wrapper>
+          <ButtonContainer>
+            <Button
+              label='Send'
+              primary
+              disabled={!areInputsValid || isSubmitting}
+              type='submit'
+              onClick={sendButtonOnClick}
+            />
+            <Button
+              label='Clear'
+              onClick={clearButtonOnClick}
+            />
+          </ButtonContainer>
+        </form>
+      </Wrapper>
+      {isSubmitting && <Loading primary />}
+    </>
   );
 };
 

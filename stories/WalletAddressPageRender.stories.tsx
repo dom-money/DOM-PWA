@@ -23,6 +23,5 @@ const Template: ComponentStory<typeof WalletAddressPageRender> = (args) =>
 
 export const Default = Template.bind({});
 Default.args = {
-  totalAmount: 0,
   address: '0x64ff637fb478863b7468bc97d30a5bf3a428a1fd',
 };

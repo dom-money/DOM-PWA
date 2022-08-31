@@ -1,5 +1,6 @@
 /* eslint-disable require-jsdoc */
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import Router from 'next/router';
 import { Web3Auth } from '@web3auth/web3auth';
 import {
   CHAIN_NAMESPACES,
@@ -14,7 +15,9 @@ import { ThemeType } from '../styles/theme';
 
 const clientId = process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID as string;
 
-const useAuth = () => {
+const useAuth = (
+    setIsAuthLoaded: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const [ web3auth, setWeb3auth ] =
     useState<Web3Auth | null>(null);
   const [ provider, setProvider ] =
@@ -23,9 +26,6 @@ const useAuth = () => {
     useState<ethers.providers.Web3Provider | null>(null);
   const [ signer, setSigner ] =
     useState<ethers.providers.JsonRpcSigner | null>(null);
-
-  // Shows if web3Auth instance & provider are ready and autologin process ended
-  const [ isAuthLoaded, setIsAuthLoaded ] = useState(false);
 
   const theme = useTheme() as ThemeType;
 
@@ -43,6 +43,16 @@ const useAuth = () => {
   const setEthersProviderAndSinger = (web3auth: Web3Auth) => {
     const ethersProvider =
         new ethers.providers.Web3Provider(web3auth.provider as any);
+
+    // Implementing reload on network change
+    ethersProvider.on('network', (newNetwork, oldNetwork) => {
+      // When a Provider makes its initial connection, it emits a "network"
+      // event with a null oldNetwork along with the newNetwork. So, if the
+      // oldNetwork exists, it represents a changing network
+      if (oldNetwork) {
+        Router.reload();
+      }
+    });
     setEthersProvider(ethersProvider);
     const signer = ethersProvider.getSigner();
     setSigner(signer);
@@ -126,7 +136,6 @@ const useAuth = () => {
     provider,
     ethersProvider,
     signer,
-    isAuthLoaded,
     login,
     logout,
   };

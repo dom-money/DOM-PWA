@@ -1,23 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 
 import SendToWalletPageRender from '../../components/SendToWalletPageRender';
 
-import useUSDCBalance from '../../hooks/useUSDCBalance';
+import AddressQRReader from '../../components/AddressQRReader';
+import PaymentStatus from '../../components/PaymentStatus';
+import useWalletBalance from '../../hooks/useWalletBalance';
 import useInputAmount from '../../hooks/useInputAmount';
 import useInputAddress from '../../hooks/useInputAddress';
-import AddressQRReader from '../../components/AddressQRReader';
 import useQRAddressReader from '../../hooks/useQRAddressReader';
+import useSendToWallet from '../../hooks/useSendToWallet';
+
 
 const SendToWalletPage: NextPage = () => {
   const [
     walletBalance,
+    ,
     isWalletBalanceLoading,
     hasWalletBalanceError,
-  ] = useUSDCBalance();
+  ] = useWalletBalance();
 
   const [
     inputAmount,
+    inputAmountUnformatted,
     inputAmountIsValid,
     inputAmountErrorMessage,
     inputAmountHandleChange,
@@ -40,6 +45,44 @@ const SendToWalletPage: NextPage = () => {
     handleQRDialogClose,
   ] = useQRAddressReader({ setInputAddress: setInputAddress });
 
+  const [
+    sendToWallet,
+    transactionResult,
+    isTransactionLoading,
+    transactionErrorMessage,
+    handleUseSendToWalletStateClear,
+  ] = useSendToWallet();
+
+  const [ isPaymentStatusOpen, setIsPaymentStatusOpen ] = useState(false);
+  const [ preserveState, setPreserveState ] = useState(false);
+
+  useEffect(() => {
+    if (transactionResult || transactionErrorMessage) {
+      setIsPaymentStatusOpen(true);
+    }
+  }, [ transactionResult, transactionErrorMessage ]);
+
+  const handleSendToWallet = () => {
+    sendToWallet(inputAmountUnformatted, inputAddress);
+  };
+
+  const handlePaymentStatusDrawerClose = (shouldPreserveState?: boolean) => {
+    if (shouldPreserveState) {
+      setPreserveState(true);
+    }
+    setIsPaymentStatusOpen(false);
+  };
+
+  const handlePaymentStatusDrawerOnExited = () => {
+    if (preserveState) {
+      handleUseSendToWalletStateClear();
+      setPreserveState(false);
+      return;
+    }
+    handleUseSendToWalletStateClear();
+    handleClearInputs();
+  };
+
   const isSubmitReady = inputAmountIsValid && inputAddessIsValid;
 
   const handleClearInputs = () => {
@@ -55,7 +98,7 @@ const SendToWalletPage: NextPage = () => {
   return (
     <>
       <SendToWalletPageRender
-        totalAmount={walletBalance}
+        availableBalance={walletBalance}
         inputAmount={inputAmount}
         onInputAmountChange={inputAmountHandleChange}
         inputAddress={inputAddress}
@@ -64,12 +107,29 @@ const SendToWalletPage: NextPage = () => {
         inputAmountErrorMessage={inputAmountErrorMessage}
         scanQROnClick={handleQRDialogOpen}
         areInputsValid={isSubmitReady}
+        isSubmitting={isTransactionLoading}
+        sendButtonOnClick={handleSendToWallet}
         clearButtonOnClick={handleClearInputs}
       />
       <AddressQRReader
         isOpen={isQRDialogOpen}
         onResult={handleQRReaderResult}
         onClose={handleQRDialogClose}
+      />
+      <PaymentStatus
+        type={transactionResult ? 'successful' : 'failed'}
+        isOpen={isPaymentStatusOpen}
+        onClose={() => handlePaymentStatusDrawerClose()}
+        onExited={handlePaymentStatusDrawerOnExited}
+        paymentTo={inputAddress}
+        amount={inputAmount}
+        message='Submitted successfully'
+        errorMessage={
+          transactionErrorMessage ?
+          transactionErrorMessage : undefined
+        }
+        sendAgainOnClick={() => handlePaymentStatusDrawerClose()}
+        tryAgainOnClick={() => handlePaymentStatusDrawerClose(true)}
       />
     </>
   );

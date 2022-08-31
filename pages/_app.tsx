@@ -1,30 +1,18 @@
 import React from 'react';
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
 import { AppProps } from 'next/app';
 import LogRocket from 'logrocket';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../styles/theme';
 import GlobalStyle from '../styles/global';
-import LoadingPage from '../components/LoadingPage';
+import Page from './Page';
+
+import ContextProviders from '../context/ContextProviders';
 
 import '@fontsource/inter/300.css';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/roboto-mono/400.css';
-
-const DynamicContextProviders = dynamic(
-    () => import('../context/ContextProviders'),
-    {
-      ssr: false,
-      loading: () => <LoadingPage />,
-    },
-);
-
-const DynamicPage = dynamic(() => import('./Page'), {
-  ssr: false,
-  loading: () => <LoadingPage />,
-});
 
 LogRocket.init('8dtdv2/dom');
 
@@ -66,11 +54,11 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <DynamicContextProviders>
-          <Container>
-            <DynamicPage Component={Component} {...pageProps}/>
-          </Container>
-        </DynamicContextProviders>
+        <Container>
+          <ContextProviders>
+            <Page Component={Component} {...pageProps}/>
+          </ContextProviders>
+        </Container>
       </ThemeProvider>
     </>
   );

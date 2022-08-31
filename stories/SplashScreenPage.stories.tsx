@@ -1,20 +1,20 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import LoadingPage from '../components/LoadingPage';
+import SplashScreenPage from '../components/SplashScreenPage';
 
 export default {
-  title: 'Pages/Loading Page',
-  component: LoadingPage,
+  title: 'Pages/Splash Screen Page',
+  component: SplashScreenPage,
   parameters: {
     layout: 'fullscreen',
     viewport: {
       defaultViewport: 'iphone12promax',
     },
   },
-} as ComponentMeta<typeof LoadingPage>;
+} as ComponentMeta<typeof SplashScreenPage>;
 
-const Template: ComponentStory<typeof LoadingPage> = () =>
-  <LoadingPage/>;
+const Template: ComponentStory<typeof SplashScreenPage> = () =>
+  <SplashScreenPage/>;
 
 export const Default = Template.bind({});

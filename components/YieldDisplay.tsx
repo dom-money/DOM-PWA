@@ -5,6 +5,10 @@ import { ThemeType } from '../styles/theme';
 
 interface YieldDisplayProps {
   /**
+   * Type of Yield Display
+   */
+  type?: 'short' | 'long';
+  /**
    * Yield value
    */
   yieldValue: number;
@@ -15,7 +19,7 @@ interface YieldDisplayProps {
   /**
    * Average Annual percentage yield value
    */
-  averageAPY: number;
+  averageAPY?: number;
   /**
    * Prop for extending styled-components style
    */
@@ -33,11 +37,16 @@ const YieldContainer = styled.div`
   gap: 0.125rem;
 `;
 
-const YieldText = styled.p`
+const Text = styled.p`
   font-size: 0.75rem;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   margin: 0;
+  color: #ffffff;
+`;
+
+const SuccessText = styled(Text)`
+  font-weight: 500;
   color: ${(props) => props.theme.colors.success};
 `;
 
@@ -46,29 +55,37 @@ const StyledTriangleIcon = styled(TriangleIcon)`
   top: 4px;
 `;
 
-const AverageAPYText = styled(YieldText)`
-  color: #ffffff;
-  font-weight: 400;
-`;
-
 const YieldDisplay = ({
+  type = 'short',
   yieldValue,
   yieldValuePercentage,
-  averageAPY,
+  averageAPY = 0,
   ...props
 }: YieldDisplayProps) => {
   const theme = useTheme() as ThemeType;
+  if (type === 'short') {
+    return (
+      <Wrapper {...props}>
+        <SuccessText>
+          +${yieldValue}
+        </SuccessText>
+        <Text>
+          +{yieldValuePercentage}%
+        </Text>
+      </Wrapper>
+    );
+  }
   return (
     <Wrapper {...props}>
       <YieldContainer>
         <StyledTriangleIcon color={theme.colors.success} />
-        <YieldText>
+        <SuccessText>
           ${yieldValue} (+{yieldValuePercentage}%)
-        </YieldText>
+        </SuccessText>
       </YieldContainer>
-      <AverageAPYText>
+      <Text>
         Average APY {averageAPY}%
-      </AverageAPYText>
+      </Text>
     </Wrapper>
   );
 };

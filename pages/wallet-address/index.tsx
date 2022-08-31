@@ -1,10 +1,10 @@
 import React from 'react';
 import type { NextPage } from 'next';
+import { useSnackbar } from 'notistack';
 
 import WalletAddressPageRender from '../../components/WalletAddressPageRender';
 
 import useWalletAddress from '../../hooks/useWalletAddress';
-import useUSDCBalance from '../../hooks/useUSDCBalance';
 
 const WalletAddressPage: NextPage = () => {
   const [
@@ -13,27 +13,45 @@ const WalletAddressPage: NextPage = () => {
     hasWalletAddressError,
   ] = useWalletAddress();
 
-  const [ balance, isBalanceLoading, hasBalanceError ] = useUSDCBalance();
+  const { enqueueSnackbar } = useSnackbar();
 
   if (isWalletAddressLoading ||
     hasWalletAddressError ||
-    isBalanceLoading ||
-    hasBalanceError) {
+    !walletAddress) {
     return null;
   };
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(walletAddress).then(()=> {
-      alert('Successfully copied wallet address to clipboard');
+      enqueueSnackbar(
+          'Successfully copied wallet address to clipboard',
+          {
+            variant: 'default',
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'center',
+            },
+          },
+      );
     });
+  };
+
+  const handleAddressShare = async () => {
+    if (!navigator[ 'canShare' ]) {
+      return;
+    };
+    try {
+      await navigator.share({ text: walletAddress });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <WalletAddressPageRender
-      totalAmount={balance}
       address={walletAddress}
       copyAddressButtonOnClick={copyToClipboard}
-      shareButtonOnClick={() => {}}
+      shareButtonOnClick={handleAddressShare}
     />
   );
 };
