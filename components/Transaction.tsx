@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Skeleton from '@mui/material/Skeleton';
 import GenericTransactionIcon from '../styles/icons/GenericTransactionIcon';
 import dateStringifier from '../utils/dateStringifier';
+import formatAmountString from '../utils/formatAmountString';
 
 type TransactionType =
   | 'Crypto Top Up'
@@ -198,7 +199,7 @@ const Transaction = ({
             <>
               {incomeOrOutcomeType === 'income' && '+'}
               {incomeOrOutcomeType === 'outcome' && '-'}
-              ${amount}
+              ${formatAmountString(amount, 2)}
             </>
           }
         </AmountText>
