@@ -148,14 +148,10 @@ const useTransactions = () => {
   const { signer } = useContext(AuthContext) as AuthContextType;
 
   const {
-    depositToWalletEventData,
-    sentFromWalletEventData,
+    walletEvent,
   } = useContext(EventListenersContext) as EventListenersContextType;
 
-  const debouncedWalletEvent = useDebounce(
-      [ depositToWalletEventData, sentFromWalletEventData ],
-      15000,
-  );
+  const debouncedWalletEvent = useDebounce(walletEvent, 15000);
 
   return useQuery(
       [ 'transactions', debouncedWalletEvent ],
