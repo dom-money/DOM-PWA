@@ -27,6 +27,10 @@ interface CollapsibleContainerProps {
    */
   secondaryContent?: React.ReactNode;
   /**
+   * Should Collapse Button be active even without Secondary Content?
+   */
+  shouldCollapseButtonBeAlwaysActive?: boolean;
+  /**
    * Should secondary content be outside of container?
    */
   shouldSecondaryContentBeOutside?: boolean;
@@ -70,7 +74,7 @@ const SecondaryContentElement = styled.div<{isCollapsed: boolean}>`
   `}
 `;
 
-const IconWrapper = styled(IconButtonCircular)<{isCollapsed: boolean}>`
+const IconWrapper = styled(IconButtonCircular)<{isCollapsed?: boolean}>`
   transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   ${(props) => props.isCollapsed && `
     transform: rotate(180deg);
@@ -83,6 +87,7 @@ const CollapsibleContainer = ({
   handleCollapseClick,
   primaryContent,
   secondaryContent,
+  shouldCollapseButtonBeAlwaysActive = false,
   shouldSecondaryContentBeOutside = false,
   transitionDuration = 300,
 }: CollapsibleContainerProps) => {
@@ -91,14 +96,23 @@ const CollapsibleContainer = ({
       <CollapsibleWrapper>
         <Header>
           <Title text={label} />
-          <IconWrapper
-            ariaLabel={`Collapse ${label} Container`}
-            data-testid={`${label}OpenCloseIcon`.replace(/ /g, '')}
-            onClick={handleCollapseClick}
-            isCollapsed={isCollapsed}
-          >
-            <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>
-          </IconWrapper>
+          {
+            secondaryContent || shouldCollapseButtonBeAlwaysActive ?
+            <IconWrapper
+              ariaLabel={`Collapse ${label} Container`}
+              data-testid={`${label}OpenCloseIcon`.replace(/ /g, '')}
+              onClick={handleCollapseClick}
+              isCollapsed={isCollapsed}
+            >
+              <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>
+            </IconWrapper> :
+            <IconWrapper
+              ariaLabel={`Disabled Button`}
+              disabled
+            >
+              <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>
+            </IconWrapper>
+          }
         </Header>
         <Contents>
           {primaryContent}

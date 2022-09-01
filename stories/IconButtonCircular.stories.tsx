@@ -24,3 +24,10 @@ Button.args = {
   children: <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>,
   ariaLabel: 'Collapse Container',
 };
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  children: <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>,
+  disabled: true,
+  ariaLabel: 'Disabled Button',
+};
