@@ -65,7 +65,7 @@ const WithdrawPage: NextPage = () => {
   };
 
   if (isWealthBalanceLoading || hasWealthBalanceError) {
-    return null;
+    return <WithdrawPageRender isLoading />;
   };
 
   return (

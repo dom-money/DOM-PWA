@@ -48,7 +48,7 @@ const MainPage: NextPage = () => {
     hasWealthBalanceError ||
     (transactions.isLoading || transactions.isError)
   ) {
-    return <MainPageRender isLoading />;
+    return <MainPageRender isLoading userName='User' />;
   };
 
   return (
