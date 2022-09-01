@@ -30,7 +30,7 @@ interface LoadingProps {
   transitionDuration?: never;
 };
 
-type TransactionPropsWithLoading = LoadingProps | RecentTransactionsProps;
+type Props = LoadingProps | RecentTransactionsProps;
 
 interface FadeOpacityProps {
   status: TransitionStatus;
@@ -107,7 +107,7 @@ const RecentTransactions = ({
   transactions,
   isLoading,
   transitionDuration = 500,
-}: TransactionPropsWithLoading) => {
+}: Props) => {
   const [ isContainerCollapsed, setIsContainerCollapsed ] = useState(false);
 
   const handleCollapseClick = () => {

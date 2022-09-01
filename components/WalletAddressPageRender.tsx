@@ -7,6 +7,10 @@ import Button from './Button';
 
 interface WalletAddressPageRenderProps {
   /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
+  /**
    * Wallet Address
    */
   address: string;
@@ -18,7 +22,19 @@ interface WalletAddressPageRenderProps {
    * 'Share' Button Click handler
    */
   shareButtonOnClick?: () => void;
-}
+};
+
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  address?: never;
+  copyAddressButtonOnClick?: never;
+  shareButtonOnClick?: never;
+};
+
+type Props = LoadingProps | WalletAddressPageRenderProps;
 
 const Wrapper = styled.div`
   padding: 1.625rem 0.313rem;
@@ -37,7 +53,30 @@ const WalletAddressPageRender = ({
   address,
   copyAddressButtonOnClick,
   shareButtonOnClick,
-}: WalletAddressPageRenderProps) => {
+  isLoading,
+}: Props) => {
+  if (isLoading) {
+    return (
+      <Wrapper>
+        <HeaderWithMargin
+          href={'/'}
+        />
+        <WalletAddress isLoading/>
+        <ButtonContainer>
+          <Button
+            label='Copy Address'
+            primary
+            disabled
+          />
+          <Button
+            label='Share'
+            disabled
+          />
+        </ButtonContainer>
+      </Wrapper>
+    );
+  };
+
   return (
     <Wrapper>
       <HeaderWithMargin

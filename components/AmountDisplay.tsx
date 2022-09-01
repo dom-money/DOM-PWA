@@ -1,10 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import Skeleton from '@mui/material/Skeleton';
 
 type sizeType = 'small' | 'medium';
 type inactiveType = boolean;
 
 interface AmountDisplayProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
   /**
    * Currency amount
    */
@@ -21,7 +26,26 @@ interface AmountDisplayProps {
    * Prop for extending styled-components style
    */
   className?: string;
-}
+};
+
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  /**
+   * Amount Display Size (small: 40px, medium: 48px)
+   */
+  size?: sizeType;
+  /**
+   * Prop for extending styled-components style
+   */
+  className?: string;
+  amount?: never;
+  inactive?: never;
+};
+
+type Props = LoadingProps | AmountDisplayProps;
 
 const calculateAmountTextSizeCSS = (size: sizeType) => {
   if (size === 'small') {
@@ -58,7 +82,7 @@ const Container = styled.div`
   scrollbar-width: none;
 `;
 
-const AmountText = styled.h3<{size: sizeType, inactive: inactiveType}>`
+const AmountText = styled.h3<{size: sizeType, inactive?: inactiveType}>`
   font-style: normal;
   font-weight: 400;
   ${(props) => calculateAmountTextSizeCSS(props.size)};
@@ -87,8 +111,25 @@ const AmountDisplay = ({
   size = 'small',
   inactive = false,
   className,
+  isLoading,
   ...props
-}: AmountDisplayProps) => {
+}: Props) => {
+  if (isLoading) {
+    return (
+      <Container className={className}>
+        <Skeleton
+          variant='text'
+          width='12rem'
+          sx={{
+            bgcolor: 'grey.800',
+            textTransform: 'uppercase',
+            fontSize: size === 'medium' ? '3rem' : '2.5rem',
+          }}
+        />
+      </Container>
+    );
+  };
+
   const amountLocaleString = amount.toLocaleString(
       'en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 },
   );

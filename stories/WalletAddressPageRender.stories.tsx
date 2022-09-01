@@ -25,3 +25,14 @@ export const Default = Template.bind({});
 Default.args = {
   address: '0x64ff637fb478863b7468bc97d30a5bf3a428a1fd',
 };
+
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
+};
+Loading.parameters = {
+  controls: {
+    hideNoControlsWarning: true,
+    exclude: [ 'shareButtonOnClick', 'copyAddressButtonOnClick', 'isLoading' ],
+  },
+};

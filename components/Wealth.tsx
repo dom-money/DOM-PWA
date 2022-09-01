@@ -10,6 +10,10 @@ import YieldDisplay from './YieldDisplay';
 
 interface WealthProps {
   /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
+  /**
    * Currency amount
    */
   amount: number;
@@ -25,7 +29,20 @@ interface WealthProps {
    * Average Annual percentage yield value
    */
   averageAPY?: number;
-}
+};
+
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  amount?: never;
+  yieldValue?: never;
+  yieldValuePercentage?: never;
+  averageAPY?: never;
+};
+
+type Props = LoadingProps | WealthProps;
 
 const ContentContainer = styled.div`
   display: flex;
@@ -54,10 +71,27 @@ const Wealth = ({
   yieldValue = 0,
   yieldValuePercentage = 0,
   averageAPY = 0,
-}: WealthProps) => {
+  isLoading,
+}: Props) => {
   const [ isContainerCollapsed, setIsContainerCollapsed ] = useState(false);
 
   const [ selectedPeriodTabID, setSelectedPeriodTabID ] = useState(0);
+
+  if (isLoading) {
+    return (
+      <CollapsibleContainer
+        label='Wealth'
+        isCollapsed={false}
+        primaryContent={
+          <ContentContainer>
+            <AmountTopContainer>
+              <AmountDisplay isLoading size='small' />
+            </AmountTopContainer>
+          </ContentContainer>
+        }
+      />
+    );
+  };
 
   const handleCollapseClick = () => {
     setIsContainerCollapsed(!isContainerCollapsed);
@@ -147,6 +181,7 @@ const Wealth = ({
             </AmountTopContainer>
           </ContentContainer>
         }
+        shouldCollapseButtonBeAlwaysActive={true}
       />
     );
   };
@@ -159,6 +194,7 @@ const Wealth = ({
       primaryContent={isContainerCollapsed ?
         <PrimaryContentCollapsed /> : <PrimaryContentNotCollapsed />
       }
+      shouldCollapseButtonBeAlwaysActive={true}
     />
   );
 };

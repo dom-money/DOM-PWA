@@ -6,6 +6,10 @@ import AmountDisplay from './AmountDisplay';
 
 interface TotalBalanceProps {
   /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
+  /**
    * Currency amount
    */
   amount: number;
@@ -14,6 +18,20 @@ interface TotalBalanceProps {
    */
   asAvailableBalance?: boolean;
 };
+
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  /**
+   * Should title be 'Available Balance'?
+   */
+  asAvailableBalance?: boolean;
+  amount?: never;
+};
+
+type Props = LoadingProps | TotalBalanceProps;
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,16 +48,17 @@ const AmountDisplayWithMargin = styled(AmountDisplay)`
   margin-bottom: 2.875rem;
 `;
 
-const TotalBalance = ({ amount, asAvailableBalance }: TotalBalanceProps) => {
+const TotalBalance = ({ amount, asAvailableBalance, isLoading }: Props) => {
   return (
     <Wrapper>
       <TitleWithMargin text={
         asAvailableBalance ? 'Available Balance' : 'Total Balance'
       }/>
-      <AmountDisplayWithMargin
-        amount={amount}
-        size='medium'
-      />
+      {
+        isLoading ?
+        <AmountDisplayWithMargin isLoading size='medium'/> :
+        <AmountDisplayWithMargin amount={amount} size='medium' />
+      }
     </Wrapper>
   );
 };

@@ -44,29 +44,14 @@ interface LoadingProps {
    * Should component display loading skeleton?
    */
   isLoading: true;
-  /**
-   * Transaction ID
-   */
   id?: never;
-  /**
-   * Transaction name
-   */
   name?: never;
-  /**
-   * Transaction type
-   */
   type?: never;
-  /**
-   * Transaction time and date (UTC Epoch in seconds)
-   */
   timestamp?: never;
-  /**
-   * Transaction amount
-   */
   amount?: never;
 };
 
-type TransactionPropsWithLoading = LoadingProps | TransactionProps;
+type Props = LoadingProps | TransactionProps;
 
 interface TextSkeletonProps {
   type?: 'nameText';
@@ -163,10 +148,7 @@ const TextSkeleton = ({ type }: TextSkeletonProps) =>
   <Skeleton
     variant='text'
     width={type === 'nameText' ? '8rem' : '4rem'}
-    sx={{
-      bgcolor: 'grey.800',
-      fontSize: type === 'nameText' ? '0.875rem' : '0.75rem',
-    }}
+    sx={{ bgcolor: 'grey.800' }}
   />;
 
 const Transaction = ({
@@ -176,7 +158,7 @@ const Transaction = ({
   timestamp,
   amount,
   isLoading,
-}: TransactionPropsWithLoading) => {
+}: Props) => {
   const incomeOrOutcomeType = incomeOrOutcome(type ?? null);
 
   return (

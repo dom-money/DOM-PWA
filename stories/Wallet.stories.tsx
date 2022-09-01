@@ -37,3 +37,14 @@ export const Inactive = Template.bind({});
 Inactive.args = {
   amount: 0,
 };
+
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
+};
+Loading.parameters = {
+  controls: {
+    hideNoControlsWarning: true,
+    exclude: [ 'scanQROnClick', 'isLoading' ],
+  },
+};
