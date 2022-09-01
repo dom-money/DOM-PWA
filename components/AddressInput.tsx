@@ -39,6 +39,10 @@ interface AddressInputProps {
    * 'Scan QR' Button Click handler
    */
   scanQROnClick?: () => void;
+  /**
+   * Is input disabled
+   */
+  disabled?: boolean;
 };
 
 const Container = styled.div`
@@ -116,8 +120,53 @@ const AddressInput = ({
   mask = '0xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
   getContactOnClick,
   scanQROnClick,
+  disabled,
 }: AddressInputProps) => {
   const maskToDisplay = mask.slice(addressValue.length);
+
+  if (disabled) {
+    return (
+      <GenericContainer
+        label={label}
+        titleHtmlElement='label'
+        inputID={inputID}
+        content={
+          <Container>
+            <InputWrapper>
+              <TextInput
+                id={inputID}
+                spellCheck={false}
+                value={addressValue}
+                disabled
+              />
+              <MaskContainer>
+                <MaskHidden>{addressValue}</MaskHidden>
+                <Mask>{maskToDisplay}</Mask>
+              </MaskContainer>
+            </InputWrapper>
+            <IconContainer>
+              <IconButton
+                size='large'
+                backgroundColor='#020202'
+                ariaLabel='Disabled "Get Contact" Button'
+                disabled
+              >
+                <ContactsIcon color='#ffffff' />
+              </IconButton>
+              <IconButton
+                size='large'
+                backgroundColor='#020202'
+                ariaLabel='Disabled "Scan QR" Button'
+                disabled
+              >
+                <ScanQRIcon color='#ffffff' />
+              </IconButton>
+            </IconContainer>
+          </Container>
+        }
+      />
+    );
+  };
 
   // eslint-disable-next-line max-len
   const allowedValuePattern = /^(?:0|0x|0x[\da-f]{1,40}|0x0x[\da-f]{1,40})$/i;
