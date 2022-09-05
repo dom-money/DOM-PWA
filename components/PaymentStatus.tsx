@@ -229,6 +229,7 @@ const PaymentStatus = ({
       SlideProps={{
         mountOnEnter: true,
         unmountOnExit: true,
+        appear: true,
         onExited: onExited,
       }}
       sx={(theme) => ({
