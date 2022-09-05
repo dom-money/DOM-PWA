@@ -7,6 +7,7 @@ import {
   SafeEventEmitterProvider,
   ADAPTER_EVENTS,
 } from '@web3auth/base';
+import type { OpenloginUserInfo } from '@toruslabs/openlogin';
 import { ethers } from 'ethers';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { MetamaskAdapter } from '@web3auth/metamask-adapter';
@@ -16,35 +17,49 @@ import { ThemeType } from '../styles/theme';
 const clientId = process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID as string;
 
 export type Web3authType = Web3Auth | null;
-export type ProviderType = SafeEventEmitterProvider | null;
+export type Web3AuthProviderType = SafeEventEmitterProvider | null;
 export type EthersProviderType = ethers.providers.Web3Provider | null;
 export type SignerType = ethers.providers.JsonRpcSigner | null;
+export type UserType = typeof defaultUser & Partial<OpenloginUserInfo>;
+
+export const defaultUser = {
+  email: '',
+  name: 'Anonymous User',
+  profileImage: '',
+};
 
 const useAuth = (
     setIsAuthLoaded: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const [ web3auth, setWeb3auth ] = useState<Web3authType>(null);
-  const [ provider, setProvider ] = useState<ProviderType>(null);
   const [ ethersProvider, setEthersProvider ] =
     useState<EthersProviderType>(null);
   const [ signer, setSigner ] = useState<SignerType>(null);
+  const [ user, setUser ] = useState<UserType>(defaultUser);
+
+  const [ isUserLoggedIn, setIsUserLoggedIn ] = useState(false);
+  const [ isWeb3AuthLoaded, setIsWeb3AuthLoaded ] = useState(false);
+  const [ isUserDataLoading, setIsUserDataLoading ] = useState(false);
 
   const theme = useTheme() as ThemeType;
 
-  const subscribeAuthEvents = (web3auth: Web3Auth) => {
+  const subscribeToAuthEvents = (web3auth: Web3Auth) => {
     web3auth.on(ADAPTER_EVENTS.CONNECTED, () => {
-      setProvider(web3auth.provider);
       // Initializing Ethers.js Provider & Signer
       setEthersProviderAndSinger(web3auth);
+      // Fetching and setting user data
+      getUserData(web3auth);
     });
     web3auth.on(ADAPTER_EVENTS.ERRORED, () => {
-      setIsAuthLoaded(true);
+      setIsWeb3AuthLoaded(true);
     });
   };
 
   const setEthersProviderAndSinger = (web3auth: Web3Auth) => {
     const ethersProvider =
-        new ethers.providers.Web3Provider(web3auth.provider as any);
+        new ethers.providers.Web3Provider(
+          web3auth.provider as Exclude<Web3AuthProviderType, null>,
+        );
 
     // Implementing reload on network change
     ethersProvider.on('network', (newNetwork, oldNetwork) => {
@@ -58,6 +73,21 @@ const useAuth = (
     setEthersProvider(ethersProvider);
     const signer = ethersProvider.getSigner();
     setSigner(signer);
+  };
+
+  const getUserData = async (web3auth: Web3Auth) => {
+    setIsUserDataLoading(true);
+    try {
+      const response = await web3auth.getUserInfo();
+      const userData = { ...defaultUser, ...response };
+      setUser(userData);
+      setIsUserLoggedIn(true);
+      console.log(userData);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsUserDataLoading(false);
+    };
   };
 
   useEffect(() => {
@@ -75,7 +105,7 @@ const useAuth = (
           },
         });
 
-        subscribeAuthEvents(web3auth);
+        subscribeToAuthEvents(web3auth);
 
         const openloginAdapter = new OpenloginAdapter({
           adapterSettings: {
@@ -104,22 +134,25 @@ const useAuth = (
       } catch (error) {
         console.error(error);
       } finally {
-        setIsAuthLoaded(true);
-      }
+        setIsWeb3AuthLoaded(true);
+      };
     };
 
     init();
   }, []);
+
+  useEffect(() => {
+    if (isWeb3AuthLoaded && !isUserDataLoading) {
+      setIsAuthLoaded(true);
+    };
+  }, [ isWeb3AuthLoaded, isUserDataLoading ]);
 
   const login = async () => {
     if (!web3auth) {
       console.log('web3auth not initialized yet');
       return;
     };
-    const web3authProvider = await web3auth.connect();
-    setProvider(web3authProvider);
-    // Initializing Ethers.js Provider & Signer
-    setEthersProviderAndSinger(web3auth);
+    await web3auth.connect();
   };
 
   const logout = async () => {
@@ -128,14 +161,16 @@ const useAuth = (
       return;
     }
     await web3auth.logout();
-    setProvider(null);
+    setIsUserLoggedIn(false);
+    setUser(defaultUser);
     setEthersProvider(null);
     setSigner(null);
   };
 
   return {
+    isUserLoggedIn,
+    user,
     web3auth,
-    provider,
     ethersProvider,
     signer,
     login,
