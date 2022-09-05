@@ -32,6 +32,10 @@ const Template: ComponentStory<typeof Loading> = (args) => {
 export const Primary = Template.bind({});
 Primary.args={
   primary: true,
+  ariaLabel: 'Showcasing <Loading /> component',
 };
 
 export const Default = Template.bind({});
+Default.args={
+  ariaLabel: 'Showcasing <Loading /> component',
+};
