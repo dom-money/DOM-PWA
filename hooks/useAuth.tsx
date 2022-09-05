@@ -85,8 +85,8 @@ const useAuth = (
             uxMode: 'popup',
             whiteLabel: {
               name: 'DOM Wallet',
-              logoLight: 'https://web3auth.io/images/w3a-L-Favicon-1.svg',
-              logoDark: 'https://web3auth.io/images/w3a-D-Favicon-1.svg',
+              logoLight: `${location.origin}/images/logo/logo-light.svg`,
+              logoDark: `${location.origin}/images/logo/logo-dark.svg`,
               defaultLanguage: 'en',
               dark: true,
               theme: { primary: theme.colors.primary },
