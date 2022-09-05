@@ -148,7 +148,10 @@ const TextSkeleton = ({ type }: TextSkeletonProps) =>
   <Skeleton
     variant='text'
     width={type === 'nameText' ? '8rem' : '4rem'}
-    sx={{ bgcolor: 'grey.800' }}
+    sx={{
+      bgcolor: 'grey.800',
+      fontSize: type === 'nameText' ? '0.875rem' : 'inherit',
+    }}
   />;
 
 const Transaction = ({
@@ -171,9 +174,11 @@ const Transaction = ({
         }
       </IconContainer>
       <DataContainer>
-        <NameText>
-          {isLoading ? <TextSkeleton type='nameText' /> : name}
-        </NameText>
+        {
+          isLoading ?
+          <TextSkeleton type='nameText' /> :
+          <NameText>{name}</NameText>
+        }
         <AmountText type={incomeOrOutcomeType}>
           {
             isLoading ?
