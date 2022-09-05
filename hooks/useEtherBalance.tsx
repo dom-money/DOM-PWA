@@ -1,41 +1,52 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
+import { ethers, BigNumber } from 'ethers';
+import { useQuery } from '@tanstack/react-query';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
-import { ethers } from 'ethers';
+import { EthersProviderType, SignerType } from './useAuth';
 
-type useEtherBalanceType = () => [
-  balance: number,
-  isLoading: boolean,
-  isError: boolean
-]
+type EtherBalanceType = {
+  balanceAsString: string;
+  balanceAsBigNumber: BigNumber;
+};
 
-const useEtherBalance: useEtherBalanceType = () => {
+type GetEtherBalanceType = (
+  ethersProvider: EthersProviderType,
+  signer: SignerType
+) => Promise<EtherBalanceType>;
+
+const getEtherBalance: GetEtherBalanceType = async (
+    ethersProvider,
+    signer,
+) => {
+  return new Promise(async (resolve, reject) => {
+    if (!signer || !ethersProvider ) {
+      throw new Error('Signer and EthersProvider are not initialized');
+    };
+    try {
+      const receivedBalance = await signer.getBalance();
+      const balanceAsBigNumber = receivedBalance;
+      const balanceAsString = ethers.utils.formatEther(receivedBalance);
+      resolve({ balanceAsString, balanceAsBigNumber });
+    } catch (error) {
+      reject(error);
+    };
+  });
+};
+
+const useEtherBalance = () => {
   const { ethersProvider, signer } = useContext(AuthContext) as AuthContextType;
 
-  const [ balance, setBalance ] = useState(0);
-  const [ isLoading, setIsLoading ] = useState(true);
-  const [ isError, setIsError ] = useState(false);
-
-  useEffect(() => {
-    const getBalance = async () => {
-      if (!signer || !ethersProvider ) {
-        return;
-      };
-      try {
-        const address = await signer.getAddress();
-        const receivedBalance = await ethersProvider.getBalance(address);
-        setBalance(parseFloat(ethers.utils.formatEther(receivedBalance)));
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setIsError(true);
-        setIsLoading(false);
-      }
-    };
-
-    getBalance();
-  }, [ ethersProvider, signer ]);
-
-  return [ balance, isLoading, isError ];
+  return useQuery(
+      [ 'walletBalance' ],
+      () => getEtherBalance(ethersProvider, signer),
+      {
+        // The query will not execute until the `signer` and ...
+        // .. `ethersProvider` are initialized
+        enabled: !!signer && !!ethersProvider,
+        // New data on key change will be swapped without Loading state
+        keepPreviousData: true,
+      },
+  );
 };
 
 export default useEtherBalance;

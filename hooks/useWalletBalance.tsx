@@ -1,66 +1,70 @@
-import { useState, useEffect, useContext } from 'react';
-import AuthContext, { AuthContextType } from '../context/AuthContext';
+import { useContext } from 'react';
 import { ethers, BigNumber } from 'ethers';
-import genericErc20Abi from '../utils/Erc20.json';
+import { useQuery } from '@tanstack/react-query';
+import AuthContext, { AuthContextType } from '../context/AuthContext';
 import EventListenersContext, {
   EventListenersContextType,
 } from '../context/EventListenersContext';
+import { EthersProviderType, SignerType } from './useAuth';
+import genericErc20Abi from '../utils/Erc20.json';
 
-type useWalletBalanceType = () => [
-  balanceAsNumber: number,
-  balanceAsBigNumber: BigNumber,
-  isLoading: boolean,
-  isError: boolean
-];
+type WalletBalanceType = {
+  balanceAsNumber: number;
+  balanceAsBigNumber: BigNumber;
+};
 
-const useWalletBalance: useWalletBalanceType = () => {
+type GetWalletBalanceType = (
+  ethersProvider: EthersProviderType,
+  signer: SignerType
+) => Promise<WalletBalanceType>;
+
+const getWalletBalance: GetWalletBalanceType = async (
+    ethersProvider,
+    signer,
+) => {
+  return new Promise(async (resolve, reject) => {
+    if (!signer || !ethersProvider ) {
+      throw new Error('Signer and EthersProvider are not initialized');
+    };
+    try {
+      const address = await signer.getAddress();
+      const usdcContractWithProvider = new ethers.Contract(
+          process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as string,
+          genericErc20Abi,
+          ethersProvider,
+      );
+      const receivedBalance: BigNumber =
+        await usdcContractWithProvider.balanceOf(address);
+      const decimals: number = await usdcContractWithProvider.decimals();
+      const balanceAsBigNumber = receivedBalance;
+      const balanceAsNumber = parseFloat(
+          ethers.utils.formatUnits(receivedBalance, decimals),
+      );
+      resolve({ balanceAsNumber, balanceAsBigNumber });
+    } catch (error) {
+      reject(error);
+    };
+  });
+};
+
+const useWalletBalance = () => {
   const { ethersProvider, signer } = useContext(AuthContext) as AuthContextType;
 
   const {
     walletEvent,
   } = useContext(EventListenersContext) as EventListenersContextType;
 
-  const [ balanceAsNumber, setBalanceAsNumber ] = useState(0);
-  const [
-    balanceAsBigNumber,
-    setBalanceAsBigNumber,
-  ] = useState(BigNumber.from(0));
-  const [ isLoading, setIsLoading ] = useState(true);
-  const [ isError, setIsError ] = useState(false);
-
-  useEffect(() => {
-    const getBalance = async () => {
-      if (!signer || !ethersProvider ) {
-        return;
-      };
-      try {
-        const address = await signer.getAddress();
-        const contract = new ethers.Contract(
-            process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as string,
-            genericErc20Abi,
-            ethersProvider,
-        );
-        const receivedBalance: BigNumber = await contract.balanceOf(address);
-        const decimals: number = await contract.decimals();
-        setBalanceAsBigNumber(receivedBalance);
-        setBalanceAsNumber(
-            parseFloat(ethers.utils.formatUnits(receivedBalance, decimals)),
-        );
-        setIsLoading(false);
-      } catch (error) {
-        setIsError(true);
-        setIsLoading(false);
-      }
-    };
-
-    getBalance();
-  }, [
-    ethersProvider,
-    signer,
-    walletEvent,
-  ]);
-
-  return [ balanceAsNumber, balanceAsBigNumber, isLoading, isError ];
+  return useQuery(
+      [ 'walletBalance', walletEvent ],
+      () => getWalletBalance(ethersProvider, signer),
+      {
+        // The query will not execute until the `signer` and ...
+        // .. `ethersProvider` are initialized
+        enabled: !!signer && !!ethersProvider,
+        // New data on key change will be swapped without Loading state
+        keepPreviousData: true,
+      },
+  );
 };
 
 export default useWalletBalance;

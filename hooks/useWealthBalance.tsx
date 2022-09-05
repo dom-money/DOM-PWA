@@ -1,98 +1,84 @@
-import { useState, useEffect, useContext } from 'react';
-import AuthContext, { AuthContextType } from '../context/AuthContext';
+import { useContext } from 'react';
 import { ethers, BigNumber } from 'ethers';
+import { useQuery } from '@tanstack/react-query';
+import AuthContext, { AuthContextType } from '../context/AuthContext';
 import EventListenersContext, {
   EventListenersContextType,
 } from '../context/EventListenersContext';
-import abi from '../utils/DepositManager-ABI.json';
+import { SignerType } from './useAuth';
+import abiDOM from '../utils/DepositManager-ABI.json';
 
-type useWealthBalanceType = () => [
+type WealthBalanceType = {
   balanceAsNumber: number,
   balanceAsBigNumber: BigNumber,
   apy: number,
   rewards: string,
-  isLoading: boolean,
-  isError: boolean
-];
+};
 
-const useWealthBalance: useWealthBalanceType = () => {
+type GetWalletBalanceType = (signer: SignerType) => Promise<WealthBalanceType>;
+
+const getWealthBalance: GetWalletBalanceType = async (signer) => {
+  return new Promise(async (resolve, reject) => {
+    if (!signer) {
+      throw new Error('Signer is not initialized');
+    };
+    try {
+      const address = await signer.getAddress();
+
+      const domContractWithSigner = new ethers.Contract(
+          process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string,
+          abiDOM,
+          signer,
+      );
+      const tokensAmountAsBigNumber =
+        await domContractWithSigner.balanceOf(address);
+      const tokensAmountAsString =
+        ethers.utils.formatUnits(tokensAmountAsBigNumber, 0);
+      if (tokensAmountAsString === '0') {
+        resolve({
+          balanceAsNumber: 0,
+          balanceAsBigNumber: BigNumber.from(0),
+          apy: 0,
+          rewards: '',
+        });
+        return;
+      }
+      const tokenIdAsBigNumber =
+        await domContractWithSigner.tokenOfOwnerByIndex(
+            address,
+            BigNumber.from(0),
+        );
+      const wealthData =
+        await domContractWithSigner.positions(tokenIdAsBigNumber);
+      const apy = parseFloat(ethers.utils.formatUnits(wealthData.apy, 0));
+      const rewards = ethers.utils.formatUnits(wealthData.rewards, 0);
+      const balanceAsBigNumber = wealthData.depositAmount;
+      const balanceAsNumber =
+          parseFloat(ethers.utils.formatEther(wealthData.depositAmount));
+      resolve({ balanceAsNumber, balanceAsBigNumber, apy, rewards });
+    } catch (error) {
+      reject(error);
+    };
+  });
+};
+
+const useWealthBalance = () => {
   const { signer } = useContext(AuthContext) as AuthContextType;
 
   const {
     wealthEvent,
   } = useContext(EventListenersContext) as EventListenersContextType;
 
-  const [ balanceAsNumber, setBalanceAsNumber ] = useState(0);
-  const [
-    balanceAsBigNumber,
-    setBalanceAsBigNumber,
-  ] = useState(BigNumber.from(0));
-  const [ apy, setApy ] = useState(0);
-  const [ rewards, setRewards ] = useState('');
-  const [ isLoading, setIsLoading ] = useState(true);
-  const [ isError, setIsError ] = useState(false);
-
-  useEffect(() => {
-    const getBalance = async () => {
-      if (!signer) {
-        return;
-      };
-      try {
-        const address = await signer.getAddress();
-
-        const contractWithSigner = new ethers.Contract(
-            process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string,
-            abi,
-            signer,
-        );
-        const tokensAmountAsBigNumber =
-          await contractWithSigner.balanceOf(address);
-        const tokensAmountAsString =
-          ethers.utils.formatUnits(tokensAmountAsBigNumber, 0);
-        if (tokensAmountAsString === '0') {
-          clearState();
-          return;
-        }
-        const tokenIdAsBigNumber = await contractWithSigner.tokenOfOwnerByIndex(
-            address,
-            BigNumber.from(0),
-        );
-        const wealthData =
-          await contractWithSigner.positions(tokenIdAsBigNumber);
-        setApy(parseFloat(ethers.utils.formatUnits(wealthData.apy, 0)));
-        setRewards(ethers.utils.formatUnits(wealthData.rewards, 0));
-        setBalanceAsBigNumber(wealthData.depositAmount);
-        setBalanceAsNumber(
-            parseFloat(ethers.utils.formatEther(wealthData.depositAmount)),
-        );
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-        setIsError(true);
-        setIsLoading(false);
-      }
-    };
-
-    getBalance();
-  }, [ signer, wealthEvent ]);
-
-  const clearState = () => {
-    setBalanceAsNumber(0);
-    setBalanceAsBigNumber(BigNumber.from(0));
-    setApy(0);
-    setRewards('');
-    setIsError(false);
-    setIsLoading(false);
-  };
-
-  return [
-    balanceAsNumber,
-    balanceAsBigNumber,
-    apy,
-    rewards,
-    isLoading,
-    isError,
-  ];
+  return useQuery(
+      [ 'wealthBalance', wealthEvent ],
+      () => getWealthBalance(signer),
+      {
+        // The query will not execute until the `signer` is initialized
+        enabled: !!signer,
+        // New data on key change will be swapped without Loading state
+        keepPreviousData: true,
+      },
+  );
 };
 
 export default useWealthBalance;
