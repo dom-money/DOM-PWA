@@ -3,7 +3,7 @@ import useAuth from '../hooks/useAuth';
 
 export type AuthContextType = ReturnType<typeof useAuth>;
 
-const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+const AuthContext = createContext({} as AuthContextType);
 
 export default AuthContext;
 
