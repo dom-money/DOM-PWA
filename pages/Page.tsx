@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
 import SplashScreenPage from '../components/SplashScreenPage';
 import LoadingContext, { LoadingContextType } from '../context/LoadingContext';
-import AuthContext, { AuthContextType } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 
 // Array of routes which should be available to unauthenticated users
 const UNPROTECTED_ROUTES = [ '/login' ];
@@ -16,7 +16,7 @@ const Page = ({ Component, pageProps }: AppProps) => {
   // isAppLoaded is `true`, when app is loaded and authentication is finished
   const { isAppLoaded } = useContext(LoadingContext) as LoadingContextType;
 
-  const { isUserLoggedIn } = useContext(AuthContext) as AuthContextType;
+  const { isUserLoggedIn } = useAuthContext();
 
   const router = useRouter();
 

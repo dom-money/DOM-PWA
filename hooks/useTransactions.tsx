@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
-import AuthContext, { AuthContextType } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 import EventListenersContext, {
   EventListenersContextType,
 } from '../context/EventListenersContext';
@@ -145,7 +145,7 @@ const getTransactions: GetTransactionsType = async (signer) => {
 };
 
 const useTransactions = () => {
-  const { signer } = useContext(AuthContext) as AuthContextType;
+  const { signer } = useAuthContext();
 
   const {
     walletEvent,

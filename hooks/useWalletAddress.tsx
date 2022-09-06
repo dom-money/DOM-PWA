@@ -1,6 +1,5 @@
-import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import AuthContext, { AuthContextType } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 import { SignerType } from './useAuth';
 
 type WalletAddressType = {
@@ -24,7 +23,7 @@ const getWalletAddress: GetWalletAddressType = async (signer) => {
 };
 
 const useWalletAddress = () => {
-  const { signer } = useContext(AuthContext) as AuthContextType;
+  const { signer } = useAuthContext();
 
   return useQuery(
       [ 'walletAddress' ],

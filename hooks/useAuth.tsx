@@ -82,7 +82,7 @@ const useAuth = (
       const userData = { ...defaultUser, ...response };
       setUser(userData);
       setIsUserLoggedIn(true);
-      console.log(userData);
+      console.log('User data:', userData);
     } catch (error) {
       console.error(error);
     } finally {

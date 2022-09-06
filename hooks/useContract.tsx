@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react';
-import AuthContext, { AuthContextType } from '../context/AuthContext';
+import { useState } from 'react';
+import { useAuthContext } from '../context/AuthContext';
 import { ethers } from 'ethers';
 import abi from '../utils/DepositManager-ABI.json';
 
@@ -16,7 +16,7 @@ type useContractType = () => [
 ];
 
 const useContract: useContractType = () => {
-  const { signer } = useContext(AuthContext) as AuthContextType;
+  const { signer } = useAuthContext();
 
   const [
     transactionResult,

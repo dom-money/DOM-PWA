@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react';
-import AuthContext, { AuthContextType } from '../context/AuthContext';
+import { useState } from 'react';
+import { useAuthContext } from '../context/AuthContext';
 import { ethers } from 'ethers';
 import genericErc20Abi from '../utils/Erc20.json';
 
@@ -14,7 +14,7 @@ type useSendToWalletType = () => [
 ];
 
 const useSendToWallet: useSendToWalletType = () => {
-  const { signer } = useContext(AuthContext) as AuthContextType;
+  const { signer } = useAuthContext();
 
   const [ transactionResult, setTransactionResult ] = useState(null);
   const [ isLoading, setIsLoading ] = useState(false);

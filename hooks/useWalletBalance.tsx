@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { ethers, BigNumber } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
-import AuthContext, { AuthContextType } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 import EventListenersContext, {
   EventListenersContextType,
 } from '../context/EventListenersContext';
@@ -48,7 +48,7 @@ const getWalletBalance: GetWalletBalanceType = async (
 };
 
 const useWalletBalance = () => {
-  const { ethersProvider, signer } = useContext(AuthContext) as AuthContextType;
+  const { ethersProvider, signer } = useAuthContext();
 
   const {
     walletEvent,

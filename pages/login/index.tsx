@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import type { NextPage } from 'next';
-import AuthContext, { AuthContextType } from '../../context/AuthContext';
+import { useAuthContext } from '../../context/AuthContext';
 
 import LoginPageRender from '../../components/LoginPageRender';
 
 const LoginPage: NextPage = () => {
-  const { login } = useContext(AuthContext) as AuthContextType;
+  const { login } = useAuthContext();
 
   return (
     <LoginPageRender onClick={login}/>

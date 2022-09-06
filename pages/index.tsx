@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import type { NextPage } from 'next';
 
 import MainPageRender from '../components/MainPageRender';
@@ -9,10 +9,10 @@ import AddressQRReader from '../components/AddressQRReader';
 import { useRouter } from 'next/router';
 import useQRAddressReader from '../hooks/useQRAddressReader';
 import useTransactions from '../hooks/useTransactions';
-import AuthContext, { AuthContextType } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 
 const MainPage: NextPage = () => {
-  const { user } = useContext(AuthContext) as AuthContextType;
+  const { user } = useAuthContext();
 
   const walletBalance = useWalletBalance();
   const wealthBalance = useWealthBalance();
