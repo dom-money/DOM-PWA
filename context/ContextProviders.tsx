@@ -1,8 +1,8 @@
 import React from 'react';
-import { SnackbarProvider } from 'notistack';
 import LoadingProvider from './LoadingProvider';
 import AuthProvider from './AuthProvider';
 import ReactQueryProvider from './ReactQueryProvider';
+import NotistackSnackbarProvider from './NotistackSnackbarProvider';
 import EventListenersProvider from './EventListenersProvider';
 
 interface ContextProvidersProps {
@@ -14,18 +14,11 @@ const ContextProviders = ({ children }: ContextProvidersProps) => {
     <LoadingProvider>
       <AuthProvider>
         <ReactQueryProvider>
-          <SnackbarProvider
-            maxSnack={3}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
-            css='overflow-wrap: break-word; word-break: break-word;'
-          >
+          <NotistackSnackbarProvider>
             <EventListenersProvider>
               {children}
             </EventListenersProvider>
-          </SnackbarProvider>
+          </NotistackSnackbarProvider>
         </ReactQueryProvider>
       </AuthProvider>
     </LoadingProvider>
