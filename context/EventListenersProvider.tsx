@@ -1,18 +1,13 @@
 import React from 'react';
-import { ethers } from 'ethers';
 import useEventListeners from '../hooks/useEventListeners';
 import EventListenersContext from './EventListenersContext';
 
 interface EventListenersProviderProps {
   children: React.ReactNode;
-  ethersProvider: ethers.providers.Web3Provider | null;
 };
 
-const EventListenersProvider = ({
-  children,
-  ethersProvider,
-}: EventListenersProviderProps) => {
-  const { ...eventListenersArgs } = useEventListeners(ethersProvider);
+const EventListenersProvider = ({ children }: EventListenersProviderProps) => {
+  const { ...eventListenersArgs } = useEventListeners();
 
   return (
     <EventListenersContext.Provider value={{ ...eventListenersArgs }}>

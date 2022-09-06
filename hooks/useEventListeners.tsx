@@ -4,13 +4,15 @@ import { ethers } from 'ethers';
 import abi from '../utils/DepositManager-ABI.json';
 import genericErc20Abi from '../utils/Erc20.json';
 import useWalletAddress from './useWalletAddress';
+import { useAuthContext } from '../context/AuthContext';
 
-type EthersProviderType = ethers.providers.Web3Provider | null;
 type EventData = object | null;
 
-const useEventListeners = (ethersProvider: EthersProviderType) => {
+const useEventListeners = () => {
   const [ walletEvent, setWalletEvent ] = useState<EventData>(null);
   const [ wealthEvent, setWealthEvent ] = useState<EventData>(null);
+
+  const { ethersProvider } = useAuthContext();
 
   const walletAddress = useWalletAddress();
 

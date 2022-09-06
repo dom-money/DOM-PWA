@@ -1,23 +1,18 @@
 import React from 'react';
 import { SnackbarProvider } from 'notistack';
-import useAuth from '../hooks/useAuth';
-import useLoading from '../hooks/useLoading';
-import EventListenersProvider from './EventListenersProvider';
+import LoadingProvider from './LoadingProvider';
+import AuthProvider from './AuthProvider';
 import ReactQueryProvider from './ReactQueryProvider';
-import AuthContext from './AuthContext';
-import LoadingContext from './LoadingContext';
+import EventListenersProvider from './EventListenersProvider';
 
 interface ContextProvidersProps {
   children: React.ReactNode
 };
 
 const ContextProviders = ({ children }: ContextProvidersProps) => {
-  const { ...loadingArgs } = useLoading();
-  const { ...authArgs } = useAuth(loadingArgs.setIsAuthLoaded);
-
   return (
-    <LoadingContext.Provider value={{ ...loadingArgs }}>
-      <AuthContext.Provider value={{ ...authArgs }}>
+    <LoadingProvider>
+      <AuthProvider>
         <ReactQueryProvider>
           <SnackbarProvider
             maxSnack={3}
@@ -27,15 +22,13 @@ const ContextProviders = ({ children }: ContextProvidersProps) => {
             }}
             css='overflow-wrap: break-word; word-break: break-word;'
           >
-            <EventListenersProvider
-              ethersProvider={authArgs.ethersProvider}
-            >
+            <EventListenersProvider>
               {children}
             </EventListenersProvider>
           </SnackbarProvider>
         </ReactQueryProvider>
-      </AuthContext.Provider>
-    </LoadingContext.Provider>
+      </AuthProvider>
+    </LoadingProvider>
   );
 };
 
