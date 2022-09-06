@@ -1,9 +1,9 @@
 /* eslint-disable require-jsdoc */
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import SplashScreenPage from '../components/SplashScreenPage';
-import LoadingContext, { LoadingContextType } from '../context/LoadingContext';
+import { useLoadingContext } from '../context/LoadingContext';
 import { useAuthContext } from '../context/AuthContext';
 
 // Array of routes which should be available to unauthenticated users
@@ -14,7 +14,7 @@ const AUTHENTICATED_UNAVAILABLE_ROUTES = [ '/login' ];
 
 const Page = ({ Component, pageProps }: AppProps) => {
   // isAppLoaded is `true`, when app is loaded and authentication is finished
-  const { isAppLoaded } = useContext(LoadingContext) as LoadingContextType;
+  const { isAppLoaded } = useLoadingContext();
 
   const { isUserLoggedIn } = useAuthContext();
 
