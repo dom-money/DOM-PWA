@@ -7,16 +7,16 @@ import WalletAddressPageRender from '../../components/WalletAddressPageRender';
 import useWalletAddress from '../../hooks/useWalletAddress';
 
 const WalletAddressPage: NextPage = () => {
-  const walletAddress = useWalletAddress();
+  const { data: walletAddress, isLoading, isError } = useWalletAddress();
 
   const { enqueueSnackbar } = useSnackbar();
 
-  if (walletAddress.isLoading || walletAddress.isError) {
+  if (isLoading || isError) {
     return <WalletAddressPageRender isLoading />;
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(walletAddress.data.walletAddress).then(()=> {
+    navigator.clipboard.writeText(walletAddress.walletAddress).then(()=> {
       enqueueSnackbar(
           'Successfully copied wallet address to clipboard',
           {
@@ -35,7 +35,7 @@ const WalletAddressPage: NextPage = () => {
       return;
     };
     try {
-      await navigator.share({ text: walletAddress.data.walletAddress });
+      await navigator.share({ text: walletAddress.walletAddress });
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +43,7 @@ const WalletAddressPage: NextPage = () => {
 
   return (
     <WalletAddressPageRender
-      address={walletAddress.data.walletAddress}
+      address={walletAddress.walletAddress}
       copyAddressButtonOnClick={copyToClipboard}
       shareButtonOnClick={handleAddressShare}
     />

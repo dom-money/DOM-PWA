@@ -9,7 +9,7 @@ import useInputAmount from '../../hooks/useInputAmount';
 import useContract from '../../hooks/useContract';
 
 const InvestPage: NextPage = () => {
-  const walletBalance = useWalletBalance();
+  const { data: walletBalance, isLoading, isError } = useWalletBalance();
 
   const [
     inputAmount,
@@ -18,7 +18,7 @@ const InvestPage: NextPage = () => {
     inputAmountErrorMessage,
     inputAmountHandleChange,
     inputAmountHandleClear,
-  ] = useInputAmount(walletBalance.data?.balanceAsNumber ?? 0);
+  ] = useInputAmount(walletBalance?.balanceAsNumber ?? 0);
 
   const [
     depositToWealth,
@@ -59,14 +59,14 @@ const InvestPage: NextPage = () => {
     inputAmountHandleClear();
   };
 
-  if (walletBalance.isLoading || walletBalance.isError) {
+  if (isLoading || isError) {
     return <InvestPageRender isLoading />;
   };
 
   return (
     <>
       <InvestPageRender
-        availableBalance={walletBalance.data.balanceAsNumber}
+        availableBalance={walletBalance.balanceAsNumber}
         inputAmount={inputAmount}
         onInputChange={inputAmountHandleChange}
         errorMessage={inputAmountErrorMessage}

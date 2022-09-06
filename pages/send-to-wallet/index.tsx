@@ -13,7 +13,7 @@ import useSendToWallet from '../../hooks/useSendToWallet';
 
 
 const SendToWalletPage: NextPage = () => {
-  const walletBalance = useWalletBalance();
+  const { data: walletBalance, isLoading, isError } = useWalletBalance();
 
   const [
     inputAmount,
@@ -22,7 +22,7 @@ const SendToWalletPage: NextPage = () => {
     inputAmountErrorMessage,
     inputAmountHandleChange,
     inputAmountHandleClear,
-  ] = useInputAmount(walletBalance.data?.balanceAsNumber ?? 0);
+  ] = useInputAmount(walletBalance?.balanceAsNumber ?? 0);
 
   const [
     inputAddress,
@@ -85,14 +85,14 @@ const SendToWalletPage: NextPage = () => {
     inputAddressHandleClear();
   };
 
-  if (walletBalance.isLoading || walletBalance.isError) {
+  if (isLoading || isError) {
     return <SendToWalletPageRender isLoading />;
   };
 
   return (
     <>
       <SendToWalletPageRender
-        availableBalance={walletBalance.data.balanceAsNumber}
+        availableBalance={walletBalance.balanceAsNumber}
         inputAmount={inputAmount}
         onInputAmountChange={inputAmountHandleChange}
         inputAddress={inputAddress}
