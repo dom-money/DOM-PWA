@@ -15,23 +15,22 @@ import useSendToWallet from '../../hooks/useSendToWallet';
 const SendToWalletPage: NextPage = () => {
   const { data: walletBalance, isLoading, isError } = useWalletBalance();
 
-  const [
-    inputAmount,
-    inputAmountUnformatted,
-    inputAmountIsValid,
-    inputAmountErrorMessage,
-    inputAmountHandleChange,
-    inputAmountHandleClear,
-  ] = useInputAmount(walletBalance?.balanceAsNumber ?? 0);
+  const {
+    amount: inputAmount,
+    amountUnformatted: inputAmountUnformatted,
+    isValid: inputAmountIsValid,
+    errorMessage: inputAmountErrorMessage,
+    handleChange: inputAmountHandleChange,
+    handleClear: inputAmountHandleClear,
+  } = useInputAmount(walletBalance?.balanceAsNumber ?? 0);
 
-  const [
-    inputAddress,
-    setInputAddress,
-    inputAddessIsValid,
-    inputAddressHandleChange,
-    inputAddressHandleFocus,
-    inputAddressHandleClear,
-  ] = useInputAddress();
+  const {
+    address: inputAddress,
+    setAddress: setInputAddress,
+    isValid: inputAddessIsValid,
+    handleChange: inputAddressHandleChange,
+    handleClear: inputAddressHandleClear,
+  } = useInputAddress();
 
   const [
     isQRDialogOpen,

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-type useInputAddressType = () => [
+type useInputAddressType = () => {
   address: string,
   setAddress: React.Dispatch<React.SetStateAction<string>>,
   isValid: boolean,
   handleChange: (addressValue: string) => void,
   handleFocus: (prefill?: string) => void,
   handleClear: () => void,
-];
+};
 
 const useInputAddress: useInputAddressType = () => {
   const [ address, setAddress ] = useState('');
@@ -43,14 +43,14 @@ const useInputAddress: useInputAddressType = () => {
     setAddress('');
   };
 
-  return [
+  return {
     address,
     setAddress,
     isValid,
     handleChange,
     handleFocus,
     handleClear,
-  ];
+  };
 };
 
 export default useInputAddress;
