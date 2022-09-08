@@ -173,11 +173,10 @@ const AddressInput = ({
     );
   };
 
-  // eslint-disable-next-line max-len
-  const allowedValuePattern = /^(?:0|0x|0x[\da-f]{1,40}|0x0x[\da-f]{1,40})$/i;
-
   const isAddressValueAllowed = (addressValue: string) => {
-  // Checking if address value matches the pattern
+    const allowedValuePattern = /^(?:0|0x|0x[\\da-f]{1,40})$/i;
+
+    // Checking if address value matches allowed pattern
     if (allowedValuePattern.test(addressValue)) {
       return true;
     };
@@ -187,20 +186,33 @@ const AddressInput = ({
     };
   };
 
+  const hasAddressValueValidAddress = (addressValue: string) => {
+    if (addressValue.length <= 42) {
+      return null;
+    };
+    const fullAddressPattern = /0x[\da-f]{40}/i;
+    // Checking if a valid address can be extracted from an address value
+    const matchedAddress = addressValue.match(fullAddressPattern)?.[ 0 ];
+    if (!matchedAddress) {
+      return null;
+    };
+    return matchedAddress;
+  };
+
   const handleInputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetAddressValue = e.target.value;
     // Checking if there's an onValueChange handler passed via props
     if (!onValueChange) {
       return;
-    }
+    };
+    // Checking if new value is a valid address pasted with additional ...
+    // .. symbols and extracting valid address
+    const matchedAddress = hasAddressValueValidAddress(targetAddressValue);
+    if (matchedAddress) {
+      return onValueChange(matchedAddress);
+    };
     // Checking if new value is allowed
     if (!isAddressValueAllowed(targetAddressValue)) {
-      return;
-    }
-    // Handling the case when user pasted address on
-    // top of '0x' value added by onFocus()
-    if (/^0x0x[\da-f]{1,40}$/i.test(targetAddressValue)) {
-      onValueChange(targetAddressValue.slice(2));
       return;
     };
     onValueChange(targetAddressValue);
