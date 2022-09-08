@@ -24,9 +24,9 @@ interface AddressInputProps {
    */
   onValueChange?: (addressValue: string) => void;
   /**
-   * Input on focus handler function
+   * Input on focus (when empty) handler function
    */
-  onFocus?: (addressValue: string) => void;
+  onFocus?: (prefill?: string) => void;
   /**
    * Optional string to be used as a mask
    */
@@ -39,6 +39,10 @@ interface AddressInputProps {
    * 'Scan QR' Button Click handler
    */
   scanQROnClick?: () => void;
+  /**
+   * Optional string to be used as a pre-fill
+   */
+  prefill?: string;
   /**
    * Is input disabled
    */
@@ -120,6 +124,7 @@ const AddressInput = ({
   mask = '0xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
   getContactOnClick,
   scanQROnClick,
+  prefill,
   disabled,
 }: AddressInputProps) => {
   const maskToDisplay = mask.slice(addressValue.length);
@@ -205,12 +210,13 @@ const AddressInput = ({
     // Checking if there's an onFocus handler passed via props
     if (!onFocus) {
       return;
-    }
-    // If address input is empty -> setting it to 2 default mask characters
+    };
+    // Checking if input is empty
     if (e.target.value.length > 0) {
       return;
     };
-    onFocus(mask.slice(0, 2));
+    // Calling callback function and passing optional prefill
+    onFocus(prefill);
   };
 
   return (

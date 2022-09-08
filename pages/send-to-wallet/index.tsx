@@ -97,7 +97,6 @@ const SendToWalletPage: NextPage = () => {
         onInputAmountChange={inputAmountHandleChange}
         inputAddress={inputAddress}
         onInputAddressChange={inputAddressHandleChange}
-        onInputAddressFocus={inputAddressHandleFocus}
         inputAmountErrorMessage={inputAmountErrorMessage}
         scanQROnClick={handleQRDialogOpen}
         areInputsValid={isSubmitReady}

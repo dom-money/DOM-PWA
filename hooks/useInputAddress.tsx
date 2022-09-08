@@ -6,7 +6,7 @@ type useInputAddressType = () => [
   setAddress: React.Dispatch<React.SetStateAction<string>>,
   isValid: boolean,
   handleChange: (addressValue: string) => void,
-  handleFocus: (addressValue: string) => void,
+  handleFocus: (prefill?: string) => void,
   handleClear: () => void,
 ];
 
@@ -19,12 +19,12 @@ const useInputAddress: useInputAddressType = () => {
   const isValid = addressFinalValidationPattern.test(address);
 
   useEffect(() => {
-    if (!(typeof router.query.walletAddress === 'string')) {
+    if (typeof router.query.walletAddress !== 'string') {
       return;
-    }
+    };
     if (!addressFinalValidationPattern.test(router.query.walletAddress)) {
       return;
-    }
+    };
     setAddress(router.query.walletAddress);
   }, [ router.query ]);
 
@@ -32,8 +32,11 @@ const useInputAddress: useInputAddressType = () => {
     setAddress(addressValue);
   };
 
-  const handleFocus = (addressValue: string) => {
-    setAddress(addressValue);
+  const handleFocus = (prefill?: string) => {
+    if (!prefill) {
+      return;
+    };
+    setAddress(prefill);
   };
 
   const handleClear = () => {
