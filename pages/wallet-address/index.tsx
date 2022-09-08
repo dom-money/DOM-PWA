@@ -25,6 +25,7 @@ const WalletAddressPage: NextPage = () => {
               vertical: 'bottom',
               horizontal: 'center',
             },
+            preventDuplicate: true,
           },
       );
     });
