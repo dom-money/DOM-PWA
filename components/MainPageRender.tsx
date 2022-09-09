@@ -15,6 +15,10 @@ interface MainPageRenderProps {
    */
   isLoading?: false;
   /**
+   * Totla Balance amount
+   */
+  totalBalanceAmount: string;
+  /**
    * Wallet Balance amount
    */
   walletAmount: string;
@@ -69,6 +73,7 @@ interface LoadingProps {
    * URL to Avatar Image
    */
   avatarImageURL?: string;
+  totalBalanceAmount?: never;
   walletAmount?: never;
   scanQROnClick?: never;
   wealthAmount?: never;
@@ -90,6 +95,7 @@ const HeaderWithMargin = styled(Header)`
 `;
 
 const MainPageRender = ({
+  totalBalanceAmount,
   walletAmount,
   scanQROnClick,
   wealthAmount = '0',
@@ -118,7 +124,6 @@ const MainPageRender = ({
     );
   };
 
-  const totalBalanceAmount = walletAmount + wealthAmount;
   return (
     <Wrapper>
       <HeaderWithMargin

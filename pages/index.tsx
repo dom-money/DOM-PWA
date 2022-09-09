@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import useQRAddressReader from '../hooks/useQRAddressReader';
 import useTransactions from '../hooks/useTransactions';
 import { useAuthContext } from '../context/AuthContext';
+import { sumTwoBalancesOfToken } from '../utils/BigNumberUtils';
 
 const MainPage: NextPage = () => {
   const { user } = useAuthContext();
@@ -35,12 +36,17 @@ const MainPage: NextPage = () => {
     return <MainPageRender isLoading userName={user.name} />;
   };
 
+  const totalBalance = sumTwoBalancesOfToken(
+      walletBalance.data.balanceAsBigNumber,
+      wealthBalance.data.balanceAsBigNumber,
+      walletBalance.data.tokenDecimals,
+  );
+
   return (
     <>
       <MainPageRender
         scanQROnClick={handleQRDialogOpen}
-        walletAmount={walletBalance.data.balanceAsNumber}
-        wealthAmount={wealthBalance.data.balanceAsNumber}
+        totalBalanceAmount={totalBalance}
         averageAPY={wealthBalance.data.apy}
         transactions={transactions.data}
         userName={user.name}
