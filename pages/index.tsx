@@ -6,7 +6,6 @@ import MainPageRender from '../components/MainPageRender';
 import useWalletBalance from '../hooks/useWalletBalance';
 import useWealthBalance from '../hooks/useWealthBalance';
 import AddressQRReader from '../components/AddressQRReader';
-import { useRouter } from 'next/router';
 import useQRAddressReader from '../hooks/useQRAddressReader';
 import useTransactions from '../hooks/useTransactions';
 import { useAuthContext } from '../context/AuthContext';
@@ -19,14 +18,12 @@ const MainPage: NextPage = () => {
   const wealthBalance = useWealthBalance();
   const transactions = useTransactions();
 
-  const router = useRouter();
-
   const [
     isQRDialogOpen,
     handleQRDialogOpen,
     handleQRReaderResult,
     handleQRDialogClose,
-  ] = useQRAddressReader({ redirectOnResult: true, router: router });
+  ] = useQRAddressReader({ redirectOnResult: true });
 
   if (
     (walletBalance.isLoading || walletBalance.isError) ||
