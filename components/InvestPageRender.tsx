@@ -7,6 +7,8 @@ import AmountInput from './AmountInput';
 import Button from './Button';
 import Loading from './Loading';
 
+import { onInputChangeType } from './AmountInput';
+
 interface InvestPageRenderProps {
   /**
    * Should component display loading skeleton?
@@ -62,11 +64,6 @@ interface LoadingProps {
 };
 
 type Props = LoadingProps | InvestPageRenderProps;
-
-interface onInputChangeType {
-  formattedValue: string,
-  value: string
-};
 
 const Wrapper = styled.div`
   padding: 1.625rem 0.313rem;

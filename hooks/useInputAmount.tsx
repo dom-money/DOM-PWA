@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { onInputChangeType } from '../components/AmountInput';
 
 type useInputAmountType = (balance: number) => {
   amount: string,
   amountUnformatted: string,
   isValid: boolean,
   errorMessage: string,
-  handleChange: ({ formattedValue, value }:HandleInputChangeType) => void,
+  handleChange: ({ formattedValue, value }: onInputChangeType) => void,
   handleClear: () => void,
 };
 
