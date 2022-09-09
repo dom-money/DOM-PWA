@@ -17,7 +17,7 @@ interface MainPageRenderProps {
   /**
    * Wallet Balance amount
    */
-  walletAmount: number;
+  walletAmount: string;
   /**
    * Scan QR On Click Handler
    */
@@ -25,7 +25,7 @@ interface MainPageRenderProps {
   /**
    * Wealth Balance amount
    */
-  wealthAmount: number;
+  wealthAmount: string;
   /**
    * Yield value
    */
@@ -92,7 +92,7 @@ const HeaderWithMargin = styled(Header)`
 const MainPageRender = ({
   walletAmount,
   scanQROnClick,
-  wealthAmount = 0,
+  wealthAmount = '0',
   yieldValue = 0,
   yieldValuePercentage = 0,
   averageAPY = 0,
@@ -116,7 +116,7 @@ const MainPageRender = ({
         <InvestButton href='/invest'/>
       </Wrapper>
     );
-  }
+  };
 
   const totalBalanceAmount = walletAmount + wealthAmount;
   return (

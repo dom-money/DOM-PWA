@@ -16,7 +16,7 @@ interface WealthProps {
   /**
    * Currency amount
    */
-  amount: number;
+  amount: string;
   /**
    * Yield value
    */
@@ -155,7 +155,7 @@ const Wealth = ({
     );
   };
 
-  const inactive = amount === 0;
+  const inactive = amount === '0';
 
   if (inactive) {
     return (

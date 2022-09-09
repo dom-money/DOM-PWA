@@ -15,7 +15,7 @@ interface InvestPageRenderProps {
   /**
    * Available Balance Amount
    */
-  availableBalance: number;
+  availableBalance: string;
   /**
    * Input amount as a string (for state control)
    */

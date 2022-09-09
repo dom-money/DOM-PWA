@@ -16,7 +16,7 @@ interface SendToWalletPageRenderProps {
   /**
    * Available Balance Amount
    */
-  availableBalance: number;
+  availableBalance: string;
   /**
    * Input amount
    */

@@ -35,9 +35,9 @@ interface AmountInputProps {
   disabled?: boolean;
 };
 
-interface onInputChangeType {
-  formattedValue: string,
-  value: string
+export type onInputChangeType = {
+  formattedValue: string;
+  value: string;
 };
 
 const Container = styled.div`

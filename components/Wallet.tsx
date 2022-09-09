@@ -15,7 +15,7 @@ interface WalletProps {
   /**
    * Currency amount
    */
-  amount: number;
+  amount: string;
   /**
    * Scan QR On Click Handler
    */
@@ -72,7 +72,7 @@ const Wallet = ({ amount, scanQROnClick, isLoading }: Props) => {
     );
   };
 
-  const inactive = amount === 0;
+  const inactive = amount === '0';
 
   return (
     <CollapsibleContainer
