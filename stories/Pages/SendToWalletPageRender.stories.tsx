@@ -29,6 +29,9 @@ const Template: ComponentStory<typeof SendToWalletPageRender> = (args) => {
   };
 
   const handleFocus = (prefill?: string) => {
+    if (!prefill) {
+      return;
+    };
     updateArgs({ inputAddress: prefill });
   };
 
