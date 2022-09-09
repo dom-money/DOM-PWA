@@ -174,7 +174,7 @@ const AddressInput = ({
   };
 
   const isAddressValueAllowed = (addressValue: string) => {
-    const allowedValuePattern = /^(?:0|0x|0x[\\da-f]{1,40})$/i;
+    const allowedValuePattern = /^(?:0|0x|0x[\da-f]{1,40})$/i;
 
     // Checking if address value matches allowed pattern
     if (allowedValuePattern.test(addressValue)) {
