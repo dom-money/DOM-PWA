@@ -20,13 +20,13 @@ const Template: ComponentStory<typeof AmountDisplay> = (args) =>
 
 export const PositiveAmountMedium = Template.bind({});
 PositiveAmountMedium.args = {
-  amount: 45725.06,
+  amount: '45725.06',
   size: 'medium',
 };
 
 export const PositiveAmountSmall = Template.bind({});
 PositiveAmountSmall.args = {
-  amount: 20000.12,
+  amount: '20000.12',
   size: 'small',
 };
 PositiveAmountSmall.parameters = {
@@ -35,13 +35,13 @@ PositiveAmountSmall.parameters = {
 
 export const ZeroAmount = Template.bind({});
 ZeroAmount.args = {
-  amount: 0,
+  amount: '0',
   size: 'medium',
 };
 
 export const Inactive = Template.bind({});
 Inactive.args = {
-  amount: 0,
+  amount: '0',
   size: 'small',
   inactive: true,
 };

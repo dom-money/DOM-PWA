@@ -33,7 +33,7 @@ const Template: ComponentStory<typeof SendToWalletPageRender> = (args) => {
   };
 
   return <SendToWalletPageRender
-    availableBalance={45725.06}
+    availableBalance='45725.06'
     areInputsValid={false}
     {...args}
     isLoading={false}
@@ -48,7 +48,7 @@ const LoadingTemplate: ComponentStory<typeof SendToWalletPageRender> = (args) =>
 
 export const Valid = Template.bind({});
 Valid.args = {
-  availableBalance: 45725.06,
+  availableBalance: '45725.06',
   inputAmount: '10000',
   inputAddress: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
   areInputsValid: true,
@@ -56,7 +56,7 @@ Valid.args = {
 
 export const Empty = Template.bind({});
 Empty.args = {
-  availableBalance: 45725.06,
+  availableBalance: '45725.06',
   inputAmount: '',
   inputAddress: '',
   areInputsValid: false,
@@ -64,7 +64,7 @@ Empty.args = {
 
 export const WithError = Template.bind({});
 WithError.args = {
-  availableBalance: 45725.06,
+  availableBalance: '45725.06',
   inputAmount: '46000',
   inputAddress: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
   inputAmountErrorMessage: 'Not Enough Money',
@@ -73,7 +73,7 @@ WithError.args = {
 
 export const Submitting = Template.bind({});
 Submitting.args = {
-  availableBalance: 45725.06,
+  availableBalance: '45725.06',
   inputAmount: '10000',
   inputAddress: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
   areInputsValid: true,

@@ -13,7 +13,7 @@ interface AmountDisplayProps {
   /**
    * Currency amount
    */
-  amount: number;
+  amount: string;
   /**
    * Amount Display Size (small: 40px, medium: 48px)
    */

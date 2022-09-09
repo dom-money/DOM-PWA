@@ -18,21 +18,30 @@ export default {
     },
   },
   argTypes: {
+    totalBalanceAmount: {
+      type: { name: 'string', required: true },
+      description: 'Total Balance Amount',
+      table: {
+        type: {
+          summary: 'string',
+        },
+      },
+    },
     walletAmount: {
-      type: { name: 'number', required: true },
+      type: { name: 'string', required: true },
       description: 'Wallet Balance Amount',
       table: {
         type: {
-          summary: 'number',
+          summary: 'string',
         },
       },
     },
     wealthAmount: {
-      type: { name: 'number', required: true },
+      type: { name: 'string', required: true },
       description: 'Wealth Balance Amount',
       table: {
         type: {
-          summary: 'number',
+          summary: 'string',
         },
       },
     },
@@ -119,8 +128,9 @@ const Template: ComponentStory<typeof MainPageRender> = (args) =>
 
 export const Default = Template.bind({});
 Default.args = {
-  walletAmount: 20000.12,
-  wealthAmount: 25724.94,
+  totalBalanceAmount: '45725.06',
+  walletAmount: '20000.12',
+  wealthAmount: '25724.94',
   yieldValue: 600,
   yieldValuePercentage: 0.1,
   averageAPY: 13,
@@ -132,8 +142,9 @@ Default.args = {
 
 export const TextAvatar = Template.bind({});
 TextAvatar.args = {
-  walletAmount: 20000.12,
-  wealthAmount: 25724.94,
+  totalBalanceAmount: '45725.06',
+  walletAmount: '20000.12',
+  wealthAmount: '25724.94',
   yieldValue: 600,
   yieldValuePercentage: 0.1,
   averageAPY: 13,
@@ -144,8 +155,9 @@ TextAvatar.args = {
 
 export const Inactive = Template.bind({});
 Inactive.args = {
-  walletAmount: 0,
-  wealthAmount: 0,
+  totalBalanceAmount: '0',
+  walletAmount: '0',
+  wealthAmount: '0',
   userName: 'John Doe',
   avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
   isNotificationPresent: false,

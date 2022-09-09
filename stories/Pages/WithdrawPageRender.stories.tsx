@@ -23,20 +23,20 @@ const Template: ComponentStory<typeof WithdrawPageRender> = (args) =>
 
 export const Valid = Template.bind({});
 Valid.args = {
-  availableBalance: 45725.06,
+  availableBalance: '45725.06',
   inputAmount: '10000',
   isInputValid: true,
 };
 
 export const Empty = Template.bind({});
 Empty.args = {
-  availableBalance: 45725.06,
+  availableBalance: '45725.06',
   isInputValid: false,
 };
 
 export const WithError = Template.bind({});
 WithError.args = {
-  availableBalance: 45725.06,
+  availableBalance: '45725.06',
   inputAmount: '20000.15',
   errorMessage: 'Not Enough Money',
   isInputValid: false,
@@ -44,7 +44,7 @@ WithError.args = {
 
 export const Submitting = Template.bind({});
 Submitting.args = {
-  availableBalance: 45725.06,
+  availableBalance: '45725.06',
   inputAmount: '10000',
   isInputValid: true,
   isSubmitting: true,

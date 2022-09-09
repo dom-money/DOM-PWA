@@ -8,11 +8,11 @@ export default {
   component: TotalBalance,
   argTypes: {
     amount: {
-      type: { name: 'number', required: true },
+      type: { name: 'string', required: true },
       description: 'Amount to display',
       table: {
         type: {
-          summary: 'number',
+          summary: 'string',
         },
       },
     },
@@ -36,17 +36,17 @@ const Template: ComponentStory<typeof TotalBalance> = (args) =>
 
 export const PositiveAmount = Template.bind({});
 PositiveAmount.args = {
-  amount: 45725.06,
+  amount: '45725.06',
 };
 
 export const ZeroAmount = Template.bind({});
 ZeroAmount.args = {
-  amount: 0,
+  amount: '0',
 };
 
 export const AsAvailableBalance = Template.bind({});
 AsAvailableBalance.args = {
-  amount: 45725.06,
+  amount: '45725.06',
   asAvailableBalance: true,
 };
 

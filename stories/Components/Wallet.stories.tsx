@@ -20,12 +20,12 @@ const Template: ComponentStory<typeof Wallet> = (args) =>
 
 export const Closed = Template.bind({});
 Closed.args = {
-  amount: 20000.12,
+  amount: '20000.12',
 };
 
 export const Open = Template.bind({});
 Open.args = {
-  amount: 20000.12,
+  amount: '20000.12',
 };
 Open.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
@@ -35,7 +35,7 @@ Open.play = async ({ canvasElement }) => {
 
 export const Inactive = Template.bind({});
 Inactive.args = {
-  amount: 0,
+  amount: '0',
 };
 
 export const Loading = Template.bind({});
