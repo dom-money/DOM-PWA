@@ -18,7 +18,10 @@ const WithdrawPage: NextPage = () => {
     errorMessage: inputAmountErrorMessage,
     handleChange: inputAmountHandleChange,
     handleClear: inputAmountHandleClear,
-  } = useInputAmount(wealthBalance?.balanceAsNumber ?? 0);
+  } = useInputAmount({
+    balance: wealthBalance?.balanceAsBigNumber,
+    tokenDecimals: wealthBalance?.tokenDecimals,
+  });
 
   const [
     ,
@@ -66,10 +69,14 @@ const WithdrawPage: NextPage = () => {
   return (
     <>
       <WithdrawPageRender
-        availableBalance={wealthBalance.balanceAsNumber}
+        availableBalance={wealthBalance.balanceAsString}
         inputAmount={inputAmount}
         onInputChange={inputAmountHandleChange}
-        errorMessage={inputAmountErrorMessage}
+        errorMessage={
+          inputAmountErrorMessage ?
+          inputAmountErrorMessage :
+          undefined
+        }
         isInputValid={inputAmountIsValid}
         isSubmitting={isTransactionLoading}
         withdrawButtonOnClick={handleWithdrawFromWealth}

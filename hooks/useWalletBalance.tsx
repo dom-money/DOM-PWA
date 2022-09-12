@@ -6,8 +6,9 @@ import { EthersProviderType, SignerType } from './useAuth';
 import genericErc20Abi from '../utils/Erc20.json';
 
 type WalletBalanceType = {
-  balanceAsNumber: number;
+  balanceAsString: string;
   balanceAsBigNumber: BigNumber;
+  tokenDecimals: number;
 };
 
 type GetWalletBalanceType = (
@@ -32,12 +33,13 @@ const getWalletBalance: GetWalletBalanceType = async (
       );
       const receivedBalance: BigNumber =
         await usdcContractWithProvider.balanceOf(address);
-      const decimals: number = await usdcContractWithProvider.decimals();
+      const tokenDecimals: number = await usdcContractWithProvider.decimals();
       const balanceAsBigNumber = receivedBalance;
-      const balanceAsNumber = parseFloat(
-          ethers.utils.formatUnits(receivedBalance, decimals),
+      const balanceAsString = ethers.utils.formatUnits(
+          balanceAsBigNumber,
+          tokenDecimals,
       );
-      resolve({ balanceAsNumber, balanceAsBigNumber });
+      resolve({ balanceAsString, balanceAsBigNumber, tokenDecimals });
     } catch (error) {
       reject(error);
     };

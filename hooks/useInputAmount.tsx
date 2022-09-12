@@ -1,59 +1,83 @@
 import { useState } from 'react';
+import { BigNumber, ethers } from 'ethers';
 import { onInputChangeType } from '../components/AmountInput';
 
-type useInputAmountType = (balance: number) => {
+type UseInputAmpuntInputType = {
+  balance?: BigNumber;
+  tokenDecimals?: number;
+};
+
+type UseInputAmountType = ({
+  balance,
+  tokenDecimals,
+}: UseInputAmpuntInputType) => {
   amount: string,
   amountUnformatted: string,
+  amountAsBigNumber: BigNumber,
   isValid: boolean,
-  errorMessage: string,
+  errorMessage: string | null,
   handleChange: ({ formattedValue, value }: onInputChangeType) => void,
   handleClear: () => void,
 };
 
-interface HandleInputChangeType {
-  formattedValue: string,
-  value: string
-};
-
-const useInputAmount: useInputAmountType = (balance) => {
+const useInputAmount: UseInputAmountType = ({
+  balance = BigNumber.from(0),
+  tokenDecimals = 18,
+}) => {
   const [ amount, setAmount ] = useState('');
   const [ amountUnformatted, setAmountUnformatted ] = useState('');
-  const [ numericAmount, setNumericAmount ] = useState(0);
-  const [ errorMessage, setErrorMessage ] = useState('');
+  const [
+    amountAsBigNumber,
+    setAmountAsBigNumber,
+  ] = useState(BigNumber.from(0));
+  const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
 
-  const isValid = errorMessage === '' && numericAmount > 0;
+  const isValid = errorMessage === null && amountAsBigNumber.gt(0);
 
   const handleChange = ({
     formattedValue,
-    value,
-  }: HandleInputChangeType) => {
-    setAmount(formattedValue);
-    setAmountUnformatted(value);
-    const numericAmountValue = parseFloat(value);
-    setNumericAmount(numericAmountValue);
-    if (value && value.length > 0) {
-      checkForErrors(numericAmountValue);
-    } else {
-      checkForErrors(0);
+    value: unformattedValue,
+  }: onInputChangeType) => {
+    const decimalPart = unformattedValue.match(/(\.)(\d+)$/)?.[ 2 ] ?? '';
+    const decimalsAmount = decimalPart.length;
+    // Not allowing inputing more decimals, than token supports
+    if (decimalsAmount > tokenDecimals) {
+      return;
     };
+    setAmount(formattedValue);
+    setAmountUnformatted(unformattedValue);
+    // Converting inputed value to BigNumber
+    let localAmountAsBigNumber = BigNumber.from(0);
+    if (unformattedValue !== '') {
+      localAmountAsBigNumber = ethers.utils.parseUnits(
+          unformattedValue,
+          tokenDecimals,
+      );
+    };
+    setAmountAsBigNumber(localAmountAsBigNumber);
+    checkForErrors(localAmountAsBigNumber);
   };
 
-  const checkForErrors = (numericAmountValue: number) => {
+  const checkForErrors = (amountAsBigNumber: BigNumber) => {
     // Checking if user has enough money on his balance
-    if (numericAmountValue > balance) {
+    if (amountAsBigNumber.gt(balance)) {
       setErrorMessage('Not enough money');
       return;
     }
-    setErrorMessage('');
+    setErrorMessage(null);
   };
 
   const handleClear = () => {
     setAmount('');
+    setAmountUnformatted('');
+    setAmountAsBigNumber(BigNumber.from(0));
+    setErrorMessage(null);
   };
 
   return {
     amount,
     amountUnformatted,
+    amountAsBigNumber,
     isValid,
     errorMessage,
     handleChange,

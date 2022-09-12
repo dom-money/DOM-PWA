@@ -44,6 +44,8 @@ const MainPage: NextPage = () => {
       <MainPageRender
         scanQROnClick={handleQRDialogOpen}
         totalBalanceAmount={totalBalance}
+        walletAmount={walletBalance.data.balanceAsString}
+        wealthAmount={wealthBalance.data.balanceAsString}
         averageAPY={wealthBalance.data.apy}
         transactions={transactions.data}
         userName={user.name}

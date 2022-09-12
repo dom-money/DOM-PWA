@@ -11,18 +11,20 @@ import useInputAddress from '../../hooks/useInputAddress';
 import useQRAddressReader from '../../hooks/useQRAddressReader';
 import useSendToWallet from '../../hooks/useSendToWallet';
 
-
 const SendToWalletPage: NextPage = () => {
   const { data: walletBalance, isLoading, isError } = useWalletBalance();
 
   const {
     amount: inputAmount,
-    amountUnformatted: inputAmountUnformatted,
+    amountAsBigNumber: inputAmountAsBigNumber,
     isValid: inputAmountIsValid,
     errorMessage: inputAmountErrorMessage,
     handleChange: inputAmountHandleChange,
     handleClear: inputAmountHandleClear,
-  } = useInputAmount(walletBalance?.balanceAsNumber ?? 0);
+  } = useInputAmount({
+    balance: walletBalance?.balanceAsBigNumber,
+    tokenDecimals: walletBalance?.tokenDecimals,
+  });
 
   const {
     address: inputAddress,
@@ -57,7 +59,7 @@ const SendToWalletPage: NextPage = () => {
   }, [ transactionResult, transactionErrorMessage ]);
 
   const handleSendToWallet = () => {
-    sendToWallet(inputAmountUnformatted, inputAddress);
+    sendToWallet(inputAmountAsBigNumber, inputAddress);
   };
 
   const handlePaymentStatusDrawerClose = (shouldPreserveState?: boolean) => {
@@ -91,12 +93,16 @@ const SendToWalletPage: NextPage = () => {
   return (
     <>
       <SendToWalletPageRender
-        availableBalance={walletBalance.balanceAsNumber}
+        availableBalance={walletBalance.balanceAsString}
         inputAmount={inputAmount}
         onInputAmountChange={inputAmountHandleChange}
         inputAddress={inputAddress}
         onInputAddressChange={inputAddressHandleChange}
-        inputAmountErrorMessage={inputAmountErrorMessage}
+        inputAmountErrorMessage={
+          inputAmountErrorMessage ?
+          inputAmountErrorMessage :
+          undefined
+        }
         scanQROnClick={handleQRDialogOpen}
         areInputsValid={isSubmitReady}
         isSubmitting={isTransactionLoading}
