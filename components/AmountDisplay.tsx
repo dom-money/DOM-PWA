@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import Skeleton from '@mui/material/Skeleton';
+import {
+  formatStringAmount,
+  getIntegerAndDecimalParts,
+  checkIfStringAmountIsZero,
+} from '../utils/stringAmountUtils';
 
 type sizeType = 'small' | 'medium';
 type inactiveType = boolean;
@@ -18,7 +23,7 @@ interface AmountDisplayProps {
    * Amount Display Size (small: 40px, medium: 48px)
    */
   size?: sizeType;
-   /**
+  /**
    * Is component inactive?
    */
   inactive?: inactiveType;
@@ -142,7 +147,8 @@ const AmountDisplay = ({
         <span>
           {integerPart}
         </span>
-        {amount === 0 ||
+        {
+          checkIfStringAmountIsZero(amount) || decimalPart.length === 0 ||
           <>
             <span>.</span>
             <DecimalText>{decimalPart}</DecimalText>

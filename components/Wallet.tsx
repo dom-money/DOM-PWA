@@ -6,6 +6,7 @@ import AmountDisplay from './AmountDisplay';
 import Button from './Button';
 import IconButton from './IconButton';
 import ScanQRIcon from '../styles/icons/ScanQRIcon';
+import { checkIfStringAmountIsZero } from '../utils/stringAmountUtils';
 
 interface WalletProps {
   /**
@@ -72,7 +73,7 @@ const Wallet = ({ amount, scanQROnClick, isLoading }: Props) => {
     );
   };
 
-  const inactive = amount === '0';
+  const inactive = checkIfStringAmountIsZero(amount);
 
   return (
     <CollapsibleContainer
