@@ -80,3 +80,21 @@ Loading.parameters = {
     exclude: [ 'transactions', 'isLoading' ],
   },
 };
+
+export const LoadingMore = Template.bind({});
+LoadingMore.args = {
+  transactions: [
+    { ...CryptoTopUp.args },
+    { ...CardTopUp.args },
+    { ...Invest.args },
+    { ...Withdraw.args },
+    { ...Transfer.args },
+  ],
+  isLoadingMore: true,
+} as { transactions: TransactionProps[] };
+LoadingMore.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const clickableHeader =
+    await canvas.getByTestId('RecentTransactionsOpenCloseIcon');
+  await userEvent.click(clickableHeader);
+};

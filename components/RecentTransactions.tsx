@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled, { useTheme } from 'styled-components';
 import { TransitionGroup, Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
+import { useInView } from 'react-intersection-observer';
 
 import CollapsibleContainer from './CollapsibleContainer';
 import Transaction, { TransactionProps } from './Transaction';
+import CircularProgress from '@mui/material/CircularProgress';
+import { ThemeType } from '../styles/theme';
 
 interface RecentTransactionsProps {
   /**
@@ -19,6 +22,14 @@ interface RecentTransactionsProps {
    * Duration of the transition (in ms), defaults to 500ms
    */
   transitionDuration?: number;
+  /**
+   * Optional onLoadMore Handler
+   */
+  onLoadMore?: () => void;
+  /**
+   * Should component display 'Loading More' Progress Component?
+   */
+  isLoadingMore?: boolean;
 };
 
 interface LoadingProps {
@@ -28,6 +39,8 @@ interface LoadingProps {
   isLoading: true;
   transactions?: never;
   transitionDuration?: never;
+  onLoadMore?: never;
+  isLoadingMore?: never;
 };
 
 type Props = LoadingProps | RecentTransactionsProps;
@@ -54,6 +67,11 @@ const FirstTransactionText = styled.p`
   font-size: 1rem;
   text-align: center;
   color: #FFFFFF;
+`;
+
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const opacityFromTransitionStatus = (status: TransitionStatus) => {
@@ -90,14 +108,34 @@ const NoRecentTransactions = () => {
   );
 };
 
-const RenderTransactions = ({ transactions }: RecentTransactionsProps) => {
+type RenderTransactionsProps = {
+  transactions: TransactionProps[] | [];
+  loadMoreRef: (node?: Element | null | undefined) => void;
+}
+
+const RenderTransactions = ({
+  transactions,
+  loadMoreRef,
+}: RenderTransactionsProps) => {
   return (
     <>
-      {transactions.map((transaction) =>
-        <React.Fragment key={transaction.id}>
-          <Divider />
-          <Transaction {...transaction} />
-        </React.Fragment>,
+      {transactions.map((transaction, index) => {
+        // Putting ref on the last rendered Transaction Component
+        if (index === transactions.length - 1) {
+          return (
+            <React.Fragment key={transaction.id}>
+              <Divider />
+              <Transaction {...transaction} ref={loadMoreRef} />
+            </React.Fragment>
+          );
+        };
+        return (
+          <React.Fragment key={transaction.id}>
+            <Divider />
+            <Transaction {...transaction} />
+          </React.Fragment>
+        );
+      },
       )}
     </>
   );
@@ -107,8 +145,22 @@ const RecentTransactions = ({
   transactions,
   isLoading,
   transitionDuration = 500,
+  onLoadMore,
+  isLoadingMore,
 }: Props) => {
   const [ isContainerCollapsed, setIsContainerCollapsed ] = useState(false);
+
+  const { ref, inView } = useInView();
+
+  const theme = useTheme() as ThemeType;
+
+  useEffect(() => {
+    // If 'Load More' indicator is not in view ...
+    // .. or no onLoadMore callback is provided
+    if (!inView || !onLoadMore) return;
+
+    onLoadMore();
+  }, [ inView ]);
 
   const handleCollapseClick = () => {
     setIsContainerCollapsed(!isContainerCollapsed);
@@ -175,7 +227,24 @@ const RecentTransactions = ({
       secondaryContent={
         shouldDisplaySecondaryContent ?
         undefined :
-        <RenderTransactions transactions={transactions.slice(1)} />
+        <>
+          <RenderTransactions
+            transactions={transactions.slice(1)}
+            loadMoreRef={ref}
+          />
+          {
+            isLoadingMore &&
+            <>
+              <Divider />
+              <LoadingWrapper>
+                <CircularProgress
+                  aria-label='Loading More transactions...'
+                  sx={{ color: theme.colors.primary }}
+                />
+              </LoadingWrapper>
+            </>
+          }
+        </>
       }
     />
   );
