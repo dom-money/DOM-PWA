@@ -72,21 +72,11 @@ interface TextSkeletonProps {
   type?: 'nameText';
 };
 
-const incomeOrOutcome = (type: TransactionType | null) => {
-  if (
-    type === 'Crypto Top Up' ||
-    type === 'Card Top Up' ||
-    type === 'Withdraw'
-  ) {
-    return 'income';
-  };
-  if (
-    type === 'Invest' ||
-    type === 'Transfer'
-  ) {
-    return 'outcome';
-  };
-  return null;
+const incomeOrOutcome = (type: TransactionType) => {
+  const income = [ 'Crypto Top Up', 'Card Top Up', 'Withdraw' ];
+  const outcome = [ 'Invest', 'Transfer' ];
+  if (income.includes(type)) return 'income';
+  if (outcome.includes(type)) return 'outcome';
 };
 
 const Wrapper = styled.div`
