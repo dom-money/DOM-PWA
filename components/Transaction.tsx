@@ -129,10 +129,12 @@ const TypeText = styled.p`
   min-width: 0;
 `;
 
-const AmountText = styled(TypeText)<{type: ReturnType<typeof incomeOrOutcome>}>`
+// eslint-disable-next-line max-len
+const AmountText = styled(TypeText)<{type?: ReturnType<typeof incomeOrOutcome>}>`
   ${(props) =>
     props.type === 'income' && `color: ${props.theme.colors.success}`};
   ${(props) => props.type === 'outcome' && `color: #FFFFFF`};
+  ${(props) => props.type || `color: #FFFFFF`};
   opacity: 1;
   justify-self: end;
 `;
@@ -167,37 +169,53 @@ const Transaction = ({
   amount,
   isLoading,
 }: TransactionPropsWithLoading) => {
-  const incomeOrOutcomeType = incomeOrOutcome(type ?? null);
+  if (isLoading) {
+    return (
+      <Wrapper>
+        <IconContainer>
+          <IconSkeleton />
+        </IconContainer>
+        <DataContainer>
+          <NameText>
+            <TextSkeleton type='nameText' />
+          </NameText>
+          <AmountText>
+            <TextSkeleton />
+          </AmountText>
+          <TypeText>
+            <TextSkeleton />
+          </TypeText>
+          <TimestampText>
+            <TextSkeleton />
+          </TimestampText>
+        </DataContainer>
+      </Wrapper>
+    );
+  };
+
+  const incomeOrOutcomeType = incomeOrOutcome(type);
 
   return (
     <Wrapper>
       <IconContainer>
-        {
-          isLoading ?
-          <IconSkeleton /> :
-          <GenericTransactionIcon color='#ffffff' css='opacity: 0.5;'/>
-        }
+        <GenericTransactionIcon color='#ffffff' css='opacity: 0.5;'/>
       </IconContainer>
       <DataContainer>
         <NameText>
-          {isLoading ? <TextSkeleton type='nameText' /> : name}
+          {name}
         </NameText>
         <AmountText type={incomeOrOutcomeType}>
-          {
-            isLoading ?
-            <TextSkeleton /> :
-            <>
-              {incomeOrOutcomeType === 'income' && '+'}
-              {incomeOrOutcomeType === 'outcome' && '-'}
-              ${formatAmountString(amount, 2)}
-            </>
-          }
+          <>
+            {incomeOrOutcomeType === 'income' && '+'}
+            {incomeOrOutcomeType === 'outcome' && '-'}
+            ${formatAmountString(amount, 2)}
+          </>
         </AmountText>
         <TypeText>
-          {isLoading ? <TextSkeleton /> : type}
+          {type}
         </TypeText>
         <TimestampText>
-          {isLoading ? <TextSkeleton /> : dateStringifier(timestamp)}
+          {dateStringifier(timestamp)}
         </TimestampText>
       </DataContainer>
     </Wrapper>
