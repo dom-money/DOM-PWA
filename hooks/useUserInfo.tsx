@@ -42,6 +42,7 @@ const useUserInfo: useUserInfoType = () => {
       try {
         const response = await web3auth.getUserInfo();
         setUserInfo(Object.assign(userInfo, response));
+        console.log(userInfo);
         setIsLoading(false);
       } catch (error) {
         console.error(error);

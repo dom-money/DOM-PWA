@@ -9,6 +9,7 @@ import useWealthBalance from '../hooks/useWealthBalance';
 import AddressQRReader from '../components/AddressQRReader';
 import { useRouter } from 'next/router';
 import useQRAddressReader from '../hooks/useQRAddressReader';
+import useTransactions from '../hooks/useTransactions';
 
 const MainPage: NextPage = () => {
   const [ userInfo, isUserInfoLoading, hasUserInfoError ] = useUserInfo();
@@ -28,6 +29,8 @@ const MainPage: NextPage = () => {
     hasWealthBalanceError,
   ] = useWealthBalance();
 
+  const transactions = useTransactions();
+
   const router = useRouter();
 
   const [
@@ -42,12 +45,11 @@ const MainPage: NextPage = () => {
     isWalletBalanceLoading ||
     hasWalletBalanceError ||
     isWealthBalanceLoading ||
-    hasWealthBalanceError
+    hasWealthBalanceError ||
+    (transactions.isLoading || transactions.isError)
   ) {
-    return null;
+    return <MainPageRender isLoading />;
   };
-
-  console.log(userInfo);
 
   return (
     <>
@@ -56,6 +58,7 @@ const MainPage: NextPage = () => {
         walletAmount={walletBalance}
         wealthAmount={wealthBalance}
         averageAPY={apy}
+        transactions={transactions.data}
         userName={userInfo.name}
         avatarImageURL={userInfo.profileImage}
       />

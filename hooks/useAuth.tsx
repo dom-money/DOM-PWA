@@ -15,17 +15,19 @@ import { ThemeType } from '../styles/theme';
 
 const clientId = process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID as string;
 
+export type Web3authType = Web3Auth | null;
+export type ProviderType = SafeEventEmitterProvider | null;
+export type EthersProviderType = ethers.providers.Web3Provider | null;
+export type SignerType = ethers.providers.JsonRpcSigner | null;
+
 const useAuth = (
     setIsAuthLoaded: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
-  const [ web3auth, setWeb3auth ] =
-    useState<Web3Auth | null>(null);
-  const [ provider, setProvider ] =
-    useState<SafeEventEmitterProvider | null>(null);
+  const [ web3auth, setWeb3auth ] = useState<Web3authType>(null);
+  const [ provider, setProvider ] = useState<ProviderType>(null);
   const [ ethersProvider, setEthersProvider ] =
-    useState<ethers.providers.Web3Provider | null>(null);
-  const [ signer, setSigner ] =
-    useState<ethers.providers.JsonRpcSigner | null>(null);
+    useState<EthersProviderType>(null);
+  const [ signer, setSigner ] = useState<SignerType>(null);
 
   const theme = useTheme() as ThemeType;
 

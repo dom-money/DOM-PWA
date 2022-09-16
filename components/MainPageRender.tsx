@@ -6,8 +6,14 @@ import InvestButton from './InvestButton';
 import TotalBalance from './TotalBalance';
 import Wallet from './Wallet';
 import Wealth from './Wealth';
+import RecentTransactions from './RecentTransactions';
+import { TransactionProps } from './Transaction';
 
 interface MainPageRenderProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
   /**
    * Wallet Balance amount
    */
@@ -33,6 +39,10 @@ interface MainPageRenderProps {
    */
   averageAPY?: number;
   /**
+   * Array of transactions
+   */
+  transactions?: TransactionProps[] | [];
+  /**
    * User's name
    */
   userName: string;
@@ -44,7 +54,26 @@ interface MainPageRenderProps {
    * Is there a notification present?
    */
   isNotificationPresent?: boolean;
-}
+};
+
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  walletAmount?: never;
+  scanQROnClick?: never;
+  wealthAmount?: never;
+  yieldValue?: never;
+  yieldValuePercentage?: never;
+  averageAPY?: never;
+  transactions?: never;
+  userName?: never;
+  avatarImageURL?: never;
+  isNotificationPresent?: never;
+};
+
+type MainPageRenderPropsWithLoading = LoadingProps | MainPageRenderProps;
 
 const Wrapper = styled.div`
   padding: 1.625rem 0.313rem 9.25rem;
@@ -61,10 +90,34 @@ const MainPageRender = ({
   yieldValue = 0,
   yieldValuePercentage = 0,
   averageAPY = 0,
+  transactions = [],
   userName,
   avatarImageURL,
   isNotificationPresent = false,
-}: MainPageRenderProps) => {
+  isLoading,
+}: MainPageRenderPropsWithLoading) => {
+  if (isLoading) {
+    return (
+      <Wrapper>
+        <HeaderWithMargin
+          isNotificationPresent={false}
+          userName='User'
+        />
+        <TotalBalance
+          amount={0}
+        />
+        <Wallet
+          amount={0}
+        />
+        <Wealth
+          amount={0}
+        />
+        <RecentTransactions isLoading />
+        <InvestButton href='/invest'/>
+      </Wrapper>
+    );
+  }
+
   const totalBalanceAmount = walletAmount + wealthAmount;
   return (
     <Wrapper>
@@ -86,6 +139,7 @@ const MainPageRender = ({
         yieldValuePercentage={yieldValuePercentage}
         averageAPY={averageAPY}
       />
+      <RecentTransactions transactions={transactions} />
       <InvestButton href='/invest'/>
     </Wrapper>
   );

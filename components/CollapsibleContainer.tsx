@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import Collapse from '@mui/material/Collapse';
 import Title from './Title';
 import IconButtonCircular from './IconButtonCircular';
 import ArrowDownIcon from '../styles/icons/ArrowDownIcon';
@@ -29,14 +30,11 @@ interface CollapsibleContainerProps {
    * Should secondary content be outside of container?
    */
   shouldSecondaryContentBeOutside?: boolean;
-}
-
-type SecondaryContentHeight = undefined | 'auto' | number;
-
-interface SecondaryContentProps {
-  isCollapsed: boolean,
-  contentHeight: SecondaryContentHeight
-}
+  /**
+   * Duration of the transition (in ms), defaults to 300ms
+   */
+  transitionDuration?: number;
+};
 
 const Wrapper = styled.div`
   width: 100%;
@@ -63,17 +61,12 @@ const Contents = styled.div`
   padding: 1.25rem;
 `;
 
-const SecondaryContentElement = styled.div<SecondaryContentProps>`
-  transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  height: ${(props) =>
-    props.contentHeight ? `${props.contentHeight}px` : 'auto'};
+const SecondaryContentElement = styled.div<{isCollapsed: boolean}>`
   overflow-x: hidden;
   overflow-y: hidden;
   margin-bottom: 0.313rem;
   ${(props) => !props.isCollapsed && `
-  // visibility: hidden;
-  height: 0;
-  margin-bottom: 0;
+    margin-bottom: 0;
   `}
 `;
 
@@ -91,16 +84,8 @@ const CollapsibleContainer = ({
   primaryContent,
   secondaryContent,
   shouldSecondaryContentBeOutside = false,
+  transitionDuration = 300,
 }: CollapsibleContainerProps) => {
-  const [ contentHeight, setContentHeight ] =
-    useState<SecondaryContentHeight>('auto');
-
-  const secondaryContentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setContentHeight(secondaryContentRef.current?.scrollHeight);
-  }, []);
-
   return (
     <Wrapper>
       <CollapsibleWrapper>
@@ -108,7 +93,7 @@ const CollapsibleContainer = ({
           <Title text={label} />
           <IconWrapper
             ariaLabel={`Collapse ${label} Container`}
-            data-testid={`${label}OpenCloseIcon`}
+            data-testid={`${label}OpenCloseIcon`.replace(/ /g, '')}
             onClick={handleCollapseClick}
             isCollapsed={isCollapsed}
           >
@@ -118,24 +103,20 @@ const CollapsibleContainer = ({
         <Contents>
           {primaryContent}
           {!shouldSecondaryContentBeOutside && secondaryContent &&
-          <SecondaryContentElement
-            ref={secondaryContentRef}
-            isCollapsed={isCollapsed}
-            contentHeight={contentHeight}
-          >
-            {secondaryContent}
-          </SecondaryContentElement>
+          <Collapse in={isCollapsed} timeout={transitionDuration}>
+            <SecondaryContentElement isCollapsed={isCollapsed}>
+              {secondaryContent}
+            </SecondaryContentElement>
+          </Collapse>
           }
         </Contents>
       </CollapsibleWrapper>
       {shouldSecondaryContentBeOutside && secondaryContent &&
-      <SecondaryContentElement
-        ref={secondaryContentRef}
-        isCollapsed={isCollapsed}
-        contentHeight={contentHeight}
-      >
-        {secondaryContent}
-      </SecondaryContentElement>
+      <Collapse in={isCollapsed} timeout={transitionDuration}>
+        <SecondaryContentElement isCollapsed={isCollapsed}>
+          {secondaryContent}
+        </SecondaryContentElement>
+      </Collapse>
       }
     </Wrapper>
   );
