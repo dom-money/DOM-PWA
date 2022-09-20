@@ -1,15 +1,13 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import axios from 'axios';
-import {
-  useInfiniteQuery,
-  InfiniteData,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useInfiniteQuery, InfiniteData } from '@tanstack/react-query';
+import { v4 as uuidv4 } from 'uuid';
 import { useAuthContext } from '../context/AuthContext';
 import { useEventListenersContext } from '../context/EventListenersContext';
 import { SignerType } from './useAuth';
 import { TransactionProps } from '../components/Transaction';
 import useDebounce from '../hooks/useDebounce';
+import { useTransactionsQueue } from '../context/TransactionsQueueContext';
 
 const DISPLAY_PER_PAGE = 10;
 const TRANSACTIONS_PER_REQUEST = 50;
@@ -46,8 +44,9 @@ export type TransactionsType = {
 
 type GetTransactionsType = (
   signer: SignerType,
+  transactionsQueue: ReturnType<typeof useTransactionsQueue>,
   pageParam: number,
-  offset?: number
+  offset?: number,
 ) => Promise<TransactionsType>
 
 interface FormatAmountArgs {
@@ -66,13 +65,32 @@ const formatAmount = ({ amount, decimals }: FormatAmountArgs) => {
   return amountWithSeparatedDecimals;
 };
 
+const fetchTransactions = async (
+    walletAddress: string,
+    pageParam: number,
+) => {
+  return await axios.get('/', {
+    baseURL: process.env.NEXT_PUBLIC_ETHERSCAN_BASE_URL,
+    params: {
+      module: 'account',
+      action: 'tokentx',
+      contractaddress: process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS,
+      address: walletAddress,
+      startblock: 0,
+      endblock: 9999999999,
+      page: pageParam,
+      offset: TRANSACTIONS_PER_REQUEST,
+      sort: 'desc',
+    } });
+};
+
 const DOM_CONTRACT_ADDRESS =
   process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string;
 
 const getTransactions: GetTransactionsType = async (
     signer,
+    transactionsQueue,
     pageParam,
-    offset = TRANSACTIONS_PER_REQUEST,
 ) => {
   return new Promise(async (resolve, reject) => {
     if (!signer) {
@@ -80,19 +98,13 @@ const getTransactions: GetTransactionsType = async (
     };
     try {
       const walletAddress = (await signer.getAddress()).toLowerCase();
-      const txsUsdcRawData = await axios.get('/', {
-        baseURL: process.env.NEXT_PUBLIC_ETHERSCAN_BASE_URL,
-        params: {
-          module: 'account',
-          action: 'tokentx',
-          contractaddress: process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS,
-          address: walletAddress,
-          startblock: 0,
-          endblock: 99999999,
-          page: pageParam,
-          offset,
-          sort: 'desc',
-        } });
+      // Adding an API request to the queue, to ensure ...
+      // .. a minimum 5 second delay between requests
+      const requestId = uuidv4();
+      const txsUsdcRawData = await transactionsQueue.push(
+          () => fetchTransactions(walletAddress, pageParam),
+          requestId,
+      );
       if (txsUsdcRawData.data.status === '0') {
         reject(new Error(txsUsdcRawData.data.result));
         return;
@@ -208,8 +220,7 @@ type UseTransactionsReturnType =
 const useTransactions = (): UseTransactionsReturnType => {
   const { signer } = useAuthContext();
   const { walletEvent } = useEventListenersContext();
-
-  const queryClient = useQueryClient();
+  const transactionsQueue = useTransactionsQueue();
 
   const [
     numberOfDisplayedTxs,
@@ -222,8 +233,6 @@ const useTransactions = (): UseTransactionsReturnType => {
 
   const debouncedWalletEvent = useDebounce(walletEvent, DEBOUNCE_DELAY);
 
-  const isFirstRender = useRef(true);
-
   const {
     data,
     isLoading,
@@ -232,85 +241,17 @@ const useTransactions = (): UseTransactionsReturnType => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(
-      [ 'transactions' ],
-      ({ pageParam = 1 }) => getTransactions(signer, pageParam),
+      [ 'transactions', debouncedWalletEvent ],
+      // eslint-disable-next-line max-len
+      ({ pageParam = 1 }) => getTransactions(signer, transactionsQueue, pageParam),
       {
         // The query will not execute until the signer is initialized
         enabled: !!signer,
         // New data on key change will be swapped without Loading state
         keepPreviousData: true,
         getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-        staleTime: Infinity,
       },
   );
-
-  // Refetching data of all 'transactions' query pages ...
-  // .. in a single request on debouncedWalletEvent
-  useEffect(() => {
-    // Skipping the first render
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    };
-
-    const refetchTransactions = async () => {
-      try {
-        // Cancel any outgoing refetches (so they don't ...
-        // .. overwrite our manual refetch)
-        await queryClient.cancelQueries([ 'transactions' ]);
-
-        // Ensuring to always fetch no less than usual number ...
-        // .. of fetched transaction (TRANSACTIONS_PER_REQUEST)
-        const numberOfTransactionsToFetch =
-          numberOfDisplayedTxs > TRANSACTIONS_PER_REQUEST ?
-          numberOfDisplayedTxs :
-          TRANSACTIONS_PER_REQUEST;
-
-        // Refetching all displayed transactions in a single request
-        const newTransactionsData =
-          await getTransactions(signer, 1, numberOfTransactionsToFetch);
-
-        const numberOfPages = Math.ceil(numberOfDisplayedTxs / 50);
-
-        const numberOfPagesArray = new Array(numberOfPages).fill(null);
-
-        // Formatting fetched data to match react-query's pages structure
-        const pages = numberOfPagesArray.map((_, index) => {
-          const numberOfCurrentPage = index + 1;
-          const isLastPage = numberOfCurrentPage === numberOfPages;
-          return {
-            transactions: newTransactionsData.transactions,
-            page: numberOfCurrentPage,
-            nextCursor: isLastPage ?
-              newTransactionsData.nextCursor :
-              numberOfCurrentPage + 1,
-          };
-        });
-
-        // Creating an array of page parameters
-        const pageParams = numberOfPagesArray.map((_, index) => {
-          const numberOfCurrentPage = index + 1;
-          if (numberOfCurrentPage === 1) {
-            return undefined;
-          };
-          return numberOfCurrentPage;
-        });
-
-        // Updating query data with manually fetched data
-        queryClient.setQueryData([ 'transactions' ], () => ({
-          pages,
-          pageParams,
-        }));
-      } catch (error) {
-        return;
-      };
-    };
-
-    refetchTransactions();
-  }, [ debouncedWalletEvent ]);
 
   // Formatting data received from react-query to a flat array of transactions
   const formatFetchedTxs: FormatFetchedTxsType = useCallback(
