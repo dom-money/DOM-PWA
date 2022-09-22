@@ -15,7 +15,12 @@ export default {
   ],
   argTypes: {
     primary: { control: 'boolean' },
-    onClick: { action: 'clicked' },
+    onClick: {
+      action: 'Button Clicked',
+      table: {
+        disable: true,
+      },
+    },
   },
 } as ComponentMeta<typeof Button>;
 

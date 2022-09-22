@@ -16,7 +16,12 @@ export default {
       control: { type: 'select' },
     },
     backgroundColor: { control: 'color' },
-    onClick: { action: 'clicked' },
+    onClick: {
+      action: `'Icon' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
     hasNotificationBadge: { control: 'boolean' },
   },
 } as ComponentMeta<typeof IconButton>;

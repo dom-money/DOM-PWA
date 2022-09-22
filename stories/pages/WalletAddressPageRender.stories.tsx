@@ -13,8 +13,18 @@ export default {
     },
   },
   argTypes: {
-    shareButtonOnClick: { action: '\'Share\' Button Pressed' },
-    copyAddressButtonOnClick: { action: '\'Copy Address\' Button Pressed' },
+    shareButtonOnClick: {
+      action: `'Share' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
+    copyAddressButtonOnClick: {
+      action: `'Copy Address' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
   },
 } as ComponentMeta<typeof WalletAddressPageRender>;
 

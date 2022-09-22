@@ -7,7 +7,12 @@ export default {
   title: 'Components/Avatar Button',
   component: AvatarButton,
   argTypes: {
-    onClick: { action: 'clicked' },
+    onClick: {
+      action: `'Avatar' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
   },
 } as ComponentMeta<typeof AvatarButton>;
 

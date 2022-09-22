@@ -8,8 +8,18 @@ export default {
   title: 'Components/Inputs/Address Input',
   component: AddressInput,
   argTypes: {
-    getContactOnClick: { action: '\'Get Contact\' Button Clicked' },
-    scanQROnClick: { action: '\'Scan QR\' Button Clicked' },
+    getContactOnClick: {
+      action: `'Get Contact' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
+    scanQROnClick: {
+      action: `'Scan QR' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
   },
   parameters: {
     layout: 'fullscreen',

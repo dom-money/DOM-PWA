@@ -11,8 +11,18 @@ export default {
   },
   argTypes: {
     isNotificationPresent: { control: 'boolean' },
-    profileOnClick: { action: 'onProfileClick' },
-    notificationsOnClick: { action: 'onNotificationsClick' },
+    profileOnClick: {
+      action: `'Profile' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
+    notificationsOnClick: {
+      action: '\'Notifications\' Button Clicked',
+      table: {
+        disable: true,
+      },
+    },
   },
   decorators: [
     (story) => (

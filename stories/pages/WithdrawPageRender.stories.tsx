@@ -13,8 +13,18 @@ export default {
     },
   },
   argTypes: {
-    withdrawButtonOnClick: { action: '\'Withdraw\' Button Pressed' },
-    clearButtonOnClick: { action: '\'Clear\' Button Pressed' },
+    withdrawButtonOnClick: {
+      action: `'Withdraw' Button Pressed`,
+      table: {
+        disable: true,
+      },
+    },
+    clearButtonOnClick: {
+      action: `'Clear' Button Pressed`,
+      table: {
+        disable: true,
+      },
+    },
   },
 } as ComponentMeta<typeof WithdrawPageRender>;
 

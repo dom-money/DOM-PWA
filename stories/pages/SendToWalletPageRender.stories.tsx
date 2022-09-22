@@ -14,10 +14,30 @@ export default {
     },
   },
   argTypes: {
-    sendButtonOnClick: { action: '\'Send\' Button Pressed' },
-    clearButtonOnClick: { action: '\'Clear\' Button Pressed' },
-    getContactOnClick: { action: '\'Get Contact\' Button Clicked' },
-    scanQROnClick: { action: '\'Scan QR\' Button Clicked' },
+    sendButtonOnClick: {
+      action: `'Send' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
+    clearButtonOnClick: {
+      action: `'Clear' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
+    getContactOnClick: {
+      action: `'Get Contact' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
+    scanQROnClick: {
+      action: `'Scan QR' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
   },
 } as ComponentMeta<typeof SendToWalletPageRender>;
 

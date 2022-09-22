@@ -28,6 +28,12 @@ export default {
         },
       },
     },
+    onLoadMore: {
+      action: `'Load More' Action`,
+      table: {
+        disable: true,
+      },
+    },
   },
   parameters: {
     layout: 'padded',

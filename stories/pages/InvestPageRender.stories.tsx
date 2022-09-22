@@ -13,8 +13,18 @@ export default {
     },
   },
   argTypes: {
-    investButtonOnClick: { action: '\'Invest\' Button Pressed' },
-    clearButtonOnClick: { action: '\'Clear\' Button Pressed' },
+    investButtonOnClick: {
+      action: `'Invest' Button Pressed`,
+      table: {
+        disable: true,
+      },
+    },
+    clearButtonOnClick: {
+      action: `'Clear' Button Pressed`,
+      table: {
+        disable: true,
+      },
+    },
   },
 } as ComponentMeta<typeof InvestPageRender>;
 

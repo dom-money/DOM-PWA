@@ -10,7 +10,12 @@ export default {
     layout: 'padded',
   },
   argTypes: {
-    onClick: { action: 'clicked' },
+    onClick: {
+      action: `'Go Back' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
   },
   decorators: [
     (story) => (

@@ -12,7 +12,12 @@ export default {
     backgrounds: { default: 'darkAdditional' },
   },
   argTypes: {
-    onClick: { action: 'clicked' },
+    onClick: {
+      action: `'Icon Button Circular' Clicked`,
+      table: {
+        disable: true,
+      },
+    },
   },
 } as ComponentMeta<typeof IconButtonCircular>;
 

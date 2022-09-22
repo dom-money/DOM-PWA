@@ -120,6 +120,18 @@ export default {
         },
       },
     },
+    scanQROnClick: {
+      action: `'Scan QR' Button Clicked`,
+      table: {
+        disable: true,
+      },
+    },
+    onLoadMoreTransactions: {
+      action: `'Load More Transactions' Action`,
+      table: {
+        disable: true,
+      },
+    },
   },
 } as ComponentMeta<typeof MainPageRender>;
 
