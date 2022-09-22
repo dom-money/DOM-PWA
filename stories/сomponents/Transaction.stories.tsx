@@ -41,6 +41,7 @@ export default {
     amount: {
       type: { name: 'string', required: true },
     },
+    timestamp: { control: 'date' },
   },
   parameters: {
     layout: 'fullscreen',
@@ -69,7 +70,7 @@ CardTopUp.args = {
   id: '2',
   name: 'Revolut LTD Visa *8035',
   type: 'Card Top Up',
-  timestamp: new Date().getTime() - 86400000,
+  timestamp: new Date().getTime() - 86400,
   amount: '560.00',
 };
 
@@ -78,7 +79,7 @@ Invest.args = {
   id: '3',
   name: 'Wallet to Wealth',
   type: 'Invest',
-  timestamp: new Date().getTime() - (5 * 86400000),
+  timestamp: new Date().getTime() - (5 * 86400),
   amount: '750.37',
 };
 
@@ -87,7 +88,7 @@ Withdraw.args = {
   id: '4',
   name: 'Wealth to Wallet',
   type: 'Withdraw',
-  timestamp: new Date().getTime() - (14 * 86400000),
+  timestamp: new Date().getTime() - (14 * 86400),
   amount: '764.13',
 };
 
@@ -96,7 +97,7 @@ Transfer.args = {
   id: '5',
   name: 'Transfer to 0xEe5b9E3a125F5c6c74cE8AEbFa76b72B3D6CF009',
   type: 'Transfer',
-  timestamp: new Date().getTime() - (365 * 86400000),
+  timestamp: new Date().getTime() - (365 * 86400),
   amount: '250.17',
 };
 
@@ -107,6 +108,6 @@ Loading.args = {
 Loading.parameters = {
   controls: {
     hideNoControlsWarning: true,
-    exclude: [ 'id', 'name', 'type', 'timestamp', 'amount', 'isLoading' ],
+    exclude: [ 'type', 'timestamp', 'isLoading' ],
   },
 };
