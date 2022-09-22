@@ -105,7 +105,7 @@ const StatusTitle = styled.h1<{type: PaymentStatusType}>`
       return props.theme.colors.success;
     };
     if (props.type === 'failed') {
-      return props.theme.colors.danger;
+      return props.theme.colors.error;
     };
   }};
 `;

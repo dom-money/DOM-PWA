@@ -94,7 +94,7 @@ const TextInput = styled.input`
 
 const ErrorMessageDisplay = styled.p<{isError: boolean}>`
   position: absolute;
-  background-color: ${(props) => props.theme.colors.danger};
+  background-color: ${(props) => props.theme.colors.error};
   color: #F8F8F8;
   text-align: center;
   margin: 0;
