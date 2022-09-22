@@ -6,7 +6,8 @@
     "extends": [
         "plugin:react/recommended",
         "google",
-        "plugin:storybook/recommended"
+        "plugin:storybook/recommended",
+        "plugin:mdx/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
