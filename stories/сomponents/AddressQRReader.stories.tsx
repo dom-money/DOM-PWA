@@ -15,6 +15,7 @@ export default {
       inlineStories: false,
       iframeHeight: 500,
     },
+    controls: { hideNoControlsWarning: true },
   },
 } as ComponentMeta<typeof AddressQRReader>;
 

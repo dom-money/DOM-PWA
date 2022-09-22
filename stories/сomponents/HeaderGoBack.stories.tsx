@@ -8,6 +8,7 @@ export default {
   component: HeaderGoBack,
   parameters: {
     layout: 'padded',
+    controls: { hideNoControlsWarning: true },
   },
   argTypes: {
     onClick: {
