@@ -59,7 +59,7 @@ export default {
       },
     },
     onInputChange: {
-      type: { name: 'function', required: true },
+      type: { name: 'function', required: false },
       description: 'Input on change handler function (when using state)',
       table: {
         type: {
