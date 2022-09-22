@@ -1,6 +1,6 @@
-const dateStringifier = (timestampInSeconds: number) => {
-  // Creating date object and converting timestamp from s to ms
-  const inputDate = new Date(timestampInSeconds * 1000);
+const dateStringifier = (timestamp: number) => {
+  // Creating date object
+  const inputDate = new Date(timestamp);
 
   const currentDate = new Date();
 
