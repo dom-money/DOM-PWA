@@ -55,4 +55,17 @@ export const parameters = {
   nextRouter: {
     Provider: RouterContext.Provider,
   },
-}
+  a11y: {
+    config: {
+      rules: [
+        {
+          // You can also signify that a violation will need to be fixed in the future
+          // by overriding the result of a rule to return "Needs Review"
+          // rather than "Violation" if the rule fails:
+          id: 'color-contrast',
+          reviewOnFail: true,
+        },
+      ],
+    },
+  },
+};

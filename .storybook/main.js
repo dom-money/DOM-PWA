@@ -7,8 +7,10 @@ module.exports = {
         "storybook-addon-next-router",
         "@storybook/addon-a11y",
     ],
+    features: {
+      interactionsDebugger: true, // 👈 Enabling playback controls
+      postcss: false,
+      modernInlineRender: true,
+    },
     framework: "@storybook/react",
-    typescript: {
-        reactDocgen: false
-    }
 };
