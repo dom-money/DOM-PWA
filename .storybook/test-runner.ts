@@ -1,0 +1,27 @@
+import { injectAxe, configureAxe, checkA11y } from 'axe-playwright';
+
+import type { TestRunnerConfig } from '@storybook/test-runner';
+
+/*
+* See https://storybook.js.org/docs/react/writing-tests/test-runner#test-hook-api-experimental
+* to learn more about the test-runner hooks API.
+*/
+const a11yConfig: TestRunnerConfig = {
+  async preRender(page) {
+    await injectAxe(page);
+  },
+  async postRender(page) {
+    await configureAxe(page, {
+      reporter: 'no-passes',
+      rules: [
+        {
+          id: 'color-contrast',
+          reviewOnFail: true,
+        }
+      ],
+    })
+    await checkA11y(page, '#root');
+  },
+};
+
+module.exports = a11yConfig;
