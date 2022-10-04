@@ -48,3 +48,23 @@ Inactive.args = {
 Inactive.parameters = {
   backgrounds: { default: 'darkAdditional' },
 };
+
+const loadingParameters = {
+  controls: {
+    exclude: [ 'amount', 'inactive', 'isLoading' ],
+  },
+};
+
+export const LoadingMedium = Template.bind({});
+LoadingMedium.args = {
+  isLoading: true,
+  size: 'medium',
+};
+LoadingMedium.parameters = loadingParameters;
+
+export const LoadingSmall = Template.bind({});
+LoadingSmall.args = {
+  isLoading: true,
+  size: 'small',
+};
+LoadingSmall.parameters = loadingParameters;

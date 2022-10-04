@@ -18,7 +18,7 @@ const WalletAddressPage: NextPage = () => {
   if (isWalletAddressLoading ||
     hasWalletAddressError ||
     !walletAddress) {
-    return null;
+    return <WalletAddressPageRender isLoading />;
   };
 
   const copyToClipboard = () => {

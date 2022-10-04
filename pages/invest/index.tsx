@@ -65,7 +65,7 @@ const InvestPage: NextPage = () => {
   };
 
   if (isWalletBalanceLoading || hasWalletBalanceError) {
-    return null;
+    return <InvestPageRender isLoading />;
   };
 
   return (

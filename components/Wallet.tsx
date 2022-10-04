@@ -9,6 +9,10 @@ import ScanQRIcon from '../styles/icons/ScanQRIcon';
 
 interface WalletProps {
   /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
+  /**
    * Currency amount
    */
   amount: number;
@@ -17,6 +21,17 @@ interface WalletProps {
    */
   scanQROnClick?: () => void;
 };
+
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  amount?: never;
+  scanQROnClick?: never;
+};
+
+type Props = LoadingProps | WalletProps;
 
 const ContentContainer = styled.div`
   display: flex;
@@ -28,14 +43,33 @@ const ButtonContainer = styled.div`
   gap: 0.375rem;
 `;
 
-const Wallet = ({
-  amount,
-  scanQROnClick,
-}: WalletProps) => {
+const Wallet = ({ amount, scanQROnClick, isLoading }: Props) => {
   const [ isContainerCollapsed, setIsContainerCollapsed ] = useState(false);
 
   const handleCollapseClick = () => {
     setIsContainerCollapsed(!isContainerCollapsed);
+  };
+
+  if (isLoading) {
+    return (
+      <CollapsibleContainer
+        label='Wallet'
+        isCollapsed={isContainerCollapsed}
+        handleCollapseClick={handleCollapseClick}
+        primaryContent={
+          <ContentContainer>
+            <AmountDisplay isLoading size='small'/>
+          </ContentContainer>
+        }
+        secondaryContent={
+          <ButtonContainer>
+            <Button label='Top Up' primary asAnchor href='/wallet-address' />
+            <Button label='Send' asAnchor href='/send-to-wallet'/>
+          </ButtonContainer>
+        }
+        shouldSecondaryContentBeOutside={true}
+      />
+    );
   };
 
   const inactive = amount === 0;
@@ -53,6 +87,7 @@ const Wallet = ({
             backgroundColor='#020202'
             ariaLabel='Scan QR'
             onClick={scanQROnClick}
+            disabled={inactive}
           >
             <ScanQRIcon color='#FFFFFF'/>
           </IconButton>

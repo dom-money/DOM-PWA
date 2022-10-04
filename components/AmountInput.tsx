@@ -29,6 +29,10 @@ interface AmountInputProps {
    * Optional autofocus prop
    */
   autoFocus?: boolean;
+  /**
+   * Is input disabled
+   */
+  disabled?: boolean;
 };
 
 interface onInputChangeType {
@@ -103,6 +107,7 @@ const AmountInput = ({
   onInputChange,
   errorMessage = '',
   autoFocus = true,
+  disabled,
 }: AmountInputProps) => {
   return (
     <GenericContainer
@@ -128,6 +133,7 @@ const AmountInput = ({
             allowedDecimalSeparators={[ '.', ',' ]}
             customInput={TextInput}
             onValueChange={onInputChange}
+            disabled={disabled}
           />
         </Container>
       }

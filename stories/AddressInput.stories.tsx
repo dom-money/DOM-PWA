@@ -62,3 +62,11 @@ Empty.args = {
   addressValue: '',
   inputID: 'default-address-input',
 };
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  label: 'Enter Or Choose Address',
+  addressValue: '',
+  inputID: 'default-address-input',
+  disabled: true,
+};

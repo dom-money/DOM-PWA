@@ -31,3 +31,10 @@ WithError.args = {
   inputID: 'default-amount-input',
   errorMessage: 'Not Enough Money',
 };
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  label: 'How much do you want to invest?',
+  inputID: 'default-amount-input',
+  disabled: true,
+};

@@ -61,6 +61,14 @@ interface LoadingProps {
    * Should component display loading skeleton?
    */
   isLoading: true;
+  /**
+   * User's name
+   */
+  userName: string;
+  /**
+   * URL to Avatar Image
+   */
+  avatarImageURL?: string;
   walletAmount?: never;
   scanQROnClick?: never;
   wealthAmount?: never;
@@ -68,12 +76,10 @@ interface LoadingProps {
   yieldValuePercentage?: never;
   averageAPY?: never;
   transactions?: never;
-  userName?: never;
-  avatarImageURL?: never;
   isNotificationPresent?: never;
 };
 
-type MainPageRenderPropsWithLoading = LoadingProps | MainPageRenderProps;
+type Props = LoadingProps | MainPageRenderProps;
 
 const Wrapper = styled.div`
   padding: 1.625rem 0.313rem 9.25rem;
@@ -95,23 +101,17 @@ const MainPageRender = ({
   avatarImageURL,
   isNotificationPresent = false,
   isLoading,
-}: MainPageRenderPropsWithLoading) => {
+}: Props) => {
   if (isLoading) {
     return (
       <Wrapper>
         <HeaderWithMargin
-          isNotificationPresent={false}
-          userName='User'
+          avatarImageURL={avatarImageURL}
+          userName={userName}
         />
-        <TotalBalance
-          amount={0}
-        />
-        <Wallet
-          amount={0}
-        />
-        <Wealth
-          amount={0}
-        />
+        <TotalBalance isLoading />
+        <Wallet isLoading />
+        <Wealth isLoading />
         <RecentTransactions isLoading />
         <InvestButton href='/invest'/>
       </Wrapper>

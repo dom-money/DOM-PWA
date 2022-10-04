@@ -150,3 +150,24 @@ Inactive.args = {
   avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
   isNotificationPresent: false,
 };
+
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
+  userName: 'John Doe',
+  avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
+};
+Loading.parameters = {
+  controls: {
+    exclude: [
+      'walletAmount',
+      'wealthAmount',
+      'yieldValue',
+      'yieldValuePercentage',
+      'averageAPY',
+      'transactions',
+      'isNotificationPresent',
+      'isLoading',
+    ],
+  },
+};

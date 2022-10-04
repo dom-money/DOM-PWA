@@ -16,10 +16,14 @@ interface IconButtonCircularProps {
    */
   href?: string;
   /**
+   * Is button disabled?
+   */
+  disabled?: boolean;
+  /**
    * Optional aria-label
    */
   ariaLabel?: string;
-}
+};
 
 const IconButton = styled.button`
   display: inline-flex;
@@ -41,19 +45,35 @@ const IconButton = styled.button`
     height: 200%;
     border-radius: 50%;
     cursor: pointer;
-  }
+  };
   &:hover::after {
     background-color: #F8F8F8;
     opacity: 0.3;
-  }
+  };
+`;
+
+const DisabledIconButton = styled(IconButton)`
+  cursor: not-allowed;
+  &:after {
+    content: none;
+  };
 `;
 
 const IconButtonCircular = ({
   children,
   href,
+  disabled,
   ariaLabel,
   ...props
 }: IconButtonCircularProps) => {
+  if (disabled) {
+    return (
+      <DisabledIconButton aria-label={ariaLabel} disabled={true}>
+        {children}
+      </DisabledIconButton>
+    );
+  };
+
   if (href) {
     return (
       <Link href={href} passHref>
@@ -63,6 +83,7 @@ const IconButtonCircular = ({
       </Link>
     );
   };
+
   return (
     <IconButton aria-label={ariaLabel} {...props}>
       {children}

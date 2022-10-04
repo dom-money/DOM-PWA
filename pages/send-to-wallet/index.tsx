@@ -91,9 +91,8 @@ const SendToWalletPage: NextPage = () => {
   };
 
   if (isWalletBalanceLoading || hasWalletBalanceError) {
-    return null;
+    return <SendToWalletPageRender isLoading />;
   };
-
 
   return (
     <>

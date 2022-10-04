@@ -33,12 +33,18 @@ const Template: ComponentStory<typeof SendToWalletPageRender> = (args) => {
   };
 
   return <SendToWalletPageRender
+    availableBalance={45725.06}
+    areInputsValid={false}
     {...args}
+    isLoading={false}
     inputAddress={inputAddress}
     onInputAddressChange={handleValueChange}
     onInputAddressFocus={handleFocus}
   />;
 };
+
+const LoadingTemplate: ComponentStory<typeof SendToWalletPageRender> = (args) =>
+  <SendToWalletPageRender {...args} />;
 
 export const Valid = Template.bind({});
 Valid.args = {
@@ -72,4 +78,21 @@ Submitting.args = {
   inputAddress: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
   areInputsValid: true,
   isSubmitting: true,
+};
+
+export const Loading = LoadingTemplate.bind({});
+Loading.args = {
+  isLoading: true,
+};
+Loading.parameters = {
+  controls: {
+    hideNoControlsWarning: true,
+    exclude: [
+      'sendButtonOnClick',
+      'clearButtonOnClick',
+      'getContactOnClick',
+      'scanQROnClick',
+      'isLoading',
+    ],
+  },
 };

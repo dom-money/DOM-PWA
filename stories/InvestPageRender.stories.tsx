@@ -49,3 +49,18 @@ Submitting.args = {
   isInputValid: true,
   isSubmitting: true,
 };
+
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
+};
+Loading.parameters = {
+  controls: {
+    hideNoControlsWarning: true,
+    exclude: [
+      'investButtonOnClick',
+      'clearButtonOnClick',
+      'isLoading',
+    ],
+  },
+};

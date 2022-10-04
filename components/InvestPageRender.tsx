@@ -9,6 +9,10 @@ import Loading from './Loading';
 
 interface InvestPageRenderProps {
   /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
+  /**
    * Available Balance Amount
    */
   availableBalance: number;
@@ -23,24 +27,41 @@ interface InvestPageRenderProps {
   /**
    * Validation error message
    */
-  errorMessage?: string,
+  errorMessage?: string;
   /**
    * Is input valid?
    */
-  isInputValid: boolean,
+  isInputValid: boolean;
   /**
    * Is Component in the process of submitting data?
    */
-  isSubmitting?: boolean
+  isSubmitting?: boolean;
   /**
    * 'Send' Button Click Handler
    */
-  investButtonOnClick?: () => void,
+  investButtonOnClick?: () => void;
   /**
    * 'Clear' Button Click Handler
    */
-  clearButtonOnClick?: () => void,
-}
+  clearButtonOnClick?: () => void;
+};
+
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  availableBalance?: never;
+  inputAmount?: never;
+  onInputChange?: never;
+  errorMessage?: string;
+  isInputValid?: never;
+  isSubmitting?: never;
+  investButtonOnClick?: never;
+  clearButtonOnClick?: never;
+};
+
+type Props = LoadingProps | InvestPageRenderProps;
 
 interface onInputChangeType {
   formattedValue: string,
@@ -69,7 +90,38 @@ const InvestPageRender = ({
   isSubmitting,
   investButtonOnClick,
   clearButtonOnClick,
-}: InvestPageRenderProps) => {
+  isLoading,
+}: Props) => {
+  if (isLoading) {
+    return (
+      <Wrapper>
+        <HeaderWithMargin
+          href={'/'}
+        />
+        <TotalBalance
+          isLoading
+          asAvailableBalance
+        />
+        <AmountInput
+          label='How much do you want to invest?'
+          inputID='amount-to-invest-input'
+          disabled
+        />
+        <ButtonContainer>
+          <Button
+            label='Invest'
+            primary
+            disabled={true}
+          />
+          <Button
+            label='Clear'
+            disabled={true}
+          />
+        </ButtonContainer>
+      </Wrapper>
+    );
+  };
+
   return (
     <>
       <Wrapper>

@@ -66,3 +66,9 @@ ContentOutside.args = {
   primaryContent: <SampleContent />,
   secondaryContent: <SampleContent />,
 };
+
+export const NoSecondaryContent = Template.bind({});
+NoSecondaryContent.args = {
+  label: 'Wallet',
+  primaryContent: <SampleContent />,
+};

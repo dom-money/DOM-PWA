@@ -3,13 +3,28 @@ import styled from 'styled-components';
 import QRCode from 'react-qr-code';
 
 import GenericContainer from './GenericContainer';
+import { Skeleton } from '@mui/material';
 
 interface WalletAddressProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
   /**
    * Wallet Address
    */
   address: string;
-}
+};
+
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  address?: never;
+};
+
+type Props = LoadingProps | WalletAddressProps;
 
 const ContentContainer = styled.div`
   display: flex;
@@ -31,16 +46,35 @@ const Text = styled.p`
   overflow-wrap: break-word;
 `;
 
-const WalletAddress = ({ address }: WalletAddressProps) => {
+const WalletAddress = ({ address, isLoading }: Props) => {
   return (
     <GenericContainer
       label='Your Address To Receive Funds'
       content={
         <ContentContainer>
-          <QRWrapper>
-            <QRCode value={address} size={220} fgColor={'#1A1A1A'} />
-          </QRWrapper>
-          <Text>{address}</Text>
+          {
+            isLoading ?
+            <Skeleton
+              variant='rectangular'
+              width='14.75rem'
+              height='15rem'
+              sx={{ bgcolor: 'grey.800' }}
+            /> :
+            <QRWrapper>
+              <QRCode value={address} size={220} fgColor={'#1A1A1A'} />
+            </QRWrapper>
+          }
+          <Text>
+            {
+              isLoading ?
+              <Skeleton
+                variant='text'
+                width='42ch'
+                sx={{ bgcolor: 'grey.800', maxWidth: '100%' }}
+              /> :
+              address
+            }
+          </Text>
         </ContentContainer>
       }
     />

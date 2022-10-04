@@ -10,6 +10,10 @@ import Loading from './Loading';
 
 interface SendToWalletPageRenderProps {
   /**
+   * Should component display loading skeleton?
+   */
+  isLoading?: false;
+  /**
    * Available Balance Amount
    */
   availableBalance: number;
@@ -40,19 +44,19 @@ interface SendToWalletPageRenderProps {
   /**
    * Are inputs valid for submission?
    */
-  areInputsValid: boolean,
+  areInputsValid: boolean;
   /**
    * Is Component in the process of submitting data?
    */
-  isSubmitting?: boolean
+  isSubmitting?: boolean;
   /**
    * 'Send' Button Click Handler
    */
-  sendButtonOnClick?: () => void,
+  sendButtonOnClick?: () => void;
   /**
    * 'Clear' Button Click Handler
    */
-  clearButtonOnClick?: () => void,
+  clearButtonOnClick?: () => void;
   /**
    * 'Get Contact' Button Click handler
    */
@@ -61,7 +65,29 @@ interface SendToWalletPageRenderProps {
    * 'Scan QR' Button Click handler
    */
   scanQROnClick?: () => void;
-}
+};
+
+interface LoadingProps {
+  /**
+   * Should component display loading skeleton?
+   */
+  isLoading: true;
+  availableBalance?: never;
+  inputAmount?: never;
+  onInputAmountChange?: never;
+  inputAddress?: never;
+  onInputAddressChange?: never;
+  onInputAddressFocus?: never;
+  inputAmountErrorMessage?: never;
+  areInputsValid?: never;
+  isSubmitting?: never;
+  sendButtonOnClick?: never;
+  clearButtonOnClick?: never;
+  getContactOnClick?: never;
+  scanQROnClick?: never;
+};
+
+type Props = LoadingProps | SendToWalletPageRenderProps;
 
 interface onInputChangeType {
   formattedValue: string,
@@ -95,7 +121,47 @@ const SendToWalletPageRender = ({
   scanQROnClick,
   sendButtonOnClick,
   clearButtonOnClick,
-}: SendToWalletPageRenderProps) => {
+  isLoading,
+}: Props) => {
+  if (isLoading) {
+    return (
+      <Wrapper>
+        <HeaderWithMargin
+          href={'/'}
+        />
+        <TotalBalance
+          isLoading
+          asAvailableBalance
+        />
+        <form>
+          <AddressInput
+            label='Enter Or Choose Address'
+            inputID='send-to-address-input'
+            addressValue=''
+            disabled
+          />
+          <AmountInput
+            label='Enter Amount To Transfer'
+            inputID='amount-to-transfer-input'
+            disabled
+            autoFocus={false}
+          />
+          <ButtonContainer>
+            <Button
+              label='Send'
+              primary
+              disabled={true}
+            />
+            <Button
+              label='Clear'
+              disabled={true}
+            />
+          </ButtonContainer>
+        </form>
+      </Wrapper>
+    );
+  };
+
   const handleSubmit = (e:React.FormEvent) => {
     e.preventDefault();
     if (!sendButtonOnClick) {
@@ -103,6 +169,7 @@ const SendToWalletPageRender = ({
     }
     sendButtonOnClick();
   };
+
   return (
     <>
       <Wrapper>
