@@ -7,57 +7,11 @@ export default {
   title: 'Components/Yield Display',
   component: YieldDisplay,
   argTypes: {
-    type: {
-      type: { name: 'string', required: false },
-      description: 'Type of Yield Display',
-      table: {
-        defaultValue: {
-          summary: 'short',
-        },
-        type: {
-          summary: 'string',
-        },
-      },
-      options: [ 'short', 'long' ],
-      control: {
-        type: 'select',
-      },
-    },
-    yieldValue: {
-      type: { name: 'number', required: true },
-      description: 'Yield Value',
-      table: {
-        type: {
-          summary: 'number',
-        },
-      },
-    },
-    yieldValuePercentage: {
-      type: { name: 'number', required: true },
-      description: 'Yield Percentage Value',
-      table: {
-        type: {
-          summary: 'number',
-        },
-      },
-      control: {
-        type: 'number',
-        min: 0,
-        max: 100,
-        step: 0.01,
-      },
-    },
     averageAPY: {
-      type: { name: 'number', required: false },
-      description: 'Average Annual Percentage Yield Value',
-      table: {
-        defaultValue: {
-          summary: 0,
-        },
-        type: {
-          summary: 'number',
-        },
-      },
+      if: { arg: 'type', eq: 'long' },
+    },
+    className: {
+      table: { disable: true },
     },
   },
   parameters: {

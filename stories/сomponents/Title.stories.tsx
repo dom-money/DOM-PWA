@@ -7,27 +7,13 @@ export default {
   title: 'Components/Title',
   component: Title,
   argTypes: {
-    text: {
-      type: { name: 'string', required: true },
-      description: 'Text to display',
+    className: {
       table: {
-        type: {
-          summary: 'string',
-        },
+        disable: true,
       },
     },
-    as: {
-      type: { name: 'string', required: false },
-      // eslint-disable-next-line max-len
-      description: 'Optionally render title as another HTML element (renders as h2 by default)',
-      table: {
-        defaultValue: {
-          summary: 'undefined',
-        },
-        type: {
-          summary: 'string',
-        },
-      },
+    inputID: {
+      if: { arg: 'as', eq: 'label' },
     },
   },
   parameters: {
@@ -46,4 +32,11 @@ export const AsParagraph = Template.bind({});
 AsParagraph.args = {
   text: 'Wallet',
   as: 'p',
+};
+
+export const AsLabel = Template.bind({});
+AsLabel.args = {
+  text: 'Amount Input',
+  as: 'label',
+  inputID: 'test-amount-input',
 };

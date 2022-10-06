@@ -1,6 +1,8 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { useArgs } from '@storybook/client-api';
+import { within, userEvent, waitFor } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 
 import AddressInput from '../../../components/AddressInput';
 
@@ -90,4 +92,20 @@ Disabled.args = {
   addressValue: '',
   inputID: 'default-address-input',
   disabled: true,
+};
+
+export const WithInteractions = Template.bind({});
+WithInteractions.args = {
+  label: 'Enter Or Choose Address',
+  addressValue: '',
+  inputID: 'default-address-input',
+};
+WithInteractions.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const input: HTMLInputElement = canvas.getByRole('textbox');
+
+  await waitFor(() => userEvent.type(input, '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca'));
+  // await userEvent.type(input, '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca');
+
+  await expect(input.value).toBe('0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca');
 };

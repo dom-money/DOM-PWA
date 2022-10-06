@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { useArgs } from '@storybook/client-api';
 
 import Dialog from '../../components/Dialog';
 import Button from '../../components/Button';
@@ -8,6 +9,9 @@ import theme from '../../styles/theme';
 export default {
   title: 'Components/Dialog',
   component: Dialog,
+  argTypes: {
+    onClose: { action: 'Dialog Closed' },
+  },
 } as ComponentMeta<typeof Dialog>;
 
 const SampleComponent = () =>
@@ -24,18 +28,19 @@ const SampleComponent = () =>
   </div>;
 
 const Template: ComponentStory<typeof Dialog> = (args) => {
-  const [ isOpen, setIsOpen ] = useState(false);
+  const [ { isOpen, onClose }, updateArgs ] = useArgs();
   return (
     <div style={{ width: '20rem' }}>
       <Button
         primary
         onClick={() => {
-          setIsOpen(true);
+          updateArgs({ isOpen: true });
         }}
         label='Open Dialog'
       />
       <Dialog {...args} isOpen={isOpen} onClose={() => {
-        setIsOpen(false);
+        updateArgs({ isOpen: false });
+        onClose();
       }}/>
     </div>
   );
@@ -43,11 +48,13 @@ const Template: ComponentStory<typeof Dialog> = (args) => {
 
 export const WithoutPadding = Template.bind({});
 WithoutPadding.args = {
+  isOpen: false,
   children: <SampleComponent />,
 };
 
 export const WithPadding = Template.bind({});
 WithPadding.args = {
+  isOpen: false,
   children: <SampleComponent />,
   padding: '1.25rem',
 };

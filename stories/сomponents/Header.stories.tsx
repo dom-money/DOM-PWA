@@ -1,5 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { within, userEvent, waitFor } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 
 import Header from '../../components/Header';
 
@@ -10,15 +12,13 @@ export default {
     layout: 'padded',
   },
   argTypes: {
-    isNotificationPresent: { control: 'boolean' },
     profileOnClick: {
       action: `'Profile' Button Clicked`,
-      table: {
-        disable: true,
-      },
     },
     notificationsOnClick: {
-      action: '\'Notifications\' Button Clicked',
+      action: `'Notifications' Button Clicked`,
+    },
+    className: {
       table: {
         disable: true,
       },
@@ -40,13 +40,38 @@ export default {
 const Template: ComponentStory<typeof Header> = (args) =>
   <Header {...args} />;
 
+type PlayFnArgs = {
+  args: React.ComponentPropsWithoutRef<typeof Header>,
+  canvasElement: HTMLElement
+};
+
+const playFn = async ({ args, canvasElement }: PlayFnArgs) => {
+  const canvas = within(canvasElement);
+  const avatarButton = canvas.getByRole('button', { name: 'Profile' });
+  const notificationsButton =
+    canvas.getByRole('button', { name: 'Notifications' });
+
+  await userEvent.click(avatarButton);
+  await waitFor(() => expect(args.profileOnClick).toHaveBeenCalled());
+
+  await userEvent.click(notificationsButton);
+  await waitFor(() => expect(args.notificationsOnClick).toHaveBeenCalled());
+
+  // Clicking away to lose focus
+  await userEvent.click(canvasElement);
+};
+
 export const WithNotification = Template.bind({});
 WithNotification.args = {
   avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
+  userName: 'John Doe',
   isNotificationPresent: true,
 };
+WithNotification.play = playFn;
 
 export const WithoutNotification = Template.bind({});
 WithoutNotification.args = {
   avatarImageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
+  userName: 'John Doe',
 };
+WithoutNotification.play = playFn;

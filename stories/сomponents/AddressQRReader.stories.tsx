@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { useArgs } from '@storybook/client-api';
 import styled from 'styled-components';
 
 import AddressQRReader from '../../components/AddressQRReader';
@@ -9,13 +10,17 @@ import ScanQRIcon from '../../styles/icons/ScanQRIcon';
 export default {
   title: 'Components/Address QR Reader',
   component: AddressQRReader,
+  argTypes: {
+    isOpen: { control: 'boolean' },
+    onResult: { action: 'QR Successfully scanned' },
+    onClose: { action: 'QR Scanner Closed' },
+  },
   parameters: {
     backgrounds: { default: 'darkAdditional' },
     docs: {
       inlineStories: false,
       iframeHeight: 500,
     },
-    controls: { hideNoControlsWarning: true },
   },
 } as ComponentMeta<typeof AddressQRReader>;
 
@@ -31,20 +36,23 @@ const AddressWrapper = styled.div`
 `;
 
 const Template: ComponentStory<typeof AddressQRReader> = (args) => {
-  const [ isOpen, setIsOpen ] = useState(false);
-  const [ address, setAddress ] = useState('');
+  const [ { isOpen, onResult, onClose }, updateArgs ] = useArgs();
+
+  const address = useRef<string | null>(null);
 
   const handleResult = (result: string) => {
-    setAddress(result);
-    handleClose();
+    address.current = result;
+    updateArgs({ isOpen: false });
+    onResult(result);
   };
 
   const handleOpen = () => {
-    setIsOpen(true);
+    updateArgs({ isOpen: true });
   };
 
   const handleClose = () => {
-    setIsOpen(false);
+    updateArgs({ isOpen: false });
+    onClose();
   };
 
   return (
@@ -58,10 +66,10 @@ const Template: ComponentStory<typeof AddressQRReader> = (args) => {
         <ScanQRIcon color='#FFFFFF'/>
       </IconButton>
       {
-        address &&
+        address.current &&
       <AddressWrapper>
         <p style={{ fontWeight: 'bold' }}>Wallet address:</p>
-        <p>{address}</p>
+        <p>{address.current}</p>
       </AddressWrapper>
       }
       <AddressQRReader
@@ -74,3 +82,6 @@ const Template: ComponentStory<typeof AddressQRReader> = (args) => {
 };
 
 export const Default = Template.bind({});
+Default.args = {
+  isOpen: false,
+};

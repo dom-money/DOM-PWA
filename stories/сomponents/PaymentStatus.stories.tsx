@@ -1,6 +1,8 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { useArgs } from '@storybook/client-api';
+import { screen, userEvent, waitFor } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 
 import PaymentStatus from '../../components/PaymentStatus';
 
@@ -11,29 +13,29 @@ export default {
   component: PaymentStatus,
   argTypes: {
     type: {
+      control: false,
+    },
+    onClose: {
+      action: `'Payment Status' Drawer Closed`,
+    },
+    onExited: {
+      action: `'Payment Status' Component Unmounted`,
+    },
+    message: {
       type: { name: 'string', required: true },
-      description: 'Type of Payment Status',
-      table: {
-        type: {
-          summary: 'string',
-        },
-      },
-      options: [ 'successful', 'failed' ],
-      control: {
-        type: 'select',
-      },
+      if: { arg: 'type', eq: 'successful' },
     },
     sendAgainOnClick: {
+      if: { arg: 'type', eq: 'successful' },
       action: `'Send Again' Button Clicked`,
-      table: {
-        disable: true,
-      },
+    },
+    errorMessage: {
+      type: { name: 'string', required: true },
+      if: { arg: 'type', eq: 'failed' },
     },
     tryAgainOnClick: {
+      if: { arg: 'type', eq: 'failed' },
       action: `'Try Again' Button Clicked`,
-      table: {
-        disable: true,
-      },
     },
   },
   parameters: {
@@ -45,10 +47,11 @@ export default {
 } as ComponentMeta<typeof PaymentStatus>;
 
 const Template: ComponentStory<typeof PaymentStatus> = (args) => {
-  const [ { isOpen }, updateArgs ] = useArgs();
+  const [ { isOpen, onClose }, updateArgs ] = useArgs();
 
   const handleDrawerClose = () => {
     updateArgs({ isOpen: false });
+    onClose();
   };
 
   return (
@@ -76,6 +79,17 @@ Successful.args = {
   amount: '200',
   message: 'Submitted successfully',
 };
+Successful.play = async ({ args, canvasElement }) => {
+  const sendAgainButton = screen.getByRole('button', { name: 'Send Again' });
+  const nextButton = screen.getByRole('link', { name: 'Next' });
+  await waitFor(() => userEvent.click(sendAgainButton));
+
+  await waitFor(() => expect(args.sendAgainOnClick).toHaveBeenCalled());
+  await expect(nextButton).toHaveAttribute('href', '/');
+
+  // Clicking away to lose focus
+  await waitFor(() => userEvent.click(canvasElement));
+};
 
 export const Failed = Template.bind({});
 Failed.args = {
@@ -84,4 +98,15 @@ Failed.args = {
   paymentTo: '0x64ff637fb478863b7468bc97d30a5bf3a415fAb3',
   amount: '200',
   errorMessage: 'Insufficient funds',
+};
+Failed.play = async ({ args, canvasElement }) => {
+  const tryAgainButton = screen.getByRole('button', { name: 'Try Again' });
+  const homeButton = screen.getByRole('link', { name: 'Home' });
+  await waitFor(() => userEvent.click(tryAgainButton));
+
+  await waitFor(() => expect(args.tryAgainOnClick).toHaveBeenCalled());
+  await expect(homeButton).toHaveAttribute('href', '/');
+
+  // Clicking away to lose focus
+  await waitFor(() => userEvent.click(canvasElement));
 };
