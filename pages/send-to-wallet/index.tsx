@@ -114,21 +114,32 @@ const SendToWalletPage: NextPage = () => {
         onResult={handleQRReaderResult}
         onClose={handleQRDialogClose}
       />
-      <PaymentStatus
-        type={transactionResult ? 'successful' : 'failed'}
-        isOpen={isPaymentStatusOpen}
-        onClose={() => handlePaymentStatusDrawerClose()}
-        onExited={handlePaymentStatusDrawerOnExited}
-        paymentTo={inputAddress}
-        amount={inputAmount}
-        message='Submitted successfully'
-        errorMessage={
-          transactionErrorMessage ?
-          transactionErrorMessage : undefined
-        }
-        sendAgainOnClick={() => handlePaymentStatusDrawerClose()}
-        tryAgainOnClick={() => handlePaymentStatusDrawerClose(true)}
-      />
+      {
+        transactionResult && !transactionErrorMessage &&
+        <PaymentStatus
+          type='successful'
+          isOpen={isPaymentStatusOpen}
+          onClose={() => handlePaymentStatusDrawerClose()}
+          onExited={handlePaymentStatusDrawerOnExited}
+          paymentTo={inputAddress}
+          amount={inputAmount}
+          message='Submitted successfully'
+          sendAgainOnClick={() => handlePaymentStatusDrawerClose()}
+        />
+      }
+      {
+        transactionErrorMessage && !transactionResult &&
+        <PaymentStatus
+          type='failed'
+          isOpen={isPaymentStatusOpen}
+          onClose={() => handlePaymentStatusDrawerClose()}
+          onExited={handlePaymentStatusDrawerOnExited}
+          paymentTo={inputAddress}
+          amount={inputAmount}
+          errorMessage={transactionErrorMessage}
+          tryAgainOnClick={() => handlePaymentStatusDrawerClose(true)}
+        />
+      }
     </>
   );
 };

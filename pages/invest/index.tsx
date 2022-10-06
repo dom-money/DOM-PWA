@@ -82,18 +82,32 @@ const InvestPage: NextPage = () => {
         investButtonOnClick={handleInvestToWealth}
         clearButtonOnClick={inputAmountHandleClear}
       />
-      <PaymentStatus
-        type={depositResult ? 'successful' : 'failed'}
-        isOpen={isPaymentStatusOpen}
-        onClose={() => handlePaymentStatusDrawerClose()}
-        onExited={handlePaymentStatusDrawerOnExited}
-        paymentTo='Your wealth wallet'
-        amount={inputAmount}
-        message='Submitted successfully'
-        errorMessage={depositErrorMessage ? depositErrorMessage : undefined}
-        sendAgainOnClick={() => handlePaymentStatusDrawerClose()}
-        tryAgainOnClick={() => handlePaymentStatusDrawerClose(true)}
-      />
+      {
+        depositResult && !depositErrorMessage &&
+        <PaymentStatus
+          type='successful'
+          isOpen={isPaymentStatusOpen}
+          onClose={() => handlePaymentStatusDrawerClose()}
+          onExited={handlePaymentStatusDrawerOnExited}
+          paymentTo='Your wealth wallet'
+          amount={inputAmount}
+          message='Submitted successfully'
+          sendAgainOnClick={() => handlePaymentStatusDrawerClose()}
+        />
+      }
+      {
+        depositErrorMessage && !depositResult &&
+        <PaymentStatus
+          type='failed'
+          isOpen={isPaymentStatusOpen}
+          onClose={() => handlePaymentStatusDrawerClose()}
+          onExited={handlePaymentStatusDrawerOnExited}
+          paymentTo='Your wealth wallet'
+          amount={inputAmount}
+          errorMessage={depositErrorMessage}
+          tryAgainOnClick={() => handlePaymentStatusDrawerClose(true)}
+        />
+      }
     </>
   );
 };
