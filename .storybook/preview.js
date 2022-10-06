@@ -51,6 +51,7 @@ export const parameters = {
       date: /Date$/,
     },
     expanded: true,
+    sort: 'requiredFirst',
   },
   nextRouter: {
     Provider: RouterContext.Provider,
