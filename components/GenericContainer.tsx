@@ -12,7 +12,7 @@ interface GenericContainerProps {
    */
   content: React.ReactNode;
   /**
-   * Optionally render title as a <label> element
+   * Optionally render title as a \<label\> element
    */
   titleHtmlElement?: 'label';
   /**
@@ -50,12 +50,21 @@ const GenericContainer = ({
   label,
   content,
   titleHtmlElement,
+  inputID,
   ...props
 }: GenericContainerProps) => {
   return (
     <Wrapper>
       <Header>
-        <Title as={titleHtmlElement} text={label} {...props} />
+        {titleHtmlElement === 'label' && inputID ?
+        <Title
+          as={titleHtmlElement}
+          text={label}
+          inputID={inputID}
+          {...props}
+        /> :
+        <Title text={label} {...props} />
+        }
       </Header>
       <Contents>
         {content}
