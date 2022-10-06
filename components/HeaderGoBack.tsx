@@ -4,16 +4,30 @@ import styled from 'styled-components';
 import IconButtonCircular from './IconButtonCircular';
 import GoBackIcon from '../styles/icons/GoBackIcon';
 
-interface HeaderGoBackProps {
+interface CommonProps {
   /**
    * Prop for extending styled-components style
    */
   className?: string;
+};
+
+interface ClickHandlerProps {
+  /**
+   * Button Click handler function
+   */
+  onClick: () => void;
+  href?: never;
+};
+
+interface LinkProps {
   /**
    * URL to Click
    */
   href: string;
-}
+  onClick?: never;
+};
+
+type HeaderGoBackProps = CommonProps & (ClickHandlerProps | LinkProps);
 
 const Wrapper = styled.header`
   display: flex;

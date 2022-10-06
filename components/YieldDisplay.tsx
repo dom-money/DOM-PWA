@@ -3,11 +3,26 @@ import styled, { useTheme } from 'styled-components';
 import TriangleIcon from '../styles/icons/TriangleIcon';
 import { ThemeType } from '../styles/theme';
 
-interface YieldDisplayProps {
+type YieldDisplayProps =
+  ({
   /**
    * Type of Yield Display
    */
-  type?: 'short' | 'long';
+  type?: 'short';
+  /**
+   * Average Annual percentage yield value
+   */
+  averageAPY?: never;
+} | {
+  /**
+   * Type of Yield Display
+   */
+  type: 'long';
+  /**
+   * Average Annual percentage yield value
+   */
+  averageAPY?: number;
+}) & {
   /**
    * Yield value
    */
@@ -16,10 +31,6 @@ interface YieldDisplayProps {
    * Yield percentage
    */
   yieldValuePercentage: number;
-  /**
-   * Average Annual percentage yield value
-   */
-  averageAPY?: number;
   /**
    * Prop for extending styled-components style
    */
@@ -74,7 +85,8 @@ const YieldDisplay = ({
         </Text>
       </Wrapper>
     );
-  }
+  };
+
   return (
     <Wrapper {...props}>
       <YieldContainer>
