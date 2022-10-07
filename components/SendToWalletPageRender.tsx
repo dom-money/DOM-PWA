@@ -213,7 +213,10 @@ const SendToWalletPageRender = ({
           </ButtonContainer>
         </form>
       </Wrapper>
-      {isSubmitting && <Loading primary />}
+      {
+        isSubmitting &&
+        <Loading ariaLabel='Transaction is in progress' primary />
+      }
     </>
   );
 };

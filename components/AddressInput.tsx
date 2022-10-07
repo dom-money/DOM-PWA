@@ -132,7 +132,7 @@ const AddressInput = ({
         inputID={inputID}
         content={
           <Container>
-            <InputWrapper>
+            <InputWrapper tabIndex={0}>
               <TextInput
                 id={inputID}
                 spellCheck={false}

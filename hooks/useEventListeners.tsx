@@ -12,7 +12,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
   const [ walletEvent, setWalletEvent ] = useState<EventData>(null);
   const [ wealthEvent, setWealthEvent ] = useState<EventData>(null);
 
-  const [ walletAddress ] = useWalletAddress();
+  const walletAddress = useWalletAddress();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -81,7 +81,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
   // Subscription to 'Deposit to Wealth Wallet' and
   // 'Withdraw from Wealth Wallet' Events
   useEffect(() => {
-    if (!ethersProvider || !walletAddress) {
+    if (!ethersProvider || walletAddress.isLoading || walletAddress.isError) {
       return;
     };
 
@@ -93,12 +93,12 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
     // eslint-disable-next-line new-cap
     const filterDepositByAddress = contractWithProvider.filters.Deposit(
         null,
-        walletAddress,
+        walletAddress.data.walletAddress,
     );
     // eslint-disable-next-line new-cap
     const filterWithdrawByAddress = contractWithProvider.filters.Withdraw(
         null,
-        walletAddress,
+        walletAddress.data.walletAddress,
     );
     contractWithProvider.on(
         filterDepositByAddress,
@@ -118,11 +118,11 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
           withdrawFromWealthEventListener,
       );
     };
-  }, [ ethersProvider, walletAddress ]);
+  }, [ ethersProvider, walletAddress.data ]);
 
   // Subscription to 'Deposit to Wallet' and 'Send From Wallet' Events
   useEffect(() => {
-    if (!ethersProvider || !walletAddress) {
+    if (!ethersProvider || walletAddress.isLoading || walletAddress.isError) {
       return;
     };
 
@@ -135,11 +135,11 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
     // eslint-disable-next-line new-cap
     const filterTo = contractUSDCWithProvider.filters.Transfer(
         null,
-        walletAddress,
+        walletAddress.data.walletAddress,
     );
     // eslint-disable-next-line new-cap
     const filterFrom = contractUSDCWithProvider.filters.Transfer(
-        walletAddress,
+        walletAddress.data.walletAddress,
         null,
     );
     contractUSDCWithProvider.on(filterTo, depositToWalletEventListener);
@@ -148,7 +148,7 @@ const useEventListeners = (ethersProvider: EthersProviderType) => {
       contractUSDCWithProvider.off(filterTo, depositToWalletEventListener);
       contractUSDCWithProvider.off(filterFrom, sentFromWalletEventListener);
     };
-  }, [ ethersProvider, walletAddress ]);
+  }, [ ethersProvider, walletAddress.data ]);
 
   return { walletEvent, wealthEvent };
 };

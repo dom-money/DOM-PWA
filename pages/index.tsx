@@ -1,34 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import type { NextPage } from 'next';
 
 import MainPageRender from '../components/MainPageRender';
 
-import useUserInfo from '../hooks/useUserInfo';
 import useWalletBalance from '../hooks/useWalletBalance';
 import useWealthBalance from '../hooks/useWealthBalance';
 import AddressQRReader from '../components/AddressQRReader';
 import { useRouter } from 'next/router';
 import useQRAddressReader from '../hooks/useQRAddressReader';
 import useTransactions from '../hooks/useTransactions';
+import AuthContext, { AuthContextType } from '../context/AuthContext';
 
 const MainPage: NextPage = () => {
-  const [ userInfo, isUserInfoLoading, hasUserInfoError ] = useUserInfo();
-  const [
-    walletBalance,
-    ,
-    isWalletBalanceLoading,
-    hasWalletBalanceError,
-  ] = useWalletBalance();
+  const { user } = useContext(AuthContext) as AuthContextType;
 
-  const [
-    wealthBalance,
-    ,
-    apy,
-    ,
-    isWealthBalanceLoading,
-    hasWealthBalanceError,
-  ] = useWealthBalance();
-
+  const walletBalance = useWalletBalance();
+  const wealthBalance = useWealthBalance();
   const transactions = useTransactions();
 
   const router = useRouter();
@@ -40,27 +27,24 @@ const MainPage: NextPage = () => {
     handleQRDialogClose,
   ] = useQRAddressReader({ redirectOnResult: true, router: router });
 
-  if (isUserInfoLoading ||
-    hasUserInfoError ||
-    isWalletBalanceLoading ||
-    hasWalletBalanceError ||
-    isWealthBalanceLoading ||
-    hasWealthBalanceError ||
+  if (
+    (walletBalance.isLoading || walletBalance.isError) ||
+    (wealthBalance.isLoading || wealthBalance.isError) ||
     (transactions.isLoading || transactions.isError)
   ) {
-    return <MainPageRender isLoading userName='User' />;
+    return <MainPageRender isLoading userName={user.name} />;
   };
 
   return (
     <>
       <MainPageRender
         scanQROnClick={handleQRDialogOpen}
-        walletAmount={walletBalance}
-        wealthAmount={wealthBalance}
-        averageAPY={apy}
+        walletAmount={walletBalance.data.balanceAsNumber}
+        wealthAmount={wealthBalance.data.balanceAsNumber}
+        averageAPY={wealthBalance.data.apy}
         transactions={transactions.data}
-        userName={userInfo.name}
-        avatarImageURL={userInfo.profileImage}
+        userName={user.name}
+        avatarImageURL={user.profileImage}
       />
       <AddressQRReader
         isOpen={isQRDialogOpen}

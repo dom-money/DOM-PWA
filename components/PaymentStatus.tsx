@@ -160,6 +160,7 @@ const BackdropContent = styled.div<{marginBottom: number}>`
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: none;
   ${(props) => props.marginBottom && `margin-bottom: ${props.marginBottom}px`};
 `;
 
@@ -229,6 +230,7 @@ const PaymentStatus = ({
       SlideProps={{
         mountOnEnter: true,
         unmountOnExit: true,
+        appear: true,
         onExited: onExited,
       }}
       sx={(theme) => ({

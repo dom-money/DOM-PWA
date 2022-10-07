@@ -140,7 +140,10 @@ const TextSkeleton = ({ type }: TextSkeletonProps) =>
   <Skeleton
     variant='text'
     width={type === 'nameText' ? '8rem' : '4rem'}
-    sx={{ bgcolor: 'grey.800' }}
+    sx={{
+      bgcolor: 'grey.800',
+      fontSize: type === 'nameText' ? '0.875rem' : 'inherit',
+    }}
   />;
 
 const Transaction = ({
@@ -150,7 +153,7 @@ const Transaction = ({
   timestamp,
   amount,
   isLoading,
-}: TransactionPropsWithLoading) => {
+}: Props) => {
   if (isLoading) {
     return (
       <Wrapper>

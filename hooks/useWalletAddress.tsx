@@ -1,42 +1,41 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import AuthContext, { AuthContextType } from '../context/AuthContext';
+import { SignerType } from './useAuth';
 
-type WalletAddressType = string | null;
+type WalletAddressType = {
+  walletAddress: string,
+};
 
-type UseWalletAddressType = () => [
-  walletAddress: WalletAddressType,
-  isLoading: boolean,
-  isError: boolean
-]
+type GetWalletAddressType = (signer: SignerType) => Promise<WalletAddressType>;
 
-const useWalletAddress: UseWalletAddressType = () => {
-  const { ethersProvider, signer } = useContext(AuthContext) as AuthContextType;
-
-  const [ walletAddress, setWalletAddress ] = useState<WalletAddressType>(null);
-  const [ isLoading, setIsLoading ] = useState(true);
-  const [ isError, setIsError ] = useState(false);
-
-  useEffect(() => {
-    if (!signer || !ethersProvider ) {
-      return;
+const getWalletAddress: GetWalletAddressType = async (signer) => {
+  return new Promise(async (resolve, reject) => {
+    if (!signer ) {
+      throw new Error('Signer is not initialized');
     };
-
-    const getAccounts = async () => {
-      try {
-        const response = await signer.getAddress();
-        setWalletAddress(response);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setIsError(true);
-        setIsLoading(false);
-      }
+    try {
+      const walletAddress = await signer.getAddress();
+      resolve({ walletAddress });
+    } catch (error) {
+      reject(error);
     };
+  });
+};
 
-    getAccounts();
-  }, [ ethersProvider, signer ]);
+const useWalletAddress = () => {
+  const { signer } = useContext(AuthContext) as AuthContextType;
 
-  return [ walletAddress, isLoading, isError ];
+  return useQuery(
+      [ 'walletAddress' ],
+      () => getWalletAddress(signer),
+      {
+        // The query will not execute until the `signer` is initialized
+        enabled: !!signer,
+        // New data on key change will be swapped without Loading state
+        keepPreviousData: true,
+      },
+  );
 };
 
 export default useWalletAddress;

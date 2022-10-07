@@ -9,12 +9,7 @@ import useInputAmount from '../../hooks/useInputAmount';
 import useContract from '../../hooks/useContract';
 
 const WithdrawPage: NextPage = () => {
-  const [
-    wealthBalance,
-    ,,,
-    isWealthBalanceLoading,
-    hasWealthBalanceError,
-  ] = useWealthBalance();
+  const { data: wealthBalance, isLoading, isError } = useWealthBalance();
 
   const [
     inputAmount,
@@ -23,7 +18,7 @@ const WithdrawPage: NextPage = () => {
     inputAmountErrorMessage,
     inputAmountHandleChange,
     inputAmountHandleClear,
-  ] = useInputAmount(wealthBalance);
+  ] = useInputAmount(wealthBalance?.balanceAsNumber ?? 0);
 
   const [
     ,
@@ -64,14 +59,14 @@ const WithdrawPage: NextPage = () => {
     inputAmountHandleClear();
   };
 
-  if (isWealthBalanceLoading || hasWealthBalanceError) {
+  if (isLoading || isError) {
     return <WithdrawPageRender isLoading />;
   };
 
   return (
     <>
       <WithdrawPageRender
-        availableBalance={wealthBalance}
+        availableBalance={wealthBalance.balanceAsNumber}
         inputAmount={inputAmount}
         onInputChange={inputAmountHandleChange}
         errorMessage={inputAmountErrorMessage}

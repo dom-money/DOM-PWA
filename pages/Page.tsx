@@ -10,7 +10,7 @@ const Page = ({ Component, pageProps }: AppProps) => {
   const { isAppLoaded } = useContext(LoadingContext) as LoadingContextType;
 
   const {
-    provider,
+    isUserLoggedIn,
     login,
   } = useContext(AuthContext) as AuthContextType;
 
@@ -21,7 +21,7 @@ const Page = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       {/* Is user logged in? */}
-      {provider ?
+      {isUserLoggedIn ?
           <Component {...pageProps} /> :
           <LoginPageRender onClick={login} {...pageProps}/>
       }

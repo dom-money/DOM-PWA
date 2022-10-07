@@ -8,6 +8,10 @@ interface LoadingProps {
    * Should Progress Element use primary theme color?
    */
   primary?: boolean;
+  /**
+   * Optional aria-label
+   */
+  ariaLabel?: string;
 }
 
 const ModalWrapper = styled.div``;
@@ -28,13 +32,14 @@ const Content = styled.div`
   z-index: 2;
 `;
 
-const Loading = ({ primary }: LoadingProps) => {
+const Loading = ({ primary, ariaLabel }: LoadingProps) => {
   const theme = useTheme() as ThemeType;
   return (
     <ModalWrapper>
       <Backdrop />
       <Content>
         <CircularProgress
+          aria-label={ariaLabel}
           sx={primary ? { color: theme.colors.primary } : { color: '#ffffff' }}
         />
       </Content>

@@ -46,9 +46,18 @@ const IconButton = styled.button`
     border-radius: 50%;
     cursor: pointer;
   };
-  &:hover::after {
-    background-color: #F8F8F8;
-    opacity: 0.3;
+  @media (hover: hover) {
+    &:hover::after {
+      background-color: #F8F8F8;
+      opacity: 0.3;
+    };
+  };
+
+  @media (hover: none) {
+    &:active::after {
+      background-color: #F8F8F8;
+      opacity: 0.3;
+    };
   };
 `;
 
