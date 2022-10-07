@@ -153,7 +153,7 @@ const Transaction = ({
   timestamp,
   amount,
   isLoading,
-}: TransactionPropsWithLoading) => {
+}: Props) => {
   if (isLoading) {
     return (
       <Wrapper>
