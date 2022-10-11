@@ -1,10 +1,7 @@
-import { useContext } from 'react';
 import { ethers, BigNumber } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
-import AuthContext, { AuthContextType } from '../context/AuthContext';
-import EventListenersContext, {
-  EventListenersContextType,
-} from '../context/EventListenersContext';
+import { useAuthContext } from '../context/AuthContext';
+import { useEventListenersContext } from '../context/EventListenersContext';
 import { SignerType } from './useAuth';
 import abiDOM from '../utils/DepositManager-ABI.json';
 
@@ -63,11 +60,8 @@ const getWealthBalance: GetWalletBalanceType = async (signer) => {
 };
 
 const useWealthBalance = () => {
-  const { signer } = useContext(AuthContext) as AuthContextType;
-
-  const {
-    wealthEvent,
-  } = useContext(EventListenersContext) as EventListenersContextType;
+  const { signer } = useAuthContext();
+  const { wealthEvent } = useEventListenersContext();
 
   return useQuery(
       [ 'wealthBalance', wealthEvent ],

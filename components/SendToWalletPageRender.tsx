@@ -36,7 +36,7 @@ interface SendToWalletPageRenderProps {
   /**
    * Address input on focus handler function
    */
-  onInputAddressFocus?: (addressValue: string) => void;
+  onInputAddressFocus?: (prefill?: string) => void;
   /**
    * Amount input validation error message
    */

@@ -1,10 +1,7 @@
-import { useContext } from 'react';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
-import AuthContext, { AuthContextType } from '../context/AuthContext';
-import EventListenersContext, {
-  EventListenersContextType,
-} from '../context/EventListenersContext';
+import { useAuthContext } from '../context/AuthContext';
+import { useEventListenersContext } from '../context/EventListenersContext';
 import { SignerType } from './useAuth';
 import { TransactionProps } from '../components/Transaction';
 import useDebounce from '../hooks/useDebounce';
@@ -145,11 +142,8 @@ const getTransactions: GetTransactionsType = async (signer) => {
 };
 
 const useTransactions = () => {
-  const { signer } = useContext(AuthContext) as AuthContextType;
-
-  const {
-    walletEvent,
-  } = useContext(EventListenersContext) as EventListenersContextType;
+  const { signer } = useAuthContext();
+  const { walletEvent } = useEventListenersContext();
 
   const debouncedWalletEvent = useDebounce(walletEvent, 15000);
 

@@ -37,8 +37,11 @@ const Template: ComponentStory<typeof AddressInput> = (args) => {
     updateArgs({ addressValue: addressValue });
   };
 
-  const handleFocus = (addressValue: string) => {
-    updateArgs({ addressValue: addressValue });
+  const handleFocus = (prefill?: string) => {
+    if (!prefill) {
+      return;
+    };
+    updateArgs({ addressValue: prefill });
   };
 
   return <AddressInput
@@ -54,6 +57,14 @@ Default.args = {
   label: 'Enter Or Choose Address',
   addressValue: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
   inputID: 'default-address-input',
+};
+
+export const WithPrefill = Template.bind({});
+WithPrefill.args = {
+  label: 'Enter Or Choose Address',
+  addressValue: '',
+  inputID: 'default-address-input',
+  prefill: '0x',
 };
 
 export const Empty = Template.bind({});

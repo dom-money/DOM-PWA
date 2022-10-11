@@ -1,9 +1,12 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import useLoading from '../hooks/useLoading';
 
 export type LoadingContextType = ReturnType<typeof useLoading>;
 
-const LoadingContext =
-  createContext<LoadingContextType | null>(null);
+const LoadingContext = createContext({} as LoadingContextType);
 
 export default LoadingContext;
+
+export const useLoadingContext = () => {
+  return useContext(LoadingContext);
+};

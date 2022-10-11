@@ -11,14 +11,14 @@ import useContract from '../../hooks/useContract';
 const WithdrawPage: NextPage = () => {
   const { data: wealthBalance, isLoading, isError } = useWealthBalance();
 
-  const [
-    inputAmount,
-    inputAmountUnformatted,
-    inputAmountIsValid,
-    inputAmountErrorMessage,
-    inputAmountHandleChange,
-    inputAmountHandleClear,
-  ] = useInputAmount(wealthBalance?.balanceAsNumber ?? 0);
+  const {
+    amount: inputAmount,
+    amountUnformatted: inputAmountUnformatted,
+    isValid: inputAmountIsValid,
+    errorMessage: inputAmountErrorMessage,
+    handleChange: inputAmountHandleChange,
+    handleClear: inputAmountHandleClear,
+  } = useInputAmount(wealthBalance?.balanceAsNumber ?? 0);
 
   const [
     ,

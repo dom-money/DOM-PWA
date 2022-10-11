@@ -28,8 +28,11 @@ const Template: ComponentStory<typeof SendToWalletPageRender> = (args) => {
     updateArgs({ inputAddress: inputAddress });
   };
 
-  const handleFocus = (inputAddress: string) => {
-    updateArgs({ inputAddress: inputAddress });
+  const handleFocus = (prefill?: string) => {
+    if (!prefill) {
+      return;
+    };
+    updateArgs({ inputAddress: prefill });
   };
 
   return <SendToWalletPageRender

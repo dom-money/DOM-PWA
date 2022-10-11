@@ -8,9 +8,10 @@ import {
   ADAPTER_EVENTS,
 } from '@web3auth/base';
 import type { OpenloginUserInfo } from '@toruslabs/openlogin';
-import { ethers } from 'ethers';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { MetamaskAdapter } from '@web3auth/metamask-adapter';
+import { ethers } from 'ethers';
+import { useLoadingContext } from '../context/LoadingContext';
 import { useTheme } from 'styled-components';
 import { ThemeType } from '../styles/theme';
 
@@ -20,28 +21,28 @@ export type Web3authType = Web3Auth | null;
 export type Web3AuthProviderType = SafeEventEmitterProvider | null;
 export type EthersProviderType = ethers.providers.Web3Provider | null;
 export type SignerType = ethers.providers.JsonRpcSigner | null;
-export type UserType = typeof defaultUser & Partial<OpenloginUserInfo>;
+export type UserType = typeof DEFAULT_USER & Partial<OpenloginUserInfo>;
 
-export const defaultUser = {
+export const DEFAULT_USER = {
   email: '',
   name: 'Anonymous User',
   profileImage: '',
 };
 
-const useAuth = (
-    setIsAuthLoaded: React.Dispatch<React.SetStateAction<boolean>>,
-) => {
+const useAuth = () => {
   const [ web3auth, setWeb3auth ] = useState<Web3authType>(null);
   const [ ethersProvider, setEthersProvider ] =
     useState<EthersProviderType>(null);
   const [ signer, setSigner ] = useState<SignerType>(null);
-  const [ user, setUser ] = useState<UserType>(defaultUser);
+  const [ user, setUser ] = useState<UserType>(DEFAULT_USER);
 
   const [ isUserLoggedIn, setIsUserLoggedIn ] = useState(false);
   const [ isWeb3AuthLoaded, setIsWeb3AuthLoaded ] = useState(false);
   const [ isUserDataLoading, setIsUserDataLoading ] = useState(false);
 
   const theme = useTheme() as ThemeType;
+
+  const { setIsAuthLoaded } = useLoadingContext();
 
   const subscribeToAuthEvents = (web3auth: Web3Auth) => {
     web3auth.on(ADAPTER_EVENTS.CONNECTED, () => {
@@ -79,10 +80,10 @@ const useAuth = (
     setIsUserDataLoading(true);
     try {
       const response = await web3auth.getUserInfo();
-      const userData = { ...defaultUser, ...response };
+      const userData = { ...DEFAULT_USER, ...response };
       setUser(userData);
       setIsUserLoggedIn(true);
-      console.log(userData);
+      console.log('User data:', userData);
     } catch (error) {
       console.error(error);
     } finally {
@@ -162,7 +163,7 @@ const useAuth = (
     }
     await web3auth.logout();
     setIsUserLoggedIn(false);
-    setUser(defaultUser);
+    setUser(DEFAULT_USER);
     setEthersProvider(null);
     setSigner(null);
   };
