@@ -10,17 +10,17 @@ export default {
   title: 'Components/Inputs/Address Input',
   component: AddressInput,
   argTypes: {
+    onValueChange: {
+      action: `'On Value Change' Callback Called`,
+    },
+    onFocus: {
+      action: `'On Focus' Callback Called`,
+    },
     getContactOnClick: {
       action: `'Get Contact' Button Clicked`,
-      table: {
-        disable: true,
-      },
     },
     scanQROnClick: {
       action: `'Scan QR' Button Clicked`,
-      table: {
-        disable: true,
-      },
     },
   },
   parameters: {
@@ -43,17 +43,18 @@ export default {
 } as ComponentMeta<typeof AddressInput>;
 
 const Template: ComponentStory<typeof AddressInput> = (args) => {
-  const [ { addressValue }, updateArgs ] = useArgs();
+  const [ { addressValue, onValueChange, onFocus }, updateArgs ] = useArgs();
 
   const handleValueChange = (addressValue: string) => {
     updateArgs({ addressValue: addressValue });
+    onValueChange(addressValue);
   };
 
   const handleFocus = (prefill?: string) => {
-    if (!prefill) {
-      return;
+    if (prefill) {
+      updateArgs({ addressValue: prefill });
     };
-    updateArgs({ addressValue: prefill });
+    onFocus(prefill);
   };
 
   return <AddressInput
@@ -69,6 +70,20 @@ Default.args = {
   label: 'Enter Or Choose Address',
   addressValue: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
   inputID: 'default-address-input',
+};
+Default.play = async ({ args, canvasElement }) => {
+  const canvas = within(canvasElement);
+  const getContactButton = canvas.getByRole('button', { name: 'Get Contact' });
+  const scanQRButton = canvas.getByRole('button', { name: 'Scan QR' });
+
+  await userEvent.click(getContactButton);
+  await waitFor(() => expect(args.getContactOnClick).toHaveBeenCalled());
+
+  await userEvent.click(scanQRButton);
+  await waitFor(() => expect(args.scanQROnClick).toHaveBeenCalled());
+
+  // Clicking away to lose focus
+  await userEvent.click(canvasElement);
 };
 
 export const WithPrefill = Template.bind({});
@@ -93,19 +108,23 @@ Disabled.args = {
   inputID: 'default-address-input',
   disabled: true,
 };
-
-export const WithInteractions = Template.bind({});
-WithInteractions.args = {
-  label: 'Enter Or Choose Address',
-  addressValue: '',
-  inputID: 'default-address-input',
-};
-WithInteractions.play = async ({ canvasElement }) => {
+Disabled.play = async ({ args, canvasElement }) => {
   const canvas = within(canvasElement);
-  const input: HTMLInputElement = canvas.getByRole('textbox');
+  const getContactButton = canvas.getByRole('button', {
+    name: 'Disabled "Get Contact" Button',
+  });
+  const scanQRButton = canvas.getByRole('button', {
+    name: 'Disabled "Scan QR" Button',
+  });
 
-  await waitFor(() => userEvent.type(input, '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca'));
-  // await userEvent.type(input, '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca');
+  await userEvent.click(getContactButton);
+  await expect(getContactButton).toBeDisabled();
+  await waitFor(() => expect(args.getContactOnClick).not.toHaveBeenCalled());
 
-  await expect(input.value).toBe('0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca');
+  await userEvent.click(scanQRButton);
+  await expect(scanQRButton).toBeDisabled();
+  await waitFor(() => expect(args.scanQROnClick).not.toHaveBeenCalled());
+
+  // Clicking away to lose focus
+  await userEvent.click(canvasElement);
 };
