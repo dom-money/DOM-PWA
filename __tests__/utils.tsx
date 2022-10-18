@@ -1,9 +1,8 @@
 /* eslint-disable react/display-name */
-import { render } from '@testing-library/react';
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
 import { rest } from 'msw';
-import * as React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
 import { ThemeProvider } from 'styled-components';
 import theme from '../styles/theme';
 import GlobalStyle from '../styles/global';
@@ -34,6 +33,22 @@ const createTestQueryClient = () => new QueryClient({
     error: () => {},
   },
 });
+
+export const simulateTypingInStatelessInput = (
+    stringToType: string,
+    input: HTMLElement,
+) => {
+  let partialString = '';
+
+  for (const character of stringToType) {
+    partialString += character;
+    fireEvent.change(input, {
+      target: {
+        value: partialString,
+      },
+    });
+  };
+};
 
 export const renderWithTheme = (ui: React.ReactElement) => {
   const { rerender, ...result } = render(
