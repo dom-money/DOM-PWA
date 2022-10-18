@@ -149,6 +149,7 @@ const AmountDisplay = ({
             textTransform: 'uppercase',
             fontSize: size === 'medium' ? '3rem' : '2.5rem',
           }}
+          data-testid='skeleton'
         />
       </Container>
     );
