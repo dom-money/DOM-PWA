@@ -17,7 +17,8 @@ const customJestConfig = {
     '^@/pages/(.*)$': '<rootDir>/pages/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
-  watchPathIgnorePatterns: [ '<rootDir>/__tests__/utils.tsx' ],
+  testPathIgnorePatterns: [ '<rootDir>/__tests__/utils.tsx' ],
+  modulePathIgnorePatterns: [ 'node_modules', 'jest-test-results.json' ],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load ...
