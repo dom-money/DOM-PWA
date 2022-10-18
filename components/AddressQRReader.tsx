@@ -65,6 +65,7 @@ const AddressQRReader = ({
     <Dialog
       isOpen={isOpen}
       onClose={onClose}
+      data-testid='cameraDialog'
     >
       <StyledQrReader
         constraints={{ facingMode: 'environment' }}
