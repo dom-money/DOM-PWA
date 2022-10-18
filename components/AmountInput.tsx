@@ -14,7 +14,15 @@ interface AmountInputProps {
    */
   amount?: string;
   /**
-   * HTML <input> id Attribute
+   * Number of max allowed decimals
+   */
+  maxDecimals?: number;
+  /**
+   * Should fixed number of decimals be always displayed?
+   */
+  fixedDecimalScale?: boolean;
+  /**
+   * HTML \<input\> id Attribute
    */
   inputID: string;
   /**
@@ -30,14 +38,14 @@ interface AmountInputProps {
    */
   autoFocus?: boolean;
   /**
-   * Is input disabled
+   * Is input disabled?
    */
   disabled?: boolean;
 };
 
-interface onInputChangeType {
-  formattedValue: string,
-  value: string
+export type onInputChangeType = {
+  formattedValue: string;
+  value: string;
 };
 
 const Container = styled.div`
@@ -103,6 +111,8 @@ const ErrorMessageDisplay = styled.p<{isError: boolean}>`
 const AmountInput = ({
   label,
   amount,
+  maxDecimals = 2,
+  fixedDecimalScale = true,
   inputID,
   onInputChange,
   errorMessage = '',
@@ -126,8 +136,8 @@ const AmountInput = ({
             inputMode='decimal'
             value={amount}
             thousandSeparator={true}
-            decimalScale={2}
-            fixedDecimalScale={true}
+            decimalScale={maxDecimals}
+            fixedDecimalScale={fixedDecimalScale}
             allowNegative={false}
             placeholder='0'
             allowedDecimalSeparators={[ '.', ',' ]}

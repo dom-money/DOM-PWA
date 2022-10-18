@@ -12,7 +12,7 @@ interface TotalBalanceProps {
   /**
    * Currency amount
    */
-  amount: number;
+  amount: string;
   /**
    * Should title be 'Available Balance'?
    */

@@ -18,7 +18,10 @@ const InvestPage: NextPage = () => {
     errorMessage: inputAmountErrorMessage,
     handleChange: inputAmountHandleChange,
     handleClear: inputAmountHandleClear,
-  } = useInputAmount(walletBalance?.balanceAsNumber ?? 0);
+  } = useInputAmount({
+    balance: walletBalance?.balanceAsBigNumber,
+    tokenDecimals: walletBalance?.tokenDecimals,
+  });
 
   const [
     depositToWealth,
@@ -66,10 +69,14 @@ const InvestPage: NextPage = () => {
   return (
     <>
       <InvestPageRender
-        availableBalance={walletBalance.balanceAsNumber}
+        availableBalance={walletBalance.balanceAsString}
         inputAmount={inputAmount}
         onInputChange={inputAmountHandleChange}
-        errorMessage={inputAmountErrorMessage}
+        errorMessage={
+          inputAmountErrorMessage ?
+          inputAmountErrorMessage :
+          undefined
+        }
         isInputValid={inputAmountIsValid}
         isSubmitting={isTransactionLoading}
         investButtonOnClick={handleInvestToWealth}

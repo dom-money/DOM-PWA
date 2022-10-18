@@ -6,10 +6,10 @@ import MainPageRender from '../components/MainPageRender';
 import useWalletBalance from '../hooks/useWalletBalance';
 import useWealthBalance from '../hooks/useWealthBalance';
 import AddressQRReader from '../components/AddressQRReader';
-import { useRouter } from 'next/router';
 import useQRAddressReader from '../hooks/useQRAddressReader';
 import useTransactions from '../hooks/useTransactions';
 import { useAuthContext } from '../context/AuthContext';
+import { sumTwoBalancesOfToken } from '../utils/BigNumberUtils';
 
 const MainPage: NextPage = () => {
   const { user } = useAuthContext();
@@ -18,14 +18,12 @@ const MainPage: NextPage = () => {
   const wealthBalance = useWealthBalance();
   const transactions = useTransactions();
 
-  const router = useRouter();
-
   const [
     isQRDialogOpen,
     handleQRDialogOpen,
     handleQRReaderResult,
     handleQRDialogClose,
-  ] = useQRAddressReader({ redirectOnResult: true, router: router });
+  ] = useQRAddressReader({ redirectOnResult: true });
 
   if (
     (walletBalance.isLoading || walletBalance.isError) ||
@@ -35,12 +33,19 @@ const MainPage: NextPage = () => {
     return <MainPageRender isLoading userName={user.name} />;
   };
 
+  const totalBalance = sumTwoBalancesOfToken(
+      walletBalance.data.balanceAsBigNumber,
+      wealthBalance.data.balanceAsBigNumber,
+      walletBalance.data.tokenDecimals,
+  );
+
   return (
     <>
       <MainPageRender
         scanQROnClick={handleQRDialogOpen}
-        walletAmount={walletBalance.data.balanceAsNumber}
-        wealthAmount={wealthBalance.data.balanceAsNumber}
+        totalBalanceAmount={totalBalance}
+        walletAmount={walletBalance.data.balanceAsString}
+        wealthAmount={wealthBalance.data.balanceAsString}
         averageAPY={wealthBalance.data.apy}
         transactions={transactions.data}
         userName={user.name}

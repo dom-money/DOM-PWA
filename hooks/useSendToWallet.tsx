@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useAuthContext } from '../context/AuthContext';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import genericErc20Abi from '../utils/Erc20.json';
 
 type ErrorMessageType = null | string;
 
 type useSendToWalletType = () => [
-  sendToWallet: (amount: string, recipient: string) => void,
+  sendToWallet: (amountToSend: BigNumber, recipient: string) => void,
   transactionResult: object | null,
   isLoading: boolean,
   errorMessage: ErrorMessageType,
@@ -20,7 +20,7 @@ const useSendToWallet: useSendToWalletType = () => {
   const [ isLoading, setIsLoading ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState<ErrorMessageType>(null);
 
-  const sendToWallet = async (amountToSend: string, recipient: string) => {
+  const sendToWallet = async (amountToSend: BigNumber, recipient: string) => {
     setIsLoading(true);
 
     if (!signer) {
@@ -30,16 +30,14 @@ const useSendToWallet: useSendToWalletType = () => {
     };
 
     try {
-      const amountToSendAsBigNumber =
-        ethers.utils.parseUnits(amountToSend, 6);
-      const contractWithSigner = new ethers.Contract(
-          process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as string,
-          genericErc20Abi,
-          signer,
+      const usdcContractWithSigner = new ethers.Contract(
+        process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as string,
+        genericErc20Abi,
+        signer,
       );
-      const result = await contractWithSigner.transfer(
+      const result = await usdcContractWithSigner.transfer(
           recipient,
-          amountToSendAsBigNumber,
+          amountToSend,
       );
       setTransactionResult(result);
     } catch (error) {

@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import Skeleton from '@mui/material/Skeleton';
+import {
+  formatStringAmount,
+  getIntegerAndDecimalParts,
+  checkIfStringAmountIsZero,
+} from '../utils/stringAmountUtils';
 
 type sizeType = 'small' | 'medium';
 type inactiveType = boolean;
@@ -13,15 +18,28 @@ interface AmountDisplayProps {
   /**
    * Currency amount
    */
-  amount: number;
+  amount: string;
   /**
    * Amount Display Size (small: 40px, medium: 48px)
    */
   size?: sizeType;
-   /**
+  /**
    * Is component inactive?
    */
   inactive?: inactiveType;
+  /**
+   * Should grouping separator be displayed?
+   */
+  useGrouping?: boolean;
+  /**
+   * Max number of decimals for display
+   */
+  maxDecimals?: number;
+  /**
+   * Should trailing zeros be added to always match the desired
+   * number of decimals?
+   */
+  shouldAddTrailingZeros?: boolean;
   /**
    * Prop for extending styled-components style
    */
@@ -43,6 +61,9 @@ interface LoadingProps {
   className?: string;
   amount?: never;
   inactive?: never;
+  useGrouping?: never;
+  maxDecimals?: never;
+  shouldAddTrailingZeros?: never;
 };
 
 type Props = LoadingProps | AmountDisplayProps;
@@ -110,6 +131,9 @@ const AmountDisplay = ({
   amount,
   size = 'small',
   inactive = false,
+  useGrouping = true,
+  maxDecimals = 2,
+  shouldAddTrailingZeros = true,
   className,
   isLoading,
   ...props
@@ -130,11 +154,16 @@ const AmountDisplay = ({
     );
   };
 
-  const amountLocaleString = amount.toLocaleString(
-      'en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 },
-  );
-  const integerPart = amountLocaleString.match(/[^\.]*/);
-  const decimalPart = amountLocaleString.match(/[^\.]*$/);
+  const formattedAmount = formatStringAmount(amount, {
+    useGrouping,
+    maxDecimals,
+    shouldAddTrailingZeros,
+  });
+  const {
+    integerPart,
+    decimalPart,
+  } = getIntegerAndDecimalParts(formattedAmount);
+
   return (
     <Container className={className}>
       <CurrencySymbol size={size} inactive={inactive}>$</CurrencySymbol>
@@ -142,7 +171,8 @@ const AmountDisplay = ({
         <span>
           {integerPart}
         </span>
-        {amount === 0 ||
+        {
+          checkIfStringAmountIsZero(amount) || decimalPart.length === 0 ||
           <>
             <span>.</span>
             <DecimalText>{decimalPart}</DecimalText>

@@ -7,6 +7,7 @@ import PeriodSelectionTabs from './PeriodSelectionTabs';
 import IconButton from './IconButton';
 import WithdrawIcon from '../styles/icons/WithdrawIcon';
 import YieldDisplay from './YieldDisplay';
+import { checkIfStringAmountIsZero } from '../utils/stringAmountUtils';
 
 interface WealthProps {
   /**
@@ -16,7 +17,7 @@ interface WealthProps {
   /**
    * Currency amount
    */
-  amount: number;
+  amount: string;
   /**
    * Yield value
    */
@@ -155,7 +156,7 @@ const Wealth = ({
     );
   };
 
-  const inactive = amount === 0;
+  const inactive = checkIfStringAmountIsZero(amount);
 
   if (inactive) {
     return (

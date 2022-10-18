@@ -1,4 +1,4 @@
-import { NextRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 type useInputAddressTypeProps = {
@@ -6,7 +6,7 @@ type useInputAddressTypeProps = {
   setInputAddress: React.Dispatch<React.SetStateAction<string>>;
 } | {
   redirectOnResult: true;
-  router: NextRouter;
+  setInputAddress?: never;
 };
 
 type useInputAddressType = (props: useInputAddressTypeProps) => [
@@ -19,13 +19,15 @@ type useInputAddressType = (props: useInputAddressTypeProps) => [
 const useQRAddressReader: useInputAddressType = (props) => {
   const [ isDialogOpen, setIsDialogOpen ] = useState(false);
 
+  const router = useRouter();
+
   const handleDialogOpen = () => {
     setIsDialogOpen(true);
   };
 
   const handleResult = (resultAddress: string) => {
     if (props.redirectOnResult) {
-      props.router.push({
+      router.push({
         pathname: '/send-to-wallet',
         query: { walletAddress: resultAddress },
       }, '/send-to-wallet');

@@ -17,7 +17,7 @@ const Template: ComponentStory<typeof Wealth> = (args) =>
 
 export const Closed = Template.bind({});
 Closed.args = {
-  amount: 25000.12,
+  amount: '25000.12',
   yieldValue: 600,
   yieldValuePercentage: 0.1,
   averageAPY: 13,
@@ -25,7 +25,7 @@ Closed.args = {
 
 export const Open = Template.bind({});
 Open.args = {
-  amount: 25000.12,
+  amount: '25000.12',
   yieldValue: 600,
   yieldValuePercentage: 0.1,
   averageAPY: 13,
@@ -38,7 +38,7 @@ Open.play = async ({ canvasElement }) => {
 
 export const Inactive = Template.bind({});
 Inactive.args = {
-  amount: 0,
+  amount: '0',
 };
 
 export const Loading = Template.bind({});
