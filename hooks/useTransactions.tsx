@@ -71,10 +71,11 @@ const getTransactions: GetTransactionsType = async (signer) => {
           offset: 10,
           sort: 'desc',
         } });
-      if (txsUsdcRawData.data.status === '0') {
+      const { status, message } = txsUsdcRawData.data;
+      if (status === '0' && message !== 'No transactions found') {
         reject(new Error(txsUsdcRawData.data.result));
         return;
-      }
+      };
       if (txsUsdcRawData.data.result.length === 0) {
         resolve([]);
         return;
