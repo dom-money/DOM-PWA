@@ -98,6 +98,7 @@ const getTransactions: GetTransactionsType = async (
     };
     try {
       const walletAddress = (await signer.getAddress()).toLowerCase();
+
       // Adding an API request to the queue, to ensure ...
       // .. a minimum 5 second delay between requests
       const requestId = uuidv4();
@@ -105,10 +106,11 @@ const getTransactions: GetTransactionsType = async (
           () => fetchTransactions(walletAddress, pageParam),
           requestId,
       );
-      if (txsUsdcRawData.data.status === '0') {
+      const { status, message } = txsUsdcRawData.data;
+      if (status === '0' && message !== 'No transactions found') {
         reject(new Error(txsUsdcRawData.data.result));
         return;
-      }
+      };
       if (txsUsdcRawData.data.result.length === 0) {
         resolve({
           transactions: [],
