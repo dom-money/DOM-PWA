@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 import { useState, useEffect } from 'react';
 import Router from 'next/router';
-import { Web3Auth } from '@web3auth/web3auth';
+import { Web3Auth } from '@web3auth/modal';
 import {
   CHAIN_NAMESPACES,
   SafeEventEmitterProvider,
@@ -16,6 +16,8 @@ import { useTheme } from 'styled-components';
 import { ThemeType } from '../styles/theme';
 
 const clientId = process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID as string;
+const web3authNetworkType =
+  process.env.NEXT_PUBLIC_NETWORK_TYPE as 'testnet' | 'mainnet';
 
 export type Web3authType = Web3Auth | null;
 export type Web3AuthProviderType = SafeEventEmitterProvider | null;
@@ -103,6 +105,7 @@ const useAuth = () => {
           },
           uiConfig: {
             theme: 'dark',
+            appLogo: `${location.origin}/images/logo/logo-dark.svg`,
           },
         });
 
@@ -110,14 +113,14 @@ const useAuth = () => {
 
         const openloginAdapter = new OpenloginAdapter({
           adapterSettings: {
-            clientId,
-            // eslint-disable-next-line max-len
-            network: process.env.NEXT_PUBLIC_NETWORK_TYPE as 'testnet' | 'mainnet',
+            network: web3authNetworkType,
             uxMode: 'popup',
             whiteLabel: {
               name: 'DOM Wallet',
-              logoLight: `${location.origin}/images/logo/logo-light.svg`,
-              logoDark: `${location.origin}/images/logo/logo-dark.svg`,
+              // eslint-disable-next-line max-len
+              logoLight: `${location.origin}/images/logo/logo-light-with-text.svg`,
+              // eslint-disable-next-line max-len
+              logoDark: `${location.origin}/images/logo/logo-dark-with-text.svg`,
               defaultLanguage: 'en',
               dark: true,
               theme: { primary: theme.colors.primary },
@@ -126,7 +129,7 @@ const useAuth = () => {
         });
         web3auth.configureAdapter(openloginAdapter);
 
-        const metamaskAdapter = new MetamaskAdapter();
+        const metamaskAdapter = new MetamaskAdapter({ clientId });
         web3auth.configureAdapter(metamaskAdapter);
 
         setWeb3auth(web3auth);
