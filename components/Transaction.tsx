@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import Skeleton from '@mui/material/Skeleton';
 import GenericTransactionIcon from '../styles/icons/GenericTransactionIcon';
@@ -146,14 +146,14 @@ const TextSkeleton = ({ type }: TextSkeletonProps) =>
     }}
   />;
 
-const Transaction = ({
+const Transaction = forwardRef(({
   id,
   name,
   type,
   timestamp,
   amount,
   isLoading,
-}: Props) => {
+}: Props, ref?: React.Ref<HTMLDivElement>) => {
   if (isLoading) {
     return (
       <Wrapper>
@@ -181,7 +181,7 @@ const Transaction = ({
   const incomeOrOutcomeType = incomeOrOutcome(type);
 
   return (
-    <Wrapper>
+    <Wrapper ref={ref}>
       <IconContainer>
         <GenericTransactionIcon color='#ffffff' css='opacity: 0.5;'/>
       </IconContainer>
@@ -193,7 +193,7 @@ const Transaction = ({
           <>
             {incomeOrOutcomeType === 'income' && '+'}
             {incomeOrOutcomeType === 'outcome' && '-'}
-            ${formatAmountString(amount, 2)}
+            ${formatStringAmount(amount, { maxDecimals: 2 })}
           </>
         </AmountText>
         <TypeText>
@@ -205,6 +205,7 @@ const Transaction = ({
       </DataContainer>
     </Wrapper>
   );
-};
+});
 
+Transaction.displayName = 'Transaction';
 export default Transaction;
