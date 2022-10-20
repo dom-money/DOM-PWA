@@ -47,6 +47,14 @@ interface MainPageRenderProps {
    */
   transactions?: TransactionProps[] | [];
   /**
+   * Optional onLoadMoreTransactions Handler
+   */
+  onLoadMoreTransactions?: () => void;
+  /**
+   * Should 'Recent Transactions' Component display 'Loading More' indicator?
+   */
+  isLoadingMoreTransactions?: boolean;
+  /**
    * User's name
    */
   userName: string;
@@ -81,6 +89,8 @@ interface LoadingProps {
   yieldValuePercentage?: never;
   averageAPY?: never;
   transactions?: never;
+  onLoadMoreTransactions?: never;
+  isLoadingMoreTransactions?: never;
   isNotificationPresent?: never;
 };
 
@@ -103,6 +113,8 @@ const MainPageRender = ({
   yieldValuePercentage = 0,
   averageAPY = 0,
   transactions = [],
+  onLoadMoreTransactions,
+  isLoadingMoreTransactions,
   userName,
   avatarImageURL,
   isNotificationPresent = false,
@@ -144,7 +156,11 @@ const MainPageRender = ({
         yieldValuePercentage={yieldValuePercentage}
         averageAPY={averageAPY}
       />
-      <RecentTransactions transactions={transactions} />
+      <RecentTransactions
+        transactions={transactions}
+        isLoadingMore={isLoadingMoreTransactions}
+        onLoadMore={onLoadMoreTransactions}
+      />
       <InvestButton href='/invest'/>
     </Wrapper>
   );

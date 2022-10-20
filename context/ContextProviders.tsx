@@ -4,9 +4,10 @@ import AuthProvider from './AuthProvider';
 import ReactQueryProvider from './ReactQueryProvider';
 import NotistackSnackbarProvider from './NotistackSnackbarProvider';
 import EventListenersProvider from './EventListenersProvider';
+import TransactionsQueueProvider from './TransactionsQueueProvider';
 
 interface ContextProvidersProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 };
 
 const ContextProviders = ({ children }: ContextProvidersProps) => {
@@ -16,7 +17,9 @@ const ContextProviders = ({ children }: ContextProvidersProps) => {
         <ReactQueryProvider>
           <NotistackSnackbarProvider>
             <EventListenersProvider>
-              {children}
+              <TransactionsQueueProvider>
+                {children}
+              </TransactionsQueueProvider>
             </EventListenersProvider>
           </NotistackSnackbarProvider>
         </ReactQueryProvider>

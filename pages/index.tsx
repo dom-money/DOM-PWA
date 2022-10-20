@@ -2,13 +2,13 @@ import React from 'react';
 import type { NextPage } from 'next';
 
 import MainPageRender from '../components/MainPageRender';
+import AddressQRReader from '../components/AddressQRReader';
 
+import { useAuthContext } from '../context/AuthContext';
 import useWalletBalance from '../hooks/useWalletBalance';
 import useWealthBalance from '../hooks/useWealthBalance';
-import AddressQRReader from '../components/AddressQRReader';
-import useQRAddressReader from '../hooks/useQRAddressReader';
 import useTransactions from '../hooks/useTransactions';
-import { useAuthContext } from '../context/AuthContext';
+import useQRAddressReader from '../hooks/useQRAddressReader';
 import { sumTwoBalancesOfToken } from '../utils/BigNumberUtils';
 
 const MainPage: NextPage = () => {
@@ -47,7 +47,9 @@ const MainPage: NextPage = () => {
         walletAmount={walletBalance.data.balanceAsString}
         wealthAmount={wealthBalance.data.balanceAsString}
         averageAPY={wealthBalance.data.apy}
-        transactions={transactions.data}
+        transactions={transactions.formattedData}
+        isLoadingMoreTransactions={transactions.isLoadingMore}
+        onLoadMoreTransactions={transactions.handleLoadMoreTransactions}
         userName={user.name}
         avatarImageURL={user.profileImage}
       />
