@@ -21,7 +21,7 @@ const Container = styled.div`
   margin: auto;
 `;
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = (appProps: AppProps) => {
   return (
     <>
       <Head>
@@ -56,7 +56,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <GlobalStyle />
         <Container>
           <ContextProviders>
-            <Page Component={Component} {...pageProps}/>
+            <Page {...appProps} />
           </ContextProviders>
         </Container>
       </ThemeProvider>
