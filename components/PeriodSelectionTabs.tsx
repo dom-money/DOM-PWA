@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
+export type Period = 'Today' | 'Week' | 'Month' | 'Year' | 'All Time';
+
 interface PeriodSelectionTabsProps {
   /**
-   * Selected Button ID which represents a time period
+   * Selected Period
    */
-  selectedButtonID: number;
+  selectedPeriod: Period;
   /**
    * Tab button click handler
    */
-  onClick: (buttonID: number) => void;
+  onClick: (period: Period) => void;
   /**
    * Prop for extending styled-components style
    */
@@ -18,29 +20,10 @@ interface PeriodSelectionTabsProps {
 
 interface ButtonElementProps {
   selected: boolean;
-}
+};
 
-const PERIODS = [
-  {
-    id: 0,
-    name: 'Today',
-  },
-  {
-    id: 1,
-    name: 'Week',
-  },
-  {
-    id: 2,
-    name: 'Month',
-  },
-  {
-    id: 3,
-    name: 'Year',
-  },
-  {
-    id: 4,
-    name: 'All Time',
-  },
+export const PERIODS: Period[] = [
+  'Today', 'Week', 'Month', 'Year', 'All Time',
 ];
 
 const Wrapper = styled.div`
@@ -65,7 +48,7 @@ const ButtonElement = styled.button<ButtonElementProps>`
 `;
 
 const PeriodSelectionTabs = ({
-  selectedButtonID,
+  selectedPeriod,
   onClick,
   ...props
 }: PeriodSelectionTabsProps) => {
@@ -73,11 +56,11 @@ const PeriodSelectionTabs = ({
     <Wrapper {...props}>
       {PERIODS.map((period) =>
         <ButtonElement
-          key={period.id}
-          selected={selectedButtonID === period.id}
-          onClick={() => onClick(period.id)}
+          key={period}
+          selected={selectedPeriod === period}
+          onClick={() => onClick(period)}
         >
-          {period.name}
+          {period}
         </ButtonElement>,
       )}
     </Wrapper>
