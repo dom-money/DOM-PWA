@@ -30,7 +30,7 @@ export interface TransactionProps {
    */
   type: TransactionType;
   /**
-   * Transaction time and date (UTC Epoch in seconds)
+   * Transaction time and date (UTC Epoch in milliseconds)
    */
   timestamp: number;
   /**
@@ -161,9 +161,7 @@ const Transaction = forwardRef(({
           <IconSkeleton />
         </IconContainer>
         <DataContainer>
-          <NameText>
-            <TextSkeleton type='nameText' />
-          </NameText>
+          <TextSkeleton type='nameText' />
           <AmountText>
             <TextSkeleton />
           </AmountText>
