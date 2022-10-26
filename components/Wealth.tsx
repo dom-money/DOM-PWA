@@ -3,10 +3,11 @@ import styled from 'styled-components';
 
 import CollapsibleContainer from './CollapsibleContainer';
 import AmountDisplay from './AmountDisplay';
-import PeriodSelectionTabs from './PeriodSelectionTabs';
+import PeriodSelectionTabs, { Period } from './PeriodSelectionTabs';
 import IconButton from './IconButton';
 import WithdrawIcon from '../styles/icons/WithdrawIcon';
 import YieldDisplay from './YieldDisplay';
+import Chart from './Chart';
 import { checkIfStringAmountIsZero } from '../utils/stringAmountUtils';
 
 interface WealthProps {
@@ -67,6 +68,16 @@ const YieldDisplayWithMargin = styled(YieldDisplay)`
   margin-top: 0.563rem;
 `;
 
+const chartData = Array.from(Array(7 * 8), (_, index) => {
+  const randomValue = Math.round(Math.random() * 100);
+  return {
+    // Every 3 hours for the last week
+    date: new Date(new Date().getTime() - 3600 * 3 * 1000 * index),
+    value: randomValue,
+    label: `+$${ randomValue }`,
+  };
+});
+
 const Wealth = ({
   amount,
   yieldValue = 0,
@@ -76,7 +87,7 @@ const Wealth = ({
 }: Props) => {
   const [ isContainerCollapsed, setIsContainerCollapsed ] = useState(false);
 
-  const [ selectedPeriodTabID, setSelectedPeriodTabID ] = useState(0);
+  const [ selectedPeriod, setSelectedPeriod ] = useState<Period>('Today');
 
   if (isLoading) {
     return (
@@ -98,8 +109,8 @@ const Wealth = ({
     setIsContainerCollapsed(!isContainerCollapsed);
   };
 
-  const handleChangeTabClick = (buttonID: number) => {
-    setSelectedPeriodTabID(buttonID);
+  const handleChangeTabClick = (period: Period) => {
+    setSelectedPeriod(period);
   };
 
   const PrimaryContentCollapsed = () => {
@@ -127,7 +138,7 @@ const Wealth = ({
           averageAPY={averageAPY}
         />
         <PeriodSelectionTabsWithMargin
-          selectedButtonID={selectedPeriodTabID}
+          selectedPeriod={selectedPeriod}
           onClick={handleChangeTabClick}
         />
       </ContentContainer>
@@ -149,7 +160,7 @@ const Wealth = ({
           />
         </AmountTopContainer>
         <PeriodSelectionTabsWithMargin
-          selectedButtonID={selectedPeriodTabID}
+          selectedPeriod={selectedPeriod}
           onClick={handleChangeTabClick}
         />
       </ContentContainer>
@@ -182,7 +193,6 @@ const Wealth = ({
             </AmountTopContainer>
           </ContentContainer>
         }
-        shouldCollapseButtonBeAlwaysActive={true}
       />
     );
   };
@@ -191,11 +201,15 @@ const Wealth = ({
     <CollapsibleContainer
       label='Wealth'
       isCollapsed={isContainerCollapsed}
-      handleCollapseClick={handleCollapseClick}
+      onCollapseClick={handleCollapseClick}
       primaryContent={isContainerCollapsed ?
         <PrimaryContentCollapsed /> : <PrimaryContentNotCollapsed />
       }
-      shouldCollapseButtonBeAlwaysActive={true}
+      secondaryContent={
+        <Chart
+          data={chartData}
+        />
+      }
     />
   );
 };

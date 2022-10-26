@@ -38,6 +38,7 @@
         "storybook-addon-next-router": "^4.0.0",
         "styled-components": "^5.3.5",
         "uuid": "^9.0.0",
+        "victory": "^36.6.8",
         "web3": "^1.7.4"
     },
     "devDependencies": {
