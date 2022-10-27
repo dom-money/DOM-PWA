@@ -43,10 +43,11 @@ update_master:
     stage: deploy
     script:
       - >-
-        ssh dima@67.205.140.99 "cd /home/andrii/dom-pwa
+        cd /home/andrii/dom-pwa
         && sudo GIT_SSH_COMMAND='ssh -i /root/.ssh/gitlab_rsa' git pull
-        && ./build.sh
-        && exit"
+        && yarn
+        && yarn build
+        && exit
       
     only:
       - main
