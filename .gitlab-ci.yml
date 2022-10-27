@@ -44,9 +44,11 @@ update_master:
     script:
       - >-
         ssh dima@67.205.140.99 "cd /home/andrii/dom-pwa
-        && sudo GIT_SSH_COMMAND='ssh -i /root/.ssh/gitlab_rsa' git pull git@gitlab.com:andrii.m.olefirenko/dom-pwa.git
-        && sudo yarn
-        && sudo yarn build
+        && sudo -s
+        && GIT_SSH_COMMAND='ssh -i /root/.ssh/gitlab_rsa' git pull git@gitlab.com:andrii.m.olefirenko/dom-pwa.git
+        && yarn cache clean
+        && yarn
+        && yarn build
         && pm2 restart dom-pwa
         && exit"
       
