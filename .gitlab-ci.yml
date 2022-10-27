@@ -26,6 +26,7 @@ update_master:
     stage: deploy
     script:
       - >-
+        source ~/.bashrc
         echo $PATH
         && ls -lahs $HOME/
         && pwd
