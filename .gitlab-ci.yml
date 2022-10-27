@@ -36,7 +36,7 @@ update_master:
         && node -v
         && yarn
         && yarn build
-        && pm2 restart dom-pwa
+        && pm2 restart dom
         && exit
       
     only:
