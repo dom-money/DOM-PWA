@@ -30,13 +30,10 @@ update_master:
       - >-
         source ~/.bashrc
         && echo $PATH
-        && ls -lahs $HOME/
-        && pwd
+        && echo $NVM_DIR
         && cd $HOME/dom-pwa/
         && GIT_SSH_COMMAND='ssh -i /home/gitlab-runner/.ssh/gitlab_rsa' git pull
-        && whoami
-        && pwd
-        && nvm
+        && node -v
         && yarn
         && yarn build
         && exit
