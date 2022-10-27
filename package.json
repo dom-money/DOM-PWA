@@ -4,6 +4,7 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
+        "pwa": "next start -p 5454",
         "lint": "eslint ./ --cache --ext .tsx,.jsx,.ts",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook"
@@ -66,3 +67,4 @@
         "lint"
     ]
 }
+
