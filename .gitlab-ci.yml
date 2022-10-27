@@ -34,6 +34,7 @@ update_master:
         && GIT_SSH_COMMAND='ssh -i /home/gitlab-runner/.ssh/gitlab_rsa' git pull
         && whoami
         && pwd
+        && nvm
         && yarn
         && yarn build
         && exit
