@@ -1,8 +1,7 @@
 #!/bin/bash
-set -e
 NODE_VER=16.18.0
 
-source ~/.bashrc
+echo $PATH
 
 nvm use $NODE_VER
 node -v
