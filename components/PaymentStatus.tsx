@@ -205,7 +205,7 @@ const PaymentStatus = ({
   });
 
   // Getting Paper's height
-  const drawerPaperRef = useCallback((node) => {
+  const drawerPaperRef = useCallback((node: HTMLDivElement) => {
     if (node === null) {
       return;
     };
