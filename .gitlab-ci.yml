@@ -46,6 +46,7 @@ update_master:
         ssh dima@67.205.140.99 "cd /home/andrii/dom-pwa
         && source /home/dima/.bashrc
         && sudo GIT_SSH_COMMAND='ssh -i /root/.ssh/gitlab_rsa' git pull
+        && sudo chmod +x ./build.sh
         && ./build.sh
         && exit"
       
