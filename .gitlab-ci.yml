@@ -31,7 +31,7 @@ update_master:
         && ls -lahs $HOME/
         && pwd
         && cd $HOME/dom-pwa/
-        && sudo GIT_SSH_COMMAND='ssh -i /root/.ssh/gitlab_rsa' git pull
+        && sudo GIT_SSH_COMMAND='ssh -i /home/gitlab-runner/.ssh/gitlab_rsa' git pull
         && whoami
         && pwd
         && yarn
