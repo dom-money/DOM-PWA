@@ -26,7 +26,9 @@ update_master:
     stage: deploy
     script:
       - >-
-        sudo GIT_SSH_COMMAND='ssh -i /root/.ssh/gitlab_rsa' git pull
+        whoami
+        && pwd
+        && sudo GIT_SSH_COMMAND='ssh -i /root/.ssh/gitlab_rsa' git pull
         && whoami
         && pwd
         && yarn
