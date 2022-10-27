@@ -20,7 +20,12 @@ const useEventListeners = () => {
 
   // 'Deposit to Wealth Wallet' Event Listener Function
   const depositToWealthEventListener = useCallback(
-      (tokenId, apy, depositAmount, event) => {
+      (
+          tokenId: ethers.BigNumber,
+          owner: string,
+          depositAmount: ethers.BigNumber,
+          event: EventData,
+      ) => {
         const depositAmountAsAString = ethers.utils.formatEther(depositAmount);
         const notificationMessage = `
           Deposit of $${depositAmountAsAString} 
@@ -35,7 +40,13 @@ const useEventListeners = () => {
 
   // 'Withdraw from Wealth Wallet' Event Listener Function
   const withdrawFromWealthEventListener = useCallback(
-      (tokenId, owner, withdrawnAmount, remainingAmount, event) => {
+      (
+          tokenId: ethers.BigNumber,
+          owner: string,
+          withdrawnAmount: ethers.BigNumber,
+          remainingAmount: ethers.BigNumber,
+          event: EventData,
+      ) => {
         const withdrawnAmountAsAString =
           ethers.utils.formatEther(withdrawnAmount);
         const notificationMessage = `
@@ -51,7 +62,12 @@ const useEventListeners = () => {
 
   // 'Deposit to Wallet' Event Listener Function
   const depositToWalletEventListener = useCallback(
-      (from, to, depositAmount, event) => {
+      (
+          from: string,
+          to: string,
+          depositAmount: ethers.BigNumber,
+          event: EventData,
+      ) => {
         const depositAmountAsAString =
           ethers.utils.formatUnits(depositAmount, 6);
         const notificationMessage = `
@@ -67,7 +83,12 @@ const useEventListeners = () => {
 
   // 'Sent From Wallet' Event Listener Function
   const sentFromWalletEventListener = useCallback(
-      (from, to, amount, event) => {
+      (
+          from: string,
+          to: string,
+          amount: ethers.BigNumber,
+          event: EventData,
+      ) => {
         const amountAsAString = ethers.utils.formatUnits(amount, 6);
         const notificationMessage = `
           Successfully sent $${amountAsAString} 
