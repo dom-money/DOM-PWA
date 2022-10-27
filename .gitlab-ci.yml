@@ -29,13 +29,14 @@ update_master:
     script:
       - >-
         source ~/.bashrc
-        && echo $PATH
-        && echo $NVM_DIR
         && cd $HOME/dom-pwa/
+        && git config --global user.email "olef_and@ukr.net"
+        && git config --global user.name "andrii"
         && GIT_SSH_COMMAND='ssh -i /home/gitlab-runner/.ssh/gitlab_rsa' git pull
         && node -v
         && yarn
         && yarn build
+        && pm2 restart dom-pwa
         && exit
       
     only:
