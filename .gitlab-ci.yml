@@ -3,7 +3,7 @@ stages:
     - test
     - deploy
 before_script:
-  - export PATH=$PATH:/home/gitlab-runner/.nvm/versions/node/v14.20.1/bin
+  - export PATH=$PATH:/home/gitlab-runner/.nvm/versions/node/v16.18.0/bin
   - export NVM_DIR="$HOME/.nvm"
 #image: ubuntu
 #before_script:
