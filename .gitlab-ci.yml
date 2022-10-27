@@ -45,9 +45,8 @@ update_master:
       - >-
         ssh dima@67.205.140.99 "cd /home/andrii/dom-pwa
         && sudo GIT_SSH_COMMAND='ssh -i /root/.ssh/gitlab_rsa' git pull git@gitlab.com:andrii.m.olefirenko/dom-pwa.git
-        && nvm use 14.17.0
-        && yarn
-        && yarn build
+        && sudo yarn
+        && sudo yarn build
         && pm2 restart dom-pwa
         && exit"
       
