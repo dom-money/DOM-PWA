@@ -37,8 +37,11 @@ interface LoadingProps {
    * Should component display loading skeleton?
    */
   isLoading: true;
+  /**
+   * Duration of the transition (in ms), defaults to 500ms
+   */
+  transitionDuration?: number;
   transactions?: never;
-  transitionDuration?: never;
   onLoadMore?: never;
   isLoadingMore?: never;
 };
@@ -171,7 +174,7 @@ const RecentTransactions = ({
       <CollapsibleContainer
         label='Recent Transactions'
         isCollapsed={isContainerCollapsed}
-        handleCollapseClick={handleCollapseClick}
+        onCollapseClick={handleCollapseClick}
         primaryContent={
           <Transaction isLoading />
         }
@@ -200,7 +203,7 @@ const RecentTransactions = ({
       isCollapsed={
         !shouldDisplaySecondaryContent ? isContainerCollapsed : false
       }
-      handleCollapseClick={handleCollapseClick}
+      onCollapseClick={handleCollapseClick}
       primaryContent={
         <div style={{ overflow: 'hidden', position: 'relative' }}>
           <TransitionGroup component={null}>

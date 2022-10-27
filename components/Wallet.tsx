@@ -56,7 +56,7 @@ const Wallet = ({ amount, scanQROnClick, isLoading }: Props) => {
       <CollapsibleContainer
         label='Wallet'
         isCollapsed={isContainerCollapsed}
-        handleCollapseClick={handleCollapseClick}
+        onCollapseClick={handleCollapseClick}
         primaryContent={
           <ContentContainer>
             <AmountDisplay isLoading size='small'/>
@@ -79,7 +79,7 @@ const Wallet = ({ amount, scanQROnClick, isLoading }: Props) => {
     <CollapsibleContainer
       label='Wallet'
       isCollapsed={isContainerCollapsed}
-      handleCollapseClick={handleCollapseClick}
+      onCollapseClick={handleCollapseClick}
       primaryContent={
         <ContentContainer>
           <AmountDisplay amount={amount} size='small' inactive={inactive}/>

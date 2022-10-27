@@ -17,7 +17,7 @@ interface CollapsibleContainerProps {
   /**
    * Collapse Click Handler Function
    */
-  handleCollapseClick?: () => void;
+  onCollapseClick?: () => void;
   /**
    * Main Content (will be always displayed)
    */
@@ -84,7 +84,7 @@ const IconWrapper = styled(IconButtonCircular)<{isCollapsed?: boolean}>`
 const CollapsibleContainer = ({
   label,
   isCollapsed = false,
-  handleCollapseClick,
+  onCollapseClick,
   primaryContent,
   secondaryContent,
   shouldCollapseButtonBeAlwaysActive = false,
@@ -101,7 +101,7 @@ const CollapsibleContainer = ({
             <IconWrapper
               ariaLabel={`Collapse ${label} Container`}
               data-testid={`${label}OpenCloseIcon`.replace(/ /g, '')}
-              onClick={handleCollapseClick}
+              onClick={onCollapseClick}
               isCollapsed={isCollapsed}
             >
               <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>

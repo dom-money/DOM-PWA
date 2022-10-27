@@ -1,15 +1,8 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { within, userEvent } from '@storybook/testing-library';
 import { useArgs } from '@storybook/client-api';
 
 import CollapsibleContainer from '../../components/CollapsibleContainer';
-
-const SampleContent = () => {
-  return (
-    <h3 style={{ color: 'white', fontWeight: 500 }}>Sample Content</h3>
-  );
-};
 
 export default {
   title: 'Components/Collapsible Container',
@@ -19,22 +12,30 @@ export default {
   },
   argTypes: {
     isCollapsed: { control: 'boolean' },
+    onCollapseClick: { action: `'Collapse' Button Clicked` },
     shouldSecondaryContentBeOutside: { control: 'boolean' },
   },
 } as ComponentMeta<typeof CollapsibleContainer>;
 
+const SampleContent = () => {
+  return (
+    <h3 style={{ color: 'white', fontWeight: 500 }}>Sample Content</h3>
+  );
+};
+
 const Template: ComponentStory<typeof CollapsibleContainer> = (args) => {
-  const [ { isCollapsed }, updateArgs ] = useArgs();
+  const [ { isCollapsed, onCollapseClick }, updateArgs ] = useArgs();
 
   const handleCollapseClick = () => {
     updateArgs({ isCollapsed: !isCollapsed });
+    onCollapseClick();
   };
 
   return (
     <CollapsibleContainer
       {...args}
       isCollapsed={isCollapsed}
-      handleCollapseClick={handleCollapseClick}
+      onCollapseClick={handleCollapseClick}
     />
   );
 };
@@ -49,14 +50,9 @@ Closed.args = {
 export const Open = Template.bind({});
 Open.args = {
   label: 'Wallet',
+  isCollapsed: true,
   primaryContent: <SampleContent />,
   secondaryContent: <SampleContent />,
-};
-
-Open.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const clickableHeader = await canvas.getByTestId('WalletOpenCloseIcon');
-  await userEvent.click(clickableHeader);
 };
 
 export const ContentOutside = Template.bind({});
@@ -71,4 +67,11 @@ export const NoSecondaryContent = Template.bind({});
 NoSecondaryContent.args = {
   label: 'Wallet',
   primaryContent: <SampleContent />,
+};
+
+export const NoSecondaryContentButActive = Template.bind({});
+NoSecondaryContentButActive.args = {
+  label: 'Wallet',
+  primaryContent: <SampleContent />,
+  shouldCollapseButtonBeAlwaysActive: true,
 };

@@ -1,27 +1,45 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { useArgs } from '@storybook/client-api';
 
-import PeriodSelectionTabs from '../../components/PeriodSelectionTabs';
+import PeriodSelectionTabs, {
+  Period,
+} from '../../components/PeriodSelectionTabs';
 
 export default {
   title: 'Components/Period Selection Tabs',
   component: PeriodSelectionTabs,
   argTypes: {
-    selectedButtonID: {
-      options: [ 0, 1, 2, 3, 4 ],
-      control: { type: 'radio' },
+    onClick: {
+      action: 'Period Selected',
     },
-    onClick: { action: `Tab Button Clicked` },
+    className: {
+      table: {
+        disable: true,
+      },
+    },
   },
   parameters: {
     backgrounds: { default: 'darkAdditional' },
   },
 } as ComponentMeta<typeof PeriodSelectionTabs>;
 
-const Template: ComponentStory<typeof PeriodSelectionTabs> = (args) =>
-  <PeriodSelectionTabs {...args} />;
+const Template: ComponentStory<typeof PeriodSelectionTabs> = (args) => {
+  const [ { selectedPeriod, onClick }, updateArgs ] = useArgs();
+
+  const handleClick = (period: Period) => {
+    updateArgs({ selectedPeriod: period });
+    onClick(period);
+  };
+
+  return <PeriodSelectionTabs
+    {...args}
+    selectedPeriod={selectedPeriod}
+    onClick={handleClick}
+  />;
+};
 
 export const Default = Template.bind({});
 Default.args = {
-  selectedButtonID: 0,
+  selectedPeriod: 'Today',
 };
