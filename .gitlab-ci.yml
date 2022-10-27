@@ -26,8 +26,9 @@ update_master:
     stage: deploy
     script:
       - >-
-        cd /home/andrii/dom-pwa
-        && sudo GIT_SSH_COMMAND='ssh -i /root/.ssh/gitlab_rsa' git pull
+        sudo GIT_SSH_COMMAND='ssh -i /root/.ssh/gitlab_rsa' git pull
+        && whoami
+        && pwd
         && yarn
         && yarn build
         && exit
