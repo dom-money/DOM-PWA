@@ -33,11 +33,11 @@ before_script:
     - git config --global user.email "olef_and@ukr.net"
     - git config --global user.name "andrii"
   
-test_package:
-    stage: test
-    script:
-      - >-
-        echo "nice"
+#test_package:
+#    stage: test
+#    script:
+#      - >-
+#        echo "nice"
 
 update_master:
     stage: deploy
