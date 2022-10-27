@@ -44,7 +44,7 @@ update_master:
     script:
       - >-
         ssh dima@67.205.140.99 "cd /home/andrii/dom-pwa
-        && source ~/.bashrc
+        && source /home/dima/.bashrc
         && GIT_SSH_COMMAND='ssh -i /root/.ssh/gitlab_rsa' git pull git@gitlab.com:andrii.m.olefirenko/dom-pwa.git
         && nvm
         && node -v
