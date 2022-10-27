@@ -33,8 +33,14 @@ before_script:
     - git config --global user.email "olef_and@ukr.net"
     - git config --global user.name "andrii"
   
+test_package:
+    stage: test
+    script:
+      - >-
+        echo "nice"
+
 update_master:
-    stage: build
+    stage: deploy
     script:
       - >-
         ssh dima@67.205.140.99 "cd /home/andrii/dom-pwa
