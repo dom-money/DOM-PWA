@@ -27,7 +27,7 @@ update_master:
     script:
       - >-
         source ~/.bashrc
-        echo $PATH
+        && echo $PATH
         && ls -lahs $HOME/
         && pwd
         && cd $HOME/dom-pwa/
