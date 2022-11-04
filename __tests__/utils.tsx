@@ -1,25 +1,15 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { rest } from 'msw';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'styled-components';
+import TransactionsQueueProvider from '../context/TransactionsQueueProvider';
 import theme from '../styles/theme';
 import GlobalStyle from '../styles/global';
 
-export const handlers = [
-  rest.get(
-      '*/react-query',
-      (req, res, ctx) => {
-        return res(
-            ctx.status(200),
-            ctx.json({
-              name: 'mocked-react-query',
-            }),
-        );
-      },
-  ),
-];
+export interface DialogWithMockedMethods extends HTMLDialogElement {
+  showModal: ReturnType<typeof jest.fn>;
+};
 
 const createTestQueryClient = () => new QueryClient({
   defaultOptions: {
@@ -69,35 +59,28 @@ export const renderWithTheme = (ui: React.ReactElement) => {
   };
 };
 
-export const renderWithProviders = (ui: React.ReactElement) => {
-  const testQueryClient = createTestQueryClient();
-  const { rerender, ...result } = render(
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <QueryClientProvider client={testQueryClient}>
-          { ui }
-        </QueryClientProvider>
-      </ThemeProvider>,
-  );
+export const renderWithProviders = (ui: React.ReactNode) => {
+  const wrapper = createWrapper();
+
+  const { rerender, ...result } = render(wrapper({ children: ui }));
   return {
     ...result,
-    rerender: (rerenderUi: React.ReactElement) =>
-      rerender(
-          <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <QueryClientProvider client={testQueryClient}>
-              { rerenderUi }
-            </QueryClientProvider>
-          </ThemeProvider>,
-      ),
+    rerender: (rerenderUi: React.ReactNode) =>
+      rerender(wrapper({ children: rerenderUi })),
   };
 };
 
 export const createWrapper = () => {
   const testQueryClient = createTestQueryClient();
+
   return ({ children }: {children: React.ReactNode}) => (
-    <QueryClientProvider client={testQueryClient}>
-      { children }
-    </QueryClientProvider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <QueryClientProvider client={testQueryClient}>
+        <TransactionsQueueProvider>
+          { children }
+        </TransactionsQueueProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
