@@ -76,6 +76,7 @@ const Dialog = ({
       ref={ref}
       padding={padding}
       onClick={handleDialogOnClick}
+      data-testid='dialog'
       {...props}
     >
       <ChildrenContainer id='dialog-child-container'>
