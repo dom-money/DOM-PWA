@@ -4,9 +4,14 @@
 // Used for __tests__/testing-library.js
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
+import { loadEnvConfig } from '@next/env';
 import 'jest-styled-components';
 
-export const server = setupServer(...handlers);
+// Loading environment variables the same way Next.js does
+export default async () => {
+  const projectDir = process.cwd();
+  loadEnvConfig(projectDir);
+};
 
 // Establish API mocking before all tests.
 beforeAll(() => {
