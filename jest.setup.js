@@ -4,8 +4,7 @@
 // Used for __tests__/testing-library.js
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
-import { setupServer } from 'msw/node';
-import { handlers } from './__tests__/utils';
+import 'jest-styled-components';
 
 export const server = setupServer(...handlers);
 
