@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { userEvent } from '@storybook/testing-library';
+import userEvent from '@testing-library/user-event';
 import { renderWithTheme } from '../utils';
 import theme from '../../styles/theme';
 
@@ -23,18 +23,21 @@ describe('Button', () => {
     expect(button).toHaveTextContent('Top Up');
   });
 
-  test('calls onClick', () => {
+  test('calls onClick', async () => {
+    const user = userEvent.setup();
     const mockClickHandler = jest.fn();
+
     renderWithTheme(<Button label='Top Up' onClick={mockClickHandler} />);
 
     const button = screen.getByRole('button');
 
-    userEvent.click(button);
+    await user.click(button);
 
     expect(mockClickHandler).toHaveBeenCalledTimes(1);
   });
 
-  test('renders correctly as disabled', () => {
+  test('renders correctly as disabled', async () => {
+    const user = userEvent.setup();
     const mockClickHandler = jest.fn();
     renderWithTheme(
         <Button label='Send' disabled onClick={mockClickHandler} />,
@@ -42,7 +45,7 @@ describe('Button', () => {
 
     const button = screen.getByRole('button');
 
-    userEvent.click(button);
+    await user.click(button);
 
     expect(button).toHaveAttribute('disabled');
 

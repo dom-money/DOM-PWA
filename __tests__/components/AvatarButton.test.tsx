@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { userEvent } from '@storybook/testing-library';
+import userEvent from '@testing-library/user-event';
 import { renderWithTheme } from '../utils';
 
 import AvatarButton from '../../components/AvatarButton';
@@ -34,7 +34,8 @@ describe('Avatar Button', () => {
     expect(image).toHaveAttribute('alt', 'John Doe\'s Avatar');
   });
 
-  test('calls onClick', () => {
+  test('calls onClick', async () => {
+    const user = userEvent.setup();
     const mockClickHandler = jest.fn();
     renderWithTheme(
         <AvatarButton
@@ -46,7 +47,7 @@ describe('Avatar Button', () => {
 
     const avatarButton = screen.getByRole('button');
 
-    userEvent.click(avatarButton);
+    await user.click(avatarButton);
 
     expect(mockClickHandler).toHaveBeenCalledTimes(1);
   });
