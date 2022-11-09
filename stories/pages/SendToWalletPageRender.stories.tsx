@@ -12,40 +12,56 @@ export default {
     viewport: {
       defaultViewport: 'iphone12promax',
     },
+    controls: {
+      exclude: [ 'isLoading' ],
+    },
   },
   argTypes: {
-    sendButtonOnClick: {
-      action: `'Send' Button Clicked`,
+    isLoading: {
       table: {
         disable: true,
       },
+    },
+    availableBalance: {
+      type: {
+        name: 'string', required: true,
+      },
+    },
+    inputAddress: {
+      type: {
+        name: 'string', required: true,
+      },
+    },
+    areInputsValid: {
+      type: {
+        name: 'boolean', required: true,
+      },
+    },
+    sendButtonOnClick: {
+      action: `'Send' Button Clicked`,
     },
     clearButtonOnClick: {
       action: `'Clear' Button Clicked`,
-      table: {
-        disable: true,
-      },
     },
     getContactOnClick: {
       action: `'Get Contact' Button Clicked`,
-      table: {
-        disable: true,
-      },
     },
     scanQROnClick: {
       action: `'Scan QR' Button Clicked`,
-      table: {
-        disable: true,
-      },
     },
   },
 } as ComponentMeta<typeof SendToWalletPageRender>;
 
 const Template: ComponentStory<typeof SendToWalletPageRender> = (args) => {
-  const [ { inputAddress }, updateArgs ] = useArgs();
+  const [ {
+    inputAddress,
+    onInputAddressChange,
+    onInputAddressFocus,
+  }, updateArgs ] = useArgs();
 
   const handleValueChange = (inputAddress: string) => {
     updateArgs({ inputAddress: inputAddress });
+    onInputAddressChange(inputAddress);
   };
 
   const handleFocus = (prefill?: string) => {
@@ -53,6 +69,7 @@ const Template: ComponentStory<typeof SendToWalletPageRender> = (args) => {
       return;
     };
     updateArgs({ inputAddress: prefill });
+    onInputAddressFocus(prefill);
   };
 
   return <SendToWalletPageRender
@@ -111,11 +128,19 @@ Loading.parameters = {
   controls: {
     hideNoControlsWarning: true,
     exclude: [
+      'areInputsValid',
+      'availableBalance',
+      'inputAddress',
+      'inputAmount',
+      'inputAmountErrorMessage',
+      'isSubmitting',
+      'onInputAddressChange',
+      'onInputAddressFocus',
+      'onInputAmountChange',
       'sendButtonOnClick',
       'clearButtonOnClick',
       'getContactOnClick',
       'scanQROnClick',
-      'isLoading',
     ],
   },
 };

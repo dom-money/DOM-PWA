@@ -18,6 +18,14 @@ interface SendToWalletPageRenderProps {
    */
   availableBalance: string;
   /**
+   * Input address
+   */
+  inputAddress: string;
+  /**
+   * Are inputs valid for submission?
+   */
+  areInputsValid: boolean;
+  /**
    * Input amount
    */
   inputAmount?: string;
@@ -25,10 +33,6 @@ interface SendToWalletPageRenderProps {
    * Amount input on change handler function
    */
   onInputAmountChange?: ({ formattedValue, value }: onInputChangeType) => void;
-  /**
-   * Input address
-   */
-  inputAddress: string;
   /**
    * Address input on change handler function
    */
@@ -41,10 +45,6 @@ interface SendToWalletPageRenderProps {
    * Amount input validation error message
    */
   inputAmountErrorMessage?: string;
-  /**
-   * Are inputs valid for submission?
-   */
-  areInputsValid: boolean;
   /**
    * Is Component in the process of submitting data?
    */

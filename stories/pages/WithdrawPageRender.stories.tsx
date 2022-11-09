@@ -11,19 +11,31 @@ export default {
     viewport: {
       defaultViewport: 'iphone12promax',
     },
+    controls: {
+      exclude: [ 'isLoading' ],
+    },
   },
   argTypes: {
-    withdrawButtonOnClick: {
-      action: `'Withdraw' Button Pressed`,
+    isLoading: {
       table: {
         disable: true,
       },
     },
+    availableBalance: {
+      type: {
+        name: 'string', required: true,
+      },
+    },
+    isInputValid: {
+      type: {
+        name: 'boolean', required: true,
+      },
+    },
+    withdrawButtonOnClick: {
+      action: `'Withdraw' Button Pressed`,
+    },
     clearButtonOnClick: {
       action: `'Clear' Button Pressed`,
-      table: {
-        disable: true,
-      },
     },
   },
 } as ComponentMeta<typeof WithdrawPageRender>;
@@ -68,9 +80,14 @@ Loading.parameters = {
   controls: {
     hideNoControlsWarning: true,
     exclude: [
+      'availableBalance',
+      'errorMessage',
+      'inputAmount',
+      'isInputValid',
+      'isSubmitting',
+      'onInputChange',
       'withdrawButtonOnClick',
       'clearButtonOnClick',
-      'isLoading',
     ],
   },
 };

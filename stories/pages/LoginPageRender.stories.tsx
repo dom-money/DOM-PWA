@@ -11,6 +11,9 @@ export default {
     viewport: {
       defaultViewport: 'iphone12promax',
     },
+    controls: {
+      hideNoControlsWarning: true,
+    },
   },
 } as ComponentMeta<typeof LoginPageRender>;
 
