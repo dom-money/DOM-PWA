@@ -106,6 +106,7 @@ deploy_storybook:
   script:
     # Currently, there is a problem with using artifacts from a runner that ...
     # uses a docker executor on a runner with a shell executor.
+    # See: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1180
     # As a workaround, we run jest tests again to generate the test results ...
     # .. in the production folder for Storybook to use.
     - yarn test:ci
