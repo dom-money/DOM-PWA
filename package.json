@@ -5,8 +5,13 @@
         "build": "next build",
         "start": "next start",
         "pwa": "next start -p 5454",
-        "lint": "eslint ./ --cache --ext .tsx,.jsx,.ts",
+        "lint": "eslint ./ --cache --ext .tsx,.jsx,.ts,.js,.md,.mdx",
+        "test": "jest --watch",
+        "test:generate-output": "jest --json --outputFile=.jest-test-results.json || true",
+        "test:ci": "jest --ci --json --outputFile=.jest-test-results.json",
         "storybook": "start-storybook -p 6006",
+        "test-storybook": "test-storybook",
+        "test-storybook:ci": "concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"yarn build-storybook --quiet && npx http-server storybook-static --port 6006 --silent\" \"wait-on tcp:6006 && yarn test-storybook\"",
         "build-storybook": "build-storybook"
     },
     "dependencies": {
@@ -57,11 +62,14 @@
         "@typescript-eslint/eslint-plugin": "^5.30.0",
         "@typescript-eslint/parser": "^5.30.0",
         "babel-loader": "^8.2.5",
+        "concurrently": "^7.5.0",
         "eslint": "^8.26.0",
         "eslint-config-google": "^0.14.0",
         "eslint-plugin-react": "^7.30.1",
         "eslint-plugin-storybook": "^0.6.3",
-        "typescript": "4.7.4"
+        "http-server": "^14.1.1",
+        "typescript": "4.7.4",
+        "wait-on": "^6.0.1"
     },
     "pre-commit": [
         "lint"
