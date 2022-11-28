@@ -18,6 +18,15 @@ beforeAll(() => {
   HTMLDialogElement.prototype.show = jest.fn();
   HTMLDialogElement.prototype.showModal = jest.fn();
   HTMLDialogElement.prototype.close = jest.fn();
+
+  // Mocking IntersectionObserver since it isn't available in jsdom
+  const mockIntersectionObserver = jest.fn();
+  mockIntersectionObserver.mockReturnValue({
+    observe: () => null,
+    unobserve: () => null,
+    disconnect: () => null,
+  });
+  window.IntersectionObserver = mockIntersectionObserver;
 });
 
 // Reset any request handlers that we may add during the tests,
