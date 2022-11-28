@@ -1,5 +1,5 @@
 import { ResolverType } from './resolverType';
-import * as mockedTransactions from '../mockedTransactions.json';
+import mockedTransactions from '../mockedTransactions.json';
 
 
 const transactionsResolver: ResolverType = (req, res, ctx) => {
