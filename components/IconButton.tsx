@@ -103,7 +103,7 @@ const DisabledButton = styled(Button)<ButtonProps>`
   cursor: not-allowed;
 `;
 
-const Badge = styled.span`
+const BadgeElement = styled.span`
   position: absolute;
   width: 0.375rem;
   height: 0.375rem;
@@ -112,6 +112,8 @@ const Badge = styled.span`
   background-color: #FEF200;
   border-radius: 50%;
 `;
+
+const Badge = () => <BadgeElement data-testid='notifications-badge'/>;
 
 const IconButton = ({
   size,
