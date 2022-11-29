@@ -2,7 +2,7 @@ import React from 'react';
 import LoadingProvider from './LoadingProvider';
 import AuthProvider from './AuthProvider';
 import ReactQueryProvider from './ReactQueryProvider';
-import NotistackSnackbarProvider from './NotistackSnackbarProvider';
+import SnackbarProvider from './SnackbarProvider';
 import EventListenersProvider from './EventListenersProvider';
 import TransactionsQueueProvider from './TransactionsQueueProvider';
 
@@ -15,13 +15,13 @@ const ContextProviders = ({ children }: ContextProvidersProps) => {
     <LoadingProvider>
       <AuthProvider>
         <ReactQueryProvider>
-          <NotistackSnackbarProvider>
+          <SnackbarProvider>
             <EventListenersProvider>
               <TransactionsQueueProvider>
                 {children}
               </TransactionsQueueProvider>
             </EventListenersProvider>
-          </NotistackSnackbarProvider>
+          </SnackbarProvider>
         </ReactQueryProvider>
       </AuthProvider>
     </LoadingProvider>
