@@ -45,6 +45,10 @@ test_app:
   tags: [ 'docker' ]
 
   artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
     paths:
       - .jest-test-results.json
   

@@ -19,6 +19,7 @@ const customJestConfig = {
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: [ '<rootDir>/__tests__/utils.tsx' ],
   modulePathIgnorePatterns: [ 'node_modules', 'jest-test-results.json' ],
+  coverageReporters: [ 'clover', 'json', 'lcov', 'text', 'cobertura' ],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load ...
