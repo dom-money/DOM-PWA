@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
 import { withTests } from '@storybook/addon-jest';
-import results from '../.jest-test-results.json';
+import results from '../reports/jest-test-results.json';
 import { ThemeProvider } from 'styled-components';
 
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';

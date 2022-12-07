@@ -3,8 +3,7 @@
 
 # testing
 /coverage
-.jest-test-results.json
-junit.xml
+/reports
 
 # production
 build

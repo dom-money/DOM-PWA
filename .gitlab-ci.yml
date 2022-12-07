@@ -49,12 +49,12 @@ test_app:
   artifacts:
     paths:
       - coverage/
-      - junit.xml
+      - reports/
     reports:
       coverage_report:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
-      junit: junit.xml
+      junit: reports/junit.xml
   
   script:
     - yarn
@@ -77,6 +77,8 @@ test_storybook:
   script:
     - yarn
     - yarn test-storybook:ci
+  
+  needs: [ 'test_app' ]
 
   only:
     - merge_requests
@@ -103,20 +105,6 @@ deploy_app:
   only:
     - main
 
-prebuild_storybook:
-  stage: deploy
-
-  script:
-    - yarn test:ci-generate-output
-  
-  after_script:
-    - exit
-  
-  needs: [ 'deploy_app' ]
-    
-  only:
-    - main
-
 deploy_storybook:
   stage: deploy
 
@@ -126,19 +114,13 @@ deploy_storybook:
     # See: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1180
     # As a workaround, we run jest tests again to generate the test results ...
     # .. in the production folder for Storybook to use.
-    - yarn test:ci
+    - yarn test:ci-coverage
     - pm2 restart storybook
   
   after_script:
     - exit
   
-  artifacts:
-    paths:
-      - .jest-test-results.json
-  
-  dependencies: [ 'prebuild_storybook' ]
-  
-  needs: [ 'deploy_app', 'prebuild_storybook' ]
+  needs: [ 'deploy_app' ]
     
   only:
     - main
