@@ -30,6 +30,7 @@ const customJestConfig = {
     '!**/pages/api/**',
   ],
   coverageReporters: [ 'clover', 'json', 'lcov', 'text', 'cobertura' ],
+  reporters: [ 'default', 'jest-junit' ],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load ...
