@@ -44,17 +44,17 @@ test_app:
 
   tags: [ 'docker' ]
 
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+
   artifacts:
     reports:
       coverage_report:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
-    paths:
-      - .jest-test-results.json
   
   script:
     - yarn
-    - yarn test:ci
+    - yarn test:ci-coverage
     
   only:
     - merge_requests
@@ -73,8 +73,6 @@ test_storybook:
   script:
     - yarn
     - yarn test-storybook:ci
-  
-  needs: [ 'test_app' ]
 
   only:
     - merge_requests
@@ -85,8 +83,6 @@ deploy_app:
   stage: deploy
 
   before_script:
-    # Copying test-results artifact to production folder
-    - cp .jest-test-results.json $HOME/dom-pwa/
     - cd $HOME/dom-pwa/
     - git config --global user.email "olef_and@ukr.net"
     - git config --global user.name "andrii"
@@ -103,6 +99,19 @@ deploy_app:
   only:
     - main
 
+prebuild_storybook:
+  stage: deploy
+
+  script:
+    - yarn test:ci-generate-output
+  
+  after_script:
+    - exit
+  
+  needs: [ 'deploy_app' ]
+    
+  only:
+    - main
 
 deploy_storybook:
   stage: deploy
@@ -119,7 +128,13 @@ deploy_storybook:
   after_script:
     - exit
   
-  needs: [ 'deploy_app' ]
+  artifacts:
+    paths:
+      - .jest-test-results.json
+  
+  dependencies: [ 'prebuild_storybook' ]
+  
+  needs: [ 'deploy_app', 'prebuild_storybook' ]
     
   only:
     - main
