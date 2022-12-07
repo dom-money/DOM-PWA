@@ -19,6 +19,16 @@ const customJestConfig = {
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: [ '<rootDir>/__tests__/utils.tsx' ],
   modulePathIgnorePatterns: [ 'node_modules', 'jest-test-results.json' ],
+  collectCoverageFrom: [
+    '**/*.{ts,tsx}',
+    '!**/node_modules/**',
+    '!**/.next/**',
+    '!**/.storybook/**',
+    '!**/stories/**',
+    '!**/__tests__/**',
+    '!**/mocks/**',
+    '!**/pages/api/**',
+  ],
   coverageReporters: [ 'clover', 'json', 'lcov', 'text', 'cobertura' ],
 };
 
