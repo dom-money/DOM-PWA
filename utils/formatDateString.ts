@@ -1,4 +1,4 @@
-const dateStringifier = (timestamp: number) => {
+const formatDateString = (timestamp: number) => {
   // Creating date object
   const inputDate = new Date(timestamp);
 
@@ -41,4 +41,4 @@ const dateStringifier = (timestamp: number) => {
   return inputDate.toLocaleString('en-US', options);
 };
 
-export default dateStringifier;
+export default formatDateString;
