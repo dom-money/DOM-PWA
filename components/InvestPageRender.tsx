@@ -149,10 +149,11 @@ const InvestPageRender = ({
           />
         </ButtonContainer>
       </Wrapper>
-      {
-        isSubmitting &&
-        <Loading ariaLabel='Transaction is in progress' primary />
-      }
+      <Loading
+        isOpen={isSubmitting}
+        primary
+        ariaLabel='Transaction is in progress'
+      />
     </>
   );
 };
