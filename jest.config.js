@@ -34,7 +34,6 @@ const customJestConfig = {
     'default',
     [ 'jest-junit', { outputDirectory: 'reports', outputName: 'junit.xml' } ],
   ],
-  testResultsProcessor: './node_modules/jest-json-reporter',
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load ...
