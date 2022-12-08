@@ -11,7 +11,7 @@ interface DialogProps {
    */
   children: React.ReactNode;
   /**
-   * On Dialog Close function handle
+   * On Dialog Close function handler
    */
   onClose?: () => void;
   /**
