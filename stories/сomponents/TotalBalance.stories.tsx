@@ -8,24 +8,13 @@ export default {
   component: TotalBalance,
   argTypes: {
     amount: {
-      type: { name: 'string', required: true },
-      description: 'Amount to display',
-      table: {
-        type: {
-          summary: 'string',
-        },
+      type: {
+        name: 'string', required: true,
       },
     },
-    asAvailableBalance: {
-      type: { name: 'boolean' },
-      description: 'Should title be \'Available Balance\'?',
+    isLoading: {
       table: {
-        defaultValue: {
-          summary: 'false',
-        },
-        type: {
-          summary: 'boolean',
-        },
+        disable: true,
       },
     },
   },
@@ -52,7 +41,7 @@ AsAvailableBalance.args = {
 
 const loadingParameters = {
   controls: {
-    exclude: [ 'amount', 'isLoading' ],
+    exclude: [ 'amount' ],
   },
 };
 

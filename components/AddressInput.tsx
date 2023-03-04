@@ -16,7 +16,7 @@ interface AddressInputProps {
    */
   addressValue: string;
   /**
-   * HTML <input> id Attribute
+   * HTML \<input\> id Attribute
    */
   inputID: string;
   /**

@@ -3,10 +3,11 @@
 
 # testing
 /coverage
-.jest-test-results.json
+/reports
 
 # production
 build
+storybook-static
 
 # next.js
 /.next/

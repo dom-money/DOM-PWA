@@ -11,10 +11,27 @@ export default {
     viewport: {
       defaultViewport: 'iphone12promax',
     },
+    controls: {
+      exclude: [ 'isLoading' ],
+    },
   },
   argTypes: {
-    shareButtonOnClick: { action: '\'Share\' Button Pressed' },
-    copyAddressButtonOnClick: { action: '\'Copy Address\' Button Pressed' },
+    isLoading: {
+      table: {
+        disable: true,
+      },
+    },
+    address: {
+      type: {
+        name: 'string', required: true,
+      },
+    },
+    shareButtonOnClick: {
+      action: `'Share' Button Clicked`,
+    },
+    copyAddressButtonOnClick: {
+      action: `'Copy Address' Button Clicked`,
+    },
   },
 } as ComponentMeta<typeof WalletAddressPageRender>;
 
@@ -33,6 +50,11 @@ Loading.args = {
 Loading.parameters = {
   controls: {
     hideNoControlsWarning: true,
-    exclude: [ 'shareButtonOnClick', 'copyAddressButtonOnClick', 'isLoading' ],
+    exclude: [
+      'address',
+      'shareButtonOnClick',
+      'copyAddressButtonOnClick',
+      'isLoading',
+    ],
   },
 };

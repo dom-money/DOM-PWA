@@ -103,6 +103,7 @@ const Chart = ({ data }: ChartProps) => {
         </defs>
       </svg>
       <VictoryChart
+        title='Chart'
         scale='time'
         containerComponent={
           <VictoryZoomVoronoiContainer

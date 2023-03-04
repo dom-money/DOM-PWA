@@ -9,23 +9,11 @@ import PaymentStatusFailedSVG from '../styles/svg/PaymentStatusFailedSVG';
 
 type PaymentStatusType = 'successful' | 'failed';
 
-interface PaymentStatusProps {
-  /**
-   * Type of Payment Status
-   */
-  type: PaymentStatusType;
+interface CommonProps {
   /**
    * Is Drawer Open?
    */
   isOpen: boolean;
-  /**
-   * On Drawer Close Handler Function
-   */
-  onClose?: () => void;
-  /**
-   * On Exited (Component unmount) Handler Function
-   */
-  onExited?: (node: HTMLElement) => void,
   /**
    * Receiver of the payment
    */
@@ -35,22 +23,50 @@ interface PaymentStatusProps {
    */
   amount: string;
   /**
+   * On Drawer Close Handler Function
+   */
+  onClose?: () => void;
+  /**
+   * On Exited (Component unmounted) Handler Function
+   */
+  onExited?: (node: HTMLElement) => void,
+};
+
+interface SuccessfulProps {
+  /**
+   * Type of Payment Status
+   */
+  type: Extract<PaymentStatusType, 'successful'>;
+  /**
    * Payment message
    */
-  message?: string;
-  /**
-   * Error message
-   */
-  errorMessage?: string;
+  message: string;
   /**
    * 'Send Again' Button On Click Handler
    */
   sendAgainOnClick?: () => void;
+  errorMessage?: never;
+  tryAgainOnClick?: never;
+};
+
+interface FailedProps {
+  /**
+   * Type of Payment Status
+   */
+  type: Extract<PaymentStatusType, 'failed'>;
+  /**
+   * Error message
+   */
+  errorMessage: string;
   /**
    * 'Try Again' Button On Click Handler
    */
   tryAgainOnClick?: () => void;
+  message?: never;
+  sendAgainOnClick?: never;
 };
+
+type PaymentStatusProps = CommonProps & (SuccessfulProps | FailedProps);
 
 interface BackdropProps {
   /**
@@ -105,7 +121,7 @@ const StatusTitle = styled.h1<{type: PaymentStatusType}>`
       return props.theme.colors.success;
     };
     if (props.type === 'failed') {
-      return props.theme.colors.danger;
+      return props.theme.colors.error;
     };
   }};
 `;
@@ -231,7 +247,7 @@ const PaymentStatus = ({
         mountOnEnter: true,
         unmountOnExit: true,
         appear: true,
-        onExited: onExited,
+        onExited,
       }}
       sx={(theme) => ({
         '.MuiDrawer-paper': {

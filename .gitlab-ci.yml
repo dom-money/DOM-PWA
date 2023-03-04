@@ -44,13 +44,21 @@ test_app:
 
   tags: [ 'docker' ]
 
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+
   artifacts:
     paths:
-      - .jest-test-results.json
+      - coverage/
+      - reports/junit.xml
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+      junit: reports/junit.xml
   
   script:
     - yarn
-    - yarn test:ci
+    - yarn test:ci-coverage
     
   only:
     - merge_requests
@@ -68,9 +76,12 @@ test_storybook:
 
   script:
     - yarn
+    - yarn test:ci-generate-output
     - yarn test-storybook:ci
   
-  needs: [ 'test_app' ]
+  artifacts:
+    paths:
+      - reports/jest-test-results.json
 
   only:
     - merge_requests
@@ -81,8 +92,6 @@ deploy_app:
   stage: deploy
 
   before_script:
-    # Copying test-results artifact to production folder
-    - cp .jest-test-results.json $HOME/dom-pwa/
     - cd $HOME/dom-pwa/
     - git config --global user.email "olef_and@ukr.net"
     - git config --global user.name "andrii"
@@ -99,7 +108,6 @@ deploy_app:
   only:
     - main
 
-
 deploy_storybook:
   stage: deploy
 
@@ -109,7 +117,7 @@ deploy_storybook:
     # See: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1180
     # As a workaround, we run jest tests again to generate the test results ...
     # .. in the production folder for Storybook to use.
-    - yarn test:ci
+    - yarn test:ci-generate-output
     - pm2 restart storybook
   
   after_script:

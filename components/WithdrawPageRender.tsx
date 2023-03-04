@@ -17,6 +17,10 @@ interface WithdrawPageRenderProps {
    */
   availableBalance: string;
   /**
+   * Is input valid?
+   */
+  isInputValid: boolean;
+  /**
    * Input amount as a string (for state control)
    */
   inputAmount?: string;
@@ -28,10 +32,6 @@ interface WithdrawPageRenderProps {
    * Validation error message
    */
   errorMessage?: string;
-  /**
-   * Is input valid?
-   */
-  isInputValid: boolean;
   /**
    * Is Component in the process of submitting data?
    */

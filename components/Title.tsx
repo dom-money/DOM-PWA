@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface TitleProps {
+type TitleProps = {
   /**
    * Title Text
    */
@@ -11,18 +11,22 @@ interface TitleProps {
    */
   className?: string;
   /**
-   * Optionally render title as another HTML element (renders as h2 by default)
-   */
-  as?: React.ElementType;
-  /**
-   * Input ID if rendering as a <label> element
-   */
-  inputID?: string;
-  /**
    * HTML id attribute
    */
   id?: string;
-}
+} & ({
+  /**
+   * Optionally render title as another HTML element (renders as h2 by default)
+   */
+   as?: Exclude<React.ElementType, 'label'>;
+   /**
+    * Input ID if rendering as a \<label\> element
+    */
+   inputID?: never;
+} | {
+   as: 'label';
+   inputID: string;
+});
 
 const TitleElement = styled.h2`
   font-style: normal;

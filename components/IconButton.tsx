@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 type sizeType = 'small' | 'medium' | 'large';
 
-interface IconButtonProps {
+interface CommonProps {
   /**
    * Icon Button Size (small: 40px, medium: 44px, large: 48px)
    */
@@ -22,26 +22,38 @@ interface IconButtonProps {
    */
   children: React.ReactNode;
   /**
-   * Optionally render button as an \<a\> element
+   * Optional aria-label
    */
-  asAnchor?: boolean;
+  ariaLabel?: string;
+};
+
+interface ClickHandlerProps {
   /**
    * Click handler
    */
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   /**
-   * URL on Click
-   */
-  href?: string
-  /**
    * Is button disabled?
    */
   disabled?: boolean;
+  asAnchor?: never;
+  href?: never;
+};
+
+interface LinkProps {
   /**
-   * Optional aria-label
+   * Optionally render button as an \<a\> element
    */
-  ariaLabel?: string;
-}
+  asAnchor: boolean;
+  /**
+   * URL on Click
+   */
+  href: string;
+  onClick?: never;
+  disabled?: never;
+};
+
+type IconButtonProps = CommonProps & (ClickHandlerProps | LinkProps);
 
 interface ButtonProps {
   size: sizeType;
@@ -91,7 +103,7 @@ const DisabledButton = styled(Button)<ButtonProps>`
   cursor: not-allowed;
 `;
 
-const Badge = styled.span`
+const BadgeElement = styled.span`
   position: absolute;
   width: 0.375rem;
   height: 0.375rem;
@@ -100,6 +112,8 @@ const Badge = styled.span`
   background-color: #FEF200;
   border-radius: 50%;
 `;
+
+const Badge = () => <BadgeElement data-testid='notifications-badge'/>;
 
 const IconButton = ({
   size,
