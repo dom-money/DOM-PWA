@@ -76,27 +76,27 @@ const YieldDisplay = ({
   const theme = useTheme() as ThemeType;
   if (type === 'short') {
     return (
-      <Wrapper {...props}>
+      <Wrapper { ...props }>
         <SuccessText>
-          +${yieldValue}
+          +${ yieldValue }
         </SuccessText>
         <Text>
-          +{yieldValuePercentage}%
+          +{ yieldValuePercentage }%
         </Text>
       </Wrapper>
     );
   };
 
   return (
-    <Wrapper {...props}>
+    <Wrapper { ...props }>
       <YieldContainer>
-        <StyledTriangleIcon color={theme.colors.success} />
+        <StyledTriangleIcon color={ theme.colors.success } />
         <SuccessText>
-          ${yieldValue} (+{yieldValuePercentage}%)
+          ${ yieldValue } (+{ yieldValuePercentage }%)
         </SuccessText>
       </YieldContainer>
       <Text>
-        Average APY {averageAPY}%
+        Average APY { averageAPY }%
       </Text>
     </Wrapper>
   );

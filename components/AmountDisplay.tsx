@@ -140,7 +140,7 @@ const AmountDisplay = ({
 }: Props) => {
   if (isLoading) {
     return (
-      <Container className={className}>
+      <Container className={ className }>
         <Skeleton
           variant='text'
           width='12rem'
@@ -166,17 +166,17 @@ const AmountDisplay = ({
   } = getIntegerAndDecimalParts(formattedAmount);
 
   return (
-    <Container className={className}>
-      <CurrencySymbol size={size} inactive={inactive}>$</CurrencySymbol>
-      <AmountText size={size} inactive={inactive} {...props}>
+    <Container className={ className }>
+      <CurrencySymbol size={ size } inactive={ inactive }>$</CurrencySymbol>
+      <AmountText size={ size } inactive={ inactive } { ...props }>
         <span>
-          {integerPart}
+          { integerPart }
         </span>
         {
           checkIfStringAmountIsZero(amount) || decimalPart.length === 0 ||
           <>
             <span>.</span>
-            <DecimalText>{decimalPart}</DecimalText>
+            <DecimalText>{ decimalPart }</DecimalText>
           </>
         }
       </AmountText>

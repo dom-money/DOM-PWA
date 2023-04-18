@@ -143,12 +143,14 @@ const useAuth = () => {
     };
 
     init();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (isWeb3AuthLoaded && !isUserDataLoading) {
       setIsAuthLoaded(true);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ isWeb3AuthLoaded, isUserDataLoading ]);
 
   const login = async () => {

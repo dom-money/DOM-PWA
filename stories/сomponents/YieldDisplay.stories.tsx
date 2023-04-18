@@ -20,7 +20,7 @@ export default {
 } as ComponentMeta<typeof YieldDisplay>;
 
 const Template: ComponentStory<typeof YieldDisplay> = (args) =>
-  <YieldDisplay {...args} />;
+  <YieldDisplay { ...args } />;
 
 export const Short = Template.bind({});
 Short.args = {

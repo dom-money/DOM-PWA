@@ -31,14 +31,14 @@ export default {
         backgroundColor: '#1F1F1F',
         boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)',
       }}>
-        {story()}
+        { story() }
       </div>
     ),
   ],
 } as ComponentMeta<typeof Header>;
 
 const Template: ComponentStory<typeof Header> = (args) =>
-  <Header {...args} />;
+  <Header { ...args } />;
 
 type PlayFnArgs = {
   args: React.ComponentPropsWithoutRef<typeof Header>,

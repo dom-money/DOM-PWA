@@ -59,7 +59,7 @@ const WalletAddressPageRender = ({
     return (
       <Wrapper>
         <HeaderWithMargin
-          href={'/'}
+          href={ '/' }
         />
         <WalletAddress isLoading/>
         <ButtonContainer>
@@ -80,18 +80,18 @@ const WalletAddressPageRender = ({
   return (
     <Wrapper>
       <HeaderWithMargin
-        href={'/'}
+        href={ '/' }
       />
-      <WalletAddress address={address}/>
+      <WalletAddress address={ address }/>
       <ButtonContainer>
         <Button
           label='Copy Address'
           primary
-          onClick={copyAddressButtonOnClick}
+          onClick={ copyAddressButtonOnClick }
         />
         <Button
           label='Share'
-          onClick={shareButtonOnClick}
+          onClick={ shareButtonOnClick }
         />
       </ButtonContainer>
     </Wrapper>

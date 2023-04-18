@@ -41,7 +41,7 @@ describe('Avatar Button', () => {
         <AvatarButton
           imageURL='https://randomuser.me/api/portraits/women/90.jpg'
           userName='John Doe'
-          onClick={mockClickHandler}
+          onClick={ mockClickHandler }
         />,
     );
 

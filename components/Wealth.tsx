@@ -93,7 +93,7 @@ const Wealth = ({
     return (
       <CollapsibleContainer
         label='Wealth'
-        isCollapsed={false}
+        isCollapsed={ false }
         primaryContent={
           <ContentContainer>
             <AmountTopContainer>
@@ -118,28 +118,28 @@ const Wealth = ({
       <ContentContainer>
         <AmountTopContainer>
           <AmountDisplay
-            amount={amount}
+            amount={ amount }
             size='small'
           />
           <IconButton
             size='large'
             backgroundColor='#020202'
-            asAnchor={true}
-            href={'/withdraw'}
+            asAnchor={ true }
+            href={ '/withdraw' }
             ariaLabel='Withdraw Button'
           >
             <WithdrawIcon color='#FFFFFF'/>
           </IconButton>
         </AmountTopContainer>
         <YieldDisplayWithMargin
-          type={'long'}
-          yieldValue={yieldValue}
-          yieldValuePercentage={yieldValuePercentage}
-          averageAPY={averageAPY}
+          type={ 'long' }
+          yieldValue={ yieldValue }
+          yieldValuePercentage={ yieldValuePercentage }
+          averageAPY={ averageAPY }
         />
         <PeriodSelectionTabsWithMargin
-          selectedPeriod={selectedPeriod}
-          onClick={handleChangeTabClick}
+          selectedPeriod={ selectedPeriod }
+          onClick={ handleChangeTabClick }
         />
       </ContentContainer>
     );
@@ -150,18 +150,18 @@ const Wealth = ({
       <ContentContainer>
         <AmountTopContainer>
           <AmountDisplay
-            amount={amount}
+            amount={ amount }
             size='small'
           />
           <YieldDisplay
-            type={'short'}
-            yieldValue={yieldValue}
-            yieldValuePercentage={yieldValuePercentage}
+            type={ 'short' }
+            yieldValue={ yieldValue }
+            yieldValuePercentage={ yieldValuePercentage }
           />
         </AmountTopContainer>
         <PeriodSelectionTabsWithMargin
-          selectedPeriod={selectedPeriod}
-          onClick={handleChangeTabClick}
+          selectedPeriod={ selectedPeriod }
+          onClick={ handleChangeTabClick }
         />
       </ContentContainer>
     );
@@ -173,19 +173,19 @@ const Wealth = ({
     return (
       <CollapsibleContainer
         label='Wealth'
-        isCollapsed={false}
+        isCollapsed={ false }
         primaryContent={
           <ContentContainer>
             <AmountTopContainer>
               <AmountDisplay
-                amount={amount}
+                amount={ amount }
                 size='small'
-                inactive={true}
+                inactive={ true }
               />
               <IconButton
                 size='large'
                 backgroundColor='#020202'
-                disabled={true}
+                disabled={ true }
                 ariaLabel='Withdraw Button'
               >
                 <WithdrawIcon color='#FFFFFF'/>
@@ -200,14 +200,14 @@ const Wealth = ({
   return (
     <CollapsibleContainer
       label='Wealth'
-      isCollapsed={isContainerCollapsed}
-      onCollapseClick={handleCollapseClick}
-      primaryContent={isContainerCollapsed ?
+      isCollapsed={ isContainerCollapsed }
+      onCollapseClick={ handleCollapseClick }
+      primaryContent={ isContainerCollapsed ?
         <PrimaryContentCollapsed /> : <PrimaryContentNotCollapsed />
       }
       secondaryContent={
         <Chart
-          data={chartData}
+          data={ chartData }
         />
       }
     />

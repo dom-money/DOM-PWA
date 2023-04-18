@@ -54,7 +54,7 @@ const playFn = async (
 };
 
 const Template: ComponentStory<typeof IconButtonCircular> = (args) =>
-  <IconButtonCircular {...args} />;
+  <IconButtonCircular { ...args } />;
 
 export const Button = Template.bind({});
 Button.args = {

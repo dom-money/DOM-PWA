@@ -93,7 +93,7 @@ const InvestPageRender = ({
     return (
       <Wrapper>
         <HeaderWithMargin
-          href={'/'}
+          href={ '/' }
         />
         <TotalBalance
           isLoading
@@ -108,11 +108,11 @@ const InvestPageRender = ({
           <Button
             label='Invest'
             primary
-            disabled={true}
+            disabled={ true }
           />
           <Button
             label='Clear'
-            disabled={true}
+            disabled={ true }
           />
         </ButtonContainer>
       </Wrapper>
@@ -123,34 +123,34 @@ const InvestPageRender = ({
     <>
       <Wrapper>
         <HeaderWithMargin
-          href={'/'}
+          href={ '/' }
         />
         <TotalBalance
-          amount={availableBalance}
+          amount={ availableBalance }
           asAvailableBalance
         />
         <AmountInput
           label='How much do you want to invest?'
           inputID='amount-to-invest-input'
-          amount={inputAmount}
-          onInputChange={onInputChange}
-          errorMessage={errorMessage}
+          amount={ inputAmount }
+          onInputChange={ onInputChange }
+          errorMessage={ errorMessage }
         />
         <ButtonContainer>
           <Button
             label='Invest'
             primary
-            onClick={investButtonOnClick}
-            disabled={!isInputValid || isSubmitting}
+            onClick={ investButtonOnClick }
+            disabled={ !isInputValid || isSubmitting }
           />
           <Button
             label='Clear'
-            onClick={clearButtonOnClick}
+            onClick={ clearButtonOnClick }
           />
         </ButtonContainer>
       </Wrapper>
       <Loading
-        isOpen={isSubmitting}
+        isOpen={ isSubmitting }
         primary
         ariaLabel='Transaction is in progress'
       />

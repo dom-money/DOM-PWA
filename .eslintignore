@@ -1,4 +1,5 @@
 workbox-*.js
 sw.js
 worker-*.js
+next-env.d.ts
 .gitignore

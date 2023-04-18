@@ -11,7 +11,7 @@ export default {
   decorators: [
     (story) => (
       <div style={{ width: '206px' }}>
-        {story()}
+        { story() }
       </div>
     ),
   ],
@@ -46,7 +46,8 @@ const playFn = async (
   await userEvent.click(canvasElement);
 };
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+const Template: ComponentStory<typeof Button> = (args) =>
+  <Button { ...args } />;
 
 export const Primary = Template.bind({});
 Primary.args = {

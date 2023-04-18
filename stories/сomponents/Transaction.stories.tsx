@@ -15,7 +15,7 @@ export default {
         width: 'min(100% - 2rem, 600px)',
         marginInline: 'auto',
       }}>
-        {story()}
+        { story() }
       </div>
     ),
   ],
@@ -53,7 +53,7 @@ export default {
 } as ComponentMeta<typeof Transaction>;
 
 const Template: ComponentStory<typeof Transaction> = (args) =>
-  <Transaction {...args} />;
+  <Transaction { ...args } />;
 
 export const CryptoTopUp = Template.bind({});
 CryptoTopUp.args = {

@@ -44,8 +44,13 @@ const TitleElement = styled.h2`
 
 const Title = ({ text, className, as, inputID, ...props }: TitleProps) => {
   return (
-    <TitleElement as={as} className={className} htmlFor={inputID} {...props}>
-      {text}
+    <TitleElement
+      as={ as }
+      className={ className }
+      htmlFor={ inputID }
+      { ...props }
+    >
+      { text }
     </TitleElement>
   );
 };

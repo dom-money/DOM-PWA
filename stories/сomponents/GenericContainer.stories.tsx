@@ -25,7 +25,7 @@ const SampleContent = () => {
 };
 
 const Template: ComponentStory<typeof GenericContainer> = (args) =>
-  <GenericContainer {...args} />;
+  <GenericContainer { ...args } />;
 
 export const Default = Template.bind({});
 Default.args = {

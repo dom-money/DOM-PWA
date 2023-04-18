@@ -18,7 +18,7 @@ const ContextProviders = ({ children }: ContextProvidersProps) => {
           <SnackbarProvider>
             <EventListenersProvider>
               <TransactionsQueueProvider>
-                {children}
+                { children }
               </TransactionsQueueProvider>
             </EventListenersProvider>
           </SnackbarProvider>

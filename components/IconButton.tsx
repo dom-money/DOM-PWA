@@ -129,42 +129,42 @@ const IconButton = ({
   if (disabled) {
     return (
       <DisabledButton
-        size={size}
-        backgroundColor={backgroundColor}
-        aria-label={ariaLabel}
+        size={ size }
+        backgroundColor={ backgroundColor }
+        aria-label={ ariaLabel }
         type='button'
-        disabled={true}
+        disabled={ true }
       >
-        {children}
-        {hasNotificationBadge && <Badge />}
+        { children }
+        { hasNotificationBadge && <Badge /> }
       </DisabledButton>
     );
   }
   if (asAnchor) {
     return (
-      <Link href={href} passHref>
+      <Link href={ href } passHref>
         <Button
           as='a'
-          size={size}
-          backgroundColor={backgroundColor}
-          aria-label={ariaLabel}
+          size={ size }
+          backgroundColor={ backgroundColor }
+          aria-label={ ariaLabel }
         >
-          {children}
-          {hasNotificationBadge && <Badge />}
+          { children }
+          { hasNotificationBadge && <Badge /> }
         </Button>
       </Link>
     );
   }
   return (
     <Button
-      size={size}
-      backgroundColor={backgroundColor}
-      aria-label={ariaLabel}
+      size={ size }
+      backgroundColor={ backgroundColor }
+      aria-label={ ariaLabel }
       type='button'
-      onClick={onClick}
+      onClick={ onClick }
     >
-      {children}
-      {hasNotificationBadge && <Badge />}
+      { children }
+      { hasNotificationBadge && <Badge /> }
     </Button>
   );
 };

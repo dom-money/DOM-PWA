@@ -42,6 +42,7 @@ const Page = ({ Component, pageProps }: AppProps) => {
     if (shouldRedirectToMain) {
       router.push('/');
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ isAppLoaded, shouldRedirectToLogin, shouldRedirectToMain ]);
 
   if (!isAppLoaded || shouldRedirectToLogin || shouldRedirectToMain) {
@@ -49,7 +50,7 @@ const Page = ({ Component, pageProps }: AppProps) => {
   };
 
   return (
-    <Component {...pageProps} />
+    <Component { ...pageProps } />
   );
 };
 

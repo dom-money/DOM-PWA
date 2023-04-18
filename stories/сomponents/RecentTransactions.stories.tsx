@@ -37,7 +37,7 @@ export default {
 } as ComponentMeta<typeof RecentTransactions>;
 
 const Template: ComponentStory<typeof RecentTransactions> = (args) =>
-  <RecentTransactions {...args} />;
+  <RecentTransactions { ...args } />;
 
 export const Closed = Template.bind({});
 Closed.args = {

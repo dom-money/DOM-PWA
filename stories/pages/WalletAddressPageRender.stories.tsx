@@ -36,7 +36,7 @@ export default {
 } as ComponentMeta<typeof WalletAddressPageRender>;
 
 const Template: ComponentStory<typeof WalletAddressPageRender> = (args) =>
-  <WalletAddressPageRender {...args} />;
+  <WalletAddressPageRender { ...args } />;
 
 export const Default = Template.bind({});
 Default.args = {

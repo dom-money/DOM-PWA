@@ -132,21 +132,21 @@ const AddressInput = ({
   if (disabled) {
     return (
       <GenericContainer
-        label={label}
+        label={ label }
         titleHtmlElement='label'
-        inputID={inputID}
+        inputID={ inputID }
         content={
           <Container>
-            <InputWrapper tabIndex={0}>
+            <InputWrapper tabIndex={ 0 }>
               <TextInput
-                id={inputID}
-                spellCheck={false}
-                value={addressValue}
+                id={ inputID }
+                spellCheck={ false }
+                value={ addressValue }
                 disabled
               />
               <MaskContainer>
-                <MaskHidden>{addressValue}</MaskHidden>
-                <Mask>{maskToDisplay}</Mask>
+                <MaskHidden>{ addressValue }</MaskHidden>
+                <Mask>{ maskToDisplay }</Mask>
               </MaskContainer>
             </InputWrapper>
             <IconContainer>
@@ -233,24 +233,24 @@ const AddressInput = ({
 
   return (
     <GenericContainer
-      label={label}
+      label={ label }
       titleHtmlElement='label'
-      inputID={inputID}
+      inputID={ inputID }
       content={
         <Container>
           <InputWrapper>
             <TextInput
               autoFocus
               autoComplete='off'
-              id={inputID}
-              spellCheck={false}
-              value={addressValue}
-              onChange={handleInputOnChange}
-              onFocus={handleInputOnFocus}
+              id={ inputID }
+              spellCheck={ false }
+              value={ addressValue }
+              onChange={ handleInputOnChange }
+              onFocus={ handleInputOnFocus }
             />
             <MaskContainer>
-              <MaskHidden>{addressValue}</MaskHidden>
-              <Mask>{maskToDisplay}</Mask>
+              <MaskHidden>{ addressValue }</MaskHidden>
+              <Mask>{ maskToDisplay }</Mask>
             </MaskContainer>
           </InputWrapper>
           <IconContainer>
@@ -258,7 +258,7 @@ const AddressInput = ({
               size='large'
               backgroundColor='#020202'
               ariaLabel='Get Contact'
-              onClick={getContactOnClick}
+              onClick={ getContactOnClick }
             >
               <ContactsIcon color='#ffffff' />
             </IconButton>
@@ -266,7 +266,7 @@ const AddressInput = ({
               size='large'
               backgroundColor='#020202'
               ariaLabel='Scan QR'
-              onClick={scanQROnClick}
+              onClick={ scanQROnClick }
             >
               <ScanQRIcon color='#ffffff' />
             </IconButton>

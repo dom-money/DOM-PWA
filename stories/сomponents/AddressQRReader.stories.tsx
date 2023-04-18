@@ -61,7 +61,7 @@ const Template: ComponentStory<typeof AddressQRReader> = (args) => {
         size='large'
         backgroundColor='#020202'
         ariaLabel='Scan QR'
-        onClick={handleOpen}
+        onClick={ handleOpen }
       >
         <ScanQRIcon color='#FFFFFF'/>
       </IconButton>
@@ -69,14 +69,14 @@ const Template: ComponentStory<typeof AddressQRReader> = (args) => {
         address.current &&
       <AddressWrapper>
         <p style={{ fontWeight: 'bold' }}>Wallet address:</p>
-        <p>{address.current}</p>
+        <p>{ address.current }</p>
       </AddressWrapper>
       }
       <AddressQRReader
-        {...args}
-        isOpen={isOpen}
-        onResult={handleResult}
-        onClose={handleClose}
+        { ...args }
+        isOpen={ isOpen }
+        onResult={ handleResult }
+        onClose={ handleClose }
       />
     </Wrapper>);
 };

@@ -24,7 +24,7 @@ const StyledButton = styled(Button)`
 const LoginPageRender = ({ ...props }: LoginPageRenderProps) => {
   return (
     <Wrapper>
-      <StyledButton label="Login" primary {...props}/>
+      <StyledButton label="Login" primary { ...props }/>
     </Wrapper>
   );
 };

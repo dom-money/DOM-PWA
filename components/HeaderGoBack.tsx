@@ -37,11 +37,11 @@ const Wrapper = styled.header`
 
 const HeaderGoBack = ({ href, ...props }: HeaderGoBackProps) => {
   return (
-    <Wrapper {...props}>
+    <Wrapper { ...props }>
       <IconButtonCircular
         ariaLabel='Return to previous page'
         data-testid='goBackIcon'
-        href={href}
+        href={ href }
       >
         <GoBackIcon color='#F8F8F8'/>
       </IconButtonCircular>

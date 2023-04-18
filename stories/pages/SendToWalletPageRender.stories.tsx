@@ -74,17 +74,17 @@ const Template: ComponentStory<typeof SendToWalletPageRender> = (args) => {
 
   return <SendToWalletPageRender
     availableBalance='45725.06'
-    areInputsValid={false}
-    {...args}
-    isLoading={false}
-    inputAddress={inputAddress}
-    onInputAddressChange={handleValueChange}
-    onInputAddressFocus={handleFocus}
+    areInputsValid={ false }
+    { ...args }
+    isLoading={ false }
+    inputAddress={ inputAddress }
+    onInputAddressChange={ handleValueChange }
+    onInputAddressFocus={ handleFocus }
   />;
 };
 
 const LoadingTemplate: ComponentStory<typeof SendToWalletPageRender> = (args) =>
-  <SendToWalletPageRender {...args} />;
+  <SendToWalletPageRender { ...args } />;
 
 export const Valid = Template.bind({});
 Valid.args = {

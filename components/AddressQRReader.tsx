@@ -63,14 +63,14 @@ const AddressQRReader = ({
 
   return (
     <Dialog
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={ isOpen }
+      onClose={ onClose }
       data-testid='cameraDialog'
     >
       <StyledQrReader
         constraints={{ facingMode: 'environment' }}
-        onResult={handleResult}
-        ViewFinder={() => <ViewFinder />}
+        onResult={ handleResult }
+        ViewFinder={ () => <ViewFinder /> }
         videoStyle={{
           objectFit: 'cover',
           transform: 'translate(-50%, -50%)',

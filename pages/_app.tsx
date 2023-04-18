@@ -50,13 +50,13 @@ const App = (appProps: AppProps) => {
           sizes="32x32"
         />
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
-        <meta name="theme-color" content={theme.colors.backgroundMain} />
+        <meta name="theme-color" content={ theme.colors.backgroundMain } />
       </Head>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={ theme }>
         <GlobalStyle />
         <Container>
           <ContextProviders>
-            <Page {...appProps} />
+            <Page { ...appProps } />
           </ContextProviders>
         </Container>
       </ThemeProvider>

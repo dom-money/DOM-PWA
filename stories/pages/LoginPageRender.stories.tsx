@@ -18,6 +18,6 @@ export default {
 } as ComponentMeta<typeof LoginPageRender>;
 
 const Template: ComponentStory<typeof LoginPageRender> = (args) =>
-  <LoginPageRender {...args} />;
+  <LoginPageRender { ...args } />;
 
 export const Default = Template.bind({});

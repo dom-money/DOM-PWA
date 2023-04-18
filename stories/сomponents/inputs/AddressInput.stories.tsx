@@ -36,7 +36,7 @@ export default {
         maxWidth: 'min-content',
         height: '100vh',
       }}>
-        {story()}
+        { story() }
       </div>
     ),
   ],
@@ -58,10 +58,10 @@ const Template: ComponentStory<typeof AddressInput> = (args) => {
   };
 
   return <AddressInput
-    {...args}
-    addressValue={addressValue}
-    onValueChange={handleValueChange}
-    onFocus={handleFocus}
+    { ...args }
+    addressValue={ addressValue }
+    onValueChange={ handleValueChange }
+    onFocus={ handleFocus }
   />;
 };
 

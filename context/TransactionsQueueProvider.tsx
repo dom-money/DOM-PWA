@@ -12,7 +12,7 @@ const TransactionsQueueProvider = ({ children }: Props) => {
 
   return (
     <TransactionsQueueContext.Provider value={{ ...queueArgs }}>
-      {children}
+      { children }
     </TransactionsQueueContext.Provider>
   );
 };

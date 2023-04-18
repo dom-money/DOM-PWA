@@ -21,7 +21,7 @@ export default {
 } as ComponentMeta<typeof TotalBalance>;
 
 const Template: ComponentStory<typeof TotalBalance> = (args) =>
-  <TotalBalance {...args} />;
+  <TotalBalance { ...args } />;
 
 export const PositiveAmount = Template.bind({});
 PositiveAmount.args = {

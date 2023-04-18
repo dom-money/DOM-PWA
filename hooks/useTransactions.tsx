@@ -254,6 +254,7 @@ const useTransactions = (): UseTransactionsReturnType => {
             (transactionsDataPerPage) => transactionsDataPerPage.transactions,
         );
         return arrayWithTransactionArrays.flat();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [ data ]);
 
   // Calculating number of transactions to be displayed on the page
@@ -271,6 +272,7 @@ const useTransactions = (): UseTransactionsReturnType => {
         } else {
           return DISPLAY_PER_PAGE;
         };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [ data ]);
 
   // 'Load More' handler
@@ -322,6 +324,7 @@ const useTransactions = (): UseTransactionsReturnType => {
         );
       });
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ data, hasNextPage, numberOfDisplayedTxs ]);
 
   const isLoadingMore = isLoadingMoreFromFetched || isFetchingNextPage;

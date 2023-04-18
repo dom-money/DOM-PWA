@@ -33,14 +33,14 @@ export default {
         backgroundColor: '#1F1F1F',
         boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)',
       }}>
-        {story()}
+        { story() }
       </div>
     ),
   ],
 } as ComponentMeta<typeof HeaderGoBack>;
 
 const Template: ComponentStory<typeof HeaderGoBack> = (args) =>
-  <HeaderGoBack {...args} />;
+  <HeaderGoBack { ...args } />;
 
 export const Default = Template.bind({});
 Default.play = async ({ args, canvasElement }) => {

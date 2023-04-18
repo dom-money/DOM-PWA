@@ -57,7 +57,7 @@ const TotalBalance = ({ amount, asAvailableBalance, isLoading }: Props) => {
       {
         isLoading ?
         <AmountDisplayWithMargin isLoading size='medium'/> :
-        <AmountDisplayWithMargin amount={amount} size='medium' />
+        <AmountDisplayWithMargin amount={ amount } size='medium' />
       }
     </Wrapper>
   );

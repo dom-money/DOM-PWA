@@ -11,7 +11,7 @@ const EventListenersProvider = ({ children }: EventListenersProviderProps) => {
 
   return (
     <EventListenersContext.Provider value={{ ...eventListenersArgs }}>
-      {children}
+      { children }
     </EventListenersContext.Provider>
   );
 };

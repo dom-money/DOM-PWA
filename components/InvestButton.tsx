@@ -49,7 +49,7 @@ const InvestButton = ({ href = '' }: InvestButtonProps) => {
   return (
     <Wrapper>
       <ButtonBackground />
-      <Link href={href}>
+      <Link href={ href }>
         <a aria-labelledby='invest-button-title'>
           <Button />
         </a>

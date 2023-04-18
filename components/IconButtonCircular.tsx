@@ -88,25 +88,25 @@ const IconButtonCircular = ({
 }: IconButtonCircularProps) => {
   if (disabled) {
     return (
-      <DisabledIconButton aria-label={ariaLabel} disabled={true}>
-        {children}
+      <DisabledIconButton aria-label={ ariaLabel } disabled={ true }>
+        { children }
       </DisabledIconButton>
     );
   };
 
   if (href) {
     return (
-      <Link href={href} passHref>
-        <IconButton as='a' aria-label={ariaLabel} {...props}>
-          {children}
+      <Link href={ href } passHref>
+        <IconButton as='a' aria-label={ ariaLabel } { ...props }>
+          { children }
         </IconButton>
       </Link>
     );
   };
 
   return (
-    <IconButton aria-label={ariaLabel} {...props}>
-      {children}
+    <IconButton aria-label={ ariaLabel } { ...props }>
+      { children }
     </IconButton>
   );
 };

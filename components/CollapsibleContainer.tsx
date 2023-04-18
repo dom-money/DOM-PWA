@@ -95,19 +95,19 @@ const CollapsibleContainer = ({
     <Wrapper>
       <CollapsibleWrapper>
         <Header>
-          <Title text={label} />
+          <Title text={ label } />
           {
             secondaryContent || shouldCollapseButtonBeAlwaysActive ?
             <IconWrapper
-              ariaLabel={`Collapse ${label} Container`}
-              data-testid={`${label}OpenCloseIcon`.replace(/ /g, '')}
-              onClick={onCollapseClick}
-              isCollapsed={isCollapsed}
+              ariaLabel={ `Collapse ${label} Container` }
+              data-testid={ `${label}OpenCloseIcon`.replace(/ /g, '') }
+              onClick={ onCollapseClick }
+              isCollapsed={ isCollapsed }
             >
               <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>
             </IconWrapper> :
             <IconWrapper
-              ariaLabel={`Disabled Button`}
+              ariaLabel={ `Disabled Button` }
               disabled
             >
               <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>
@@ -115,20 +115,20 @@ const CollapsibleContainer = ({
           }
         </Header>
         <Contents data-testid='collapsible-container-contents'>
-          {primaryContent}
-          {!shouldSecondaryContentBeOutside && secondaryContent &&
-          <Collapse in={isCollapsed} timeout={transitionDuration}>
-            <SecondaryContentElement isCollapsed={isCollapsed}>
-              {secondaryContent}
+          { primaryContent }
+          { !shouldSecondaryContentBeOutside && secondaryContent &&
+          <Collapse in={ isCollapsed } timeout={ transitionDuration }>
+            <SecondaryContentElement isCollapsed={ isCollapsed }>
+              { secondaryContent }
             </SecondaryContentElement>
           </Collapse>
           }
         </Contents>
       </CollapsibleWrapper>
-      {shouldSecondaryContentBeOutside && secondaryContent &&
-      <Collapse in={isCollapsed} timeout={transitionDuration}>
-        <SecondaryContentElement isCollapsed={isCollapsed}>
-          {secondaryContent}
+      { shouldSecondaryContentBeOutside && secondaryContent &&
+      <Collapse in={ isCollapsed } timeout={ transitionDuration }>
+        <SecondaryContentElement isCollapsed={ isCollapsed }>
+          { secondaryContent }
         </SecondaryContentElement>
       </Collapse>
       }

@@ -33,15 +33,15 @@ const Template: ComponentStory<typeof Dialog> = (args) => {
     <div style={{ width: '20rem' }}>
       <Button
         primary
-        onClick={() => {
+        onClick={ () => {
           updateArgs({ isOpen: true });
-        }}
+        } }
         label='Open Dialog'
       />
-      <Dialog {...args} isOpen={isOpen} onClose={() => {
+      <Dialog { ...args } isOpen={ isOpen } onClose={ () => {
         updateArgs({ isOpen: false });
         onClose();
-      }}/>
+      } }/>
     </div>
   );
 };

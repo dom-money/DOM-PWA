@@ -73,14 +73,14 @@ const Dialog = ({
 
   return (
     <StyledDialog
-      ref={ref}
-      padding={padding}
-      onClick={handleDialogOnClick}
+      ref={ ref }
+      padding={ padding }
+      onClick={ handleDialogOnClick }
       data-testid='dialog'
-      {...props}
+      { ...props }
     >
       <ChildrenContainer id='dialog-child-container'>
-        {isOpen && children}
+        { isOpen && children }
       </ChildrenContainer>
     </StyledDialog>
   );

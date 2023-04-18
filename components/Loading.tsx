@@ -22,10 +22,10 @@ interface LoadingProps {
 const Loading = ({ isOpen = false, primary, ariaLabel }: LoadingProps) => {
   const theme = useTheme() as ThemeType;
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={ isOpen }>
       <CircularProgress
-        aria-label={ariaLabel}
-        sx={primary ? { color: theme.colors.primary } : { color: '#ffffff' }}
+        aria-label={ ariaLabel }
+        sx={ primary ? { color: theme.colors.primary } : { color: '#ffffff' } }
       />
     </Modal>
   );

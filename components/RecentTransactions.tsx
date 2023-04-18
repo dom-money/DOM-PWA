@@ -122,24 +122,24 @@ const RenderTransactions = ({
 }: RenderTransactionsProps) => {
   return (
     <>
-      {transactions.map((transaction, index) => {
+      { transactions.map((transaction, index) => {
         // Putting ref on the last rendered Transaction Component
         if (index === transactions.length - 1) {
           return (
-            <React.Fragment key={transaction.id}>
+            <React.Fragment key={ transaction.id }>
               <Divider />
-              <Transaction {...transaction} ref={loadMoreRef} />
+              <Transaction { ...transaction } ref={ loadMoreRef } />
             </React.Fragment>
           );
         };
         return (
-          <React.Fragment key={transaction.id}>
+          <React.Fragment key={ transaction.id }>
             <Divider />
-            <Transaction {...transaction} />
+            <Transaction { ...transaction } />
           </React.Fragment>
         );
       },
-      )}
+      ) }
     </>
   );
 };
@@ -163,7 +163,7 @@ const RecentTransactions = ({
     if (!inView || !onLoadMore) return;
 
     onLoadMore();
-  }, [ inView ]);
+  }, [ inView, onLoadMore ]);
 
   const handleCollapseClick = () => {
     setIsContainerCollapsed(!isContainerCollapsed);
@@ -173,8 +173,8 @@ const RecentTransactions = ({
     return (
       <CollapsibleContainer
         label='Recent Transactions'
-        isCollapsed={isContainerCollapsed}
-        onCollapseClick={handleCollapseClick}
+        isCollapsed={ isContainerCollapsed }
+        onCollapseClick={ handleCollapseClick }
         primaryContent={
           <Transaction isLoading />
         }
@@ -203,26 +203,26 @@ const RecentTransactions = ({
       isCollapsed={
         !shouldDisplaySecondaryContent ? isContainerCollapsed : false
       }
-      onCollapseClick={handleCollapseClick}
+      onCollapseClick={ handleCollapseClick }
       primaryContent={
         <div style={{ overflow: 'hidden', position: 'relative' }}>
-          <TransitionGroup component={null}>
+          <TransitionGroup component={ null }>
             <Transition
-              key={transactions[ 0 ]?.id ?? 'no-recent-transactions'}
-              timeout={transitionDuration}
+              key={ transactions[ 0 ]?.id ?? 'no-recent-transactions' }
+              timeout={ transitionDuration }
             >
-              {(status) => (
+              { (status) => (
                 <FadeOpacity
-                  status={status}
-                  transitionDuration={transitionDuration}
+                  status={ status }
+                  transitionDuration={ transitionDuration }
                 >
                   {
                     isTransactionsPropEmpty ?
                     <NoRecentTransactions /> :
-                    <Transaction {...transactions[ 0 ]} />
+                    <Transaction { ...transactions[ 0 ] } />
                   }
                 </FadeOpacity>
-              )}
+              ) }
             </Transition>
           </TransitionGroup>
         </div>
@@ -232,8 +232,8 @@ const RecentTransactions = ({
         undefined :
         <>
           <RenderTransactions
-            transactions={transactions.slice(1)}
-            loadMoreRef={ref}
+            transactions={ transactions.slice(1) }
+            loadMoreRef={ ref }
           />
           {
             isLoadingMore &&

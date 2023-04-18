@@ -139,7 +139,7 @@ const IconSkeleton = () =>
 const TextSkeleton = ({ type }: TextSkeletonProps) =>
   <Skeleton
     variant='text'
-    width={type === 'nameText' ? '8rem' : '4rem'}
+    width={ type === 'nameText' ? '8rem' : '4rem' }
     sx={{
       bgcolor: 'grey.800',
       fontSize: type === 'nameText' ? '0.875rem' : 'inherit',
@@ -179,26 +179,26 @@ const Transaction = forwardRef(({
   const incomeOrOutcomeType = incomeOrOutcome(type);
 
   return (
-    <Wrapper ref={ref}>
+    <Wrapper ref={ ref }>
       <IconContainer>
         <GenericTransactionIcon color='#ffffff' css='opacity: 0.5;'/>
       </IconContainer>
       <DataContainer>
         <NameText>
-          {name}
+          { name }
         </NameText>
-        <AmountText type={incomeOrOutcomeType}>
+        <AmountText type={ incomeOrOutcomeType }>
           <>
-            {incomeOrOutcomeType === 'income' && '+'}
-            {incomeOrOutcomeType === 'outcome' && '-'}
-            ${formatStringAmount(amount, { maxDecimals: 2 })}
+            { incomeOrOutcomeType === 'income' && '+' }
+            { incomeOrOutcomeType === 'outcome' && '-' }
+            ${ formatStringAmount(amount, { maxDecimals: 2 }) }
           </>
         </AmountText>
         <TypeText>
-          {type}
+          { type }
         </TypeText>
         <TimestampText>
-          {formatDateString(timestamp)}
+          { formatDateString(timestamp) }
         </TimestampText>
       </DataContainer>
     </Wrapper>

@@ -61,7 +61,7 @@ const WalletAddress = ({ address, isLoading }: Props) => {
               sx={{ bgcolor: 'grey.800' }}
             /> :
             <QRWrapper>
-              <QRCode value={address} size={220} fgColor={'#1A1A1A'} />
+              <QRCode value={ address } size={ 220 } fgColor={ '#1A1A1A' } />
             </QRWrapper>
           }
           <Text>
