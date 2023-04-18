@@ -1,13 +1,17 @@
 {
   "eslint.options": {
-      "extensions": [".js", ".jsx", ".md", ".mdx", ".ts", ".tsx"]
+    "extensions": [ ".ts", ".tsx", ".js", ".jsx", ".md", ".mdx", "json" ]
   },
   "eslint.validate": [
-      "markdown",
-      "mdx",
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact"
-  ]
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact",
+    "markdown",
+    "mdx",
+    "json",
+    "jsonc"
+  ],
+  "editor.tabSize": 2,
+  "eslint.packageManager": "yarn"
 }
