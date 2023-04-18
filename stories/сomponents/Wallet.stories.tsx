@@ -29,7 +29,7 @@ export default {
 } as ComponentMeta<typeof Wallet>;
 
 const Template: ComponentStory<typeof Wallet> = (args) =>
-  <Wallet {...args} />;
+  <Wallet { ...args } />;
 
 export const Closed = Template.bind({});
 Closed.args = {

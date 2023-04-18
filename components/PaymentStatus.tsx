@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 
@@ -181,11 +181,11 @@ const BackdropContent = styled.div<{marginBottom: number}>`
 `;
 
 const Backdrop = ({ type, ...props }: BackdropProps) =>
-  <BackdropContent {...props} >
-    {type === 'successful' &&
+  <BackdropContent { ...props } >
+    { type === 'successful' &&
         <PaymentStatusSuccessSVG />
     }
-    {type === 'failed' &&
+    { type === 'failed' &&
         <PaymentStatusFailedSVG />
     }
   </BackdropContent>;
@@ -207,40 +207,41 @@ const PaymentStatus = ({
     setDrawerPaperHeight,
   ] = useState(0);
 
-  const [ windowHeight, setWindowHeight ] = useState(0);
+  const resizeObserver = useMemo(() => new ResizeObserver((entries) => {
+    setDrawerPaperHeight(entries[ 0 ].contentRect.height);
+  }), []);
 
-  // Catching window resize
+  const SwipeableDrawerRef = useCallback((node: HTMLDivElement) => {
+    if (!node) return;
+
+    const drawerPaperElement = node.children?.[ 2 ];
+
+    // Starting observing the drawer paper element when the component is mounted
+    resizeObserver.observe(drawerPaperElement);
+  }, [ resizeObserver ]);
+
+  // Unsubscribing from resize updates on component unmount
   useEffect(() => {
-    const updateWindowDimensions = () => {
-      const newWindowHeight = window.innerHeight;
-      setWindowHeight(newWindowHeight);
-    };
-
-    window.addEventListener('resize', updateWindowDimensions);
-    return () => window.removeEventListener('resize', updateWindowDimensions);
+    return resizeObserver.disconnect();
   });
-
-  // Getting Paper's height
-  const drawerPaperRef = useCallback((node: HTMLDivElement) => {
-    if (node === null) {
-      return;
-    };
-    setDrawerPaperHeight(node.children[ 2 ].clientHeight);
-  }, [ windowHeight ]);
 
   return (
     <SwipeableDrawer
-      ref={drawerPaperRef}
-      anchor={'bottom'}
-      open={isOpen}
-      onClose={onClose}
-      onOpen={() => {}}
-      disableBackdropTransition={!iOS}
-      disableDiscovery={true}
-      disableSwipeToOpen={true}
+      ref={ SwipeableDrawerRef }
+      anchor={ 'bottom' }
+      open={ isOpen }
+      onClose={ onClose }
+      onOpen={ () => {} }
+      disableBackdropTransition={ !iOS }
+      disableDiscovery={ true }
+      disableSwipeToOpen={ true }
       ModalProps={{
         componentsProps: { backdrop: {
-          children: <Backdrop type={type} marginBottom={drawerPaperHeight} />,
+          children:
+            <Backdrop
+              type={ type }
+              marginBottom={ drawerPaperHeight }
+            />,
         } },
       }}
       SlideProps={{
@@ -249,7 +250,7 @@ const PaymentStatus = ({
         appear: true,
         onExited,
       }}
-      sx={(theme) => ({
+      sx={ (theme) => ({
         '.MuiDrawer-paper': {
           backgroundColor: 'transparent',
           borderRadius: '32px 32px 0px 0px',
@@ -265,58 +266,58 @@ const PaymentStatus = ({
           backgroundColor: 'rgba(0, 0, 0, 0.8)',
           backdropFilter: 'blur(5px)',
         },
-      })}
+      }) }
     >
       <ColoredAreaWrapper>
         <Puller />
         <ContentWrapper>
-          <StatusTitle type={type}>
-            {type === 'successful' && 'Successful'}
-            {type === 'failed' && 'Payment Failed'}
+          <StatusTitle type={ type }>
+            { type === 'successful' && 'Successful' }
+            { type === 'failed' && 'Payment Failed' }
           </StatusTitle>
           <DataContainer>
             <DataItem>
               <TitleWithMargin text='Your Payment To' />
               <Text>
-                {paymentTo}
+                { paymentTo }
               </Text>
             </DataItem>
             <Divider />
             <DataItem>
               <TitleWithMargin text='Amount' />
               <Text>
-                ${amount}
+                ${ amount }
               </Text>
             </DataItem>
             <Divider />
-            {type === 'successful' &&
+            { type === 'successful' &&
                 <DataItem>
                   <TitleWithMargin text='Message' />
                   <Text>
-                    {message}
+                    { message }
                   </Text>
                 </DataItem>
             }
-            {type === 'failed' &&
+            { type === 'failed' &&
               <DataItem>
                 <TitleWithMargin text='Error' />
                 <Text>
-                  {errorMessage}
+                  { errorMessage }
                 </Text>
               </DataItem>
             }
           </DataContainer>
         </ContentWrapper>
       </ColoredAreaWrapper>
-      {type === 'successful' &&
+      { type === 'successful' &&
         <ButtonsContainer>
-          <Button primary label='Send Again' onClick={sendAgainOnClick}/>
+          <Button primary label='Send Again' onClick={ sendAgainOnClick }/>
           <Button label='Next' asAnchor href='/'/>
         </ButtonsContainer>
       }
-      {type === 'failed' &&
+      { type === 'failed' &&
         <ButtonsContainer>
-          <Button primary label='Try Again' onClick={tryAgainOnClick}/>
+          <Button primary label='Try Again' onClick={ tryAgainOnClick }/>
           <Button label='Home' asAnchor href='/'/>
         </ButtonsContainer>
       }

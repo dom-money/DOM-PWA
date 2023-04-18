@@ -94,7 +94,7 @@ describe('Amount Input', () => {
         <AmountInput
           label='How much do you want to invest?'
           inputID='default-amount-input'
-          maxDecimals={6}
+          maxDecimals={ 6 }
         />,
     );
 
@@ -160,7 +160,7 @@ describe('Amount Input', () => {
         <AmountInput
           label='How much do you want to invest?'
           inputID='default-amount-input'
-          onInputChange={handleInputChange}
+          onInputChange={ handleInputChange }
         />,
     );
 
@@ -179,8 +179,8 @@ describe('Amount Input', () => {
         <AmountInput
           label='How much do you want to invest?'
           inputID='default-amount-input'
-          maxDecimals={6}
-          fixedDecimalScale={false}
+          maxDecimals={ 6 }
+          fixedDecimalScale={ false }
         />,
     );
 
@@ -204,7 +204,7 @@ describe('Amount Input', () => {
         <AmountInput
           label='How much do you want to invest?'
           inputID='default-amount-input'
-          onInputChange={handleInputChange}
+          onInputChange={ handleInputChange }
         />,
     );
 
@@ -241,7 +241,7 @@ describe('Amount Input', () => {
         <AmountInput
           label='How much do you want to invest?'
           inputID='default-amount-input'
-          autoFocus={false}
+          autoFocus={ false }
         />,
     );
 
@@ -258,7 +258,7 @@ describe('Amount Input', () => {
         <AmountInput
           label='How much do you want to invest?'
           inputID='default-amount-input'
-          onInputChange={handleInputChange}
+          onInputChange={ handleInputChange }
           disabled
         />,
     );

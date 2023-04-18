@@ -83,7 +83,7 @@ describe('Amount Display', () => {
   });
 
   test('correctly renders without thousands separator', () => {
-    renderWithTheme(<AmountDisplay amount='45873.15' useGrouping={false} />);
+    renderWithTheme(<AmountDisplay amount='45873.15' useGrouping={ false } />);
 
     const amountText = screen.getByRole('heading', { name: '45873 . 15' });
 
@@ -92,7 +92,7 @@ describe('Amount Display', () => {
 
   test('correctly renders without trailing zeros', () => {
     renderWithTheme(
-        <AmountDisplay amount='45725.10' shouldAddTrailingZeros={false} />,
+        <AmountDisplay amount='45725.10' shouldAddTrailingZeros={ false } />,
     );
 
     const amountText = screen.getByRole('heading', { name: '45,725 . 1' });
@@ -102,7 +102,7 @@ describe('Amount Display', () => {
 
   test('correctly renders with custom amount of max decimals', () => {
     const { rerender } = renderWithTheme(
-        <AmountDisplay amount='45725.06' maxDecimals={6} />,
+        <AmountDisplay amount='45725.06' maxDecimals={ 6 } />,
     );
 
     const amountText = screen.getByRole('heading', { name: '45,725 . 060000' });
@@ -113,8 +113,8 @@ describe('Amount Display', () => {
     rerender(
         <AmountDisplay
           amount='45725.123456123'
-          maxDecimals={6}
-          shouldAddTrailingZeros={false}
+          maxDecimals={ 6 }
+          shouldAddTrailingZeros={ false }
         />,
     );
 

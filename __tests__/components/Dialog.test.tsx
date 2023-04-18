@@ -22,7 +22,7 @@ const SampleComponent = () =>
 describe('Dialog', () => {
   test('does not show a dialog with isOpen={false} prop', () => {
     renderWithTheme(
-        <Dialog isOpen={false}>
+        <Dialog isOpen={ false }>
           <SampleComponent />
         </Dialog>,
     );
@@ -47,7 +47,7 @@ describe('Dialog', () => {
     const handleClose = jest.fn();
 
     renderWithTheme(
-        <Dialog isOpen onClose={handleClose}>
+        <Dialog isOpen onClose={ handleClose }>
           <SampleComponent />
         </Dialog>,
     );

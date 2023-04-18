@@ -46,17 +46,17 @@ const Header = ({
   className,
 }: HeaderProps) => {
   return (
-    <Wrapper className={className}>
+    <Wrapper className={ className }>
       <AvatarButton
-        imageURL={avatarImageURL}
-        userName={userName}
-        onClick={profileOnClick}
+        imageURL={ avatarImageURL }
+        userName={ userName }
+        onClick={ profileOnClick }
       />
       <IconButton
         size='medium'
         backgroundColor='#272727'
-        hasNotificationBadge={isNotificationPresent}
-        onClick={notificationsOnClick}
+        hasNotificationBadge={ isNotificationPresent }
+        onClick={ notificationsOnClick }
         ariaLabel='Notifications'
       >
         <NotificationIcon color='#FFFFFF'/>

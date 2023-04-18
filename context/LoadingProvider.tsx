@@ -11,7 +11,7 @@ const LoadingProvider = ({ children }: LoadingProviderProps) => {
 
   return (
     <LoadingContext.Provider value={{ ...loadingArgs }}>
-      {children}
+      { children }
     </LoadingContext.Provider>
   );
 };

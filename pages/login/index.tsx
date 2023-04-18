@@ -8,7 +8,7 @@ const LoginPage: NextPage = () => {
   const { login } = useAuthContext();
 
   return (
-    <LoginPageRender onClick={login}/>
+    <LoginPageRender onClick={ login }/>
   );
 };
 

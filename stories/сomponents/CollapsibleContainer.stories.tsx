@@ -33,9 +33,9 @@ const Template: ComponentStory<typeof CollapsibleContainer> = (args) => {
 
   return (
     <CollapsibleContainer
-      {...args}
-      isCollapsed={isCollapsed}
-      onCollapseClick={handleCollapseClick}
+      { ...args }
+      isCollapsed={ isCollapsed }
+      onCollapseClick={ handleCollapseClick }
     />
   );
 };

@@ -96,7 +96,7 @@ const WithdrawPageRender = ({
     return (
       <Wrapper>
         <HeaderWithMargin
-          href={'/'}
+          href={ '/' }
         />
         <TotalBalance
           isLoading
@@ -111,11 +111,11 @@ const WithdrawPageRender = ({
           <Button
             label='Withdraw'
             primary
-            disabled={true}
+            disabled={ true }
           />
           <Button
             label='Clear'
-            disabled={true}
+            disabled={ true }
           />
         </ButtonContainer>
       </Wrapper>
@@ -126,34 +126,34 @@ const WithdrawPageRender = ({
     <>
       <Wrapper>
         <HeaderWithMargin
-          href={'/'}
+          href={ '/' }
         />
         <TotalBalance
-          amount={availableBalance}
+          amount={ availableBalance }
           asAvailableBalance
         />
         <AmountInput
           label='How much do you want to withdraw?'
           inputID='amount-to-withdraw-input'
-          amount={inputAmount}
-          onInputChange={onInputChange}
-          errorMessage={errorMessage}
+          amount={ inputAmount }
+          onInputChange={ onInputChange }
+          errorMessage={ errorMessage }
         />
         <ButtonContainer>
           <Button
             label='Withdraw'
             primary
-            onClick={withdrawButtonOnClick}
-            disabled={!isInputValid}
+            onClick={ withdrawButtonOnClick }
+            disabled={ !isInputValid }
           />
           <Button
             label='Clear'
-            onClick={clearButtonOnClick}
+            onClick={ clearButtonOnClick }
           />
         </ButtonContainer>
       </Wrapper>
       <Loading
-        isOpen={isSubmitting}
+        isOpen={ isSubmitting }
         primary
         ariaLabel='Transaction is in progress'
       />

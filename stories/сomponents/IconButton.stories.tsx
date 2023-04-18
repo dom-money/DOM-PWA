@@ -45,7 +45,7 @@ const playFn = async (
 };
 
 const Template: ComponentStory<typeof IconButton> = (args) =>
-  <IconButton {...args} />;
+  <IconButton { ...args } />;
 
 const excludeParams = {
   controls: {

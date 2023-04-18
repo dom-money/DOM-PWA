@@ -53,16 +53,16 @@ const PeriodSelectionTabs = ({
   ...props
 }: PeriodSelectionTabsProps) => {
   return (
-    <Wrapper {...props}>
-      {PERIODS.map((period) =>
+    <Wrapper { ...props }>
+      { PERIODS.map((period) =>
         <ButtonElement
-          key={period}
-          selected={selectedPeriod === period}
-          onClick={() => onClick(period)}
+          key={ period }
+          selected={ selectedPeriod === period }
+          onClick={ () => onClick(period) }
         >
-          {period}
+          { period }
         </ButtonElement>,
-      )}
+      ) }
     </Wrapper>
   );
 };

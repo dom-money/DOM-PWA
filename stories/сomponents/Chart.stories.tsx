@@ -12,7 +12,7 @@ export default {
         height: '100vh',
         margin: 'auto',
       }}>
-        {story()}
+        { story() }
       </div>
     ),
   ],
@@ -23,7 +23,7 @@ export default {
 } as ComponentMeta<typeof Chart>;
 
 const Template: ComponentStory<typeof Chart> = (args) =>
-  <Chart {...args} />;
+  <Chart { ...args } />;
 
 export const Default = Template.bind({});
 Default.args = {

@@ -69,43 +69,43 @@ const InvestPage: NextPage = () => {
   return (
     <>
       <InvestPageRender
-        availableBalance={walletBalance.balanceAsString}
-        inputAmount={inputAmount}
-        onInputChange={inputAmountHandleChange}
+        availableBalance={ walletBalance.balanceAsString }
+        inputAmount={ inputAmount }
+        onInputChange={ inputAmountHandleChange }
         errorMessage={
           inputAmountErrorMessage ?
           inputAmountErrorMessage :
           undefined
         }
-        isInputValid={inputAmountIsValid}
-        isSubmitting={isTransactionLoading}
-        investButtonOnClick={handleInvestToWealth}
-        clearButtonOnClick={inputAmountHandleClear}
+        isInputValid={ inputAmountIsValid }
+        isSubmitting={ isTransactionLoading }
+        investButtonOnClick={ handleInvestToWealth }
+        clearButtonOnClick={ inputAmountHandleClear }
       />
       {
         depositResult && !depositErrorMessage &&
         <PaymentStatus
           type='successful'
-          isOpen={isPaymentStatusOpen}
-          onClose={() => handlePaymentStatusDrawerClose()}
-          onExited={handlePaymentStatusDrawerOnExited}
+          isOpen={ isPaymentStatusOpen }
+          onClose={ () => handlePaymentStatusDrawerClose() }
+          onExited={ handlePaymentStatusDrawerOnExited }
           paymentTo='Your wealth wallet'
-          amount={inputAmount}
+          amount={ inputAmount }
           message='Submitted successfully'
-          sendAgainOnClick={() => handlePaymentStatusDrawerClose()}
+          sendAgainOnClick={ () => handlePaymentStatusDrawerClose() }
         />
       }
       {
         depositErrorMessage && !depositResult &&
         <PaymentStatus
           type='failed'
-          isOpen={isPaymentStatusOpen}
-          onClose={() => handlePaymentStatusDrawerClose()}
-          onExited={handlePaymentStatusDrawerOnExited}
+          isOpen={ isPaymentStatusOpen }
+          onClose={ () => handlePaymentStatusDrawerClose() }
+          onExited={ handlePaymentStatusDrawerOnExited }
           paymentTo='Your wealth wallet'
-          amount={inputAmount}
-          errorMessage={depositErrorMessage}
-          tryAgainOnClick={() => handlePaymentStatusDrawerClose(true)}
+          amount={ inputAmount }
+          errorMessage={ depositErrorMessage }
+          tryAgainOnClick={ () => handlePaymentStatusDrawerClose(true) }
         />
       }
     </>

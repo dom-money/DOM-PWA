@@ -39,18 +39,18 @@ const Flyout = ({ center, width, height }: FlyoutProps) => {
   return (
     <g filter='url(#drop_shadow_filter)'>
       <rect
-        x={x}
-        y={y}
-        width={width}
-        height={height}
+        x={ x }
+        y={ y }
+        width={ width }
+        height={ height }
         rx='6'
         fill='#212120'
       />
       <rect
-        x={x + 0.5}
-        y={y + 0.5}
-        width={width - 1}
-        height={height - 1}
+        x={ x + 0.5 }
+        y={ y + 0.5 }
+        width={ width - 1 }
+        height={ height - 1 }
         fill='transparent'
         rx='5.5'
         stroke='url(#inner_border_gradient)'
@@ -69,6 +69,7 @@ const Chart = ({ data }: ChartProps) => {
       new Date(new Date().getTime() - 3600 * 24 * 1000),
       new Date(),
     ],
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [ data ]);
 
   return (
@@ -108,7 +109,7 @@ const Chart = ({ data }: ChartProps) => {
         containerComponent={
           <VictoryZoomVoronoiContainer
             zoomDimension='x'
-            zoomDomain={initialZoomDomain}
+            zoomDomain={ initialZoomDomain }
           />
         }
         padding={{ left: 0, right: 0, bottom: 20, top: 30 }}
@@ -132,7 +133,7 @@ const Chart = ({ data }: ChartProps) => {
         <VictoryArea
           labelComponent={
             <VictoryTooltip
-              flyoutComponent={<Flyout />}
+              flyoutComponent={ <Flyout /> }
               labelComponent={
                 <VictoryLabel
                   style={{
@@ -153,7 +154,7 @@ const Chart = ({ data }: ChartProps) => {
               fill: 'url(#yellow_black_gradient)',
             },
           }}
-          data={data}
+          data={ data }
           x='date'
           y='value'
         />

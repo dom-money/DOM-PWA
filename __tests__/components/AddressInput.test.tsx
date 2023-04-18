@@ -87,7 +87,7 @@ describe('Address Input', () => {
           addressValue=''
           inputID='default-address-input'
           label='Enter Or Choose Address'
-          onValueChange={handleValueChange}
+          onValueChange={ handleValueChange }
         />,
     );
 
@@ -109,7 +109,7 @@ describe('Address Input', () => {
           addressValue=''
           inputID='default-address-input'
           label='Enter Or Choose Address'
-          onValueChange={handleValueChange}
+          onValueChange={ handleValueChange }
         />,
     );
 
@@ -131,7 +131,7 @@ describe('Address Input', () => {
           addressValue=''
           inputID='default-address-input'
           label='Enter Or Choose Address'
-          onValueChange={handleValueChange}
+          onValueChange={ handleValueChange }
         />,
     );
 
@@ -156,7 +156,7 @@ describe('Address Input', () => {
           addressValue=''
           inputID='default-address-input'
           label='Enter Or Choose Address'
-          onFocus={handleInputFocus}
+          onFocus={ handleInputFocus }
         />,
     );
 
@@ -179,7 +179,7 @@ describe('Address Input', () => {
           inputID='default-address-input'
           label='Enter Or Choose Address'
           prefill='0x'
-          onFocus={handleInputFocus}
+          onFocus={ handleInputFocus }
         />,
     );
 
@@ -198,7 +198,7 @@ describe('Address Input', () => {
           addressValue=''
           inputID='default-address-input'
           label='Enter Or Choose Address'
-          onValueChange={handleValueChange}
+          onValueChange={ handleValueChange }
           disabled
         />,
     );
@@ -221,7 +221,7 @@ describe('Address Input', () => {
               addressValue=''
               inputID='default-address-input'
               label='Enter Or Choose Address'
-              getContactOnClick={handleGetContactClick}
+              getContactOnClick={ handleGetContactClick }
             />,
         );
 
@@ -246,7 +246,7 @@ describe('Address Input', () => {
               addressValue=''
               inputID='default-address-input'
               label='Enter Or Choose Address'
-              scanQROnClick={handleScanQRClick}
+              scanQROnClick={ handleScanQRClick }
             />,
         );
 
@@ -268,8 +268,8 @@ describe('Address Input', () => {
           addressValue=''
           inputID='default-address-input'
           label='Enter Or Choose Address'
-          getContactOnClick={handleGetContactClick}
-          scanQROnClick={handleScanQRClick}
+          getContactOnClick={ handleGetContactClick }
+          scanQROnClick={ handleScanQRClick }
           disabled
         />,
     );

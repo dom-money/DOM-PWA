@@ -76,21 +76,21 @@ const RenderButton = ({ label, ...props }: ButtonProps) => {
   return (
     <ButtonElement
       type='button'
-      {...props}
+      { ...props }
     >
-      {label}
+      { label }
     </ButtonElement>
   );
 };
 
 const RenderLink = ({ href = '', label, ...props }: ButtonProps) => {
   return (
-    <Link href={href} passHref>
+    <Link href={ href } passHref>
       <LinkElement
         as='a'
-        {...props}
+        { ...props }
       >
-        {label}
+        { label }
       </LinkElement>
     </Link>
   );
@@ -109,18 +109,18 @@ const Button = ({
   return (
     asAnchor ?
     <RenderLink
-      primary={primary}
-      label={label}
-      href={href}
-      className={className}
+      primary={ primary }
+      label={ label }
+      href={ href }
+      className={ className }
     /> :
     <RenderButton
-      primary={primary}
-      label={label}
-      disabled={disabled}
-      onClick={onClick}
-      className={className}
-      type={type}
+      primary={ primary }
+      label={ label }
+      disabled={ disabled }
+      onClick={ onClick }
+      className={ className }
+      type={ type }
     />
   );
 };

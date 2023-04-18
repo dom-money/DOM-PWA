@@ -51,7 +51,7 @@ export default {
 } as ComponentMeta<typeof MainPageRender>;
 
 const Template: ComponentStory<typeof MainPageRender> = (args) =>
-  <MainPageRender {...args} />;
+  <MainPageRender { ...args } />;
 
 export const Default = Template.bind({});
 Default.args = {

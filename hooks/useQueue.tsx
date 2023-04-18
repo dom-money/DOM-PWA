@@ -60,6 +60,7 @@ const useQueue = ({ maxCalls, timeWindow }: useQueueParams) => {
     // .. and processing next queue item with a delay
     const timeToWait = delayTime - timeElapsed;
     setTimeout(processNextQueueItem, timeToWait);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ queue ]);
 
   // Push queue item to queue

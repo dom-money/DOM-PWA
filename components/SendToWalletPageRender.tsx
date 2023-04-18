@@ -127,7 +127,7 @@ const SendToWalletPageRender = ({
     return (
       <Wrapper>
         <HeaderWithMargin
-          href={'/'}
+          href={ '/' }
         />
         <TotalBalance
           isLoading
@@ -144,17 +144,17 @@ const SendToWalletPageRender = ({
             label='Enter Amount To Transfer'
             inputID='amount-to-transfer-input'
             disabled
-            autoFocus={false}
+            autoFocus={ false }
           />
           <ButtonContainer>
             <Button
               label='Send'
               primary
-              disabled={true}
+              disabled={ true }
             />
             <Button
               label='Clear'
-              disabled={true}
+              disabled={ true }
             />
           </ButtonContainer>
         </form>
@@ -174,47 +174,47 @@ const SendToWalletPageRender = ({
     <>
       <Wrapper>
         <HeaderWithMargin
-          href={'/'}
+          href={ '/' }
         />
         <TotalBalance
-          amount={availableBalance}
+          amount={ availableBalance }
           asAvailableBalance
         />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={ handleSubmit }>
           <AddressInput
             label='Enter Or Choose Address'
             inputID='send-to-address-input'
-            addressValue={inputAddress}
-            onValueChange={onInputAddressChange}
-            onFocus={onInputAddressFocus}
-            getContactOnClick={getContactOnClick}
-            scanQROnClick={scanQROnClick}
+            addressValue={ inputAddress }
+            onValueChange={ onInputAddressChange }
+            onFocus={ onInputAddressFocus }
+            getContactOnClick={ getContactOnClick }
+            scanQROnClick={ scanQROnClick }
           />
           <AmountInput
             label='Enter Amount To Transfer'
             inputID='amount-to-transfer-input'
-            amount={inputAmount}
-            onInputChange={onInputAmountChange}
-            errorMessage={inputAmountErrorMessage}
-            autoFocus={false}
+            amount={ inputAmount }
+            onInputChange={ onInputAmountChange }
+            errorMessage={ inputAmountErrorMessage }
+            autoFocus={ false }
           />
           <ButtonContainer>
             <Button
               label='Send'
               primary
-              disabled={!areInputsValid || isSubmitting}
+              disabled={ !areInputsValid || isSubmitting }
               type='submit'
-              onClick={sendButtonOnClick}
+              onClick={ sendButtonOnClick }
             />
             <Button
               label='Clear'
-              onClick={clearButtonOnClick}
+              onClick={ clearButtonOnClick }
             />
           </ButtonContainer>
         </form>
       </Wrapper>
       <Loading
-        isOpen={isSubmitting}
+        isOpen={ isSubmitting }
         primary
         ariaLabel='Transaction is in progress'
       />

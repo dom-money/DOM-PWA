@@ -124,8 +124,8 @@ const MainPageRender = ({
     return (
       <Wrapper>
         <HeaderWithMargin
-          avatarImageURL={avatarImageURL}
-          userName={userName}
+          avatarImageURL={ avatarImageURL }
+          userName={ userName }
         />
         <TotalBalance isLoading />
         <Wallet isLoading />
@@ -139,27 +139,27 @@ const MainPageRender = ({
   return (
     <Wrapper>
       <HeaderWithMargin
-        avatarImageURL={avatarImageURL}
-        isNotificationPresent={isNotificationPresent}
-        userName={userName}
+        avatarImageURL={ avatarImageURL }
+        isNotificationPresent={ isNotificationPresent }
+        userName={ userName }
       />
       <TotalBalance
-        amount={totalBalanceAmount}
+        amount={ totalBalanceAmount }
       />
       <Wallet
-        amount={walletAmount}
-        scanQROnClick={scanQROnClick}
+        amount={ walletAmount }
+        scanQROnClick={ scanQROnClick }
       />
       <Wealth
-        amount={wealthAmount}
-        yieldValue={yieldValue}
-        yieldValuePercentage={yieldValuePercentage}
-        averageAPY={averageAPY}
+        amount={ wealthAmount }
+        yieldValue={ yieldValue }
+        yieldValuePercentage={ yieldValuePercentage }
+        averageAPY={ averageAPY }
       />
       <RecentTransactions
-        transactions={transactions}
-        isLoadingMore={isLoadingMoreTransactions}
-        onLoadMore={onLoadMoreTransactions}
+        transactions={ transactions }
+        isLoadingMore={ isLoadingMoreTransactions }
+        onLoadMore={ onLoadMoreTransactions }
       />
       <InvestButton href='/invest'/>
     </Wrapper>

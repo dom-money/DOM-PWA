@@ -19,7 +19,7 @@ export default {
 } as ComponentMeta<typeof AvatarButton>;
 
 const Template: ComponentStory<typeof AvatarButton> = (args) =>
-  <AvatarButton {...args} />;
+  <AvatarButton { ...args } />;
 
 type PlayFnArgs = {
   args: React.ComponentPropsWithoutRef<typeof AvatarButton>,

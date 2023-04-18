@@ -26,6 +26,7 @@ const useInputAddress: useInputAddressType = () => {
       return;
     };
     setAddress(router.query.walletAddress);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ router.query ]);
 
   const handleChange = (addressValue: string) => {

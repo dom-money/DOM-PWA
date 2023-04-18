@@ -121,29 +121,29 @@ const AmountInput = ({
 }: AmountInputProps) => {
   return (
     <GenericContainer
-      label={label}
+      label={ label }
       titleHtmlElement='label'
-      inputID={inputID}
+      inputID={ inputID }
       content={
         <Container>
-          <ErrorMessageDisplay isError={errorMessage.length > 0}>
-            {errorMessage}
+          <ErrorMessageDisplay isError={ errorMessage.length > 0 }>
+            { errorMessage }
           </ErrorMessageDisplay>
           <CurrencySymbol>$</CurrencySymbol>
           <NumberFormat
-            autoFocus={autoFocus}
-            id={inputID}
+            autoFocus={ autoFocus }
+            id={ inputID }
             inputMode='decimal'
-            value={amount}
-            thousandSeparator={true}
-            decimalScale={maxDecimals}
-            fixedDecimalScale={fixedDecimalScale}
-            allowNegative={false}
+            value={ amount }
+            thousandSeparator={ true }
+            decimalScale={ maxDecimals }
+            fixedDecimalScale={ fixedDecimalScale }
+            allowNegative={ false }
             placeholder='0'
-            allowedDecimalSeparators={[ '.', ',' ]}
-            customInput={TextInput}
-            onValueChange={onInputChange}
-            disabled={disabled}
+            allowedDecimalSeparators={ [ '.', ',' ] }
+            customInput={ TextInput }
+            onValueChange={ onInputChange }
+            disabled={ disabled }
           />
         </Container>
       }

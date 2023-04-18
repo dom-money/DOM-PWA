@@ -35,9 +35,9 @@ const Template: ComponentStory<typeof PeriodSelectionTabs> = (args) => {
   };
 
   return <PeriodSelectionTabs
-    {...args}
-    selectedPeriod={selectedPeriod}
-    onClick={handleClick}
+    { ...args }
+    selectedPeriod={ selectedPeriod }
+    onClick={ handleClick }
   />;
 };
 

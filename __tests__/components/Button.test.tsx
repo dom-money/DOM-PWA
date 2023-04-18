@@ -27,7 +27,7 @@ describe('Button', () => {
     const user = userEvent.setup();
     const mockClickHandler = jest.fn();
 
-    renderWithTheme(<Button label='Top Up' onClick={mockClickHandler} />);
+    renderWithTheme(<Button label='Top Up' onClick={ mockClickHandler } />);
 
     const button = screen.getByRole('button');
 
@@ -40,7 +40,7 @@ describe('Button', () => {
     const user = userEvent.setup();
     const mockClickHandler = jest.fn();
     renderWithTheme(
-        <Button label='Send' disabled onClick={mockClickHandler} />,
+        <Button label='Send' disabled onClick={ mockClickHandler } />,
     );
 
     const button = screen.getByRole('button');

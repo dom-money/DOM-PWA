@@ -26,7 +26,7 @@ export default {
 } as ComponentMeta<typeof Wealth>;
 
 const Template: ComponentStory<typeof Wealth> = (args) =>
-  <Wealth {...args} />;
+  <Wealth { ...args } />;
 
 export const Closed = Template.bind({});
 Closed.args = {

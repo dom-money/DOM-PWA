@@ -35,6 +35,7 @@ const useEventListeners = () => {
         );
         setWealthEvent(event);
         console.log('Deposit to Wealth Wallet event:', event);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [],
   );
 
@@ -57,6 +58,7 @@ const useEventListeners = () => {
         );
         setWealthEvent(event);
         console.log('Withdrawal from Wealth Wallet event:', event);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [],
   );
 
@@ -78,6 +80,7 @@ const useEventListeners = () => {
         );
         setWalletEvent(event);
         console.log('Deposit to Wallet event:', event);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [],
   );
 
@@ -98,6 +101,7 @@ const useEventListeners = () => {
         );
         setWalletEvent(event);
         console.log('Sent from Wallet event:', event);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [],
   );
 
@@ -141,7 +145,14 @@ const useEventListeners = () => {
           withdrawFromWealthEventListener,
       );
     };
-  }, [ ethersProvider, walletAddress.data ]);
+  }, [
+    ethersProvider,
+    walletAddress.isLoading,
+    walletAddress.isError,
+    walletAddress.data,
+    depositToWealthEventListener,
+    withdrawFromWealthEventListener,
+  ]);
 
   // Subscription to 'Deposit to Wallet' and 'Send From Wallet' Events
   useEffect(() => {
@@ -171,7 +182,14 @@ const useEventListeners = () => {
       contractUSDCWithProvider.off(filterTo, depositToWalletEventListener);
       contractUSDCWithProvider.off(filterFrom, sentFromWalletEventListener);
     };
-  }, [ ethersProvider, walletAddress.data ]);
+  }, [
+    ethersProvider,
+    walletAddress.isLoading,
+    walletAddress.isError,
+    walletAddress.data,
+    depositToWalletEventListener,
+    sentFromWalletEventListener,
+  ]);
 
   return { walletEvent, wealthEvent };
 };

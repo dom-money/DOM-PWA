@@ -41,7 +41,7 @@ export default {
 } as ComponentMeta<typeof WithdrawPageRender>;
 
 const Template: ComponentStory<typeof WithdrawPageRender> = (args) =>
-  <WithdrawPageRender {...args} />;
+  <WithdrawPageRender { ...args } />;
 
 export const Valid = Template.bind({});
 Valid.args = {

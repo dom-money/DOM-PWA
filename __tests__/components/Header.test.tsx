@@ -69,8 +69,8 @@ describe('Header', () => {
     renderWithTheme(
         <Header
           userName='Anonymous User'
-          profileOnClick={mockProfileClickHandler}
-          notificationsOnClick={mockNotificationsClickHandler}
+          profileOnClick={ mockProfileClickHandler }
+          notificationsOnClick={ mockNotificationsClickHandler }
         />,
     );
 

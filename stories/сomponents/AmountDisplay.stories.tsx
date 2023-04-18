@@ -21,7 +21,7 @@ export default {
 } as ComponentMeta<typeof AmountDisplay>;
 
 const Template: ComponentStory<typeof AmountDisplay> = (args) =>
-  <AmountDisplay {...args} />;
+  <AmountDisplay { ...args } />;
 
 export const PositiveAmountMedium = Template.bind({});
 PositiveAmountMedium.args = {

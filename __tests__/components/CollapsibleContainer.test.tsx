@@ -10,7 +10,7 @@ describe('Collapsible Container', () => {
     renderWithTheme(
         <CollapsibleContainer
           label='Wallet'
-          primaryContent={<p>Test Content</p>}
+          primaryContent={ <p>Test Content</p> }
         />,
     );
 
@@ -27,7 +27,7 @@ describe('Collapsible Container', () => {
     renderWithTheme(
         <CollapsibleContainer
           label='Wallet'
-          primaryContent={<p>Test Content</p>}
+          primaryContent={ <p>Test Content</p> }
         />,
     );
 
@@ -44,8 +44,8 @@ describe('Collapsible Container', () => {
           <CollapsibleContainer
             label='Wallet'
             isCollapsed
-            primaryContent={<p>Primary Content</p>}
-            secondaryContent={<p>Secondary Content</p>}
+            primaryContent={ <p>Primary Content</p> }
+            secondaryContent={ <p>Secondary Content</p> }
           />,
       );
 
@@ -59,8 +59,8 @@ describe('Collapsible Container', () => {
           <CollapsibleContainer
             label='Wallet'
             isCollapsed
-            primaryContent={<p>Primary Content</p>}
-            secondaryContent={<p>Secondary Content</p>}
+            primaryContent={ <p>Primary Content</p> }
+            secondaryContent={ <p>Secondary Content</p> }
           />,
       );
 
@@ -75,8 +75,8 @@ describe('Collapsible Container', () => {
       renderWithTheme(
           <CollapsibleContainer
             label='Wallet'
-            primaryContent={<p>Primary Content</p>}
-            secondaryContent={<p>Secondary Content</p>}
+            primaryContent={ <p>Primary Content</p> }
+            secondaryContent={ <p>Secondary Content</p> }
           />,
       );
 
@@ -89,8 +89,8 @@ describe('Collapsible Container', () => {
       renderWithTheme(
           <CollapsibleContainer
             label='Wallet'
-            primaryContent={<p>Primary Content</p>}
-            secondaryContent={<p>Secondary Content</p>}
+            primaryContent={ <p>Primary Content</p> }
+            secondaryContent={ <p>Secondary Content</p> }
           />,
       );
 
@@ -108,9 +108,9 @@ describe('Collapsible Container', () => {
     renderWithTheme(
         <CollapsibleContainer
           label='Wallet'
-          onCollapseClick={mockClickHandler}
-          primaryContent={<p>Primary Content</p>}
-          secondaryContent={<p>Secondary Content</p>}
+          onCollapseClick={ mockClickHandler }
+          primaryContent={ <p>Primary Content</p> }
+          secondaryContent={ <p>Secondary Content</p> }
         />,
     );
 
@@ -128,9 +128,9 @@ describe('Collapsible Container', () => {
 
     renderWithTheme(
         <CollapsibleContainer
-          onCollapseClick={mockClickHandler}
+          onCollapseClick={ mockClickHandler }
           label='Wallet'
-          primaryContent={<p>Primary Content</p>}
+          primaryContent={ <p>Primary Content</p> }
         />,
     );
 
@@ -149,9 +149,9 @@ describe('Collapsible Container', () => {
 
     renderWithTheme(
         <CollapsibleContainer
-          onCollapseClick={mockClickHandler}
+          onCollapseClick={ mockClickHandler }
           label='Wallet'
-          primaryContent={<p>Primary Content</p>}
+          primaryContent={ <p>Primary Content</p> }
           shouldCollapseButtonBeAlwaysActive
         />,
     );
@@ -171,8 +171,8 @@ describe('Collapsible Container', () => {
           label='Wallet'
           isCollapsed
           shouldSecondaryContentBeOutside
-          primaryContent={<p>Primary Content</p>}
-          secondaryContent={<p>Secondary Content</p>}
+          primaryContent={ <p>Primary Content</p> }
+          secondaryContent={ <p>Secondary Content</p> }
         />,
     );
 

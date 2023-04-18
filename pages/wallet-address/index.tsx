@@ -44,9 +44,9 @@ const WalletAddressPage: NextPage = () => {
 
   return (
     <WalletAddressPageRender
-      address={walletAddress.walletAddress}
-      copyAddressButtonOnClick={copyToClipboard}
-      shareButtonOnClick={handleAddressShare}
+      address={ walletAddress.walletAddress }
+      copyAddressButtonOnClick={ copyToClipboard }
+      shareButtonOnClick={ handleAddressShare }
     />
   );
 };

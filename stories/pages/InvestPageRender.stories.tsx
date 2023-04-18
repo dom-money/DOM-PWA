@@ -41,7 +41,7 @@ export default {
 } as ComponentMeta<typeof InvestPageRender>;
 
 const Template: ComponentStory<typeof InvestPageRender> = (args) =>
-  <InvestPageRender {...args} />;
+  <InvestPageRender { ...args } />;
 
 export const Valid = Template.bind({});
 Valid.args = {

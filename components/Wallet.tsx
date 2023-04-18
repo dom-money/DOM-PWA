@@ -55,8 +55,8 @@ const Wallet = ({ amount, scanQROnClick, isLoading }: Props) => {
     return (
       <CollapsibleContainer
         label='Wallet'
-        isCollapsed={isContainerCollapsed}
-        onCollapseClick={handleCollapseClick}
+        isCollapsed={ isContainerCollapsed }
+        onCollapseClick={ handleCollapseClick }
         primaryContent={
           <ContentContainer>
             <AmountDisplay isLoading size='small'/>
@@ -68,7 +68,7 @@ const Wallet = ({ amount, scanQROnClick, isLoading }: Props) => {
             <Button label='Send' asAnchor href='/send-to-wallet'/>
           </ButtonContainer>
         }
-        shouldSecondaryContentBeOutside={true}
+        shouldSecondaryContentBeOutside={ true }
       />
     );
   };
@@ -78,17 +78,17 @@ const Wallet = ({ amount, scanQROnClick, isLoading }: Props) => {
   return (
     <CollapsibleContainer
       label='Wallet'
-      isCollapsed={isContainerCollapsed}
-      onCollapseClick={handleCollapseClick}
+      isCollapsed={ isContainerCollapsed }
+      onCollapseClick={ handleCollapseClick }
       primaryContent={
         <ContentContainer>
-          <AmountDisplay amount={amount} size='small' inactive={inactive}/>
+          <AmountDisplay amount={ amount } size='small' inactive={ inactive }/>
           <IconButton
             size='large'
             backgroundColor='#020202'
             ariaLabel='Scan QR'
-            onClick={scanQROnClick}
-            disabled={inactive}
+            onClick={ scanQROnClick }
+            disabled={ inactive }
           >
             <ScanQRIcon color='#FFFFFF'/>
           </IconButton>
@@ -100,7 +100,7 @@ const Wallet = ({ amount, scanQROnClick, isLoading }: Props) => {
           <Button label='Send' asAnchor href='/send-to-wallet'/>
         </ButtonContainer>
       }
-      shouldSecondaryContentBeOutside={true}
+      shouldSecondaryContentBeOutside={ true }
     />
   );
 };

@@ -24,7 +24,7 @@ export default {
 } as ComponentMeta<typeof WalletAddress>;
 
 const Template: ComponentStory<typeof WalletAddress> = (args) =>
-  <WalletAddress {...args} />;
+  <WalletAddress { ...args } />;
 
 export const Default = Template.bind({});
 Default.args = {

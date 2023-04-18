@@ -76,13 +76,13 @@ const Modal = ({
       (event: MouseEvent | TouchEvent) => {
         if (!onClose) return;
         onClose(event, 'backdropClick' );
-      }, []);
+      }, [ onClose ]);
 
   const onEscapeKeyDownHandler = useCallback(
       (event: KeyboardEvent) => {
         if (!onClose) return;
         onClose(event, 'escapeKeyDown' );
-      }, []);
+      }, [ onClose ]);
 
   useLockBodyScroll<HTMLDivElement>(ref, shouldLock);
 
@@ -93,10 +93,10 @@ const Modal = ({
 
   if (disablePortal) {
     return (
-      <ModalRoot isOpen={isOpen}>
+      <ModalRoot isOpen={ isOpen }>
         <Backdrop />
-        <ContentWrapper ref={ref}>
-          {children}
+        <ContentWrapper ref={ ref }>
+          { children }
         </ContentWrapper>
       </ModalRoot>
     );
@@ -104,10 +104,10 @@ const Modal = ({
 
   return (
     <Portal>
-      <ModalRoot isOpen={isOpen}>
+      <ModalRoot isOpen={ isOpen }>
         <Backdrop />
-        <ContentWrapper ref={ref}>
-          {children}
+        <ContentWrapper ref={ ref }>
+          { children }
         </ContentWrapper>
       </ModalRoot>
     </Portal>

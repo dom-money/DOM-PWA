@@ -14,7 +14,7 @@ export default {
 } as ComponentMeta<typeof AmountInput>;
 
 const Template: ComponentStory<typeof AmountInput> = (args) =>
-  <AmountInput {...args}/>;
+  <AmountInput { ...args }/>;
 
 export const Default = Template.bind({});
 Default.args = {

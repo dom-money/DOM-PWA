@@ -9,7 +9,7 @@ describe('Generic Container', () => {
     renderWithTheme(
         <GenericContainer
           label='Your Address to receive funds'
-          content={<p>Sample Content</p>}
+          content={ <p>Sample Content</p> }
         />,
     );
 
@@ -22,7 +22,7 @@ describe('Generic Container', () => {
     renderWithTheme(
         <GenericContainer
           label='Your Address to receive funds'
-          content={<p>Sample Content</p>}
+          content={ <p>Sample Content</p> }
         />,
     );
 
@@ -39,7 +39,7 @@ describe('Generic Container', () => {
       renderWithTheme(
           <GenericContainer
             label='Enter Amount To Transfer'
-            content={<input id='test-input-id'></input>}
+            content={ <input id='test-input-id'></input> }
             inputID='test-input-id'
             titleHtmlElement='label'
           />,
@@ -57,7 +57,7 @@ describe('Generic Container', () => {
       renderWithTheme(
           <GenericContainer
             label='Enter Amount To Transfer'
-            content={<input id='test-input-id'></input>}
+            content={ <input id='test-input-id'></input> }
             inputID='test-input-id'
             titleHtmlElement='label'
           />,

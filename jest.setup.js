@@ -4,10 +4,11 @@ import { loadEnvConfig } from '@next/env';
 import 'jest-styled-components';
 
 // Loading environment variables the same way Next.js does
-export default async () => {
+const loadEnvVariables = async () => {
   const projectDir = process.cwd();
   loadEnvConfig(projectDir);
 };
+export default loadEnvVariables;
 
 // Establish API mocking before all tests.
 beforeAll(() => {

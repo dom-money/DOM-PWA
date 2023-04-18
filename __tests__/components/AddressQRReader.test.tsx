@@ -34,7 +34,7 @@ describe('Address QR Reader', () => {
   });
 
   test('does not open a dialog with "isOpen={false}" prop', () => {
-    renderWithTheme(<AddressQRReader isOpen={false} />);
+    renderWithTheme(<AddressQRReader isOpen={ false } />);
 
     const dialog: DialogWithMockedMethods = screen.getByTestId('cameraDialog');
 
@@ -45,7 +45,7 @@ describe('Address QR Reader', () => {
     const user = userEvent.setup();
     const handleClose = jest.fn();
 
-    renderWithTheme(<AddressQRReader isOpen onClose={handleClose} />);
+    renderWithTheme(<AddressQRReader isOpen onClose={ handleClose } />);
 
     const dialog = screen.getByTestId('cameraDialog');
 
@@ -62,7 +62,7 @@ describe('Address QR Reader', () => {
 
     const handleResult = jest.fn();
 
-    renderWithTheme(<AddressQRReader isOpen onResult={handleResult} />);
+    renderWithTheme(<AddressQRReader isOpen onResult={ handleResult } />);
 
     expect(handleResult).toBeCalledWith(testAddress.valid);
   });
@@ -75,7 +75,7 @@ describe('Address QR Reader', () => {
 
     const handleResult = jest.fn();
 
-    renderWithTheme(<AddressQRReader isOpen onResult={handleResult} />);
+    renderWithTheme(<AddressQRReader isOpen onResult={ handleResult } />);
 
     expect(handleResult).not.toBeCalled();
   });

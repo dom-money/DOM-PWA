@@ -42,7 +42,7 @@ export const simulateTypingInStatelessInput = (
 
 export const renderWithTheme = (ui: React.ReactElement) => {
   const { rerender, ...result } = render(
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={ theme }>
         <GlobalStyle />
         { ui }
       </ThemeProvider>,
@@ -51,7 +51,7 @@ export const renderWithTheme = (ui: React.ReactElement) => {
     ...result,
     rerender: (rerenderUi: React.ReactElement) =>
       rerender(
-          <ThemeProvider theme={theme}>
+          <ThemeProvider theme={ theme }>
             <GlobalStyle />
             { rerenderUi }
           </ThemeProvider>,
@@ -74,9 +74,9 @@ export const createWrapper = () => {
   const testQueryClient = createTestQueryClient();
 
   return ({ children }: {children: React.ReactNode}) => (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={ theme }>
       <GlobalStyle />
-      <QueryClientProvider client={testQueryClient}>
+      <QueryClientProvider client={ testQueryClient }>
         <TransactionsQueueProvider>
           { children }
         </TransactionsQueueProvider>

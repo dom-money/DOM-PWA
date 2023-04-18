@@ -56,18 +56,18 @@ const GenericContainer = ({
   return (
     <Wrapper>
       <Header>
-        {titleHtmlElement === 'label' && inputID ?
+        { titleHtmlElement === 'label' && inputID ?
         <Title
-          as={titleHtmlElement}
-          text={label}
-          inputID={inputID}
-          {...props}
+          as={ titleHtmlElement }
+          text={ label }
+          inputID={ inputID }
+          { ...props }
         /> :
-        <Title text={label} {...props} />
+        <Title text={ label } { ...props } />
         }
       </Header>
       <Contents>
-        {content}
+        { content }
       </Contents>
     </Wrapper>
   );

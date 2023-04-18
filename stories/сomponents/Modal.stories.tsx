@@ -35,18 +35,18 @@ const Template: ComponentStory<typeof Modal> = (args) => {
     <div style={{ width: '20rem' }}>
       <Button
         primary
-        onClick={() => {
+        onClick={ () => {
           updateArgs({ isOpen: true });
-        }}
+        } }
         label='Open Modal'
       />
       <Modal
-        {...args}
-        isOpen={isOpen}
-        onClose={(...params) => {
+        { ...args }
+        isOpen={ isOpen }
+        onClose={ (...params) => {
           updateArgs({ isOpen: false });
           onClose(...params);
-        }}
+        } }
       />
     </div>
   );

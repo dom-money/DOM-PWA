@@ -10,7 +10,7 @@ describe('Header with "go back" button', () => {
   test('renders a button', () => {
     const mockOnClick = jest.fn();
 
-    renderWithTheme(<HeaderGoBack onClick={mockOnClick} />);
+    renderWithTheme(<HeaderGoBack onClick={ mockOnClick } />);
 
     const button = screen.getByRole('button');
 
@@ -20,7 +20,7 @@ describe('Header with "go back" button', () => {
   test('has a correct aria-label on button', () => {
     const mockOnClick = jest.fn();
 
-    renderWithTheme(<HeaderGoBack onClick={mockOnClick} />);
+    renderWithTheme(<HeaderGoBack onClick={ mockOnClick } />);
 
     const button = screen.getByRole('button');
 
@@ -31,7 +31,7 @@ describe('Header with "go back" button', () => {
     const user = userEvent.setup();
     const mockOnClick = jest.fn();
 
-    renderWithTheme(<HeaderGoBack onClick={mockOnClick} />);
+    renderWithTheme(<HeaderGoBack onClick={ mockOnClick } />);
 
     const button = screen.getByRole('button');
 
@@ -50,7 +50,7 @@ describe('Header with "go back" button', () => {
 
   test('renders correctly', () => {
     const tree = renderer
-        .create(<HeaderGoBack onClick={() => {}} />)
+        .create(<HeaderGoBack onClick={ () => {} } />)
         .toJSON();
     expect(tree).toMatchSnapshot();
   });
