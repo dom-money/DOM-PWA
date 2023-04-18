@@ -114,7 +114,7 @@ const CollapsibleContainer = ({
             </IconWrapper>
           }
         </Header>
-        <Contents>
+        <Contents data-testid='collapsible-container-contents'>
           {primaryContent}
           {!shouldSecondaryContentBeOutside && secondaryContent &&
           <Collapse in={isCollapsed} timeout={transitionDuration}>

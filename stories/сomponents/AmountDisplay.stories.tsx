@@ -7,78 +7,14 @@ export default {
   title: 'Components/Amount Display',
   component: AmountDisplay,
   argTypes: {
-    amount: {
-      type: { name: 'string', required: true },
-      description: 'Currency amount',
+    isLoading: {
       table: {
-        type: {
-          summary: 'string',
-        },
+        disable: true,
       },
     },
-    size: {
-      type: { name: 'string', required: false },
-      description: 'Amount Display Size (small: 40px, medium: 48px)',
+    className: {
       table: {
-        defaultValue: {
-          summary: 'small',
-        },
-        type: {
-          summary: 'string',
-        },
-      },
-      options: [ 'small', 'medium' ],
-      control: { type: 'select' },
-    },
-    inactive: {
-      type: { name: 'boolean', required: false },
-      description: 'Is component inactive?',
-      table: {
-        defaultValue: {
-          summary: 'false',
-        },
-        type: {
-          summary: 'boolean',
-        },
-      },
-      control: { type: 'boolean' },
-    },
-    useGrouping: {
-      type: { name: 'boolean', required: false },
-      description: 'Should grouping separator be displayed?',
-      table: {
-        defaultValue: {
-          summary: 'true',
-        },
-        type: {
-          summary: 'boolean',
-        },
-      },
-      control: { type: 'boolean' },
-    },
-    maxDecimals: {
-      type: { name: 'number', required: false },
-      description: 'Max number of decimals for display',
-      table: {
-        defaultValue: {
-          summary: '2',
-        },
-        type: {
-          summary: 'number',
-        },
-      },
-    },
-    shouldAddTrailingZeros: {
-      type: { name: 'boolean', required: false },
-      description: `Should trailing zeros be added to
-      always match the desired number of decimals?`,
-      table: {
-        defaultValue: {
-          summary: 'true',
-        },
-        type: {
-          summary: 'boolean',
-        },
+        disable: true,
       },
     },
   },
@@ -146,7 +82,6 @@ const loadingParameters = {
     exclude: [
       'amount',
       'inactive',
-      'isLoading',
       'useGrouping',
       'maxDecimals',
       'shouldAddTrailingZeros',

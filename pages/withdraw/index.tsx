@@ -82,20 +82,32 @@ const WithdrawPage: NextPage = () => {
         withdrawButtonOnClick={handleWithdrawFromWealth}
         clearButtonOnClick={inputAmountHandleClear}
       />
-      <PaymentStatus
-        type={withdrawalResult ? 'successful' : 'failed'}
-        isOpen={isPaymentStatusOpen}
-        onClose={() => handlePaymentStatusDrawerClose()}
-        onExited={handlePaymentStatusDrawerOnExited}
-        paymentTo='Your wallet balance'
-        amount={inputAmount}
-        message='Submitted successfully'
-        errorMessage={
-          withdrawalErrorMessage ? withdrawalErrorMessage : undefined
-        }
-        sendAgainOnClick={() => handlePaymentStatusDrawerClose()}
-        tryAgainOnClick={() => handlePaymentStatusDrawerClose(true)}
-      />
+      {
+        withdrawalResult && !withdrawalErrorMessage &&
+        <PaymentStatus
+          type='successful'
+          isOpen={isPaymentStatusOpen}
+          onClose={() => handlePaymentStatusDrawerClose()}
+          onExited={handlePaymentStatusDrawerOnExited}
+          paymentTo='Your wallet balance'
+          amount={inputAmount}
+          message='Submitted successfully'
+          sendAgainOnClick={() => handlePaymentStatusDrawerClose()}
+        />
+      }
+      {
+        withdrawalErrorMessage && !withdrawalResult &&
+        <PaymentStatus
+          type='failed'
+          isOpen={isPaymentStatusOpen}
+          onClose={() => handlePaymentStatusDrawerClose()}
+          onExited={handlePaymentStatusDrawerOnExited}
+          paymentTo='Your wallet balance'
+          amount={inputAmount}
+          errorMessage={withdrawalErrorMessage}
+          tryAgainOnClick={() => handlePaymentStatusDrawerClose(true)}
+        />
+      }
     </>
   );
 };

@@ -15,6 +15,10 @@ interface MainPageRenderProps {
    */
   isLoading?: false;
   /**
+   * User's name
+   */
+  userName: string;
+  /**
    * Totla Balance amount
    */
   totalBalanceAmount: string;
@@ -23,13 +27,13 @@ interface MainPageRenderProps {
    */
   walletAmount: string;
   /**
-   * Scan QR On Click Handler
-   */
-  scanQROnClick?: () => void;
-  /**
    * Wealth Balance amount
    */
   wealthAmount: string;
+  /**
+   * Scan QR On Click Handler
+   */
+  scanQROnClick?: () => void;
   /**
    * Yield value
    */
@@ -54,10 +58,6 @@ interface MainPageRenderProps {
    * Should 'Recent Transactions' Component display 'Loading More' indicator?
    */
   isLoadingMoreTransactions?: boolean;
-  /**
-   * User's name
-   */
-  userName: string;
   /**
    * URL to Avatar Image
    */

@@ -6,6 +6,18 @@ import WalletAddress from '../../components/WalletAddress';
 export default {
   title: 'Components/Wallet Address',
   component: WalletAddress,
+  argTypes: {
+    isLoading: {
+      table: {
+        disable: true,
+      },
+    },
+    address: {
+      type: {
+        name: 'string', required: true,
+      },
+    },
+  },
   parameters: {
     layout: 'padded',
   },
@@ -26,6 +38,6 @@ Loading.args = {
 Loading.parameters = {
   controls: {
     hideNoControlsWarning: true,
-    exclude: [ 'isLoading' ],
+    exclude: [ 'address' ],
   },
 };

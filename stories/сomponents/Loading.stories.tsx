@@ -24,18 +24,20 @@ const Template: ComponentStory<typeof Loading> = (args) => {
         inputAddress='0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca'
         areInputsValid={true}
       />
-      <Loading {...args}/>;
+      <Loading {...args}/>
     </>
   );
 };
 
 export const Primary = Template.bind({});
 Primary.args={
+  isOpen: true,
   primary: true,
   ariaLabel: 'Showcasing <Loading /> component',
 };
 
 export const Default = Template.bind({});
 Default.args={
+  isOpen: true,
   ariaLabel: 'Showcasing <Loading /> component',
 };

@@ -1,15 +1,15 @@
 import React from 'react';
-import { SnackbarProvider } from 'notistack';
+import { SnackbarProvider as NotistackSnackbarProvider } from 'notistack';
 
-interface NotistackSnackbarProviderProps {
+interface SnackbarProviderProps {
   children: React.ReactNode;
 };
 
-const NotistackSnackbarProvider = ({
+const SnackbarProvider = ({
   children,
-}: NotistackSnackbarProviderProps) => {
+}: SnackbarProviderProps) => {
   return (
-    <SnackbarProvider
+    <NotistackSnackbarProvider
       maxSnack={3}
       anchorOrigin={{
         vertical: 'top',
@@ -18,8 +18,8 @@ const NotistackSnackbarProvider = ({
       css='overflow-wrap: break-word; word-break: break-word;'
     >
       {children}
-    </SnackbarProvider>
+    </NotistackSnackbarProvider>
   );
 };
 
-export default NotistackSnackbarProvider;
+export default SnackbarProvider;

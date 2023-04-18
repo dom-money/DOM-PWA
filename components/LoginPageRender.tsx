@@ -5,7 +5,7 @@ import Button from './Button';
 
 interface LoginPageRenderProps {
   /**
-   * Profile Avatar Button Click handler
+   * Login Button Click handler
    */
   onClick?: () => void;
 }

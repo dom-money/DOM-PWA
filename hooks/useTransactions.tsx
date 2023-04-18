@@ -125,52 +125,44 @@ const getTransactions: GetTransactionsType = async (
       };
       const formattedTransactions = txsUsdcRawData.data.result.map(
           (transaction: TransactionResponseType) => {
+            const id = transaction.hash;
+            // Converting to number type and milliseconds
+            const timestamp = parseInt(transaction.timeStamp) * 1000;
+            const amount = formatAmount({
+              amount: transaction.value,
+              decimals: transaction.tokenDecimal,
+            });
+            const formattedTransaction = {
+              id,
+              timestamp,
+              amount,
+            };
             if (transaction.from === walletAddress) {
               return {
-                id: transaction.hash,
+                ...formattedTransaction,
                 name: `Transfer to ${transaction.to}`,
                 type: 'Transfer',
-                timestamp: transaction.timeStamp,
-                amount: formatAmount({
-                  amount: transaction.value,
-                  decimals: transaction.tokenDecimal,
-                }),
               };
             };
             if (transaction.to === walletAddress) {
               return {
-                id: transaction.hash,
+                ...formattedTransaction,
                 name: `Deposit from ${transaction.from}`,
                 type: 'Crypto Top Up',
-                timestamp: transaction.timeStamp,
-                amount: formatAmount({
-                  amount: transaction.value,
-                  decimals: transaction.tokenDecimal,
-                }),
               };
             };
             if (transaction.to === DOM_CONTRACT_ADDRESS) {
               return {
-                id: transaction.hash,
+                ...formattedTransaction,
                 name: `Wallet to Wealth`,
                 type: 'Invest',
-                timestamp: transaction.timeStamp,
-                amount: formatAmount({
-                  amount: transaction.value,
-                  decimals: transaction.tokenDecimal,
-                }),
               };
             };
             if (transaction.from === DOM_CONTRACT_ADDRESS) {
               return {
-                id: transaction.hash,
+                ...formattedTransaction,
                 name: `Wealth to Wallet`,
                 type: 'Withdraw',
-                timestamp: transaction.timeStamp,
-                amount: formatAmount({
-                  amount: transaction.value,
-                  decimals: transaction.tokenDecimal,
-                }),
               };
             }
           });

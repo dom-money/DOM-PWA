@@ -2,28 +2,39 @@ import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
-interface IconButtonCircularProps {
+interface CommonProps {
   /**
    * Pass SVG Icon component as a child
    */
   children: React.ReactNode;
   /**
-   * Click handler
-   */
-  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
-  /**
-   * URL on Click
-   */
-  href?: string;
-  /**
-   * Is button disabled?
-   */
-  disabled?: boolean;
-  /**
    * Optional aria-label
    */
   ariaLabel?: string;
 };
+
+interface ClickHandlerProps {
+  /**
+   * Click handler
+   */
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
+  /**
+   * Is button disabled?
+   */
+  disabled?: boolean;
+  href?: never;
+};
+
+interface LinkProps {
+  /**
+   * URL on Click
+   */
+  href: string;
+  onClick?: never;
+  disabled?: never;
+};
+
+type IconButtonCircularProps = CommonProps & (ClickHandlerProps | LinkProps);
 
 const IconButton = styled.button`
   display: inline-flex;

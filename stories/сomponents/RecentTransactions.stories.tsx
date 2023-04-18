@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { within, userEvent } from '@storybook/testing-library';
+import { within, userEvent, waitFor } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 
 import RecentTransactions from '../../components/RecentTransactions';
 import {
@@ -17,15 +18,16 @@ export default {
   component: RecentTransactions,
   argTypes: {
     transactions: {
-      control: 'array',
-      description: 'Array of transactions',
+      type: {
+        name: 'other', value: 'TransactionProps[] | []', required: true,
+      },
+    },
+    onLoadMore: {
+      action: `'Load More' Action`,
+    },
+    isLoading: {
       table: {
-        defaultValue: {
-          summary: '[]',
-        },
-        type: {
-          summary: 'array',
-        },
+        disable: true,
       },
     },
   },
@@ -60,14 +62,23 @@ Open.args = {
 } as { transactions: TransactionProps[] };
 Open.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const clickableHeader =
-    await canvas.getByTestId('RecentTransactionsOpenCloseIcon');
-  await userEvent.click(clickableHeader);
+  const collapseButton = await canvas.getByRole('button');
+  await userEvent.click(collapseButton);
+
+  const lastTransactionTitleElement =
+    canvas.getByText('Transfer to 0xEe5b9E3a125F5c6c74cE8AEbFa76b72B3D6CF009');
+  await waitFor(() => expect(lastTransactionTitleElement).toBeVisible());
 };
 
 export const Empty = Template.bind({});
 Empty.args = {
   transactions: [],
+};
+Empty.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const collapseButton = await canvas.getByRole('button');
+
+  await waitFor(() => expect(collapseButton).toBeDisabled());
 };
 
 export const Loading = Template.bind({});
@@ -76,8 +87,7 @@ Loading.args = {
 };
 Loading.parameters = {
   controls: {
-    hideNoControlsWarning: true,
-    exclude: [ 'transactions', 'isLoading' ],
+    exclude: [ 'transactions', 'isLoadingMore', 'onLoadMore' ],
   },
 };
 
@@ -92,9 +102,14 @@ LoadingMore.args = {
   ],
   isLoadingMore: true,
 } as { transactions: TransactionProps[] };
-LoadingMore.play = async ({ canvasElement }) => {
+LoadingMore.play = async ({ args, canvasElement }) => {
   const canvas = within(canvasElement);
-  const clickableHeader =
-    await canvas.getByTestId('RecentTransactionsOpenCloseIcon');
-  await userEvent.click(clickableHeader);
+  const collapseButton = await canvas.getByRole('button');
+  await userEvent.click(collapseButton);
+
+  const lastTransactionTitleElement =
+    canvas.getByText('Transfer to 0xEe5b9E3a125F5c6c74cE8AEbFa76b72B3D6CF009');
+  await userEvent.hover(lastTransactionTitleElement);
+
+  await waitFor(() => expect(args.onLoadMore).toBeCalledTimes(1));
 };

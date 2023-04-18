@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import Skeleton from '@mui/material/Skeleton';
 import GenericTransactionIcon from '../styles/icons/GenericTransactionIcon';
-import dateStringifier from '../utils/dateStringifier';
+import formatDateString from '../utils/formatDateString';
 import { formatStringAmount } from '../utils/stringAmountUtils';
 
 type TransactionType =
@@ -198,7 +198,7 @@ const Transaction = forwardRef(({
           {type}
         </TypeText>
         <TimestampText>
-          {dateStringifier(timestamp)}
+          {formatDateString(timestamp)}
         </TimestampText>
       </DataContainer>
     </Wrapper>

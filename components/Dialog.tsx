@@ -11,7 +11,7 @@ interface DialogProps {
    */
   children: React.ReactNode;
   /**
-   * On Dialog Close function handle
+   * On Dialog Close function handler
    */
   onClose?: () => void;
   /**
@@ -43,7 +43,13 @@ const ChildrenContainer = styled.div`
   height: 100%;
 `;
 
-const Dialog = ({ isOpen, children, onClose, padding = '0' }: DialogProps) => {
+const Dialog = ({
+  isOpen,
+  children,
+  onClose,
+  padding = '0',
+  ...props
+}: DialogProps) => {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -66,7 +72,13 @@ const Dialog = ({ isOpen, children, onClose, padding = '0' }: DialogProps) => {
   };
 
   return (
-    <StyledDialog ref={ref} padding={padding} onClick={handleDialogOnClick}>
+    <StyledDialog
+      ref={ref}
+      padding={padding}
+      onClick={handleDialogOnClick}
+      data-testid='dialog'
+      {...props}
+    >
       <ChildrenContainer id='dialog-child-container'>
         {isOpen && children}
       </ChildrenContainer>

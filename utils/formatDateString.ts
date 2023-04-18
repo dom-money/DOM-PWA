@@ -1,6 +1,6 @@
-const dateStringifier = (timestampInSeconds: number) => {
-  // Creating date object and converting timestamp from s to ms
-  const inputDate = new Date(timestampInSeconds * 1000);
+const formatDateString = (timestamp: number) => {
+  // Creating date object
+  const inputDate = new Date(timestamp);
 
   const currentDate = new Date();
 
@@ -41,4 +41,4 @@ const dateStringifier = (timestampInSeconds: number) => {
   return inputDate.toLocaleString('en-US', options);
 };
 
-export default dateStringifier;
+export default formatDateString;

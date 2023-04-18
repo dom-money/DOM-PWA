@@ -1,5 +1,7 @@
 import React from 'react';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
+import { withTests } from '@storybook/addon-jest';
+import results from '../reports/jest-test-results.json';
 import { ThemeProvider } from 'styled-components';
 
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
@@ -16,11 +18,12 @@ export const decorators = [
       <>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
-          <Story />
+          {Story()}
         </ThemeProvider>
       </>
-    )
-  ];
+    ),
+    withTests({ results }),
+];
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -51,8 +54,22 @@ export const parameters = {
       date: /Date$/,
     },
     expanded: true,
+    sort: 'requiredFirst',
   },
   nextRouter: {
     Provider: RouterContext.Provider,
   },
-}
+  a11y: {
+    config: {
+      rules: [
+        {
+          // You can also signify that a violation will need to be fixed in the future
+          // by overriding the result of a rule to return "Needs Review"
+          // rather than "Violation" if the rule fails:
+          id: 'color-contrast',
+          reviewOnFail: true,
+        },
+      ],
+    },
+  },
+};
