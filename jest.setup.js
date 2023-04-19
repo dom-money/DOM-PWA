@@ -10,6 +10,9 @@ const loadEnvVariables = async () => {
 };
 export default loadEnvVariables;
 
+// Mocking Next.js router
+jest.mock('next/router', () => require('next-router-mock'));
+
 // Establish API mocking before all tests.
 beforeAll(() => {
   server.listen({ onUnhandledRequest: 'error' });
