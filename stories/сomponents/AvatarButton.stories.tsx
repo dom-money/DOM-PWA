@@ -52,3 +52,11 @@ export const Text: Story = {
 
   play: playFn,
 };
+
+export const PhoneNumber: Story = {
+  args: {
+    userName: '+1-555-555-1234',
+  },
+
+  play: playFn,
+};

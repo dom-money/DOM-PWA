@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
 interface AvatarButtonProps {
@@ -57,6 +57,15 @@ const TextAvatar = styled.span`
 `;
 
 const AvatarButton = ({ imageURL, userName, ...props }: AvatarButtonProps) => {
+  const userInitials = useMemo(() => {
+    const isPhoneNumber = /^[+\d-]+$/.test(userName);
+    if (isPhoneNumber) {
+      return userName.slice(-2);
+    };
+
+    return userName.match(/\b[a-z]/gi)?.slice(0, 2);
+  }, [ userName ]);
+
   return (
     <Wrapper aria-label='Profile' { ...props }>
       <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -69,9 +78,9 @@ const AvatarButton = ({ imageURL, userName, ...props }: AvatarButtonProps) => {
         </defs>
       </svg>
       {
-      imageURL ?
-      <Avatar src={ imageURL } alt={ `${userName}\'s Avatar` }/> :
-      <TextAvatar>{ userName.match(/\b[a-z]/gi)?.slice(0, 2) }</TextAvatar>
+        imageURL ?
+        <Avatar src={ imageURL } alt={ `${userName}\'s Avatar` }/> :
+        <TextAvatar>{ userInitials }</TextAvatar>
       }
     </Wrapper>
   );
