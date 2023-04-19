@@ -1,10 +1,10 @@
 import React from 'react';
-import { RouterContext } from 'next/dist/shared/lib/router-context';
+import type { Preview } from '@storybook/react';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import { ThemeProvider } from 'styled-components';
 import { withTests } from '@storybook/addon-jest';
 import results from '../reports/jest-test-results.json';
-import { ThemeProvider } from 'styled-components';
 
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import GlobalStyle from '../styles/global';
 import theme from '../styles/theme';
 
@@ -13,20 +13,28 @@ import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/roboto-mono/400.css';
 
-export const decorators = [
-    Story => (
+const preview: Preview = {
+  decorators: [
+    (Story) => (
       <>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
-          {Story()}
+          <Story />
         </ThemeProvider>
       </>
     ),
-    withTests({ results }),
-];
-
-export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+    withTests({ results })
+  ],
+  parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/,
+      },
+      expanded: true,
+      sort: 'requiredFirst',
+    },
   layout: 'centered',
   backgrounds: {
     default: 'darkMain',
@@ -48,28 +56,20 @@ export const parameters = {
   viewport: {
     viewports: INITIAL_VIEWPORTS,
   },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
-    },
-    expanded: true,
-    sort: 'requiredFirst',
-  },
-  nextRouter: {
-    Provider: RouterContext.Provider,
-  },
   a11y: {
     config: {
       rules: [
         {
           // You can also signify that a violation will need to be fixed in the future
-          // by overriding the result of a rule to return "Needs Review"
-          // rather than "Violation" if the rule fails:
+          // by overriding the result of a rule to return 'Needs Review'
+          // rather than 'Violation' if the rule fails:
           id: 'color-contrast',
           reviewOnFail: true,
         },
       ],
     },
   },
+  },
 };
+
+export default preview;
