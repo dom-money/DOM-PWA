@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta, StoryObj } from '@storybook/react';
 import { useArgs } from '@storybook/client-api';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
@@ -24,9 +24,9 @@ export default {
   parameters: {
     backgrounds: { default: 'darkAdditional' },
   },
-} as ComponentMeta<typeof PeriodSelectionTabs>;
+} as Meta<typeof PeriodSelectionTabs>;
 
-const Template: ComponentStory<typeof PeriodSelectionTabs> = (args) => {
+const Template: StoryFn<typeof PeriodSelectionTabs> = (args) => {
   const [ { selectedPeriod, onClick }, updateArgs ] = useArgs();
 
   const handleClick = (period: Period) => {
@@ -41,52 +41,61 @@ const Template: ComponentStory<typeof PeriodSelectionTabs> = (args) => {
   />;
 };
 
-export const Default = Template.bind({});
-Default.args = {
-  selectedPeriod: 'Today',
+type Story = StoryObj<typeof PeriodSelectionTabs>;
+
+export const Default: Story = {
+  render: Template,
+
+  args: {
+    selectedPeriod: 'Today',
+  },
 };
 
-export const WithInteractions = Template.bind({});
-WithInteractions.args = {
-  selectedPeriod: 'Today',
-};
-WithInteractions.play = async ({ args, canvasElement }) => {
-  const sleep = async (ms: number) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
+export const WithInteractions: Story = {
+  render: Template,
 
-  const canvas = within(canvasElement);
-  const todayButton = canvas.getByRole('button', { name: 'Today' });
-  const weekButton = canvas.getByRole('button', { name: 'Week' });
-  const monthButton = canvas.getByRole('button', { name: 'Month' });
-  const yearButton = canvas.getByRole('button', { name: 'Year' });
-  const allTimeButton = canvas.getByRole('button', { name: 'All Time' });
+  args: {
+    selectedPeriod: 'Today',
+  },
 
-  await sleep(1000);
+  play: async ({ args, canvasElement }) => {
+    const sleep = async (ms: number) => {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    };
 
-  await waitFor(() => userEvent.click(weekButton));
-  await waitFor(() => expect(args.onClick).toHaveBeenCalledWith('Week'));
+    const canvas = within(canvasElement);
+    const todayButton = canvas.getByRole('button', { name: 'Today' });
+    const weekButton = canvas.getByRole('button', { name: 'Week' });
+    const monthButton = canvas.getByRole('button', { name: 'Month' });
+    const yearButton = canvas.getByRole('button', { name: 'Year' });
+    const allTimeButton = canvas.getByRole('button', { name: 'All Time' });
 
-  await sleep(1000);
+    await sleep(1000);
 
-  await waitFor(() => userEvent.click(monthButton));
-  await waitFor(() => expect(args.onClick).toHaveBeenCalledWith('Month'));
+    await waitFor(() => userEvent.click(weekButton));
+    await waitFor(() => expect(args.onClick).toHaveBeenCalledWith('Week'));
 
-  await sleep(1000);
+    await sleep(1000);
 
-  await waitFor(() => userEvent.click(yearButton));
-  await waitFor(() => expect(args.onClick).toHaveBeenCalledWith('Year'));
+    await waitFor(() => userEvent.click(monthButton));
+    await waitFor(() => expect(args.onClick).toHaveBeenCalledWith('Month'));
 
-  await sleep(1000);
+    await sleep(1000);
 
-  await waitFor(() => userEvent.click(allTimeButton));
-  await waitFor(() => expect(args.onClick).toHaveBeenCalledWith('All Time'));
+    await waitFor(() => userEvent.click(yearButton));
+    await waitFor(() => expect(args.onClick).toHaveBeenCalledWith('Year'));
 
-  await sleep(1000);
+    await sleep(1000);
 
-  await waitFor(() => userEvent.click(todayButton));
-  await waitFor(() => expect(args.onClick).toHaveBeenCalledWith('Today'));
+    await waitFor(() => userEvent.click(allTimeButton));
+    await waitFor(() => expect(args.onClick).toHaveBeenCalledWith('All Time'));
 
-  // Clicking away to lose focus
-  await waitFor(() => userEvent.click(canvasElement));
+    await sleep(1000);
+
+    await waitFor(() => userEvent.click(todayButton));
+    await waitFor(() => expect(args.onClick).toHaveBeenCalledWith('Today'));
+
+    // Clicking away to lose focus
+    await waitFor(() => userEvent.click(canvasElement));
+  },
 };

@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import AmountInput from '../../../components/AmountInput';
 
@@ -11,52 +10,57 @@ export default {
       action: `'On Input Change' Callback Called`,
     },
   },
-} as ComponentMeta<typeof AmountInput>;
+} as Meta<typeof AmountInput>;
 
-const Template: ComponentStory<typeof AmountInput> = (args) =>
-  <AmountInput { ...args }/>;
+type Story = StoryObj<typeof AmountInput>;
 
-export const Default = Template.bind({});
-Default.args = {
-  label: 'How much do you want to invest?',
-  amount: '10000',
-  inputID: 'default-amount-input',
+export const Default: Story = {
+  args: {
+    label: 'How much do you want to invest?',
+    amount: '10000',
+    inputID: 'default-amount-input',
+  },
 };
 
-export const WithSixDecimals = Template.bind({});
-WithSixDecimals.args = {
-  label: 'How much do you want to invest?',
-  amount: '10000.759213',
-  maxDecimals: 6,
-  inputID: 'default-amount-input',
+export const WithSixDecimals: Story = {
+  args: {
+    label: 'How much do you want to invest?',
+    amount: '10000.759213',
+    maxDecimals: 6,
+    inputID: 'default-amount-input',
+  },
 };
 
-export const WithoutFixedDecimalScale = Template.bind({});
-WithoutFixedDecimalScale.args = {
-  label: 'How much do you want to invest?',
-  amount: '10000.759213',
-  maxDecimals: 6,
-  fixedDecimalScale: false,
-  inputID: 'default-amount-input',
+export const WithoutFixedDecimalScale: Story = {
+  args: {
+    label: 'How much do you want to invest?',
+    amount: '10000.759213',
+    maxDecimals: 6,
+    fixedDecimalScale: false,
+    inputID: 'default-amount-input',
+  },
 };
 
-export const Empty = Template.bind({});
-Empty.args = {
-  label: 'How much do you want to invest?',
-  inputID: 'default-amount-input',
+export const Empty: Story = {
+  args: {
+    label: 'How much do you want to invest?',
+    inputID: 'default-amount-input',
+  },
 };
 
-export const WithError = Template.bind({});
-WithError.args = {
-  label: 'How much do you want to invest?',
-  amount: '25000',
-  inputID: 'default-amount-input',
-  errorMessage: 'Not Enough Money',
+export const WithError: Story = {
+  args: {
+    label: 'How much do you want to invest?',
+    amount: '25000',
+    inputID: 'default-amount-input',
+    errorMessage: 'Not Enough Money',
+  },
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  label: 'How much do you want to invest?',
-  inputID: 'default-amount-input',
-  disabled: true,
+export const Disabled: Story = {
+  args: {
+    label: 'How much do you want to invest?',
+    inputID: 'default-amount-input',
+    disabled: true,
+  },
 };

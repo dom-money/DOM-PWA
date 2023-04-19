@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta, StoryObj } from '@storybook/react';
 
 import SplashScreenPage from '../../components/SplashScreenPage';
 
@@ -13,9 +13,12 @@ export default {
     },
     controls: { hideNoControlsWarning: true },
   },
-} as ComponentMeta<typeof SplashScreenPage>;
+} as Meta<typeof SplashScreenPage>;
 
-const Template: ComponentStory<typeof SplashScreenPage> = () =>
-  <SplashScreenPage/>;
+const Template: StoryFn<typeof SplashScreenPage> = () => <SplashScreenPage />;
 
-export const Default = Template.bind({});
+type Story = StoryObj<typeof SplashScreenPage>;
+
+export const Default: Story = {
+  render: Template,
+};

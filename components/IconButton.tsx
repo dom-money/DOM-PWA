@@ -142,7 +142,7 @@ const IconButton = ({
   }
   if (asAnchor) {
     return (
-      <Link href={ href } passHref>
+      <Link href={ href } passHref legacyBehavior>
         <Button
           as='a'
           size={ size }

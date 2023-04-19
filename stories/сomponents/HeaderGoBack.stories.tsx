@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
@@ -28,52 +28,54 @@ export default {
   },
   decorators: [
     (story) => (
-      <div style={{
-        padding: '2rem',
-        backgroundColor: '#1F1F1F',
-        boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)',
-      }}>
+      <div
+        style={{
+          padding: '2rem',
+          backgroundColor: '#1F1F1F',
+          boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)',
+        }}
+      >
         { story() }
       </div>
     ),
   ],
-} as ComponentMeta<typeof HeaderGoBack>;
+} as Meta<typeof HeaderGoBack>;
 
-const Template: ComponentStory<typeof HeaderGoBack> = (args) =>
-  <HeaderGoBack { ...args } />;
+type Story = StoryObj<typeof HeaderGoBack>;
 
-export const Default = Template.bind({});
-Default.play = async ({ args, canvasElement }) => {
-  const canvas = within(canvasElement);
-  const goBackButton = canvas.getByRole('button');
-  await userEvent.click(goBackButton);
-  await waitFor(() => expect(args.onClick).toHaveBeenCalled());
+export const Default: Story = {
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const goBackButton = canvas.getByRole('button');
+    await userEvent.click(goBackButton);
+    await waitFor(() => expect(args.onClick).toHaveBeenCalled());
 
-  // Clicking away to lose focus
-  await userEvent.click(canvasElement);
-};
-Default.parameters = {
-  controls: {
-    exclude: [
-      'href',
-    ],
+    // Clicking away to lose focus
+    await userEvent.click(canvasElement);
+  },
+
+  parameters: {
+    controls: {
+      exclude: [ 'href' ],
+    },
   },
 };
 
-export const AsLink = Template.bind({});
-AsLink.args = {
-  href: '/',
-};
-AsLink.play = async ({ args, canvasElement }) => {
-  const canvas = within(canvasElement);
-  const goBackButton = canvas.getByRole('link');
+export const AsLink: Story = {
+  args: {
+    href: '/',
+  },
 
-  await waitFor(() => expect(goBackButton).toHaveAttribute('href', '/'));
-};
-AsLink.parameters = {
-  controls: {
-    exclude: [
-      'onClick',
-    ],
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const goBackButton = canvas.getByRole('link');
+
+    await waitFor(() => expect(goBackButton).toHaveAttribute('href', '/'));
+  },
+
+  parameters: {
+    controls: {
+      exclude: [ 'onClick' ],
+    },
   },
 };

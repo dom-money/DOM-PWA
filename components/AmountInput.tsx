@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import NumberFormat from 'react-number-format';
+import { NumericFormat } from 'react-number-format';
 
 import GenericContainer from './GenericContainer';
 
@@ -130,7 +130,7 @@ const AmountInput = ({
             { errorMessage }
           </ErrorMessageDisplay>
           <CurrencySymbol>$</CurrencySymbol>
-          <NumberFormat
+          <NumericFormat
             autoFocus={ autoFocus }
             id={ inputID }
             inputMode='decimal'

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, StoryObj, Meta } from '@storybook/react';
 import { useArgs } from '@storybook/client-api';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
@@ -28,21 +28,23 @@ export default {
   },
   decorators: [
     (story) => (
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 1rem',
-        margin: '0 auto',
-        maxWidth: 'min-content',
-        height: '100vh',
-      }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 1rem',
+          margin: '0 auto',
+          maxWidth: 'min-content',
+          height: '100vh',
+        }}
+      >
         { story() }
       </div>
     ),
   ],
-} as ComponentMeta<typeof AddressInput>;
+} as Meta<typeof AddressInput>;
 
-const Template: ComponentStory<typeof AddressInput> = (args) => {
+const Template: StoryFn<typeof AddressInput> = (args) => {
   const [ { addressValue, onValueChange, onFocus }, updateArgs ] = useArgs();
 
   const handleValueChange = (addressValue: string) => {
@@ -53,78 +55,99 @@ const Template: ComponentStory<typeof AddressInput> = (args) => {
   const handleFocus = (prefill?: string) => {
     if (prefill) {
       updateArgs({ addressValue: prefill });
-    };
+    }
     onFocus(prefill);
   };
 
-  return <AddressInput
-    { ...args }
-    addressValue={ addressValue }
-    onValueChange={ handleValueChange }
-    onFocus={ handleFocus }
-  />;
+  return (
+    <AddressInput
+      { ...args }
+      addressValue={ addressValue }
+      onValueChange={ handleValueChange }
+      onFocus={ handleFocus }
+    />
+  );
 };
 
-export const Default = Template.bind({});
-Default.args = {
-  label: 'Enter Or Choose Address',
-  addressValue: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
-  inputID: 'default-address-input',
-};
-Default.play = async ({ args, canvasElement }) => {
-  const canvas = within(canvasElement);
-  const getContactButton = canvas.getByRole('button', { name: 'Get Contact' });
-  const scanQRButton = canvas.getByRole('button', { name: 'Scan QR' });
+type Story = StoryObj<typeof AddressInput>;
 
-  await userEvent.click(getContactButton);
-  await waitFor(() => expect(args.getContactOnClick).toHaveBeenCalled());
+export const Default: Story = {
+  render: Template,
 
-  await userEvent.click(scanQRButton);
-  await waitFor(() => expect(args.scanQROnClick).toHaveBeenCalled());
+  args: {
+    label: 'Enter Or Choose Address',
+    addressValue: '0xeA2a9ca3d52BEF67Cf562B59c5709B32Ed4c0eca',
+    inputID: 'default-address-input',
+  },
 
-  // Clicking away to lose focus
-  await userEvent.click(canvasElement);
-};
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const getContactButton = canvas.getByRole(
+        'button',
+        { name: 'Get Contact' },
+    );
+    const scanQRButton = canvas.getByRole('button', { name: 'Scan QR' });
 
-export const WithPrefill = Template.bind({});
-WithPrefill.args = {
-  label: 'Enter Or Choose Address',
-  addressValue: '',
-  inputID: 'default-address-input',
-  prefill: '0x',
-};
+    await userEvent.click(getContactButton);
+    await waitFor(() => expect(args.getContactOnClick).toHaveBeenCalled());
 
-export const Empty = Template.bind({});
-Empty.args = {
-  label: 'Enter Or Choose Address',
-  addressValue: '',
-  inputID: 'default-address-input',
+    await userEvent.click(scanQRButton);
+    await waitFor(() => expect(args.scanQROnClick).toHaveBeenCalled());
+
+    // Clicking away to lose focus
+    await userEvent.click(canvasElement);
+  },
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  label: 'Enter Or Choose Address',
-  addressValue: '',
-  inputID: 'default-address-input',
-  disabled: true,
+export const WithPrefill: Story = {
+  render: Template,
+
+  args: {
+    label: 'Enter Or Choose Address',
+    addressValue: '',
+    inputID: 'default-address-input',
+    prefill: '0x',
+  },
 };
-Disabled.play = async ({ args, canvasElement }) => {
-  const canvas = within(canvasElement);
-  const getContactButton = canvas.getByRole('button', {
-    name: 'Disabled "Get Contact" Button',
-  });
-  const scanQRButton = canvas.getByRole('button', {
-    name: 'Disabled "Scan QR" Button',
-  });
 
-  await userEvent.click(getContactButton);
-  await expect(getContactButton).toBeDisabled();
-  await waitFor(() => expect(args.getContactOnClick).not.toHaveBeenCalled());
+export const Empty: Story = {
+  render: Template,
 
-  await userEvent.click(scanQRButton);
-  await expect(scanQRButton).toBeDisabled();
-  await waitFor(() => expect(args.scanQROnClick).not.toHaveBeenCalled());
+  args: {
+    label: 'Enter Or Choose Address',
+    addressValue: '',
+    inputID: 'default-address-input',
+  },
+};
 
-  // Clicking away to lose focus
-  await userEvent.click(canvasElement);
+export const Disabled: Story = {
+  render: Template,
+
+  args: {
+    label: 'Enter Or Choose Address',
+    addressValue: '',
+    inputID: 'default-address-input',
+    disabled: true,
+  },
+
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const getContactButton = canvas.getByRole('button', {
+      name: 'Disabled "Get Contact" Button',
+    });
+    const scanQRButton = canvas.getByRole('button', {
+      name: 'Disabled "Scan QR" Button',
+    });
+
+    await userEvent.click(getContactButton);
+    await expect(getContactButton).toBeDisabled();
+    await waitFor(() => expect(args.getContactOnClick).not.toHaveBeenCalled());
+
+    await userEvent.click(scanQRButton);
+    await expect(scanQRButton).toBeDisabled();
+    await waitFor(() => expect(args.scanQROnClick).not.toHaveBeenCalled());
+
+    // Clicking away to lose focus
+    await userEvent.click(canvasElement);
+  },
 };

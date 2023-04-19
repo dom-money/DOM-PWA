@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import LoginPageRender from '../../components/LoginPageRender';
 
@@ -15,9 +14,8 @@ export default {
       hideNoControlsWarning: true,
     },
   },
-} as ComponentMeta<typeof LoginPageRender>;
+} as Meta<typeof LoginPageRender>;
 
-const Template: ComponentStory<typeof LoginPageRender> = (args) =>
-  <LoginPageRender { ...args } />;
+type Story = StoryObj<typeof LoginPageRender>;
 
-export const Default = Template.bind({});
+export const Default: Story = {};

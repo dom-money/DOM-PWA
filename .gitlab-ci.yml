@@ -70,7 +70,7 @@ test_storybook:
 
   # Using playwright docker image (docker image version must match the ...
   # .. version used by the app)
-  image: mcr.microsoft.com/playwright:v1.26.0-focal
+  image: mcr.microsoft.com/playwright:v1.32.3-focal
 
   tags: [ 'docker' ]
 

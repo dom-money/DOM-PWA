@@ -85,7 +85,7 @@ const RenderButton = ({ label, ...props }: ButtonProps) => {
 
 const RenderLink = ({ href = '', label, ...props }: ButtonProps) => {
   return (
-    <Link href={ href } passHref>
+    <Link href={ href } passHref legacyBehavior>
       <LinkElement
         as='a'
         { ...props }

@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import TotalBalance from '../../components/TotalBalance';
 
@@ -9,7 +8,8 @@ export default {
   argTypes: {
     amount: {
       type: {
-        name: 'string', required: true,
+        name: 'string',
+        required: true,
       },
     },
     isLoading: {
@@ -18,25 +18,27 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof TotalBalance>;
+} as Meta<typeof TotalBalance>;
 
-const Template: ComponentStory<typeof TotalBalance> = (args) =>
-  <TotalBalance { ...args } />;
+type Story = StoryObj<typeof TotalBalance>;
 
-export const PositiveAmount = Template.bind({});
-PositiveAmount.args = {
-  amount: '45725.06',
+export const PositiveAmount: Story = {
+  args: {
+    amount: '45725.06',
+  },
 };
 
-export const ZeroAmount = Template.bind({});
-ZeroAmount.args = {
-  amount: '0',
+export const ZeroAmount: Story = {
+  args: {
+    amount: '0',
+  },
 };
 
-export const AsAvailableBalance = Template.bind({});
-AsAvailableBalance.args = {
-  amount: '45725.06',
-  asAvailableBalance: true,
+export const AsAvailableBalance: Story = {
+  args: {
+    amount: '45725.06',
+    asAvailableBalance: true,
+  },
 };
 
 const loadingParameters = {
@@ -45,15 +47,19 @@ const loadingParameters = {
   },
 };
 
-export const Loading = Template.bind({});
-Loading.args = {
-  isLoading: true,
-};
-Loading.parameters = loadingParameters;
+export const Loading: Story = {
+  args: {
+    isLoading: true,
+  },
 
-export const LoadingAsAvailableBalance = Template.bind({});
-LoadingAsAvailableBalance.args = {
-  isLoading: true,
-  asAvailableBalance: true,
+  parameters: loadingParameters,
 };
-LoadingAsAvailableBalance.parameters = loadingParameters;
+
+export const LoadingAsAvailableBalance: Story = {
+  args: {
+    isLoading: true,
+    asAvailableBalance: true,
+  },
+
+  parameters: loadingParameters,
+};

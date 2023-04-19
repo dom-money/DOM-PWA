@@ -10,10 +10,13 @@ import {
 import type { OpenloginUserInfo } from '@toruslabs/openlogin';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { MetamaskAdapter } from '@web3auth/metamask-adapter';
+import {
+  WalletConnectV2Adapter,
+} from '@web3auth/wallet-connect-v2-adapter';
 import { ethers } from 'ethers';
 import { useLoadingContext } from '../context/LoadingContext';
-import { useTheme } from 'styled-components';
-import { ThemeType } from '../styles/theme';
+// import { useTheme } from 'styled-components';
+// import { ThemeType } from '../styles/theme';
 
 const clientId = process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID as string;
 const web3authNetworkType =
@@ -42,7 +45,7 @@ const useAuth = () => {
   const [ isWeb3AuthLoaded, setIsWeb3AuthLoaded ] = useState(false);
   const [ isUserDataLoading, setIsUserDataLoading ] = useState(false);
 
-  const theme = useTheme() as ThemeType;
+  // const theme = useTheme() as ThemeType;
 
   const { setIsAuthLoaded } = useLoadingContext();
 
@@ -104,8 +107,9 @@ const useAuth = () => {
             rpcTarget: process.env.NEXT_PUBLIC_RPC_TARGET,
           },
           uiConfig: {
-            theme: 'dark',
+            appName: 'DOM',
             appLogo: `${location.origin}/images/logo/logo-dark.svg`,
+            theme: 'dark',
           },
         });
 
@@ -123,7 +127,7 @@ const useAuth = () => {
               logoDark: `${location.origin}/images/logo/logo-dark-with-text.svg`,
               defaultLanguage: 'en',
               dark: true,
-              theme: { primary: theme.colors.primary },
+              // theme: { primary: theme.colors.primary },
             },
           },
         });
@@ -131,6 +135,9 @@ const useAuth = () => {
 
         const metamaskAdapter = new MetamaskAdapter({ clientId });
         web3auth.configureAdapter(metamaskAdapter);
+
+        const walletConnectV2Adapter = new WalletConnectV2Adapter();
+        web3auth.configureAdapter(walletConnectV2Adapter);
 
         setWeb3auth(web3auth);
 

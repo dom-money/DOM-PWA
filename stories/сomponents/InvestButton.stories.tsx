@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { within, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
@@ -15,18 +14,19 @@ export default {
       iframeHeight: 250,
     },
   },
-} as ComponentMeta<typeof InvestButton>;
+} as Meta<typeof InvestButton>;
 
-const Template: ComponentStory<typeof InvestButton> = (args) =>
-  <InvestButton { ...args } />;
+type Story = StoryObj<typeof InvestButton>;
 
-export const Default = Template.bind({});
-Default.args = {
-  href: '/invest',
-};
-Default.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const linkButton = canvas.getByRole('link');
+export const Default: Story = {
+  args: {
+    href: '/invest',
+  },
 
-  await waitFor(() => expect(linkButton).toHaveAttribute('href', '/invest'));
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const linkButton = canvas.getByRole('link');
+
+    await waitFor(() => expect(linkButton).toHaveAttribute('href', '/invest'));
+  },
 };
