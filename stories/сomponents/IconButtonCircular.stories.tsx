@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
@@ -19,19 +19,17 @@ export default {
       action: `'Icon Button Circular' Clicked`,
     },
   },
-} as ComponentMeta<typeof IconButtonCircular>;
+} as Meta<typeof IconButtonCircular>;
 
 const excludeParams = {
   controls: {
-    exclude: [
-      'href',
-    ],
+    exclude: [ 'href' ],
   },
 };
 
 type PlayFnArgs = {
-  args: React.ComponentPropsWithoutRef<typeof IconButtonCircular>,
-  canvasElement: HTMLElement
+  args: React.ComponentPropsWithoutRef<typeof IconButtonCircular>;
+  canvasElement: HTMLElement;
 };
 
 const playFn = async (
@@ -47,49 +45,52 @@ const playFn = async (
     await waitFor(() => expect(args.onClick).not.toHaveBeenCalled());
   } else {
     await waitFor(() => expect(args.onClick).toHaveBeenCalled());
-  };
+  }
 
   // Clicking away to lose focus
   await userEvent.click(canvasElement);
 };
 
-const Template: ComponentStory<typeof IconButtonCircular> = (args) =>
-  <IconButtonCircular { ...args } />;
+type Story = StoryObj<typeof IconButtonCircular>;
 
-export const Button = Template.bind({});
-Button.args = {
-  children: <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>,
-  ariaLabel: 'Collapse Container',
-};
-Button.play = playFn;
-Button.parameters = excludeParams;
-
-export const Disabled = Template.bind({});
-Disabled.args = {
-  children: <ArrowDownIcon color="#F8F8F8" opacity="0.3"/>,
-  disabled: true,
-  ariaLabel: 'Disabled Button',
-};
-Disabled.parameters = excludeParams;
-Disabled.play = (args) => playFn(args, true);
-
-export const AsLink = Template.bind({});
-AsLink.args = {
-  children: <GoBackIcon color='#F8F8F8'/>,
-  ariaLabel: 'Return to previous page',
-  href: '/',
-};
-AsLink.parameters = {
-  controls: {
-    exclude: [
-      'onClick',
-      'disabled',
-    ],
+export const Button: Story = {
+  args: {
+    children: <ArrowDownIcon color="#F8F8F8" opacity="0.3" />,
+    ariaLabel: 'Collapse Container',
   },
-};
-AsLink.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const linkButton = canvas.getByRole('link');
 
-  await waitFor(() => expect(linkButton).toHaveAttribute('href', '/'));
+  play: playFn,
+  parameters: excludeParams,
+};
+
+export const Disabled: Story = {
+  args: {
+    children: <ArrowDownIcon color="#F8F8F8" opacity="0.3" />,
+    disabled: true,
+    ariaLabel: 'Disabled Button',
+  },
+
+  parameters: excludeParams,
+  play: (args) => playFn(args, true),
+};
+
+export const AsLink: Story = {
+  args: {
+    children: <GoBackIcon color="#F8F8F8" />,
+    ariaLabel: 'Return to previous page',
+    href: '/',
+  },
+
+  parameters: {
+    controls: {
+      exclude: [ 'onClick', 'disabled' ],
+    },
+  },
+
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const linkButton = canvas.getByRole('link');
+
+    await waitFor(() => expect(linkButton).toHaveAttribute('href', '/'));
+  },
 };

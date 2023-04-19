@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta, StoryObj } from '@storybook/react';
 import { useArgs } from '@storybook/client-api';
 import styled from 'styled-components';
 
@@ -22,7 +22,7 @@ export default {
       iframeHeight: 500,
     },
   },
-} as ComponentMeta<typeof AddressQRReader>;
+} as Meta<typeof AddressQRReader>;
 
 const Wrapper = styled.div`
   position: relative;
@@ -35,7 +35,7 @@ const AddressWrapper = styled.div`
   color: #ffffff;
 `;
 
-const Template: ComponentStory<typeof AddressQRReader> = (args) => {
+const Template: StoryFn<typeof AddressQRReader> = (args) => {
   const [ { isOpen, onResult, onClose }, updateArgs ] = useArgs();
 
   const address = useRef<string | null>(null);
@@ -58,30 +58,35 @@ const Template: ComponentStory<typeof AddressQRReader> = (args) => {
   return (
     <Wrapper>
       <IconButton
-        size='large'
-        backgroundColor='#020202'
-        ariaLabel='Scan QR'
+        size="large"
+        backgroundColor="#020202"
+        ariaLabel="Scan QR"
         onClick={ handleOpen }
       >
-        <ScanQRIcon color='#FFFFFF'/>
+        <ScanQRIcon color="#FFFFFF" />
       </IconButton>
-      {
-        address.current &&
-      <AddressWrapper>
-        <p style={{ fontWeight: 'bold' }}>Wallet address:</p>
-        <p>{ address.current }</p>
-      </AddressWrapper>
-      }
+      { address.current && (
+        <AddressWrapper>
+          <p style={{ fontWeight: 'bold' }}>Wallet address:</p>
+          <p>{ address.current }</p>
+        </AddressWrapper>
+      ) }
       <AddressQRReader
         { ...args }
         isOpen={ isOpen }
         onResult={ handleResult }
         onClose={ handleClose }
       />
-    </Wrapper>);
+    </Wrapper>
+  );
 };
 
-export const Default = Template.bind({});
-Default.args = {
-  isOpen: false,
+type Story = StoryObj<typeof AddressQRReader>;
+
+export const Default: Story = {
+  render: Template,
+
+  args: {
+    isOpen: false,
+  },
 };

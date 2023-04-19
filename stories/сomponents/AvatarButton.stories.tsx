@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
@@ -16,15 +16,12 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof AvatarButton>;
-
-const Template: ComponentStory<typeof AvatarButton> = (args) =>
-  <AvatarButton { ...args } />;
+} as Meta<typeof AvatarButton>;
 
 type PlayFnArgs = {
-  args: React.ComponentPropsWithoutRef<typeof AvatarButton>,
-  canvasElement: HTMLElement
-}
+  args: React.ComponentPropsWithoutRef<typeof AvatarButton>;
+  canvasElement: HTMLElement;
+};
 
 const playFn = async ({ args, canvasElement }: PlayFnArgs) => {
   const canvas = within(canvasElement);
@@ -37,15 +34,21 @@ const playFn = async ({ args, canvasElement }: PlayFnArgs) => {
   await userEvent.click(canvasElement);
 };
 
-export const Image = Template.bind({});
-Image.args = {
-  imageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
-  userName: 'John Doe',
-};
-Image.play = playFn;
+type Story = StoryObj<typeof AvatarButton>;
 
-export const Text = Template.bind({});
-Text.args = {
-  userName: 'John Doe',
+export const Image: Story = {
+  args: {
+    imageURL: 'https://randomuser.me/api/portraits/women/90.jpg',
+    userName: 'John Doe',
+  },
+
+  play: playFn,
 };
-Text.play = playFn;
+
+export const Text: Story = {
+  args: {
+    userName: 'John Doe',
+  },
+
+  play: playFn,
+};

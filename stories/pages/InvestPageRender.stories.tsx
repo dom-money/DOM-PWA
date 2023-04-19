@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import InvestPageRender from '../../components/InvestPageRender';
 
@@ -23,12 +22,14 @@ export default {
     },
     availableBalance: {
       type: {
-        name: 'string', required: true,
+        name: 'string',
+        required: true,
       },
     },
     isInputValid: {
       type: {
-        name: 'boolean', required: true,
+        name: 'boolean',
+        required: true,
       },
     },
     investButtonOnClick: {
@@ -38,56 +39,61 @@ export default {
       action: `'Clear' Button Pressed`,
     },
   },
-} as ComponentMeta<typeof InvestPageRender>;
+} as Meta<typeof InvestPageRender>;
 
-const Template: ComponentStory<typeof InvestPageRender> = (args) =>
-  <InvestPageRender { ...args } />;
+type Story = StoryObj<typeof InvestPageRender>;
 
-export const Valid = Template.bind({});
-Valid.args = {
-  availableBalance: '45725.06',
-  inputAmount: '10000',
-  isInputValid: true,
+export const Valid: Story = {
+  args: {
+    availableBalance: '45725.06',
+    inputAmount: '10000',
+    isInputValid: true,
+  },
 };
 
-export const Empty = Template.bind({});
-Empty.args = {
-  availableBalance: '45725.06',
-  isInputValid: false,
+export const Empty: Story = {
+  args: {
+    availableBalance: '45725.06',
+    isInputValid: false,
+  },
 };
 
-export const WithError = Template.bind({});
-WithError.args = {
-  availableBalance: '45725.06',
-  inputAmount: '46000',
-  errorMessage: 'Not Enough Money',
-  isInputValid: false,
+export const WithError: Story = {
+  args: {
+    availableBalance: '45725.06',
+    inputAmount: '46000',
+    errorMessage: 'Not Enough Money',
+    isInputValid: false,
+  },
 };
 
-export const Submitting = Template.bind({});
-Submitting.args = {
-  availableBalance: '45725.06',
-  inputAmount: '10000',
-  isInputValid: true,
-  isSubmitting: true,
+export const Submitting: Story = {
+  args: {
+    availableBalance: '45725.06',
+    inputAmount: '10000',
+    isInputValid: true,
+    isSubmitting: true,
+  },
 };
 
-export const Loading = Template.bind({});
-Loading.args = {
-  isLoading: true,
-};
-Loading.parameters = {
-  controls: {
-    hideNoControlsWarning: true,
-    exclude: [
-      'availableBalance',
-      'errorMessage',
-      'inputAmount',
-      'isInputValid',
-      'isSubmitting',
-      'onInputChange',
-      'investButtonOnClick',
-      'clearButtonOnClick',
-    ],
+export const Loading: Story = {
+  args: {
+    isLoading: true,
+  },
+
+  parameters: {
+    controls: {
+      hideNoControlsWarning: true,
+      exclude: [
+        'availableBalance',
+        'errorMessage',
+        'inputAmount',
+        'isInputValid',
+        'isSubmitting',
+        'onInputChange',
+        'investButtonOnClick',
+        'clearButtonOnClick',
+      ],
+    },
   },
 };

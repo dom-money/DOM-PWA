@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
@@ -11,7 +10,8 @@ export default {
   argTypes: {
     amount: {
       type: {
-        name: 'string', required: true,
+        name: 'string',
+        required: true,
       },
     },
     isLoading: {
@@ -23,76 +23,82 @@ export default {
   parameters: {
     layout: 'padded',
   },
-} as ComponentMeta<typeof Wealth>;
+} as Meta<typeof Wealth>;
 
-const Template: ComponentStory<typeof Wealth> = (args) =>
-  <Wealth { ...args } />;
+type Story = StoryObj<typeof Wealth>;
 
-export const Closed = Template.bind({});
-Closed.args = {
-  amount: '25000.12',
-  yieldValue: 600,
-  yieldValuePercentage: 0.1,
-  averageAPY: 13,
+export const Closed: Story = {
+  args: {
+    amount: '25000.12',
+    yieldValue: 600,
+    yieldValuePercentage: 0.1,
+    averageAPY: 13,
+  },
 };
 
-export const Open = Template.bind({});
-Open.args = {
-  amount: '25000.12',
-  yieldValue: 600,
-  yieldValuePercentage: 0.1,
-  averageAPY: 13,
-};
-Open.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const collapseButton = await canvas.getByRole('button', {
-    name: 'Collapse Wealth Container',
-  });
-  await userEvent.click(collapseButton);
+export const Open: Story = {
+  args: {
+    amount: '25000.12',
+    yieldValue: 600,
+    yieldValuePercentage: 0.1,
+    averageAPY: 13,
+  },
 
-  // Clicking away to lose focus
-  await userEvent.click(canvasElement);
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const collapseButton = await canvas.getByRole('button', {
+      name: 'Collapse Wealth Container',
+    });
+    await userEvent.click(collapseButton);
 
-  const withdrawButton = await canvas.getByRole('link', {
-    name: 'Withdraw Button',
-  });
+    // Clicking away to lose focus
+    await userEvent.click(canvasElement);
 
-  const averageApyText = await canvas.getByText('Average APY 13%');
+    const withdrawButton = await canvas.getByRole('link', {
+      name: 'Withdraw Button',
+    });
 
-  await waitFor(() => expect(withdrawButton).toBeVisible());
-  await waitFor(() => expect(averageApyText).toBeVisible());
+    const averageApyText = await canvas.getByText('Average APY 13%');
 
-  await waitFor(() =>
-    expect(withdrawButton).toHaveAttribute('href', '/withdraw'),
-  );
-};
+    await waitFor(() => expect(withdrawButton).toBeVisible());
+    await waitFor(() => expect(averageApyText).toBeVisible());
 
-export const Inactive = Template.bind({});
-Inactive.args = {
-  amount: '0',
-};
-Inactive.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const collapseButton = await canvas.getByRole('button', {
-    name: 'Disabled Button',
-  });
-
-  await waitFor(() => expect(collapseButton).toBeDisabled());
-
-  const withdrawButton = await canvas.getByRole('button', {
-    name: 'Withdraw Button',
-  });
-
-  await waitFor(() => expect(withdrawButton).toBeDisabled());
+    await waitFor(
+        () => expect(withdrawButton).toHaveAttribute('href', '/withdraw'),
+    );
+  },
 };
 
-export const Loading = Template.bind({});
-Loading.args = {
-  isLoading: true,
+export const Inactive: Story = {
+  args: {
+    amount: '0',
+  },
+
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const collapseButton = await canvas.getByRole('button', {
+      name: 'Disabled Button',
+    });
+
+    await waitFor(() => expect(collapseButton).toBeDisabled());
+
+    const withdrawButton = await canvas.getByRole('button', {
+      name: 'Withdraw Button',
+    });
+
+    await waitFor(() => expect(withdrawButton).toBeDisabled());
+  },
 };
-Loading.parameters = {
-  controls: {
-    hideNoControlsWarning: true,
-    exclude: [ 'amount', 'averageAPY', 'yieldValue', 'yieldValuePercentage' ],
+
+export const Loading: Story = {
+  args: {
+    isLoading: true,
+  },
+
+  parameters: {
+    controls: {
+      hideNoControlsWarning: true,
+      exclude: [ 'amount', 'averageAPY', 'yieldValue', 'yieldValuePercentage' ],
+    },
   },
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta, StoryObj } from '@storybook/react';
 
 import Page404Render from '../../components/Page404Render';
 
@@ -13,9 +13,12 @@ export default {
     },
     controls: { hideNoControlsWarning: true },
   },
-} as ComponentMeta<typeof Page404Render>;
+} as Meta<typeof Page404Render>;
 
-const Template: ComponentStory<typeof Page404Render> = () =>
-  <Page404Render/>;
+const Template: StoryFn<typeof Page404Render> = () => <Page404Render />;
 
-export const Default = Template.bind({});
+type Story = StoryObj<typeof Page404Render>;
+
+export const Default: Story = {
+  render: Template,
+};

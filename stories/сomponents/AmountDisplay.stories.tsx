@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import AmountDisplay from '../../components/AmountDisplay';
 
@@ -18,63 +17,71 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof AmountDisplay>;
+} as Meta<typeof AmountDisplay>;
 
-const Template: ComponentStory<typeof AmountDisplay> = (args) =>
-  <AmountDisplay { ...args } />;
+type Story = StoryObj<typeof AmountDisplay>;
 
-export const PositiveAmountMedium = Template.bind({});
-PositiveAmountMedium.args = {
-  amount: '45725.06',
-  size: 'medium',
+export const PositiveAmountMedium: Story = {
+  args: {
+    amount: '45725.06',
+    size: 'medium',
+  },
 };
 
-export const PositiveAmountSmall = Template.bind({});
-PositiveAmountSmall.args = {
-  amount: '20000.12',
-  size: 'small',
-};
-PositiveAmountSmall.parameters = {
-  backgrounds: { default: 'darkAdditional' },
+export const PositiveAmountSmall: Story = {
+  args: {
+    amount: '20000.12',
+    size: 'small',
+  },
+
+  parameters: {
+    backgrounds: { default: 'darkAdditional' },
+  },
 };
 
-export const ZeroAmount = Template.bind({});
-ZeroAmount.args = {
-  amount: '0',
-  size: 'medium',
+export const ZeroAmount: Story = {
+  args: {
+    amount: '0',
+    size: 'medium',
+  },
 };
 
-export const Inactive = Template.bind({});
-Inactive.args = {
-  amount: '0',
-  size: 'small',
-  inactive: true,
-};
-Inactive.parameters = {
-  backgrounds: { default: 'darkAdditional' },
+export const Inactive: Story = {
+  args: {
+    amount: '0',
+    size: 'small',
+    inactive: true,
+  },
+
+  parameters: {
+    backgrounds: { default: 'darkAdditional' },
+  },
 };
 
-export const WithoutGrouping = Template.bind({});
-WithoutGrouping.args = {
-  amount: '45725.06',
-  size: 'medium',
-  useGrouping: false,
+export const WithoutGrouping: Story = {
+  args: {
+    amount: '45725.06',
+    size: 'medium',
+    useGrouping: false,
+  },
 };
 
-export const WithoutTrailingZeros = Template.bind({});
-WithoutTrailingZeros.args = {
-  amount: '45725.10',
-  size: 'medium',
-  maxDecimals: 2,
-  shouldAddTrailingZeros: false,
+export const WithoutTrailingZeros: Story = {
+  args: {
+    amount: '45725.10',
+    size: 'medium',
+    maxDecimals: 2,
+    shouldAddTrailingZeros: false,
+  },
 };
 
-export const WithSixDecimals = Template.bind({});
-WithSixDecimals.args = {
-  amount: '45725.06',
-  size: 'medium',
-  maxDecimals: 6,
-  shouldAddTrailingZeros: true,
+export const WithSixDecimals: Story = {
+  args: {
+    amount: '45725.06',
+    size: 'medium',
+    maxDecimals: 6,
+    shouldAddTrailingZeros: true,
+  },
 };
 
 const loadingParameters = {
@@ -89,16 +96,20 @@ const loadingParameters = {
   },
 };
 
-export const LoadingMedium = Template.bind({});
-LoadingMedium.args = {
-  isLoading: true,
-  size: 'medium',
-};
-LoadingMedium.parameters = loadingParameters;
+export const LoadingMedium: Story = {
+  args: {
+    isLoading: true,
+    size: 'medium',
+  },
 
-export const LoadingSmall = Template.bind({});
-LoadingSmall.args = {
-  isLoading: true,
-  size: 'small',
+  parameters: loadingParameters,
 };
-LoadingSmall.parameters = loadingParameters;
+
+export const LoadingSmall: Story = {
+  args: {
+    isLoading: true,
+    size: 'small',
+  },
+
+  parameters: loadingParameters,
+};

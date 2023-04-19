@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import Title from '../../components/Title';
 
@@ -19,24 +18,27 @@ export default {
   parameters: {
     backgrounds: { default: 'darkAdditional' },
   },
-} as ComponentMeta<typeof Title>;
+} as Meta<typeof Title>;
 
-const Template: ComponentStory<typeof Title> = (args) => <Title { ...args } />;
+type Story = StoryObj<typeof Title>;
 
-export const Default = Template.bind({});
-Default.args = {
-  text: 'Wallet',
+export const Default: Story = {
+  args: {
+    text: 'Wallet',
+  },
 };
 
-export const AsParagraph = Template.bind({});
-AsParagraph.args = {
-  text: 'Wallet',
-  as: 'p',
+export const AsParagraph: Story = {
+  args: {
+    text: 'Wallet',
+    as: 'p',
+  },
 };
 
-export const AsLabel = Template.bind({});
-AsLabel.args = {
-  text: 'Amount Input',
-  as: 'label',
-  inputID: 'test-amount-input',
+export const AsLabel: Story = {
+  args: {
+    text: 'Amount Input',
+    as: 'label',
+    inputID: 'test-amount-input',
+  },
 };

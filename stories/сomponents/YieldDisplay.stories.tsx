@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import YieldDisplay from '../../components/YieldDisplay';
 
@@ -17,22 +16,23 @@ export default {
   parameters: {
     backgrounds: { default: 'darkAdditional' },
   },
-} as ComponentMeta<typeof YieldDisplay>;
+} as Meta<typeof YieldDisplay>;
 
-const Template: ComponentStory<typeof YieldDisplay> = (args) =>
-  <YieldDisplay { ...args } />;
+type Story = StoryObj<typeof YieldDisplay>;
 
-export const Short = Template.bind({});
-Short.args = {
-  type: 'short',
-  yieldValue: 275,
-  yieldValuePercentage: 1.1,
+export const Short: Story = {
+  args: {
+    type: 'short',
+    yieldValue: 275,
+    yieldValuePercentage: 1.1,
+  },
 };
 
-export const Long = Template.bind({});
-Long.args = {
-  type: 'long',
-  yieldValue: 600,
-  yieldValuePercentage: 0.1,
-  averageAPY: 13,
+export const Long: Story = {
+  args: {
+    type: 'long',
+    yieldValue: 600,
+    yieldValuePercentage: 0.1,
+    averageAPY: 13,
+  },
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
@@ -8,25 +8,21 @@ import Button from '../../components/Button';
 export default {
   title: 'Components/Button',
   component: Button,
-  decorators: [
-    (story) => (
-      <div style={{ width: '206px' }}>
-        { story() }
-      </div>
-    ),
-  ],
+  decorators: [ (story) => <div style={{ width: '206px' }}>{ story() }</div> ],
   argTypes: {
     primary: { control: 'boolean' },
     onClick: {
       action: 'Button Clicked',
     },
   },
-} as ComponentMeta<typeof Button>;
+} as Meta<typeof Button>;
 
 type PlayFnArgs = {
-  args: React.ComponentPropsWithoutRef<typeof Button>,
-  canvasElement: HTMLElement
+  args: React.ComponentPropsWithoutRef<typeof Button>;
+  canvasElement: HTMLElement;
 };
+
+type Story = StoryObj<typeof Button>;
 
 const playFn = async (
     { args, canvasElement }: PlayFnArgs,
@@ -40,46 +36,51 @@ const playFn = async (
     await waitFor(() => expect(args.onClick).not.toHaveBeenCalled());
   } else {
     await waitFor(() => expect(args.onClick).toHaveBeenCalled());
-  };
+  }
 
   // Clicking away to lose focus
   await userEvent.click(canvasElement);
 };
 
-const Template: ComponentStory<typeof Button> = (args) =>
-  <Button { ...args } />;
+export const Primary: Story = {
+  args: {
+    label: 'Top Up',
+    primary: true,
+  },
 
-export const Primary = Template.bind({});
-Primary.args = {
-  label: 'Top Up',
-  primary: true,
+  play: playFn,
 };
-Primary.play = playFn;
 
-export const Default = Template.bind({});
-Default.args = {
-  label: 'Send',
+export const Default: Story = {
+  args: {
+    label: 'Send',
+  },
+
+  play: playFn,
 };
-Default.play = playFn;
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  label: 'Send',
-  primary: true,
-  disabled: true,
+export const Disabled: Story = {
+  args: {
+    label: 'Send',
+    primary: true,
+    disabled: true,
+  },
+
+  play: (args) => playFn(args, true),
 };
-Disabled.play = (args) => playFn(args, true);
 
-export const AsLink = Template.bind({});
-AsLink.args = {
-  label: 'Top Up',
-  primary: true,
-  asAnchor: true,
-  href: '/',
-};
-AsLink.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const avatarLinkButton = canvas.getByRole('link');
+export const AsLink: Story = {
+  args: {
+    label: 'Top Up',
+    primary: true,
+    asAnchor: true,
+    href: '/',
+  },
 
-  await waitFor(() => expect(avatarLinkButton).toHaveAttribute('href', '/'));
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const avatarLinkButton = canvas.getByRole('link');
+
+    await waitFor(() => expect(avatarLinkButton).toHaveAttribute('href', '/'));
+  },
 };

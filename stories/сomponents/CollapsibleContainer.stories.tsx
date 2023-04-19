@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta, StoryObj } from '@storybook/react';
 import { useArgs } from '@storybook/client-api';
 
 import CollapsibleContainer from '../../components/CollapsibleContainer';
@@ -15,15 +15,13 @@ export default {
     onCollapseClick: { action: `'Collapse' Button Clicked` },
     shouldSecondaryContentBeOutside: { control: 'boolean' },
   },
-} as ComponentMeta<typeof CollapsibleContainer>;
+} as Meta<typeof CollapsibleContainer>;
 
 const SampleContent = () => {
-  return (
-    <h3 style={{ color: 'white', fontWeight: 500 }}>Sample Content</h3>
-  );
+  return <h3 style={{ color: 'white', fontWeight: 500 }}>Sample Content</h3>;
 };
 
-const Template: ComponentStory<typeof CollapsibleContainer> = (args) => {
+const Template: StoryFn<typeof CollapsibleContainer> = (args) => {
   const [ { isCollapsed, onCollapseClick }, updateArgs ] = useArgs();
 
   const handleCollapseClick = () => {
@@ -40,38 +38,55 @@ const Template: ComponentStory<typeof CollapsibleContainer> = (args) => {
   );
 };
 
-export const Closed = Template.bind({});
-Closed.args = {
-  label: 'Wallet',
-  primaryContent: <SampleContent />,
-  secondaryContent: <SampleContent />,
+type Story = StoryObj<typeof CollapsibleContainer>;
+
+export const Closed: Story = {
+  render: Template,
+
+  args: {
+    label: 'Wallet',
+    primaryContent: <SampleContent />,
+    secondaryContent: <SampleContent />,
+  },
 };
 
-export const Open = Template.bind({});
-Open.args = {
-  label: 'Wallet',
-  isCollapsed: true,
-  primaryContent: <SampleContent />,
-  secondaryContent: <SampleContent />,
+export const Open: Story = {
+  render: Template,
+
+  args: {
+    label: 'Wallet',
+    isCollapsed: true,
+    primaryContent: <SampleContent />,
+    secondaryContent: <SampleContent />,
+  },
 };
 
-export const ContentOutside = Template.bind({});
-ContentOutside.args = {
-  label: 'Wallet',
-  shouldSecondaryContentBeOutside: true,
-  primaryContent: <SampleContent />,
-  secondaryContent: <SampleContent />,
+export const ContentOutside: Story = {
+  render: Template,
+
+  args: {
+    label: 'Wallet',
+    shouldSecondaryContentBeOutside: true,
+    primaryContent: <SampleContent />,
+    secondaryContent: <SampleContent />,
+  },
 };
 
-export const NoSecondaryContent = Template.bind({});
-NoSecondaryContent.args = {
-  label: 'Wallet',
-  primaryContent: <SampleContent />,
+export const NoSecondaryContent: Story = {
+  render: Template,
+
+  args: {
+    label: 'Wallet',
+    primaryContent: <SampleContent />,
+  },
 };
 
-export const NoSecondaryContentButActive = Template.bind({});
-NoSecondaryContentButActive.args = {
-  label: 'Wallet',
-  primaryContent: <SampleContent />,
-  shouldCollapseButtonBeAlwaysActive: true,
+export const NoSecondaryContentButActive: Story = {
+  render: Template,
+
+  args: {
+    label: 'Wallet',
+    primaryContent: <SampleContent />,
+    shouldCollapseButtonBeAlwaysActive: true,
+  },
 };

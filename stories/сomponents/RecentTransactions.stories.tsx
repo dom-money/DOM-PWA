@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
@@ -19,7 +18,9 @@ export default {
   argTypes: {
     transactions: {
       type: {
-        name: 'other', value: 'TransactionProps[] | []', required: true,
+        name: 'other',
+        value: 'TransactionProps[] | []',
+        required: true,
       },
     },
     onLoadMore: {
@@ -34,82 +35,92 @@ export default {
   parameters: {
     layout: 'padded',
   },
-} as ComponentMeta<typeof RecentTransactions>;
+} as Meta<typeof RecentTransactions>;
 
-const Template: ComponentStory<typeof RecentTransactions> = (args) =>
-  <RecentTransactions { ...args } />;
+type Story = StoryObj<typeof RecentTransactions>;
 
-export const Closed = Template.bind({});
-Closed.args = {
-  transactions: [
-    { ...CryptoTopUp.args },
-    { ...CardTopUp.args },
-    { ...Invest.args },
-    { ...Withdraw.args },
-    { ...Transfer.args },
-  ],
-} as { transactions: TransactionProps[] };
-
-export const Open = Template.bind({});
-Open.args = {
-  transactions: [
-    { ...CryptoTopUp.args },
-    { ...CardTopUp.args },
-    { ...Invest.args },
-    { ...Withdraw.args },
-    { ...Transfer.args },
-  ],
-} as { transactions: TransactionProps[] };
-Open.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const collapseButton = await canvas.getByRole('button');
-  await userEvent.click(collapseButton);
-
-  const lastTransactionTitleElement =
-    canvas.getByText('Transfer to 0xEe5b9E3a125F5c6c74cE8AEbFa76b72B3D6CF009');
-  await waitFor(() => expect(lastTransactionTitleElement).toBeVisible());
+export const Closed: Story = {
+  args: {
+    transactions: [
+      { ...CryptoTopUp.args },
+      { ...CardTopUp.args },
+      { ...Invest.args },
+      { ...Withdraw.args },
+      { ...Transfer.args },
+    ],
+  } as { transactions: TransactionProps[] },
 };
 
-export const Empty = Template.bind({});
-Empty.args = {
-  transactions: [],
-};
-Empty.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const collapseButton = await canvas.getByRole('button');
+export const Open: Story = {
+  args: {
+    transactions: [
+      { ...CryptoTopUp.args },
+      { ...CardTopUp.args },
+      { ...Invest.args },
+      { ...Withdraw.args },
+      { ...Transfer.args },
+    ],
+  } as { transactions: TransactionProps[] },
 
-  await waitFor(() => expect(collapseButton).toBeDisabled());
-};
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const collapseButton = await canvas.getByRole('button');
+    await userEvent.click(collapseButton);
 
-export const Loading = Template.bind({});
-Loading.args = {
-  isLoading: true,
-};
-Loading.parameters = {
-  controls: {
-    exclude: [ 'transactions', 'isLoadingMore', 'onLoadMore' ],
+    const lastTransactionTitleElement = canvas.getByText(
+        'Transfer to 0xEe5b9E3a125F5c6c74cE8AEbFa76b72B3D6CF009',
+    );
+    await waitFor(() => expect(lastTransactionTitleElement).toBeVisible());
   },
 };
 
-export const LoadingMore = Template.bind({});
-LoadingMore.args = {
-  transactions: [
-    { ...CryptoTopUp.args },
-    { ...CardTopUp.args },
-    { ...Invest.args },
-    { ...Withdraw.args },
-    { ...Transfer.args },
-  ],
-  isLoadingMore: true,
-} as { transactions: TransactionProps[] };
-LoadingMore.play = async ({ args, canvasElement }) => {
-  const canvas = within(canvasElement);
-  const collapseButton = await canvas.getByRole('button');
-  await userEvent.click(collapseButton);
+export const Empty: Story = {
+  args: {
+    transactions: [],
+  },
 
-  const lastTransactionTitleElement =
-    canvas.getByText('Transfer to 0xEe5b9E3a125F5c6c74cE8AEbFa76b72B3D6CF009');
-  await userEvent.hover(lastTransactionTitleElement);
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const collapseButton = await canvas.getByRole('button');
 
-  await waitFor(() => expect(args.onLoadMore).toBeCalledTimes(1));
+    await waitFor(() => expect(collapseButton).toBeDisabled());
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    isLoading: true,
+  },
+
+  parameters: {
+    controls: {
+      exclude: [ 'transactions', 'isLoadingMore', 'onLoadMore' ],
+    },
+  },
+};
+
+export const LoadingMore: Story = {
+  args: {
+    transactions: [
+      { ...CryptoTopUp.args },
+      { ...CardTopUp.args },
+      { ...Invest.args },
+      { ...Withdraw.args },
+      { ...Transfer.args },
+    ],
+    isLoadingMore: true,
+  } as { transactions: TransactionProps[] },
+
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const collapseButton = await canvas.getByRole('button');
+    await userEvent.click(collapseButton);
+
+    const lastTransactionTitleElement = canvas.getByText(
+        'Transfer to 0xEe5b9E3a125F5c6c74cE8AEbFa76b72B3D6CF009',
+    );
+    await userEvent.hover(lastTransactionTitleElement);
+
+    await waitFor(() => expect(args.onLoadMore).toBeCalledTimes(1));
+  },
 };
