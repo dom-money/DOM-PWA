@@ -1,5 +1,37 @@
-workbox-*.js
-sw.js
-worker-*.js
+# dependencies
+/node_modules
+
+# testing
+/coverage
+/reports
+
+# production
+build
+storybook-static
+
+# next.js
+/.next/
+/out/
+
+# next-pwa
+**/public/workbox-*.js
+**/public/workbox-*.js.map
+**/public/sw.js
+**/public/sw.js.map
+**/public/worker-*.js
+
+# misc
+dist
+.eslintcache
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
 next-env.d.ts
-.gitignore
