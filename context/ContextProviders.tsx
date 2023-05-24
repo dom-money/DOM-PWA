@@ -1,5 +1,5 @@
 import React from 'react';
-import LoadingProvider from './LoadingProvider';
+import { GlobalLoadingProvider } from '@/store/GlobalLoadingStore';
 import AuthProvider from './AuthProvider';
 import ReactQueryProvider from './ReactQueryProvider';
 import SnackbarProvider from './SnackbarProvider';
@@ -12,7 +12,7 @@ interface ContextProvidersProps {
 
 const ContextProviders = ({ children }: ContextProvidersProps) => {
   return (
-    <LoadingProvider>
+    <GlobalLoadingProvider>
       <AuthProvider>
         <ReactQueryProvider>
           <SnackbarProvider>
@@ -24,7 +24,7 @@ const ContextProviders = ({ children }: ContextProvidersProps) => {
           </SnackbarProvider>
         </ReactQueryProvider>
       </AuthProvider>
-    </LoadingProvider>
+    </GlobalLoadingProvider>
   );
 };
 
