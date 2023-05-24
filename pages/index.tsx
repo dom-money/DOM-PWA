@@ -10,6 +10,7 @@ import useWealthBalance from '../hooks/useWealthBalance';
 import useTransactions from '../hooks/useTransactions';
 import useQRAddressReader from '../hooks/useQRAddressReader';
 import { sumTwoBalancesOfToken } from '../utils/BigNumberUtils';
+import { DEFAULT_USER } from '@/constants';
 
 const MainPage: NextPage = () => {
   const { user } = useAuthContext();
@@ -28,9 +29,10 @@ const MainPage: NextPage = () => {
   if (
     (walletBalance.isLoading || walletBalance.isError) ||
     (wealthBalance.isLoading || wealthBalance.isError) ||
-    (transactions.isLoading || transactions.isError)
+    (transactions.isLoading || transactions.isError) ||
+    !user
   ) {
-    return <MainPageRender isLoading userName={ user.name } />;
+    return <MainPageRender isLoading userName={ DEFAULT_USER.name } />;
   };
 
   const totalBalance = sumTwoBalancesOfToken(
