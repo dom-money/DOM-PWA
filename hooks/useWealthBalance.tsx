@@ -1,9 +1,9 @@
 import { ethers, BigNumber } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
-import { useAuthContext } from '../context/AuthContext';
-import { useEventListenersContext } from '../context/EventListenersContext';
-import { SignerType } from './useAuth';
-import abiDOM from '../utils/DepositManager-ABI.json';
+import { useAuthContext } from '@/context/AuthContext';
+import { useEventListenersContext } from '@/context/EventListenersContext';
+import { Signer } from './useAuth';
+import abiDOM from '@/utils/DepositManager-ABI.json';
 
 type WealthBalanceType = {
   balanceAsString: string;
@@ -13,7 +13,8 @@ type WealthBalanceType = {
   rewards: string;
 };
 
-type GetWalletBalanceType = (signer: SignerType) => Promise<WealthBalanceType>;
+type GetWalletBalanceType = (signer: Signer | null) =>
+  Promise<WealthBalanceType>;
 
 const USDC_TOKEN_DECIMALS = 6;
 

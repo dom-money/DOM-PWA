@@ -2,7 +2,7 @@ import { ethers, BigNumber } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthContext } from '../context/AuthContext';
 import { useEventListenersContext } from '../context/EventListenersContext';
-import { EthersProviderType, SignerType } from './useAuth';
+import { Provider, Signer } from './useAuth';
 import genericErc20Abi from '../utils/Erc20.json';
 
 type WalletBalanceType = {
@@ -12,8 +12,8 @@ type WalletBalanceType = {
 };
 
 type GetWalletBalanceType = (
-  ethersProvider: EthersProviderType,
-  signer: SignerType
+  ethersProvider: Provider | null,
+  signer: Signer | null
 ) => Promise<WalletBalanceType>;
 
 const getWalletBalance: GetWalletBalanceType = async (
@@ -47,16 +47,16 @@ const getWalletBalance: GetWalletBalanceType = async (
 };
 
 const useWalletBalance = () => {
-  const { ethersProvider, signer } = useAuthContext();
+  const { provider, signer } = useAuthContext();
   const { walletEvent } = useEventListenersContext();
 
   return useQuery(
       [ 'walletBalance', walletEvent ],
-      () => getWalletBalance(ethersProvider, signer),
+      () => getWalletBalance(provider, signer),
       {
         // The query will not execute until the `signer` and ...
         // .. `ethersProvider` are initialized
-        enabled: !!signer && !!ethersProvider,
+        enabled: !!signer && !!provider,
         // New data on key change will be swapped without Loading state
         keepPreviousData: true,
       },

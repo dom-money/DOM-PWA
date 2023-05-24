@@ -4,7 +4,7 @@ import { useInfiniteQuery, InfiniteData } from '@tanstack/react-query';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuthContext } from '../context/AuthContext';
 import { useEventListenersContext } from '../context/EventListenersContext';
-import { SignerType } from './useAuth';
+import { Signer } from './useAuth';
 import { TransactionProps } from '../components/Transaction';
 import useDebounce from '../hooks/useDebounce';
 import { useTransactionsQueue } from '../context/TransactionsQueueContext';
@@ -43,7 +43,7 @@ export type TransactionsType = {
 };
 
 type GetTransactionsType = (
-  signer: SignerType,
+  signer: Signer | null,
   transactionsQueue: ReturnType<typeof useTransactionsQueue>,
   pageParam: number,
   offset?: number,

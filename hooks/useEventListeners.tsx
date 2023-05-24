@@ -12,7 +12,7 @@ const useEventListeners = () => {
   const [ walletEvent, setWalletEvent ] = useState<EventData>(null);
   const [ wealthEvent, setWealthEvent ] = useState<EventData>(null);
 
-  const { ethersProvider } = useAuthContext();
+  const { provider } = useAuthContext();
 
   const walletAddress = useWalletAddress();
 
@@ -108,14 +108,14 @@ const useEventListeners = () => {
   // Subscription to 'Deposit to Wealth Wallet' and
   // 'Withdraw from Wealth Wallet' Events
   useEffect(() => {
-    if (!ethersProvider || walletAddress.isLoading || walletAddress.isError) {
+    if (!provider || walletAddress.isLoading || walletAddress.isError) {
       return;
     };
 
     const contractWithProvider = new ethers.Contract(
         process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string,
         abi,
-        ethersProvider,
+        provider,
     );
     // eslint-disable-next-line new-cap
     const filterDepositByAddress = contractWithProvider.filters.Deposit(
@@ -146,7 +146,7 @@ const useEventListeners = () => {
       );
     };
   }, [
-    ethersProvider,
+    provider,
     walletAddress.isLoading,
     walletAddress.isError,
     walletAddress.data,
@@ -156,14 +156,14 @@ const useEventListeners = () => {
 
   // Subscription to 'Deposit to Wallet' and 'Send From Wallet' Events
   useEffect(() => {
-    if (!ethersProvider || walletAddress.isLoading || walletAddress.isError) {
+    if (!provider || walletAddress.isLoading || walletAddress.isError) {
       return;
     };
 
     const contractUSDCWithProvider = new ethers.Contract(
         process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as string,
         genericErc20Abi,
-        ethersProvider,
+        provider,
     );
 
     // eslint-disable-next-line new-cap
@@ -183,7 +183,7 @@ const useEventListeners = () => {
       contractUSDCWithProvider.off(filterFrom, sentFromWalletEventListener);
     };
   }, [
-    ethersProvider,
+    provider,
     walletAddress.isLoading,
     walletAddress.isError,
     walletAddress.data,

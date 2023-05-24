@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAuthContext } from '../context/AuthContext';
-import { SignerType } from './useAuth';
+import { Signer } from './useAuth';
 
 type WalletAddressType = {
   walletAddress: string,
 };
 
-type GetWalletAddressType = (signer: SignerType) => Promise<WalletAddressType>;
+type GetWalletAddressType = (signer: Signer | null) =>
+  Promise<WalletAddressType>;
 
 const getWalletAddress: GetWalletAddressType = async (signer) => {
   return new Promise(async (resolve, reject) => {
