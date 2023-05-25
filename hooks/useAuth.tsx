@@ -7,12 +7,13 @@ import type { OpenloginUserInfo } from '@toruslabs/openlogin';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { MetamaskAdapter } from '@web3auth/metamask-adapter';
 import { WalletConnectV2Adapter } from '@web3auth/wallet-connect-v2-adapter';
-import { web3AuthClientId, web3AuthNetwork, DEFAULT_USER } from '@/constants';
-import { useGlobalLoadingContext } from '@/store/GlobalLoadingStore';
 import Safe, { EthersAdapter } from '@safe-global/protocol-kit';
-import { useRelayAdapter } from '@/store/GelatoRelayStore';
 import SafeApiKit from '@safe-global/api-kit';
 import deploySafe from '@/services/safe/deploySafe';
+import { useGlobalLoadingContext } from '@/store/GlobalLoadingStore';
+import { useRelayAdapter } from '@/store/GelatoRelayStore';
+import { useSafeActions } from '@/store/SafeStore';
+import { web3AuthClientId, web3AuthNetwork, DEFAULT_USER } from '@/constants';
 
 export type Web3AuthProvider = NonNullable<Web3Auth['provider']>;
 export type Provider = ethers.providers.Web3Provider;
@@ -28,6 +29,7 @@ const useAuth = () => {
   const { setIsAuthLoaded } = useGlobalLoadingContext();
   const router = useRouter();
   const relayAdapter = useRelayAdapter();
+  const { setSafeService, setSafe, setSafeAddress } = useSafeActions();
 
   const effectCalled = useRef(false);
 
@@ -103,25 +105,36 @@ const useAuth = () => {
       ethAdapter,
     });
 
+    // Setting safeService as global state
+    setSafeService(safeService);
+
     const { safes } = await safeService.getSafesByOwner(walletAddress);
 
-    let safeSdk: Safe;
+    let safe: Safe;
 
     if (safes.length === 0) {
       // Deploying a safe
-      safeSdk = await deploySafe(ethAdapter, signer, relayAdapter);
+      safe = await deploySafe(ethAdapter, signer, relayAdapter);
     } else {
       // Loading existing safe
       console.log(`Available Safes:\n\t${safes.join('\n\t')}`);
 
-      safeSdk = await Safe.create({
+      safe = await Safe.create({
         ethAdapter,
         safeAddress: safes[ 0 ],
       });
     };
 
-    console.log('Loaded Safe:', await safeSdk.getAddress());
-  }, [ relayAdapter ]);
+    // Setting safe as global state
+    setSafe(safe);
+
+    const safeAddress = await safe.getAddress();
+
+    // Setting safeAddress as global state
+    setSafeAddress(safeAddress);
+
+    console.log('Loaded Safe:', safeAddress);
+  }, [ relayAdapter, setSafeService, setSafe, setSafeAddress ]);
 
   const initUser = useCallback(async (
       web3Auth: Web3Auth,
@@ -177,7 +190,10 @@ const useAuth = () => {
     setUser(null);
     setProvider(null);
     setSigner(null);
-  }, [ web3Auth ]);
+    setSafeService(null);
+    setSafe(null);
+    setSafeAddress(null);
+  }, [ web3Auth, setSafe, setSafeAddress, setSafeService ]);
 
   return {
     user,
