@@ -33,7 +33,6 @@ const useWealthBalanceMock = useWealthBalance.default as jest.Mock;
 // Setting up mocks
 beforeEach(() => {
   useAuthContextMock.mockReturnValue({
-    isUserLoggedIn: true,
     user: {
       email: '',
       name: 'Anonymous User',
@@ -102,7 +101,6 @@ describe('Main Page', () => {
   test('displays transactions', async () => {
     // TBD: Works, but overrides returned value for next tests
     useAuthContextMock.mockReturnValue({
-      isUserLoggedIn: true,
       user: {
         email: '',
         name: 'Anonymous User',
