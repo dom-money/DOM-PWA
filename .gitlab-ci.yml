@@ -36,9 +36,10 @@ build_app:
     - yarn build
     
   only:
-    - merge_requests
-    - main
-    - changes:
+    refs:
+      - merge_requests
+      - main
+    changes:
       - web-app/**/*
     
 
@@ -68,9 +69,10 @@ test_app:
     - yarn test:ci-coverage
     
   only:
-    - merge_requests
-    - main
-    - changes:
+    refs:
+      - merge_requests
+      - main
+    changes:
       - web-app/**/*
 
 
@@ -94,9 +96,10 @@ test_storybook:
       - $WEB_APP_FOLDER/reports/jest-test-results.json
 
   only:
-    - merge_requests
-    - main
-    - changes:
+    refs:
+      - merge_requests
+      - main
+    changes:
       - web-app/**/*
 
 
@@ -119,8 +122,9 @@ deploy_app:
     - exit
     
   only:
-    - main
-    - changes:
+    refs:
+      - main
+    changes:
       - web-app/**/*
 
 deploy_storybook:
@@ -142,6 +146,7 @@ deploy_storybook:
   needs: [ 'deploy_app' ]
     
   only:
-    - main
-    - changes:
+    refs:
+      - main
+    changes:
       - web-app/**/*
