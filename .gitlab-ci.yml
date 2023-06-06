@@ -38,8 +38,9 @@ build_app:
   only:
     - merge_requests
     - main
-    changes:
+    - changes:
       - web-app/**/*
+    
 
 
 test_app:
@@ -69,7 +70,7 @@ test_app:
   only:
     - merge_requests
     - main
-    changes:
+    - changes:
       - web-app/**/*
 
 
@@ -95,7 +96,7 @@ test_storybook:
   only:
     - merge_requests
     - main
-    changes:
+    - changes:
       - web-app/**/*
 
 
@@ -119,7 +120,7 @@ deploy_app:
     
   only:
     - main
-    changes:
+    - changes:
       - web-app/**/*
 
 deploy_storybook:
@@ -142,5 +143,5 @@ deploy_storybook:
     
   only:
     - main
-    changes:
+    - changes:
       - web-app/**/*
