@@ -9,6 +9,8 @@ stages:
 
 variables:
   NODE_VER: '16.18.1'
+  WEB_APP_FOLDER: web-app
+  P2P_SERVICE_FOLDER: p2p-service
 
 cache: &global_cache
   key: $CI_COMMIT_REF_SLUG
@@ -26,15 +28,20 @@ build_app:
 
   artifacts:
     paths:
-      - .next/
+      - $WEB_APP_FOLDER/.next/
 
   script:
+    - cd $WEB_APP_FOLDER
     - yarn
     - yarn build
     
   only:
-    - merge_requests
-    - main
+    refs:
+      - merge_requests
+      - main
+    changes:
+      - web-app/**/*
+    
 
 
 test_app:
@@ -48,21 +55,25 @@ test_app:
 
   artifacts:
     paths:
-      - coverage/
-      - reports/junit.xml
+      - $WEB_APP_FOLDER/coverage/
+      - $WEB_APP_FOLDER/reports/junit.xml
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: coverage/cobertura-coverage.xml
-      junit: reports/junit.xml
+        path: $WEB_APP_FOLDER/coverage/cobertura-coverage.xml
+      junit: $WEB_APP_FOLDER/reports/junit.xml
   
   script:
+    - cd $WEB_APP_FOLDER
     - yarn
     - yarn test:ci-coverage
     
   only:
-    - merge_requests
-    - main
+    refs:
+      - merge_requests
+      - main
+    changes:
+      - web-app/**/*
 
 
 test_storybook:
@@ -75,17 +86,21 @@ test_storybook:
   tags: [ 'docker' ]
 
   script:
+    - cd $WEB_APP_FOLDER
     - yarn
     - yarn test:ci-generate-output
     - yarn test-storybook:ci
   
   artifacts:
     paths:
-      - reports/jest-test-results.json
+      - $WEB_APP_FOLDER/reports/jest-test-results.json
 
   only:
-    - merge_requests
-    - main
+    refs:
+      - merge_requests
+      - main
+    changes:
+      - web-app/**/*
 
 
 deploy_app:
@@ -98,6 +113,7 @@ deploy_app:
     - GIT_SSH_COMMAND='ssh -i /home/gitlab-runner/.ssh/gitlab_rsa' git pull
 
   script:
+    - cd $WEB_APP_FOLDER
     - yarn
     - yarn build
     - pm2 restart dom
@@ -106,7 +122,10 @@ deploy_app:
     - exit
     
   only:
-    - main
+    refs:
+      - main
+    changes:
+      - web-app/**/*
 
 deploy_storybook:
   stage: deploy
@@ -117,6 +136,7 @@ deploy_storybook:
     # See: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1180
     # As a workaround, we run jest tests again to generate the test results ...
     # .. in the production folder for Storybook to use.
+    - cd $WEB_APP_FOLDER
     - yarn test:ci-generate-output
     - pm2 restart storybook
   
@@ -126,4 +146,7 @@ deploy_storybook:
   needs: [ 'deploy_app' ]
     
   only:
-    - main
+    refs:
+      - main
+    changes:
+      - web-app/**/*
