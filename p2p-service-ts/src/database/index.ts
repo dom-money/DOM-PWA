@@ -9,7 +9,7 @@ class DbService {
   }
 
   public open() {
-    const dbFile = path.join(__dirname, '..', 'database.sqlite');
+    const dbFile = path.join(__dirname, '..', '..', 'database.sqlite');
     this.db = new Database(dbFile, (err: Error) => {
       if (err) {
         console.error(err.message);
