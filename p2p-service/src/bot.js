@@ -1,7 +1,6 @@
 // src/bot.js
 const {Telegraf} = require('telegraf');
 const { Markup } = require('telegraf');
-const {QrCodePix} = require('qrcode-pix');
 const {
   saveOrder,
   getOrderById,
@@ -11,10 +10,7 @@ const {
   updateProvider,
   getProvider,
 } = require('./database');
-
-const axios = require('axios');
-
-const { sendCreateOrderNotification } = require('./helpers');
+const QRCode = require('qrcode');
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
@@ -34,9 +30,6 @@ bot.start(async (ctx) => {
       ])
         .oneTime()
         .resize(),
-      // Markup.inlineKeyboard([
-      //   Markup.button.callback('Input your Polygon address', 'input_polygon_address'),
-      // ])
     );
   }
 });
@@ -50,15 +43,6 @@ bot.hears('✅ Set address', (ctx) => {
     ctx.reply(`Polygon address saved: ${polygonAddress}`);
   });
 } )
-// bot.action('input_polygon_address', (ctx) => {
-//   ctx.reply('Please input your Polygon address:');
-//   bot.on('text', async (ctx) => {
-//     const polygonAddress = ctx.message.text;
-//     const providerId = ctx.chat.id;
-//     await saveProvider(providerId, polygonAddress);
-//     ctx.reply(`Polygon address saved: ${polygonAddress}`);
-//   });
-// });
 
 bot.action(/accept_order:(\d+)/, async (ctx) => {
     const orderId = Number(ctx.match[1]);
@@ -69,20 +53,8 @@ bot.action(/accept_order:(\d+)/, async (ctx) => {
       await updateProvider(ctx.chat.id, orderId);
       await updateOrder(orderId, ctx.chat.id, "fileLink", "accepted_by_provider");
 
-      const qrCodePix = QrCodePix({
-        version: '01',
-        key: order.pix_address, //or any PIX key
-        name: 'Fulano de Tal',
-        city: 'SAO PAULO',
-        transactionId: 'YOUR_TRANSACTION_ID', //max 25 characters
-        message: 'Pay me :)',
-        cep: '99999999',
-        value: order.amount,
-    });
-
-    console.log(qrCodePix);
-      const qrCodeImage = await qrCodePix.base64();
-      ctx.replyWithPhoto({ source: Buffer.from(qrCodeImage.split(',')[1], 'base64') });
+      const qrImage = await QRCode.toBuffer(order.qr_data);
+      ctx.replyWithPhoto({ source: qrImage });
       ctx.reply(
         'Order accepted. Please pay the transaction and upload the receipt.',
         Markup.inlineKeyboard([
@@ -130,14 +102,14 @@ bot.action(/accept_order:(\d+)/, async (ctx) => {
 
 bot.launch();
 
-async function sendOrderToProviders(orderData) {
+async function sendOrderToProviders(order) {
   const providers = await getProviders();
   for (const provider of providers) {
     await bot.telegram.sendMessage(
       provider.telegram_id,
-      `New order: ${orderData.amount} BRL to ${orderData.pix_address}`,
+      `New order: ${order.amount} BRL (${order.usdt_amount} USDT) to ${order.pix_address}`,
       Markup.inlineKeyboard([
-        Markup.button.callback('Accept order', `accept_order:${provider.id}`),
+        Markup.button.callback('Accept order', `accept_order:${order.id}`),
       ])
     );
   }
