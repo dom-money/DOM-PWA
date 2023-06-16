@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import { BigNumber, ethers } from 'ethers';
 import genericErc20Abi from '../utils/Erc20.json';
+import { PAYMENT_TOKEN_CONTRACT_ADDRESS } from '@/constants';
 
 type ErrorMessageType = null | string;
 
@@ -31,9 +32,9 @@ const useSendToWallet: useSendToWalletType = () => {
 
     try {
       const usdcContractWithSigner = new ethers.Contract(
-        process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as string,
-        genericErc20Abi,
-        signer,
+          PAYMENT_TOKEN_CONTRACT_ADDRESS,
+          genericErc20Abi,
+          signer,
       );
       const result = await usdcContractWithSigner.transfer(
           recipient,

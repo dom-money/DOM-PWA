@@ -3,8 +3,10 @@ import { useRouter } from 'next/router';
 import { ethers } from 'ethers';
 import { Web3Auth } from '@web3auth/modal';
 import { CHAIN_NAMESPACES } from '@web3auth/base';
-import type { OpenloginUserInfo } from '@toruslabs/openlogin';
-import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
+import {
+  OpenloginAdapter,
+  OpenloginUserInfo,
+} from '@web3auth/openlogin-adapter';
 import { MetamaskAdapter } from '@web3auth/metamask-adapter';
 import { WalletConnectV2Adapter } from '@web3auth/wallet-connect-v2-adapter';
 import Safe, { EthersAdapter } from '@safe-global/protocol-kit';
@@ -13,7 +15,14 @@ import deploySafe from '@/services/safe/deploySafe';
 import { useGlobalLoadingContext } from '@/store/GlobalLoadingStore';
 import { useRelayAdapter } from '@/store/GelatoRelayStore';
 import { useSafeActions } from '@/store/SafeStore';
-import { web3AuthClientId, web3AuthNetwork, DEFAULT_USER } from '@/constants';
+import {
+  WEB3_AUTH_CLIENT_ID,
+  WEB3_AUTH_NETWORK_TYPE,
+  DEFAULT_USER,
+  CHAIN_ID_HEX,
+  RPC_TARGET,
+  SAFE_TRANSACTION_SERVICE_URL,
+} from '@/constants';
 
 export type Web3AuthProvider = NonNullable<Web3Auth['provider']>;
 export type Provider = ethers.providers.Web3Provider;
@@ -35,11 +44,11 @@ const useAuth = () => {
 
   const initWeb3Auth = useCallback(async () => {
     const web3Auth = new Web3Auth({
-      clientId: web3AuthClientId,
+      clientId: WEB3_AUTH_CLIENT_ID,
       chainConfig: {
         chainNamespace: CHAIN_NAMESPACES.EIP155,
-        chainId: process.env.NEXT_PUBLIC_CHAIN_ID,
-        rpcTarget: process.env.NEXT_PUBLIC_RPC_TARGET,
+        chainId: CHAIN_ID_HEX,
+        rpcTarget: RPC_TARGET,
       },
       uiConfig: {
         appName: 'DOM',
@@ -50,7 +59,7 @@ const useAuth = () => {
 
     const openloginAdapter = new OpenloginAdapter({
       adapterSettings: {
-        network: web3AuthNetwork,
+        network: WEB3_AUTH_NETWORK_TYPE,
         uxMode: 'popup',
         whiteLabel: {
           name: 'DOM Wallet',
@@ -61,7 +70,9 @@ const useAuth = () => {
         },
       },
     });
-    const metamaskAdapter = new MetamaskAdapter({ clientId: web3AuthClientId });
+    const metamaskAdapter = new MetamaskAdapter({
+      clientId: WEB3_AUTH_CLIENT_ID,
+    });
 
     web3Auth.configureAdapter(openloginAdapter);
     web3Auth.configureAdapter(metamaskAdapter);
@@ -101,7 +112,7 @@ const useAuth = () => {
     });
 
     const safeService = new SafeApiKit({
-      txServiceUrl: 'https://safe-transaction-mumbai.dom.money',
+      txServiceUrl: SAFE_TRANSACTION_SERVICE_URL,
       ethAdapter,
     });
 
@@ -144,6 +155,8 @@ const useAuth = () => {
 
     await initSafe(signer);
 
+    console.log(await web3Auth.getUserInfo());
+
     setUser({
       ...DEFAULT_USER,
       ...await web3Auth.getUserInfo(),
@@ -158,7 +171,9 @@ const useAuth = () => {
         const web3Auth = await initWeb3Auth();
 
         // If user has active session
-        if (web3Auth.provider) await initUser(web3Auth, web3Auth.provider);
+        if (web3Auth.connected && web3Auth.provider) {
+          await initUser(web3Auth, web3Auth.provider);
+        };
       } catch (error) {
         console.error(error);
       } finally {

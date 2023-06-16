@@ -4,12 +4,12 @@ import type { NextPage } from 'next';
 import InvestPageRender from '../../components/InvestPageRender';
 import PaymentStatus from '../../components/PaymentStatus';
 
-import useWalletBalance from '../../hooks/useWalletBalance';
+import useSafeUsdtBalance from '@/hooks/useSafeUsdtBalance';
 import useInputAmount from '../../hooks/useInputAmount';
 import useContract from '../../hooks/useContract';
 
 const InvestPage: NextPage = () => {
-  const { data: walletBalance, isLoading, isError } = useWalletBalance();
+  const { data: walletBalance, isLoading, isError } = useSafeUsdtBalance();
 
   const {
     amount: inputAmount,

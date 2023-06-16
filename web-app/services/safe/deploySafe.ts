@@ -82,7 +82,7 @@ const deploySafe = async (
 
   console.log([
     'Relay task success!',
-    `https://mumbai.polygonscan.com/tx/${transactionHash}`,
+    `https://polygonscan.com/tx/${transactionHash}`,
   ].join('\n'));
 
   console.log('Waiting for the transaction to be minted...');
@@ -90,7 +90,7 @@ const deploySafe = async (
 
   console.log([
     'Deployed Safe successfully!',
-    `https://mumbai.polygonscan.com/address/${safeAddress}`,
+    `https://polygonscan.com/address/${safeAddress}`,
   ].join('\n'));
   const safeSdk = await Safe.create({ ethAdapter, safeAddress });
 
