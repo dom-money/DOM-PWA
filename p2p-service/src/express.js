@@ -1,13 +1,17 @@
-// src/express.js
 const express = require('express');
 const bodyParser = require('body-parser');
-const webhookRoutes = require('./webhook');
+const cors = require('cors');
+const ordersRouter = require('./routes/orders');
+const jwtVerifyMiddleware = require('./middlewares/jwtVerifyMiddleware');
+const errorMiddleware = require('./middlewares/errorMiddleware');
 
 const app = express();
 
+app.use(cors({ exposedHeaders: ['Authorization'] }));
 app.use(bodyParser.json());
 
-app.use('/webhook', webhookRoutes);
+app.use('/orders', jwtVerifyMiddleware, ordersRouter);
+app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
