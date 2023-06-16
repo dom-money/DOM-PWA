@@ -1,9 +1,7 @@
 import { rest } from 'msw';
 import transactionsResolver from './resolvers/transactionsResolver';
-
-const TRANSACTIONS_API_BASE_URL =
-  CHAIN_EXPLORER_API_URL as string;
+import { CHAIN_EXPLORER_API_URL } from '@/constants';
 
 export const handlers = [
-  rest.get(`${TRANSACTIONS_API_BASE_URL}/`, transactionsResolver),
+  rest.get(`${CHAIN_EXPLORER_API_URL}/`, transactionsResolver),
 ];
