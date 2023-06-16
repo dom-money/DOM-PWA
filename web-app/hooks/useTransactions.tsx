@@ -8,6 +8,11 @@ import { Signer } from './useAuth';
 import { TransactionProps } from '../components/Transaction';
 import useDebounce from '../hooks/useDebounce';
 import { useTransactionsQueue } from '../context/TransactionsQueueContext';
+import {
+  CHAIN_EXPLORER_API_URL,
+  DOM_CONTRACT_ADDRESS,
+  PAYMENT_TOKEN_CONTRACT_ADDRESS,
+} from '@/constants';
 
 const DISPLAY_PER_PAGE = 10;
 const TRANSACTIONS_PER_REQUEST = 50;
@@ -70,11 +75,11 @@ const fetchTransactions = async (
     pageParam: number,
 ) => {
   return await axios.get('/', {
-    baseURL: process.env.NEXT_PUBLIC_ETHERSCAN_BASE_URL,
+    baseURL: CHAIN_EXPLORER_API_URL,
     params: {
       module: 'account',
       action: 'tokentx',
-      contractaddress: process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS,
+      contractaddress: PAYMENT_TOKEN_CONTRACT_ADDRESS,
       address: walletAddress,
       startblock: 0,
       endblock: 9999999999,
@@ -83,9 +88,6 @@ const fetchTransactions = async (
       sort: 'desc',
     } });
 };
-
-const DOM_CONTRACT_ADDRESS =
-  process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string;
 
 const getTransactions: GetTransactionsType = async (
     signer,

@@ -3,20 +3,19 @@ import type { NextPage } from 'next';
 import { useSnackbar } from 'notistack';
 
 import WalletAddressPageRender from '../../components/WalletAddressPageRender';
-
-import useWalletAddress from '../../hooks/useWalletAddress';
+import { useSafeStore } from '@/store/SafeStore';
 
 const WalletAddressPage: NextPage = () => {
-  const { data: walletAddress, isLoading, isError } = useWalletAddress();
+  const safeAddress = useSafeStore((state) => state.safeAddress);
 
   const { enqueueSnackbar } = useSnackbar();
 
-  if (isLoading || isError) {
+  if (!safeAddress) {
     return <WalletAddressPageRender isLoading />;
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(walletAddress.walletAddress).then(()=> {
+    navigator.clipboard.writeText(safeAddress).then(()=> {
       enqueueSnackbar(
           'Successfully copied wallet address to clipboard',
           {
@@ -36,7 +35,7 @@ const WalletAddressPage: NextPage = () => {
       return;
     };
     try {
-      await navigator.share({ text: walletAddress.walletAddress });
+      await navigator.share({ text: safeAddress });
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +43,7 @@ const WalletAddressPage: NextPage = () => {
 
   return (
     <WalletAddressPageRender
-      address={ walletAddress.walletAddress }
+      address={ safeAddress }
       copyAddressButtonOnClick={ copyToClipboard }
       shareButtonOnClick={ handleAddressShare }
     />

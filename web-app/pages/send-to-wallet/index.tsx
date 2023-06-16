@@ -5,14 +5,14 @@ import SendToWalletPageRender from '../../components/SendToWalletPageRender';
 
 import AddressQRReader from '../../components/AddressQRReader';
 import PaymentStatus from '../../components/PaymentStatus';
-import useWalletBalance from '../../hooks/useWalletBalance';
+import useSafeUsdtBalance from '../../hooks/useSafeUsdtBalance';
 import useInputAmount from '../../hooks/useInputAmount';
 import useInputAddress from '../../hooks/useInputAddress';
 import useQRAddressReader from '../../hooks/useQRAddressReader';
 import useSendToWallet from '../../hooks/useSendToWallet';
 
 const SendToWalletPage: NextPage = () => {
-  const { data: walletBalance, isLoading, isError } = useWalletBalance();
+  const { data: walletBalance, isLoading, isError } = useSafeUsdtBalance();
 
   const {
     amount: inputAmount,

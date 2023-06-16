@@ -8,6 +8,7 @@ import Wallet from './Wallet';
 import Wealth from './Wealth';
 import RecentTransactions from './RecentTransactions';
 import { TransactionProps } from './Transaction';
+import Loading from './Loading';
 
 interface MainPageRenderProps {
   /**
@@ -66,6 +67,10 @@ interface MainPageRenderProps {
    * Is there a notification present?
    */
   isNotificationPresent?: boolean;
+  /**
+   * Is Component in the process of submitting a new order?
+   */
+  isSubmitting?: boolean;
 };
 
 interface LoadingProps {
@@ -92,6 +97,7 @@ interface LoadingProps {
   onLoadMoreTransactions?: never;
   isLoadingMoreTransactions?: never;
   isNotificationPresent?: never;
+  isSubmitting?: never;
 };
 
 type Props = LoadingProps | MainPageRenderProps;
@@ -119,6 +125,7 @@ const MainPageRender = ({
   avatarImageURL,
   isNotificationPresent = false,
   isLoading,
+  isSubmitting,
 }: Props) => {
   if (isLoading) {
     return (
@@ -137,32 +144,39 @@ const MainPageRender = ({
   };
 
   return (
-    <Wrapper>
-      <HeaderWithMargin
-        avatarImageURL={ avatarImageURL }
-        isNotificationPresent={ isNotificationPresent }
-        userName={ userName }
+    <>
+      <Wrapper>
+        <HeaderWithMargin
+          avatarImageURL={ avatarImageURL }
+          isNotificationPresent={ isNotificationPresent }
+          userName={ userName }
+        />
+        <TotalBalance
+          amount={ totalBalanceAmount }
+        />
+        <Wallet
+          amount={ walletAmount }
+          scanQROnClick={ scanQROnClick }
+        />
+        <Wealth
+          amount={ wealthAmount }
+          yieldValue={ yieldValue }
+          yieldValuePercentage={ yieldValuePercentage }
+          averageAPY={ averageAPY }
+        />
+        <RecentTransactions
+          transactions={ transactions }
+          isLoadingMore={ isLoadingMoreTransactions }
+          onLoadMore={ onLoadMoreTransactions }
+        />
+        <InvestButton href='/invest'/>
+      </Wrapper>
+      <Loading
+        isOpen={ isSubmitting }
+        primary
+        ariaLabel='Transaction is in progress'
       />
-      <TotalBalance
-        amount={ totalBalanceAmount }
-      />
-      <Wallet
-        amount={ walletAmount }
-        scanQROnClick={ scanQROnClick }
-      />
-      <Wealth
-        amount={ wealthAmount }
-        yieldValue={ yieldValue }
-        yieldValuePercentage={ yieldValuePercentage }
-        averageAPY={ averageAPY }
-      />
-      <RecentTransactions
-        transactions={ transactions }
-        isLoadingMore={ isLoadingMoreTransactions }
-        onLoadMore={ onLoadMoreTransactions }
-      />
-      <InvestButton href='/invest'/>
-    </Wrapper>
+    </>
   );
 };
 

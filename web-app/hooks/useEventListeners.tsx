@@ -5,6 +5,10 @@ import abi from '../utils/DepositManager-ABI.json';
 import genericErc20Abi from '../utils/Erc20.json';
 import useWalletAddress from './useWalletAddress';
 import { useAuthContext } from '../context/AuthContext';
+import {
+  DOM_CONTRACT_ADDRESS,
+  PAYMENT_TOKEN_CONTRACT_ADDRESS,
+} from '@/constants';
 
 type EventData = object | null;
 
@@ -113,7 +117,7 @@ const useEventListeners = () => {
     };
 
     const contractWithProvider = new ethers.Contract(
-        process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string,
+        DOM_CONTRACT_ADDRESS,
         abi,
         provider,
     );
@@ -161,7 +165,7 @@ const useEventListeners = () => {
     };
 
     const contractUSDCWithProvider = new ethers.Contract(
-        process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as string,
+        PAYMENT_TOKEN_CONTRACT_ADDRESS,
         genericErc20Abi,
         provider,
     );

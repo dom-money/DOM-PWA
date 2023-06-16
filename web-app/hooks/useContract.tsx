@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import { ethers } from 'ethers';
 import abi from '../utils/DepositManager-ABI.json';
+import { DOM_CONTRACT_ADDRESS } from '@/constants';
 
 type ErrorMessageType = string | null;
 type TransactionResultType = object | null;
@@ -39,7 +40,7 @@ const useContract: useContractType = () => {
       const amountToDepositAsBigNumber =
         ethers.utils.parseUnits(amountToDeposit, 'ether');
       const contractWithSigner = new ethers.Contract(
-          process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string,
+          DOM_CONTRACT_ADDRESS,
           abi,
           signer,
       );
@@ -75,7 +76,7 @@ const useContract: useContractType = () => {
       const amountToWithdrawAsBigNumber =
         ethers.utils.parseUnits(amountToWithdraw, 'ether');
       const contractWithSigner = new ethers.Contract(
-          process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string,
+          DOM_CONTRACT_ADDRESS,
           abi,
           signer,
       );

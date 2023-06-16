@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { ethers, BigNumber } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthContext } from '@/context/AuthContext';
 import { useEventListenersContext } from '@/context/EventListenersContext';
 import { Signer } from './useAuth';
 import abiDOM from '@/utils/DepositManager-ABI.json';
+import { DOM_CONTRACT_ADDRESS, PAYMENT_TOKEN_DECIMALS } from '@/constants';
 
 type WealthBalanceType = {
   balanceAsString: string;
@@ -16,18 +18,26 @@ type WealthBalanceType = {
 type GetWalletBalanceType = (signer: Signer | null) =>
   Promise<WealthBalanceType>;
 
-const USDC_TOKEN_DECIMALS = 6;
-
 const getWealthBalance: GetWalletBalanceType = async (signer) => {
   return new Promise(async (resolve, reject) => {
     if (!signer) {
       throw new Error('Signer is not initialized');
     };
     try {
+      resolve({
+        balanceAsString: '0',
+        balanceAsBigNumber: BigNumber.from(0),
+        tokenDecimals: PAYMENT_TOKEN_DECIMALS,
+        apy: 0,
+        rewards: '',
+      });
+      return;
+
+      /*
       const address = await signer.getAddress();
 
       const domContractWithSigner = new ethers.Contract(
-          process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS as string,
+          DOM_CONTRACT_ADDRESS,
           abiDOM,
           signer,
       );
@@ -37,7 +47,7 @@ const getWealthBalance: GetWalletBalanceType = async (signer) => {
         resolve({
           balanceAsString: '0',
           balanceAsBigNumber: BigNumber.from(0),
-          tokenDecimals: USDC_TOKEN_DECIMALS,
+          tokenDecimals: PAYMENT_TOKEN_DECIMALS,
           apy: 0,
           rewards: '',
         });
@@ -57,19 +67,20 @@ const getWealthBalance: GetWalletBalanceType = async (signer) => {
       // Converting to BigNumber as USDC with 6 decimals
       const balanceAsBigNumber = ethers.utils.parseUnits(
           stringEthers,
-          USDC_TOKEN_DECIMALS,
+          PAYMENT_TOKEN_DECIMALS,
       );
       const balanceAsString = ethers.utils.formatUnits(
           balanceAsBigNumber,
-          USDC_TOKEN_DECIMALS,
+          PAYMENT_TOKEN_DECIMALS,
       );
       resolve({
-        balanceAsString,
+        balanceAsString: '',
         balanceAsBigNumber,
-        tokenDecimals: USDC_TOKEN_DECIMALS,
+        tokenDecimals: PAYMENT_TOKEN_DECIMALS,
         apy,
         rewards,
       });
+      */
     } catch (error) {
       reject(error);
     };

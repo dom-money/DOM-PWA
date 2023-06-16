@@ -1,5 +1,5 @@
 import { ethers, BigNumber } from 'ethers';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { useSafeStore } from '@/store/SafeStore';
 import SafeApiKit from '@safe-global/api-kit';
@@ -8,7 +8,7 @@ import {
   SAFE_TRANSACTION_SERVICE_URL,
 } from '@/constants';
 
-type GetWalletBalance = (
+type GetSafeUsdtBalance = (
   safeService: SafeApiKit | null,
   ownerAddress: string | null
 ) => Promise<{
@@ -17,16 +17,16 @@ type GetWalletBalance = (
   tokenDecimals: number;
 }>;
 
-const getWalletBalance: GetWalletBalance = (
+const getSafeUsdtBalance: GetSafeUsdtBalance = (
     safeService,
-    ownerAddress,
+    safeAddress,
 ) => {
-  if (!safeService || !ownerAddress ) {
-    throw new Error('safeService and ownerAddress are not initialized');
+  if (!safeService || !safeAddress ) {
+    throw new Error('safeService and safeAddress are not initialized');
   };
 
   // eslint-disable-next-line max-len
-  return axios.get(`${SAFE_TRANSACTION_SERVICE_URL}/api/v1/safes/${ownerAddress}/balances`)
+  return axios.get(`${SAFE_TRANSACTION_SERVICE_URL}/api/v1/safes/${safeAddress}/balances`)
       .then((resp) => {
         const tokens = resp.data;
         console.log(tokens);
@@ -54,16 +54,26 @@ const getWalletBalance: GetWalletBalance = (
           balanceAsBigNumber,
           tokenDecimals,
         };
+      }).catch((error: AxiosError) => {
+        if (error.status === 404) {
+          return {
+            balanceAsString: '0',
+            balanceAsBigNumber: BigNumber.from(0),
+            tokenDecimals: 18,
+          };
+        };
+
+        throw (error);
       });
 };
 
-const useWalletBalance = () => {
+const useSafeUsdtBalance = () => {
   const safeService = useSafeStore((state) => state.safeService);
   const safeAddress = useSafeStore((state) => state.safeAddress);
 
   return useQuery(
-      [ 'walletBalance', safeAddress ],
-      () => getWalletBalance(safeService, safeAddress),
+      [ 'safeUsdtBalance', safeAddress ],
+      () => getSafeUsdtBalance(safeService, safeAddress),
       {
         // The query will not execute until the `safeService` and  ...
         // .. `safeAddress` are initialized
@@ -74,4 +84,4 @@ const useWalletBalance = () => {
   );
 };
 
-export default useWalletBalance;
+export default useSafeUsdtBalance;
