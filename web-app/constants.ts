@@ -32,6 +32,3 @@ export const DOM_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_DOM_CONTRACT_ADDRESS
 
 // P2P Service API
 export const P2P_SERVICE_API_URL = process.env.NEXT_PUBLIC_P2P_SERVICE_API_URL;
-
-// Hot Wallet
-export const HOT_WALLET_ADDRESS = process.env.NEXT_PUBLIC_HOT_WALLET_ADDRESS;

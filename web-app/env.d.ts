@@ -16,7 +16,6 @@ declare global {
       NEXT_PUBLIC_PAYMENT_TOKEN_DECIMALS: string;
       NEXT_PUBLIC_DOM_CONTRACT_ADDRESS: string;
       NEXT_PUBLIC_P2P_SERVICE_API_URL: string;
-      NEXT_PUBLIC_HOT_WALLET_ADDRESS: string;
     };
   };
 };
