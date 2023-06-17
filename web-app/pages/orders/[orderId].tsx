@@ -23,7 +23,6 @@ import { useSafeStore } from '@/store/SafeStore';
 import { useAuthContext } from '@/context/AuthContext';
 import {
   CHAIN_ID,
-  HOT_WALLET_ADDRESS,
   PAYMENT_TOKEN_CONTRACT_ADDRESS,
   PAYMENT_TOKEN_DECIMALS,
 } from '@/constants';
@@ -71,6 +70,21 @@ const OrderPage: NextPage = () => {
   const { signer } = useAuthContext();
   const { user } = useAuthContext();
 
+  const handleConfirmPrice = useCallback(async () => {
+    if (!user || !order.data) return;
+
+    await backendClient({
+      url: `/orders/${order.data.order.id}/actions`,
+      method: 'post',
+      data: {
+        type: 'user_price_confirm',
+      },
+      headers: {
+        Authorization: `Bearer ${user.idToken}`,
+      },
+    });
+  }, [ user, order ]);
+
   const handleConfirmOrder = useCallback(async () => {
     if (!safeAddress || !signer || !safe || !user || !order) return;
 
@@ -84,9 +98,9 @@ const OrderPage: NextPage = () => {
     );
 
     // Specify the recipient and the amount
-    const recipient = HOT_WALLET_ADDRESS;
+    const recipient = order.data.order.polygon_address;
     const amount = ethers.utils.parseUnits(
-        order.data.order.usdt_amount,
+        order.data.order.usdt_amount.toFixed(PAYMENT_TOKEN_DECIMALS).toString(),
         PAYMENT_TOKEN_DECIMALS,
     );
 
@@ -107,7 +121,7 @@ const OrderPage: NextPage = () => {
     const options: MetaTransactionOptions = {
       gasLimit: '100000',
       gasToken: PAYMENT_TOKEN_CONTRACT_ADDRESS,
-      isSponsored: false,
+      isSponsored: true,
     };
 
     const safeTransaction =
@@ -148,7 +162,7 @@ const OrderPage: NextPage = () => {
       url: `/orders/${orderId}/actions`,
       method: 'post',
       data: {
-        type: 'user_confirm',
+        type: 'user_payment_confirm',
         relay_transaction: relayTransaction,
       },
       headers: {
@@ -167,8 +181,7 @@ const OrderPage: NextPage = () => {
 
   if (
     (walletBalance.isLoading || walletBalance.isError) ||
-    (order.isLoading || order.isError) ||
-    remainingSeconds === null
+    (order.isLoading || order.isError)
   ) return null;
 
   return (
@@ -193,8 +206,10 @@ const OrderPage: NextPage = () => {
             }</p>
             {
               order.data.order.receipt_image &&
+              order.data.order.receipt_image !== 'fileLink' &&
               <Image
                 src={ order.data.order.receipt_image }
+                priority
                 alt='Receipt Image'
                 width={ 500 }
                 height={ 500 }
@@ -206,7 +221,15 @@ const OrderPage: NextPage = () => {
       {
         order.data.order.status === 'created' &&
         <ButtonWithMargin
-          label={ `Confirm order (${remainingSeconds})` }
+          label={ `Confirm order exchange price (${remainingSeconds})` }
+          primary
+          onClick={ handleConfirmPrice }
+        />
+      }
+      {
+        order.data.order.status === 'accepted_by_provider' &&
+        <ButtonWithMargin
+          label={ `Confirm order` }
           primary
           onClick={ handleConfirmOrder }
         />

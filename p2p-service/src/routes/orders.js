@@ -84,7 +84,7 @@ ordersRouter.get("/:orderId", async (req, res) => {
   }
 
   // If the price is not valid, fetching a new price
-  if (new Date(order.price_valid_until) < new Date()) {
+  if (new Date(order.price_valid_until) < new Date() && order.status === 'created') {
     const response = await axios.get("https://api.huobi.pro/market/trade", {
       params: { symbol: "usdtbrl" },
       // headers: { 'Access-Key': process.env.HUOBI_API_KEY }
