@@ -132,7 +132,7 @@ const useAuth = () => {
 
       safe = await Safe.create({
         ethAdapter,
-        safeAddress: safes[ 0 ],
+        safeAddress: safes[ safes.length - 1 ],
       });
     };
 
