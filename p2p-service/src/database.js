@@ -32,7 +32,9 @@ db.serialize(() => {
         user_address TEXT NOT NULL,
         receipt_image TEXT,
         status TEXT NOT NULL,
-        qr_data TEXT NOT NULL
+        qr_data TEXT NOT NULL,
+        transaction_hash TEXT,
+        relay_transaction TEXT
       );
     `);
 
@@ -169,7 +171,12 @@ function getActionsByUserAndOrder(userAddress, orderId) {
 
 function getOrderById(orderId) {
   return new Promise((resolve, reject) => {
-    const query = "SELECT * FROM orders WHERE id = ?";
+    const query = `
+      SELECT orders.*, providers.polygon_address
+      FROM orders
+      LEFT JOIN providers ON orders.provider_id = providers.telegram_id
+      WHERE orders.id = ?
+    `;
     db.get(query, [orderId], (err, row) => {
       if (err) {
         reject(err);
@@ -179,6 +186,28 @@ function getOrderById(orderId) {
     });
   });
 }
+
+
+
+function getProviderTelegramIdByOrderId(orderId) {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT providers.telegram_id
+      FROM orders
+      INNER JOIN providers ON orders.provider_id = providers.telegram_id
+      WHERE orders.id = ?
+    `;
+    db.get(query, [orderId], (err, row) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(row ? row.telegram_id : null);
+      }
+    });
+  });
+}
+
+
 
 function updateOrder(orderId, providerId, receiptImage, status) {
   return new Promise((resolve, reject) => {
@@ -202,13 +231,9 @@ function updateOrderPrice(orderId, usdtAmount, priceValidUntil) {
       if (err) {
         reject(err);
       } else {
-        db.get("SELECT * FROM orders WHERE id = ?", [orderId], (err, row) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(row);
-          }
-        });
+        getOrderById(orderId)
+        .then(order => resolve(order))
+        .catch(err => reject(err));
       }
     });
   });
@@ -227,6 +252,19 @@ function updateOrderStatus(orderId, status) {
   });
 }
 
+function updateOrderRelayTransaction(orderId, transaction) {
+  return new Promise((resolve, reject) => {
+    const query = "UPDATE orders SET relay_transaction = ? WHERE id = ?";
+    db.run(query, [transaction, orderId], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(this.changes);
+      }
+    });
+  });
+}
+
 module.exports = {
   saveProvider,
   getProviders,
@@ -236,8 +274,10 @@ module.exports = {
   createOrder,
   saveOrder,
   getOrdersByUserAddress,
+  getProviderTelegramIdByOrderId,
   getOrderById,
   updateOrder,
   updateOrderPrice,
   updateOrderStatus,
+  updateOrderRelayTransaction,
 };

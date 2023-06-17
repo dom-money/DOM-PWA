@@ -10,4 +10,13 @@ module.exports = withPWA({
   compiler: {
     styledComponents: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.telegram.org',
+        port: '',
+      },
+    ],
+  },
 });
