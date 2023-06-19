@@ -8,6 +8,7 @@
     "ethers": "^6.5.1",
     "express": "^4.18.2",
     "jose": "^4.14.4",
+    "pix-utils": "^2.5.0",
     "pixcode": "^1.4.0",
     "qrcode": "^1.5.3",
     "qrcode-pix": "^5.0.0",

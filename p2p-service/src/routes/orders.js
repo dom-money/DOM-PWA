@@ -3,50 +3,89 @@ const axios = require("axios");
 const ordersRouter = express.Router();
 const actionsRouter = require("./actions");
 const { ethers } = require("ethers");
-const { parse } = require("pixcode");
+const { parsePix } = require("pix-utils");
 const {
   getOrdersByUserAddress,
   getOrderById,
   createOrder,
   updateOrderPrice,
 } = require("../database");
+const {
+  jwtVerify,
+  decodeProtectedHeader,
+  createRemoteJWKSet,
+} = require("jose");
+
+const getTransactionAmount = async (parsedPix) => {
+  if (parsedPix.type === "STATIC") {
+    return parsedPix.transactionAmount;
+  }
+
+  if (parsedPix.type === "DYNAMIC") {
+    try {
+      const { jwsString } = await parsedPix.fetchPayload({
+        url: parsedPix.url,
+      });
+      const jwtHeader = decodeProtectedHeader(jwsString);
+      const jwks = createRemoteJWKSet(new URL(jwtHeader.jku));
+      const verifiedJwt = await jwtVerify(jwsString, jwks, {
+        algorithms: [jwtHeader.alg],
+      });
+
+      return verifiedJwt.payload.valor.original;
+    } catch (error) {
+      console.error("Error while getting transaction amount:", error);
+      throw error;
+    }
+  }
+};
 
 ordersRouter.post("/", async (req, res) => {
-  const qrData = req.body?.qr_data;
+  try {
+    const qrData = req.body?.qr_data;
 
-  if (!qrData) return res.status(400).json({ message: "qr_data is required" });
+    if (!qrData)
+      return res.status(400).json({ message: "qr_data is required" });
 
-  const userPublicKey = req.user.wallets[0].public_key;
+    const userPublicKey = req.user.wallets[0].public_key;
 
-  const publicKeyWithPrefix = "0x" + userPublicKey;
-  const userAddress = ethers.computeAddress(publicKeyWithPrefix);
+    const publicKeyWithPrefix = "0x" + userPublicKey;
+    const userAddress = ethers.computeAddress(publicKeyWithPrefix);
 
-  const parsedQrData = parse(qrData);
-  const pixAddress = parsedQrData.merchantAccountInformation.value;
-  const amount = parsedQrData.transactionAmount.value;
+    const parsedQrData = parsePix(qrData);
 
-  // Getting order amount in usdt
-  const response = await axios.get("https://api.huobi.pro/market/trade", {
-    params: { symbol: "usdtbrl" },
-    // headers: { 'Access-Key': process.env.HUOBI_API_KEY }
-  });
-  const rate = response.data.tick.data[0].price;
+    if (parsedQrData.type === "INVALID") {
+      return res.status(400).json({ message: "Invalid qr_data" });
+    }
 
-  // Calculate the amount in USDT
-  const usdtAmount = amount / rate;
+    const pixAddress = parsedQrData.merchantName;
+    const amount = await getTransactionAmount(parsedQrData);
 
-  const priceValidUntil = new Date(Date.now() + 15000).toISOString();
+    // Getting order amount in usdt
+    const response = await axios.get("https://api.huobi.pro/market/trade", {
+      params: { symbol: "usdtbrl" },
+      // headers: { 'Access-Key': process.env.HUOBI_API_KEY }
+    });
+    const rate = response.data.tick.data[0].price;
 
-  const orderFromDB = await createOrder(
-    userAddress,
-    pixAddress,
-    amount,
-    usdtAmount,
-    priceValidUntil,
-    qrData
-  );
+    // Calculate the amount in USDT
+    const usdtAmount = amount / rate;
 
-  res.status(201).json({ order: orderFromDB });
+    const priceValidUntil = new Date(Date.now() + 15000).toISOString();
+
+    const orderFromDB = await createOrder(
+      userAddress,
+      pixAddress,
+      amount,
+      usdtAmount,
+      priceValidUntil,
+      qrData
+    );
+
+    res.status(201).json({ order: orderFromDB });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+  }
 });
 
 ordersRouter.get("/", async (req, res) => {
@@ -84,7 +123,10 @@ ordersRouter.get("/:orderId", async (req, res) => {
   }
 
   // If the price is not valid, fetching a new price
-  if (new Date(order.price_valid_until) < new Date() && order.status === 'created') {
+  if (
+    new Date(order.price_valid_until) < new Date() &&
+    order.status === "created"
+  ) {
     const response = await axios.get("https://api.huobi.pro/market/trade", {
       params: { symbol: "usdtbrl" },
       // headers: { 'Access-Key': process.env.HUOBI_API_KEY }
